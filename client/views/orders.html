@@ -1,0 +1,42 @@
+<template name='orders'>
+  <table class='table table-hover'>
+    <thead>
+      <tr>
+        <th>Customer Name</th>
+        <th>Order Date</th>
+        <th>Item Type</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each activeOrder}}
+        <tr class='orderRow default' id='{{_id}}'>
+          <td>{{customerName}}</td>
+          <td>{{orderDate}}</td>
+          <td>{{itemType}}</td>
+          <td><button type="button" class="btn btn-default expand">
+              Expand
+          </button></td>
+        </tr>
+        {{#if isOrdered this._id}}
+        <div class="row">
+          <div class="col-md-4">
+          {{{getMeasurements this._id}}}
+          </div>
+          <div class="col-md-4">
+          {{{getStyleChoices this._id}}}
+        </div>
+        </div>
+        {{/if}}
+      {{/each}}
+    </tbody>
+  </table>
+    <hr>
+    <form role="form">
+    <div class="form-group">
+      <label for="targetEmail">Supplier's Email Address</label>
+      <input type="email" class="form-control" id="targetEmail"
+        placeholder="Enter email">
+      </div>
+    </form>
+    <button class="btn btn-lg btn-primary" id="reviewOrder">Review Order</button> 
+</template>

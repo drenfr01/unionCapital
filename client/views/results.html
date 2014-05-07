@@ -1,0 +1,18 @@
+<template name='results'>
+  {{#if searchResults}}
+    <div class='row list-group col-xs-4 col-xs-offset-4'>
+      <ul>
+      {{#each searchResults}}
+        {{> searchResult}}
+      {{/each}}
+      </ul>
+    </div>
+  {{/if}}
+  {{#if addCustomerClicked}}
+    {{#unless searchResults}}
+      <div class='row'>
+        {{> addCustomerForm}}
+      </div>
+    {{/unless}}
+  {{/if}}
+</template>
