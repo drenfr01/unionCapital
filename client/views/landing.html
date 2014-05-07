@@ -1,47 +1,14 @@
 <template name="landing">
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-      <div class="input-group">
-        <span class="input-group-btn">
-          <button class="btn btn-default btn-large" id="addCustomer">
-            Add New Customer</button>
-        </span>
-        <input type='text' class="form-control" placeholder='Customer Name' id='customerSearch'/><br>
-      </div>
-    </div>
-  </div>
-  <div class='text-center row'>
-    {{> results}}
-  </div>
-  <div class="col-sm-6 col-sm-offset-3">
-    <div class="row text-center">
-    <h1><small>Customer Info</small></h1>
-    <hr>
-      <p>
-        <a href="measurements" class="btn-lg btn-default btn-block">Measurements</a>
-      </p>
-    </div>
-    <div class="row text-center">
-      <p>
-      <a href="takePicture" class="btn-lg btn-default btn-block">
-       Upload Customer Pictures</a>
-      </p>
-    </div>
-    <div class="row text-center">
-    <h1><small>Order Management</small></h1>
-    <hr>
-      <p>
-      <a href="itemMenu" id="newItem" class="btn-lg btn-default btn-block">
-        New Item</a>
-    </p>
-    </div>
-    <div class="row text-center">
-      <p>
-      <a href="orders" class="btn-lg btn-default btn-block">Review/Send Order</a>
-      </p>
-    </div>
-    <div class="row text-center">
-      <a href="uploadStyles" class="btn-lg btn-default btn-block">Upload New Styles</a>
-    </div>
+  <img class="img-responsive" src="images/ucb-logo-lg.jpg" 
+  alt="Union Capital Logo">
+  <hr>
+  <div class="row text-center">
+    <p><small>
+      Giving back to people who have given back to their communities
+    </small></p>
+    <br>
+    <button type="button" class="btn btn-lg btn-default" id='loginButton'>
+      Login
+    </button>
   </div>
 </template>
