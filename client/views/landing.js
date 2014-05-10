@@ -1,7 +1,11 @@
 Template.landing.events({
-  'click #loginButton': function(e) {
+  'click #memberLogin': function(e) {
     e.preventDefault();
     Router.go('memberHomePage');
+  },
+  'click #adminLogin': function(e) {
+    e.preventDefault();
+    Router.go('adminHomePage');
   },
 });
 
