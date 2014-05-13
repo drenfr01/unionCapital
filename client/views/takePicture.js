@@ -38,37 +38,15 @@ Template.takePicture.events({
     var files = e.target.files; 
     insertFiles(files, e, "Front");
   },
-  'change #photoInputSide': function(e) {
-    e.preventDefault(); 
-    
-    var files = e.target.files; 
-    insertFiles(files, e, "Side");
-  },
-  'change #photoInputBack': function(e) {
-    e.preventDefault(); 
-    
-    var files = e.target.files; 
-    insertFiles(files, e, "Back");
-  },
   'click #removeFront': function(e) {
     e.preventDefault();
   
     removeImages("Front");    
   },
-  'click #removeSide': function(e) {
-    e.preventDefault();
-  
-    removeImages("Side");    
-  },
-  'click #removeBack': function(e) {
-    e.preventDefault();
-  
-    removeImages("Back");    
-  },
   'click #reviewOrder': function(e) {
     e.preventDefault();
 
-    Router.go('itemMenu');
+    Router.go('memberHomePage');
     throwError("Photos successfully submitted", "alert-success");
   },
 });

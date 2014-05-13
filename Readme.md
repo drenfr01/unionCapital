@@ -16,3 +16,9 @@ Install Meteor
 
 Run meteorite from the base level of this repo.
 `mrt` Depending on your permissions, you may need to run `sudo mrt`
+
+
+ToDo:
+
+- rename submit events submit photos
+- add in another option to join events

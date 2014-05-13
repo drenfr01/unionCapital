@@ -1,0 +1,8 @@
+<template name="reviewPhotos">
+  <div class="text-center">
+    <h1><small>Enter member name to view their submissions</small></h1>
+    {{#each images "Front"}}
+      <img src="{{url}}" alt="an Image" width="400" height="400">
+    {{/each}}
+  </div>
+</template>
