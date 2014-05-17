@@ -8,7 +8,9 @@ Template.results.helpers({
     // TODO: Unit test this....
     if(!_.isUndefined(keyword) && !(keyword === "")){
       var query = new RegExp( keyword, 'i' );
-      var results = Meteor.users.find( {'emails[0].address': query},
+      var results = Meteor.users.find({$or: [{'emails[0].address': query},
+                                            {username: query} ]
+                                      },
                                        {limit: 5}
                                   );
       return results.fetch();

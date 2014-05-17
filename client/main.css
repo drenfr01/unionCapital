@@ -7,7 +7,7 @@ body { height: 100%; margin: 0; padding: 0 }
 }
 
 .vcenter {
-  display: table-cell !important;
+  display: inline-block !important;
   vertical-align: middle !important;
   float: none !important;
 }
