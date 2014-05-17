@@ -1,18 +1,40 @@
 <template name="landing">
-  <img class="img-responsive" src="images/ucb-logo-lg.jpg" 
-  alt="Union Capital Logo">
-  <hr>
-  <div class="row text-center">
+<nav class="navbar navbar-default" role="navigation">
+  <div class="navbar-header">
+    <a class="navbar-brand" href="/">Home</a>
+  </div>
+  <div class="collapse navbar-collapse" id="bs-example-vabar-collapse-1">
+    <ul class="nav navbar-nav">
+      <li><a href="/orders">Orders</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-left">
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      {{> loginButtons}}
+    </ul>
+  </div>
+</nav>
+<div class="row">
+  <div class="col-md-4 col-md-offset-4">
+    <img class="img-responsive" src="images/ucb-logo-lg.jpg" 
+      alt="Union Capital Logo">
+    <br>
     <p><small>
       Giving back to people who have given back to their communities
     </small></p>
-    <br>
-    <button type="button" class="btn btn-lg btn-default" id='memberLogin'>
-      Login
-    </button>
-    <br><br>
-    <button type="button" class="btn btn-lg btn-default" id='adminLogin'>
-      Admin Login
-    </button>
   </div>
+</div>
+<div class="row text-center">
+  <hr>
+  <br>
+  {{#if isMember}}
+    {{#if isInRole 'admin'}}
+      <a href="{{pathFor 'adminHomePage'}}">Admin Home Page</a>
+    {{else}}
+      <a href="{{pathFor 'memberHomePage'}}">Member Home Page</a>
+    {{/if}}
+  {{else}}
+    <p>Please Log In</p>
+  {{/if}}
+</div>
 </template>

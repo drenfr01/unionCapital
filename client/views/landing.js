@@ -9,3 +9,8 @@ Template.landing.events({
   },
 });
 
+Template.landing.helpers({
+  'isMember': function() {
+    return Meteor.user();
+  },
+});

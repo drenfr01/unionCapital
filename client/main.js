@@ -1,2 +1,2 @@
-Meteor.subscribe('markers');
+Meteor.subscribe('events');
 Meteor.subscribe('images');

@@ -7,7 +7,7 @@ Template.communityNeeds.rendered = function() {
     mapOptions);
   console.log(map);
 
-  activeEvents = Markers.find({active: 1});
+  activeEvents = Events.find({active: 1});
   var geocoder = new google.maps.Geocoder();
 
   activeEvents.forEach(function (place) {

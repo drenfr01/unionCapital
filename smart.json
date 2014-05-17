@@ -3,6 +3,7 @@
     "bootstrap-3": {},
     "iron-router": {},
     "accounts-ui-bootstrap-3": {},
-    "collectionFS": {}
+    "collectionFS": {},
+    "roles": {}
   }
 }

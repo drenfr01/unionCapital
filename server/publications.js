@@ -1,5 +1,5 @@
-Meteor.publish("markers", function() {
-  return Markers.find();
+Meteor.publish("events", function() {
+  return Events.find();
 });
 
 Meteor.publish('images', function() {
