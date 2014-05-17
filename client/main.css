@@ -5,3 +5,9 @@ body { height: 100%; margin: 0; padding: 0 }
   /* have to either give pixel value or set all container columns to 100% */
   height: 500px; 
 }
+
+.vcenter {
+  display: table-cell !important;
+  vertical-align: middle !important;
+  float: none !important;
+}
