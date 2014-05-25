@@ -1,8 +1,9 @@
 function insertFiles(files, e, view) {
     FS.Utility.eachFile(e, function(file) {
       var newFile = new FS.File(file);
-      newFile.metadata = {customerId: Session.get('currentCustomer'),
-        view: view};
+      var currentDate = new Date();
+      newFile.metadata = {memberId: Member.userId(),
+        submissionTime: currentDate};
       Images.insert(newFile, function(error, fileObj) {
         if(error) {
           throwError(error.reason);

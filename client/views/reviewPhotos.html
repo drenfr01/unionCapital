@@ -1,8 +1,24 @@
 <template name="reviewPhotos">
   <div class="text-center">
     <h1><small>Enter member name to view their submissions</small></h1>
-    {{#each images "Front"}}
-      <img src="{{url}}" alt="an Image" width="400" height="400">
-    {{/each}}
+  </div>
+  <div class="col-md-6 col-md-offset-3">
+    <div class="input-group ">
+      <span class="input-group-btn">
+        <button class="btn btn-default btn-large" id="addMember">
+          Actions</button>
+      </span>
+      <input type='text' class="form-control" placeholder='Member Name' 
+        id='memberSearch'/><br>
+    </div>
+  </div>
+  <div class='text-center row'>
+    {{> results}}
+  </div>
+  <div class='text-center row'>
+    {{#with member}}
+      <div>Name: {{profile.name}}</div>
+      <div>Address: {{profile.address}}</div>
+    {{/with}}
   </div>
 </template>

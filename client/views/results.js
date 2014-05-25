@@ -8,11 +8,9 @@ Template.results.helpers({
     // TODO: Unit test this....
     if(!_.isUndefined(keyword) && !(keyword === "")){
       var query = new RegExp( keyword, 'i' );
-      var results = Meteor.users.find({$or: [{'emails[0].address': query},
-                                            {username: query} ]
-                                      },
-                                       {limit: 5}
-                                  );
+      var results = Meteor.users.find({$or: [{'emails.address': query},
+                                            {'profile.name': query} ]
+                                      }, {limit: 5});
       return results.fetch();
     }
     return false;
@@ -30,5 +28,7 @@ Template.results.events({
     $('#memberSearch').val("");
     Session.set('searchQuery', "");
     Session.set("memberButtonClicked", false);
+    Session.set("memberProfileSelected", false);
+    Session.set('selectedMemberId', this._id);
   }
 });

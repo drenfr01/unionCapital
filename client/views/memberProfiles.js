@@ -1,5 +1,7 @@
 Template.memberProfiles.rendered = function() {
   $('#memberSearch').focus();
+  Session.set("memberProfileSelected", false);
+  Session.set('selectedMemberId', false);
 };
 
 Template.memberProfiles.helpers({  
@@ -10,6 +12,9 @@ Template.memberProfiles.helpers({
       return Meteor.users.findOne({_id: memberId}).fullName;
     }
     return '';
+  },
+  'member': function() {
+    return Meteor.users.findOne(Session.get('selectedMemberId'));
   }
 });
 
