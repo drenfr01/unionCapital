@@ -1,9 +1,11 @@
+var map;
+
 Template.communityNeeds.rendered = function() {
   var mapOptions = {
     center: new google.maps.LatLng(42.3581, -71.0636),
     zoom: 15 
   };
-  var map = new google.maps.Map(document.getElementById("map-canvas"),
+  map = new google.maps.Map(document.getElementById("map-canvas"),
     mapOptions);
   console.log(map);
 
@@ -26,3 +28,4 @@ Template.communityNeeds.rendered = function() {
     });
   });
 };
+

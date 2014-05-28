@@ -1,6 +1,6 @@
 Events = new Meteor.Collection('events', {
   schema: {
-            Name: {
+            name: {
                      type: String,
                      label: 'Name of Event'
                   },
