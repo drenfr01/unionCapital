@@ -34,5 +34,8 @@ Meteor.methods({
    },
    removeImage: function(imageId) {
     return removeSingleImage(imageId);
+   },
+   updateUserPoints: function(attributes) {
+    return Meteor.users.update(attributes.userId, {$inc: { 'profile.points': attributes.points }});
    }
 });

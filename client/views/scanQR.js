@@ -1,5 +1,4 @@
 UI.registerHelper("activityOptions", function() {
-  //TODO: create label and value property
   var events = Events.find().fetch();
   var names =  _.pluck(events, 'name');
   var options = [];
@@ -11,6 +10,19 @@ UI.registerHelper("activityOptions", function() {
 
 Template.scanQR.events({
   'submit': function(e) {
-    console.log('click');
+    var attributes = {
+      points: parseInt($('#userPoints').val(), 10),
+      userId:  Meteor.userId()
+    };
+    console.log(attributes);
+
+    Meteor.call('updateUserPoints', attributes, function(error,response) {
+      if(error) {
+        throwError(error.reason, 'alert-danger');
+        Router.go('scanQR');
+      }
+      throwError('Points Added!', 'alert-success');
+      Router.go('memberHomePage');
+    });
   }
 });
