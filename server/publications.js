@@ -2,6 +2,10 @@ Meteor.publish("events", function() {
   return Events.find();
 });
 
+Meteor.publish('transactions', function() {
+  return Transactions.find();
+});
+
 Meteor.publish('images', function() {
   return Images.find();
 });
