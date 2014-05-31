@@ -1,9 +1,5 @@
 Transactions = new Meteor.Collection('transactions', {
   schema: {
-    transactionDate: {
-              type: Date,
-              label: 'Date of Transaction'
-             },
      userId: {
                type: String,
                label: 'User Identifier',
