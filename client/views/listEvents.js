@@ -9,13 +9,13 @@ Template.listEvents.helpers({
     return Events.findOne(Session.get('modalDataContext')._id);
   },
   'isEventIndex': function() {
-      return Session.get('eventIndex');
+    return Session.get('eventIndex');
   },
   'eventView': function() {
-      return Session.get('event');
+    return Session.get('event');
   },
   'isAdmin': function() {
-  		return false;
+    return false;
   }
 });
 
