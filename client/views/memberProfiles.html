@@ -15,10 +15,13 @@
   <div class='text-center row'>
     {{> results}}
   </div>
-  <div class='text-center row'>
+  <br>
+  <br>
+  <div class='row'>
     {{#with member}}
-      <div>Name: {{username}}</div>
-      <div>Address: {{profile.address}}</div>
+      <h3>User Profile</h3>
+      <div>Name: {{profile.firstName}} {{profile.lastName}}</div>
+      <div>Address: {{profile.street}} {{profile.city}} {{profile.state}}</div>
     {{/with}}
   </div>
 </template>

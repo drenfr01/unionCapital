@@ -7,7 +7,6 @@ Template.communityNeeds.rendered = function() {
   };
   map = new google.maps.Map(document.getElementById("map-canvas"),
     mapOptions);
-  console.log(map);
 
   activeEvents = Events.find({active: 1});
   var geocoder = new google.maps.Geocoder();

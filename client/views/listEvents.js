@@ -15,7 +15,6 @@ Template.listEvents.helpers({
 
 Template.listEvents.events({
   'click .editEvent': function(e) {
-    console.log(this);
     Session.set('modalDataContext', this);
   }
 });
