@@ -25,3 +25,12 @@ Template.scanQR.events({
     });
   }
 });
+
+AutoForm.addHooks('insertTransactionForm', {
+  before: {
+    insert: function(transaction) {
+      transaction.userId = Meteor.userId();
+      return transaction;
+    }
+  }
+});
