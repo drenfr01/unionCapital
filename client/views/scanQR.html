@@ -4,14 +4,11 @@
     <hr>
     <p>Currently the user will manually enter location and points for Demo purposes</p>
     <div class="col-md-4 col-md-offset-4">
-      <!-- add more complex field, use options and UI helper to have select box --> 
+      <!-- add more complex field, use options and UI helper to have select box -->
       {{#autoForm collection="Transactions" id="insertTransactionForm" type="insert"}}
         <fieldset>
           <legend>Add points from Event</legend>
-          {{> afQuickField name="userId" type="hidden" value="testing"}}
-          {{> afQuickField name='transactionDate'}}
-          {{> afQuickField name='points' id='userPoints'}}
-          {{> afFieldInput name='activity' options=activityOptions}}
+          {{> afFieldInput name='eventID' options=eventOptions}}
         </fieldset>
         <button type="submit" class="btn btn-default" id="submit">Submit</button>
       {{/autoForm}}

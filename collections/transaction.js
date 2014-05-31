@@ -1,21 +1,13 @@
 Transactions = new Meteor.Collection('transactions', {
   schema: {
-    transactionDate: {
-              type: Date,
-              label: 'Date of Transaction'
-             },
-     points: {
-               type: Number,
-               label: 'Amount of Points'
-             },
      userId: {
                type: String,
                label: 'User Identifier',
                optional: true
              },
-     activity: {
+     eventID: {
                type: String,
-               label: 'Event Name'
+               label: 'ID of related Event'
                }
           }
 });
