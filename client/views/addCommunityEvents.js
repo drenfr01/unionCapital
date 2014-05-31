@@ -18,6 +18,7 @@ Template.addCommunityEvents.events({
     Session.set('addEventClicked', true);
   },
   'submit': function(e) {
+    e.preventDefault();
     Session.set('addEventClicked', false);
   },
   'click #cancelEvent': function(e) {

@@ -1,12 +1,23 @@
+Template.landing.rendered = function() {
+  Session.set('loginStateVar', 'landingPage');
+};
+
+Template.landing.helpers({
+  'loginState': function(state) {
+    return Session.get('loginStateVar') === state;
+  },
+});
+
 Template.landing.events({
-  'click #memberLogin': function(e) {
+  'click #login': function(e) {
     e.preventDefault();
-    Router.go('memberHomePage');
+    Session.set('loginStateVar', 'loginPage');
   },
-  'click #adminLogin': function(e) {
+  'click #signUp': function(e) {
     e.preventDefault();
-    Router.go('adminHomePage');
+    Session.set('loginStateVar', 'signUp');
   },
+  /*
   'submit': function(e) {
     e.preventDefault();
     Accounts.createUser({
@@ -26,10 +37,6 @@ Template.landing.events({
     console.log('clicked');
 
   } 
+  */
 });
 
-Template.landing.helpers({
-  'isMember': function() {
-    return Meteor.user();
-  },
-});
