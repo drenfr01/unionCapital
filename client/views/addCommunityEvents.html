@@ -1,7 +1,11 @@
 <template name="addCommunityEvents">
   {{>listEvents}}
   <button type="button" class="btn btn-lg btn-default text-center" id="addEvent">Add Event</button>
-  <button type="button" class="btn btn-lg btn-default text-center" id="showMap">Show Map</button>
+  {{#if showMapClicked}}
+    <button type="button" class="btn btn-lg btn-danger text-center" id="hideMap">Hide Map</button>
+  {{else}}
+    <button type="button" class="btn btn-lg btn-default text-center" id="showMap">Show Map</button>
+  {{/if}}
   <br><br>
   {{#if addEventClicked}}
   <div class="col-md-4 col-md-offset-4">
@@ -10,7 +14,6 @@
   </div>
   {{/if}}
   {{#if showMapClicked}}
-    <button type="button" class="btn btn-danger" id="hideMap">Hide Map</button>
     {{> communityNeeds }}
   {{/if}}
 </template>
