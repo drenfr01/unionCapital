@@ -43,18 +43,21 @@
         <th> Points </th>
         <th> Start Date </th>
         <th> End Date </th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
     {{#each communityEvents}}
-    <tr class="eventView">
-      <td>{{name}}</td>
-      <td>{{address}}</td>
-      <td>{{points}}</td>
-      <td>{{formatDate startDate}}</td>
-      <td>{{formatDate endDate}}</td>
-      <td><button type="button" class="btn btn-default editEvent" data-toggle="modal" 
+    <tr>
+      <td class="eventView">{{name}}</td>
+      <td class="eventView">{{address}}</td>
+      <td class="eventView">{{points}}</td>
+      <td class="eventView">{{formatDate startDate}}</td>
+      <td class="eventView">{{formatDate endDate}}</td>
+      {{#if isInRole 'admin'}}
+      	<td><button type="button" class="btn btn-default editEvent" data-toggle="modal" 
           data-target = "#editModal">Edit</button></td>
+      {{/if}}
     </tr>
     {{/each}}
     </tbody>

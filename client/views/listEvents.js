@@ -13,12 +13,14 @@ Template.listEvents.helpers({
   },
   'eventView': function() {
       return Session.get('event');
+  },
+  'isAdmin': function() {
+  		return false;
   }
 });
 
 Template.listEvents.events({
   'click .editEvent': function(e) {
-    console.log(this);
     Session.set('modalDataContext', this);
   },
   'click .eventView': function(e) {
