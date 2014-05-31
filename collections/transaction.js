@@ -9,9 +9,9 @@ Transactions = new Meteor.Collection('transactions', {
                label: 'User Identifier',
                optional: true
              },
-     activity: {
+     eventID: {
                type: String,
-               label: 'Event Name'
+               label: 'ID of related Event'
                }
           }
 });
