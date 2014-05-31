@@ -8,6 +8,7 @@
       {{#autoForm collection="Transactions" id="insertTransactionForm" type="insert"}}
         <fieldset>
           <legend>Add points from Event</legend>
+          {{> afQuickField name="userId" type="hidden" value="testing"}}
           {{> afQuickField name='transactionDate'}}
           {{> afQuickField name='points' id='userPoints'}}
           {{> afFieldInput name='activity' options=activityOptions}}
