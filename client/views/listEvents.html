@@ -13,11 +13,22 @@
           <h4 class="modal-title text-center">Edit Events</h4>
         </div>
         <div class="modal-body">
-          <p>{{this.name}}&hellip;</p>
+        {{#autoForm collection="Events" doc=editingDoc id="updatEventsForm" type="update"}}
+          <fieldset>
+            <legend>Update Event</legend>
+            {{> afQuickField name="name"}}
+            {{> afQuickField name="address"}}
+            {{> afQuickField name="description"}}
+            {{> afQuickField name="active"}}
+            {{> afQuickField name="startDate"}}
+            {{> afQuickField name="endDate"}}
+            {{> afQuickField name="points"}}
+          </fieldset>
+          <button type="submit" class="btn btn-default" id="submit">Submit</button>
+        {{/autoForm}}
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -41,8 +52,8 @@
       <td>{{points}}</td>
       <td>{{formatDate startDate}}</td>
       <td>{{formatDate endDate}}</td>
-      <td><button type="button" class="btn btn-default" data-toggle="modal" 
-          data-target = "#editModal" id="editEvent">Edit</button></td>
+      <td><button type="button" class="btn btn-default editEvent" data-toggle="modal" 
+          data-target = "#editModal">Edit</button></td>
     </tr>
     {{/each}}
     </tbody>

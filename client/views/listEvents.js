@@ -1,5 +1,4 @@
 Template.listEvents.rendered = function() {
-  //Session.set('modalDataContext', n);
 };
 
 Template.listEvents.helpers({
@@ -8,11 +7,14 @@ Template.listEvents.helpers({
   },
   'modalContext': function() {
     return Session.get('modalDataContext');
+  },
+  'editingDoc': function() {
+    return Events.findOne(Session.get('modalDataContext')._id);
   }
 });
 
 Template.listEvents.events({
-  'click #editEvent': function(e) {
+  'click .editEvent': function(e) {
     console.log(this);
     Session.set('modalDataContext', this);
   }
