@@ -3,6 +3,38 @@
   <h1 class="text-center">Current and Upcoming Events</h1>
   <hr>
   <br>
+  <!--Modal launched when Edit button below clicked -->
+  {{#with modalContext}}
+  <div class="modal fade" id="editModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;</button>
+          <h4 class="modal-title text-center">Edit Events</h4>
+        </div>
+        <div class="modal-body">
+        {{#autoForm collection="Events" doc=editingDoc id="updatEventsForm" type="update"}}
+          <fieldset>
+            <legend>Update Event</legend>
+            {{> afQuickField name="name"}}
+            {{> afQuickField name="address"}}
+            {{> afQuickField name="description"}}
+            {{> afQuickField name="active"}}
+            {{> afQuickField name="startDate"}}
+            {{> afQuickField name="endDate"}}
+            {{> afQuickField name="points"}}
+          </fieldset>
+          <button type="submit" class="btn btn-default" id="submit">Submit</button>
+        {{/autoForm}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  {{/with}}
   <table class="table table-hover">
     <thead>
       <tr>
@@ -21,6 +53,8 @@
       <td>{{points}}</td>
       <td>{{formatDate startDate}}</td>
       <td>{{formatDate endDate}}</td>
+      <td><button type="button" class="btn btn-default editEvent" data-toggle="modal" 
+          data-target = "#editModal">Edit</button></td>
     </tr>
     {{/each}}
     </tbody>

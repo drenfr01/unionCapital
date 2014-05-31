@@ -1,27 +1,36 @@
-
 Template.listEvents.helpers({
   'communityEvents': function() {
-  		return Events.find({active: 1}, {sort: {startDate: 1}});
+    return Events.find({active: 1}, {sort: {startDate: 1}});
+  },
+  'modalContext': function() {
+    return Session.get('modalDataContext');
+  },
+  'editingDoc': function() {
+    return Events.findOne(Session.get('modalDataContext')._id);
   },
   'isEventIndex': function() {
-  		return Session.get('eventIndex');
+      return Session.get('eventIndex');
   },
   'eventView': function() {
-  		return Session.get('event');
-	}
+      return Session.get('event');
+  }
 });
 
 Template.listEvents.events({
-	'click .eventView': function(e) {
-		Session.set('eventIndex', false);
-		Session.set('event', this);
-	}, 
-	'click .back': function(e) {
-		Session.set('eventIndex', true);
-		Session.set('event', null);
-	}
+  'click .editEvent': function(e) {
+    console.log(this);
+    Session.set('modalDataContext', this);
+  },
+  'click .eventView': function(e) {
+    Session.set('eventIndex', false);
+    Session.set('event', this);
+  }, 
+  'click .back': function(e) {
+    Session.set('eventIndex', true);
+    Session.set('event', null);
+  }
 });
 
-Template.listEvents.rendered = function() {	
-	Session.set('eventIndex', true);
+Template.listEvents.rendered = function() {  
+  Session.set('eventIndex', true);
 };

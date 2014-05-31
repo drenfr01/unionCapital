@@ -8,5 +8,8 @@ AutoForm.addHooks('insertTransactionForm', {
   onSuccess: function(){
     throwError('Points Added!', 'alert-success');
     Router.go('memberHomePage');
-  }
+  },
+  onError: function(operation, error, template) {
+    throwError(error.message, 'alert-danger');
+  },
 });
