@@ -10,11 +10,10 @@ Meteor.publish('images', function() {
   return Images.find();
 });
 
-Meteor.publish('adminMemberData', function() {
+Meteor.publish('userData', function() {
   if (Roles.userIsInRole(this.userId, 'admin')) {
-    return Meteor.users.find({});
-  } else if (this.userId) {
-    return Meteor.users.find({_id: this.userId});
+    console.log(Meteor.users.find().fetch());
+    return Meteor.users.find();
   } else {
     this.ready();
   }
