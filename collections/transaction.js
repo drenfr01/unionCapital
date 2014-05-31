@@ -4,10 +4,6 @@ Transactions = new Meteor.Collection('transactions', {
               type: Date,
               label: 'Date of Transaction'
              },
-     points: {
-               type: Number,
-               label: 'Amount of Points'
-             },
      userId: {
                type: String,
                label: 'User Identifier',
