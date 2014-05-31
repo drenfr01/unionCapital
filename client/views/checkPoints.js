@@ -20,6 +20,12 @@ Template.checkPoints.helpers({
   'getPoints': function(){
     return getEvent(this).points;
   },
+  'getEventStart': function(){
+    return getEvent(this).startDate;
+  },
+  'getEventEnd': function(){
+    return getEvent(this).endDate;
+  },
   'activities': function() {
     return Transactions.find(
       { userId: Meteor.userId() },
