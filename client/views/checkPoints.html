@@ -8,7 +8,8 @@
       <tr>
         <th>Event Name</th>
         <th>Points</th>
-        <th>Event Date</th>
+        <th>Event Start Date</th>
+        <th>Event End Date</th>
       </tr>
     </thead>
     <tbody>
@@ -16,7 +17,8 @@
       <tr>
         <td>{{getEvent}}</td>
         <td>{{getPoints}}</td>
-        <td>{{formatDate transactionDate}} </td>
+        <td>{{formatDate getEventStart}} </td>
+        <td>{{formatDate getEventEnd}} </td>
         <td class="text-right">
           <a href="#" class="btn btn-warning btn-xs">Dispute</a>
         </td>
