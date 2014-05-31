@@ -4,6 +4,9 @@
     "iron-router": {},
     "accounts-ui-bootstrap-3": {},
     "collectionFS": {},
-    "roles": {}
+    "roles": {},
+    "autoform": {},
+    "collection2": {},
+    "moment": {}
   }
 }
