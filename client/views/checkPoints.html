@@ -1,6 +1,25 @@
 <template name="checkPoints">
   <div class="text-center">
-    <h1>Total Points: 250</h1>
+    <h1><small>Activity History</small></h1>
     <hr>
-  </div>
+    </div>
+    <table class="table table-hover">
+    <thead>
+      <tr> 
+        <th>Event Name</th>
+        <th>Points</th>
+        <th>Event Date</th>
+      </tr>
+    </thead>
+    <tbody>
+    {{#each activities}}
+      <tr>
+        <td>{{activity}}</td>
+        <td>{{points}}</td>
+        <td>{{formatDate transactionDate}} </td>
+      </tr>
+    {{/each}}
+    </tbody>
+  </table>
+  <h3 class="text-center">Total Points: {{totalPoints}}</h3>
 </template>

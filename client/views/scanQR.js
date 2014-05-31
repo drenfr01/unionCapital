@@ -14,7 +14,6 @@ Template.scanQR.events({
       points: parseInt($('#userPoints').val(), 10),
       userId:  Meteor.userId()
     };
-    console.log(attributes);
 
     Meteor.call('updateUserPoints', attributes, function(error,response) {
       if(error) {
