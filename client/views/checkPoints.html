@@ -15,10 +15,10 @@
     <tbody>
     {{#each activities}}
       <tr>
-        <td>{{getEvent}}</td>
-        <td>{{getPoints}}</td>
-        <td>{{formatDate getEventStart}} </td>
-        <td>{{formatDate getEventEnd}} </td>
+        <td>{{eventName}}</td>
+        <td>{{eventPoints}}</td>
+        <td>{{formatDate eventStart}} </td>
+        <td>{{formatDate eventEnd}} </td>
         <td class="text-right">
           <a href="#" class="btn btn-warning btn-xs">Dispute</a>
         </td>

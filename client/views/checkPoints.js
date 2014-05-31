@@ -5,7 +5,24 @@ function getEvent(transaction){
 }
 
 Template.checkPoints.helpers({
-  'totalPoints': function() {
+  activities: function() {
+    return Transactions.find(
+      { userId: Meteor.userId() },
+      { sort: { transactionDate: -1 } });
+  },
+  eventName: function(){
+    return getEvent(this).name;
+  },
+  eventPoints: function(){
+    return getEvent(this).points;
+  },
+  eventStart: function(){
+    return getEvent(this).startDate;
+  },
+  eventEnd: function(){
+    return getEvent(this).endDate;
+  },
+  totalPoints: function() {
     return Transactions
       .find({userId: Meteor.userId()})
       .fetch()
@@ -13,22 +30,5 @@ Template.checkPoints.helpers({
         var event = getEvent(transaction);
         return sum += event.points;
       }, 0);
-  },
-  'getEvent': function(){
-    return getEvent(this).name;
-  },
-  'getPoints': function(){
-    return getEvent(this).points;
-  },
-  'getEventStart': function(){
-    return getEvent(this).startDate;
-  },
-  'getEventEnd': function(){
-    return getEvent(this).endDate;
-  },
-  'activities': function() {
-    return Transactions.find(
-      { userId: Meteor.userId() },
-      { sort: { transactionDate: -1 } });
   }
 });
