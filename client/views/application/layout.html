@@ -1,6 +1,5 @@
 <template name="layout">
   <div class="container">
-    {{> errors}}
     <div id="main" class="row">
       <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
@@ -28,7 +27,8 @@
           </div>
         </div>
       </nav>
-      
+    {{> alerts}}
+
       {{> yield}}
     </div>
   </div>

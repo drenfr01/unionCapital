@@ -1,8 +1,21 @@
-Errors = new Meteor.Collection(null);
+Alerts = new Meteor.Collection(null);
 
-throwError = function(message, type) {
-  Errors.insert({message: message, seen: false, type: type});
+addErrorMessage = function(message) {
+  Alerts.insert({message: message, seen: false, type: 'alert-danger'});
 };
-clearErrors = function() {
-  Errors.remove({seen: true});
+
+addWarningMessage = function(message) {
+  Alerts.insert({message: message, seen: false, type: 'alert-warning'});
+};
+
+addInfoMessage = function(message) {
+  Alerts.insert({message: message, seen: false, type: 'alert-info'});
+};
+
+addSuccessMessage = function(message) {
+  Alerts.insert({message: message, seen: false, type: 'alert-success'});
+};
+
+clearAlerts = function() {
+  Alerts.remove({seen: true});
 };
