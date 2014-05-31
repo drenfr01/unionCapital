@@ -49,7 +49,7 @@
     <tbody>
     {{#each communityEvents}}
     <tr>
-      <td class="eventView">{{name}}</td>
+      <td class="eventView"><a href="{{pathFor 'adminEventSummary' _id=this._id.toHexString}}">{{name}}</a></td>
       <td class="eventView">{{address}}</td>
       <td class="eventView">{{points}}</td>
       <td class="eventView">{{formatDate startDate}}</td>
