@@ -10,12 +10,12 @@ Template.addCustomerForm.events({
     var lastName = $('#lastName').val();
 
     var duplicateCustomer = Customers.findOne(
-      {firstName: firstName, 
+      {firstName: firstName,
        lastName: lastName
       });
 
     if(_.isUndefined(duplicateCustomer)) {
-      
+
       var attributes = {
         email: email,
         firstName: firstName,
@@ -24,7 +24,7 @@ Template.addCustomerForm.events({
       Meteor.call('createNewCustomer', attributes,
         function(error, customerId) {
         if (error) {
-          throwError(error.reason);
+          addErrorMessage(error.reason);
           Router.go('customers');
         }
 
@@ -34,8 +34,7 @@ Template.addCustomerForm.events({
         Session.set('searchQuery', "");
       });
     } else {
-      throwError("Duplicate Customer! Please enter a different name or use existing customer",
-          "alert-danger");
+      addErrorMessage("Duplicate Customer! Please enter a different name or use existing customer");
     }
   }
 });

@@ -3,7 +3,7 @@ var map;
 Template.communityNeeds.rendered = function() {
   var mapOptions = {
     center: new google.maps.LatLng(42.3581, -71.0636),
-    zoom: 15 
+    zoom: 15
   };
   map = new google.maps.Map(document.getElementById("map-canvas"),
     mapOptions);
@@ -12,7 +12,7 @@ Template.communityNeeds.rendered = function() {
   var geocoder = new google.maps.Geocoder();
 
   activeEvents.forEach(function (place) {
-    
+
     geocoder.geocode( { 'address': place.address}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         var marker = new google.maps.Marker({
@@ -21,8 +21,8 @@ Template.communityNeeds.rendered = function() {
           title: place.description
         });
       } else {
-        throwError('Geocode was not successful for the following reason ' +
-          status, "alert-danger");
+        addErrorMEssage('Geocode was not successful for the following reason ' +
+          status);
       }
     });
   });
