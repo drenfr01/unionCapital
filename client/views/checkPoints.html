@@ -5,7 +5,7 @@
     </div>
     <table class="table table-hover">
     <thead>
-      <tr> 
+      <tr>
         <th>Event Name</th>
         <th>Points</th>
         <th>Event Date</th>
@@ -14,8 +14,8 @@
     <tbody>
     {{#each activities}}
       <tr>
-        <td>{{activity}}</td>
-        <td>{{points}}</td>
+        <td>{{getEvent}}</td>
+        <td>{{getPoints}}</td>
         <td>{{formatDate transactionDate}} </td>
         <td class="text-right">
           <a href="#" class="btn btn-warning btn-xs">Dispute</a>
