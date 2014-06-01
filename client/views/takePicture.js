@@ -1,9 +1,14 @@
-function insertFiles(files, e, view) {
+var photoType = "userEvent";
+
+function insertFiles(files, e, type) {
     FS.Utility.eachFile(e, function(file) {
       var newFile = new FS.File(file);
       var currentDate = new Date();
-      newFile.metadata = {memberId: Member.userId(),
-        submissionTime: currentDate};
+      newFile.metadata = {
+        userId: Meteor.userId(),
+        type: type,
+        submissionTime: currentDate
+      };
       Images.insert(newFile, function(error, fileObj) {
         if(error) {
           addErrorMessage(error.reason);
@@ -12,11 +17,11 @@ function insertFiles(files, e, view) {
     });
 }
 
-function removeImages(view) {
-  //TODO: note that Minimongo doesn't yet support findAndModify, so
+function removeImages(type) {
+  //TODO: note that Minimongo doesn't yet support findAndModify, so 
   //we have to do this clunky approach
-  var image = Images.findOne({"metadata.view": view,
-    "metadata.customerId": Session.get('currentCustomer')},
+  var image = Images.findOne({"metadata.type": type, 
+    "metadata.userId": Meteor.userId()}, 
     {sort: {updatedAt: -1}, limit: 1});
 
     Images.remove(image._id);
@@ -28,21 +33,27 @@ function removeImages(view) {
     if(error) {
       addErrorMessage(error.reason);
     }
+    $('#userInput').val('');
+    Session.set('imageLoaded', false);
   });
 }
 
+Template.takePicture.rendered = function() {
+  Session.set('imageLoaded', false);
+};
+
 //TODO: this code needs to be DRY
 Template.takePicture.events({
-  'change #photoInputFront': function(e) {
-    e.preventDefault();
-
-    var files = e.target.files;
-    insertFiles(files, e, "Front");
+  'change #userInput': function(e) {
+    e.preventDefault(); 
+    
+    var files = e.target.files; 
+    Session.set('imageLoaded', true);
+    insertFiles(files, e, photoType);
   },
-  'click #removeFront': function(e) {
+  'click #removeUserInput': function(e) {
     e.preventDefault();
-
-    removeImages("Front");
+    removeImages(photoType);    
   },
   'click #reviewOrder': function(e) {
     e.preventDefault();
@@ -53,10 +64,13 @@ Template.takePicture.events({
 });
 
 Template.takePicture.helpers({
-  images: function(view) {
-    return Images.find({"metadata.view": view,
-      "metadata.customerId": Session.get('currentCustomer')},
+  images: function(type) {
+    return Images.find({"metadata.type": type, 
+      "metadata.userId": Meteor.userId()}, 
       {sort: {updatedAt: -1}, limit: 1});
+  },
+  imageLoaded: function() {
+    return Session.get('imageLoaded');
   }
 });
 

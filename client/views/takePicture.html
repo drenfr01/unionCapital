@@ -1,15 +1,19 @@
 <template name='takePicture'>
   <div class="text-center">
     <h3><small>Please submit picture</small></h3>
-    {{#each images "Front"}}
+    {{#each images "userEvent"}}
       <img src="{{url}}" alt="an Image" width="400" height="400">
     {{/each}}
     <form role="form">
       <div class="form-group">
-        <input  id="photoInputFront" class="center-block" type="file" accept="image/*" capture="camera"> 
+        <input  id="userInput" class="center-block" type="file" 
+          accept="image/*" capture="camera"> 
       </div>
     </form>
-    <button type="button" class="btn btn-large btn-danger" id="removeFront">Remove</button>
+    {{#if imageLoaded}}
+    <button type="button" class="btn btn-large btn-danger" 
+      id="removeUserInput">Remove</button>
+    {{/if}}
   </div>
   <hr>
   <div class="col-md-4 col-md-offset-4">
