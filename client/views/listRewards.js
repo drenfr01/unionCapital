@@ -1,6 +1,6 @@
 Template.listRewards.helpers({
   'rewards': function() {
-    return Rewards.find();
+    return Rewards.find().fetch();
   },
   'modalContext': function() {
     return Session.get('modalDataContext');
