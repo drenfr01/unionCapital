@@ -6,7 +6,7 @@ Template.listRewards.helpers({
     return Session.get('modalDataContext');
   },
   'editingDoc': function() {
-    return Events.findOne(Session.get('modalDataContext')._id);
+    return Rewards.findOne(Session.get('modalDataContext')._id);
   },
   'isRewardIndex': function() {
       return Session.get('rewardIndex');
