@@ -5,7 +5,9 @@ Template.alerts.helpers({
 });
 Template.alerts.rendered = function() {
   var alert = this.data;
-  Meteor.defer(function() {
-    Alerts.update(alert._id, {$set: {seen: true}});
-  });
+  if (alert) {
+    Meteor.defer(function() {
+      Alerts.update(alert._id, {$set: {seen: true}});
+    });
+  }
 };
