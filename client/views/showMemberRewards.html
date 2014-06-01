@@ -1,0 +1,15 @@
+<template name="showMemberRewards">
+  <h1 class="text-center">Rewards</h1>
+  <hr>
+  {{#each rewards }}
+    <div class="col-sm-4 panel panel-default">
+      <div class="panel-body">
+        <p>
+          <strong>Price:</strong>  {{price}}
+        </p>
+        <p>{{description}}</p>
+      </div>
+      <div class="panel-footer">{{name}}</div>
+    </div>
+  {{/each}}
+</template>
