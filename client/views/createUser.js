@@ -2,8 +2,6 @@ Template.createUser.events({
   'click #createNewUser': function(e) {
     e.preventDefault();
 
-    console.log('clicked');
-
     Accounts.createUser({
       email: $('#userEmail').val(),
       password: $('#userPassword').val(),
