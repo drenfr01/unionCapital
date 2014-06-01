@@ -33,7 +33,7 @@ Meteor.methods({
     return updateOrder(attributes.orderId,attributes.styleChoices);
    },
    removeImage: function(imageId) {
-    return removeSingleImage(imageId);
+    return Images.remove(imageId);
    },
    updateUserPoints: function(attributes) {
     return Meteor.users.update(attributes.userId, {$inc: { 'profile.points': attributes.points }});
