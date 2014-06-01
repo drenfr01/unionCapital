@@ -3,7 +3,7 @@ var map;
 Template.communityNeeds.rendered = function() {
   var mapOptions = {
     center: new google.maps.LatLng(42.3581, -71.0636),
-    zoom: 15 
+    zoom: 13 
   };
   map = new google.maps.Map(document.getElementById("map-canvas"),
     mapOptions);
