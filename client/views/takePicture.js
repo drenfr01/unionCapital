@@ -1,4 +1,6 @@
 var photoType = "userEvent";
+var imageId;
+var files;
 
 function insertFiles(files, e, type) {
     FS.Utility.eachFile(e, function(file) {
@@ -9,11 +11,11 @@ function insertFiles(files, e, type) {
         type: type,
         submissionTime: currentDate
       };
-      Images.insert(newFile, function(error, fileObj) {
+      imageId = Images.insert(newFile, function(error, fileObj) {
         if(error) {
           throwError(error.reason);
         }
-      });
+      })._id;
     });
 }
 
@@ -47,20 +49,41 @@ Template.takePicture.events({
   'change #userInput': function(e) {
     e.preventDefault(); 
     
-    var files = e.target.files; 
+    console.log('Event Below');
+    console.log(e);
+    files = e.target.files; 
+    $('#eventImage')
+      .attr('src', e.target.result)
+      .width(400)
+      .height(400); 
     Session.set('imageLoaded', true);
-    insertFiles(files, e, photoType);
+
+//    insertFiles(files, e, photoType);
   },
   'click #removeUserInput': function(e) {
     e.preventDefault();
   
     removeImages(photoType);    
   },
-  'click #reviewOrder': function(e) {
+  'click #submitEvent': function(e) {
     e.preventDefault();
 
-    Router.go('memberHomePage');
-    throwError("Photos successfully submitted", "alert-success");
+    var attributes = {
+      userId: Meteor.userId(),
+      imageId: imageId,
+      needsApproval: true,
+      pendingEventName: $('#eventName').val(),
+      pendingEventDescription: $('#eventDescription').val()
+    };
+
+    Meteor.call('insertTransaction', attributes, function(error) {
+      if(error) {
+        throwError(error.reason, 'alert-danger');
+        Router.go('takePicture'); 
+      }
+      throwError('Transaction successfully submitted', 'alert-success');
+      Router.go('memberHomePage');
+    }); 
   },
 });
 
