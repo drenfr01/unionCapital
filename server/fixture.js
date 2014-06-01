@@ -33,15 +33,17 @@ Meteor.startup(function () {
       {
         name: 'Cambridge Science Festival',
         address: '1 Kendall Sq',
+        url: 'http://example.com/CSF',
         description: 'A festival of science for everybody',
         active: 1,
-        startDate: new Date(),
-        endDate: new Date(),
+        startDate: new Date(2013,6,6),
+        endDate: new Date(2013,7,7),
         points: 50
       },
       {
         name: 'Somerville Cooking Festival',
         address: '189 Mass Ave',
+        url: 'http://example.com/SCF',
         description: 'A festival of cooking for the masses',
         active: 1,
         startDate: new Date(),
@@ -51,19 +53,21 @@ Meteor.startup(function () {
       {
         name: 'Boston Music Festival',
         address: '26 Vassar St',
+        url: 'http://example.com/BMF',
         description: 'Music festival; all styles - join us soon!',
         active: 1,
-        startDate: new Date(),
-        endDate: new Date(),
+        startDate: new Date(2013,6,6),
+        endDate: new Date(2013,8,8),
         points: 25
       },
       {
         name: 'Cambridge Film Festival',
         address: '18 Davis Sq',
+        url: 'http://example.com/CFF',
         description: 'Watch as many films as you can in just 3 days of mandness!',
         active: 1,
-        startDate: new Date(),
-        endDate: new Date(),
+        startDate: new Date(2013,7,7),
+        endDate: new Date(2013,8,8),
         points: 150
       }
     ];
@@ -72,6 +76,7 @@ Meteor.startup(function () {
       Events.insert({
         name: event.name,
         address: event.address,
+        url: event.url,
         description: event.description,
         active: event.active,
         startDate: event.startDate,
