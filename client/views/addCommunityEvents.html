@@ -1,19 +1,48 @@
 <template name="addCommunityEvents">
-  {{>listEvents}}
-  <button type="button" class="btn btn-lg btn-default text-center" id="addEvent">Add Event</button>
+  <!--Modal launched when Edit button below clicked -->
+  <div class="modal fade" id="addEventModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;</button>
+          <h4 class="modal-title text-center">Edit Events</h4>
+        </div>
+        <div class="modal-body">
+        {{#autoForm collection="Events" id="insertEventsForm" type="insert"}}
+          <fieldset>
+            <legend>Update Event</legend>
+            {{> afQuickField name="name"}}
+            {{> afQuickField name="address"}}
+            {{> afQuickField name="description"}}
+            {{> afQuickField name="active"}}
+            {{> afQuickField name="startDate"}}
+            {{> afQuickField name="endDate"}}
+            {{> afQuickField name="points"}}
+          </fieldset>
+          <button type="submit" class="btn btn-default" id="submit">Submit</button>
+        {{/autoForm}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  {{#unless showMapClicked}}
+    {{>listEvents}}
+    <div class="row text-center">
+      <button type="button" class="btn btn-lg btn-default text-center" 
+        id="addEvent" data-toggle="modal" data-target="#addEventModal">Add Event</button>
+      <button type="button" class="btn btn-lg btn-default text-center" id="showMap">
+        Show Events on Map</button>
+    </div>
+    <br><br>
+  {{/unless}}
   {{#if showMapClicked}}
-    <button type="button" class="btn btn-lg btn-danger text-center" id="hideMap">Hide Map</button>
-  {{else}}
-    <button type="button" class="btn btn-lg btn-default text-center" id="showMap">Show Map</button>
-  {{/if}}
-  <br><br>
-  {{#if addEventClicked}}
-  <div class="col-md-4 col-md-offset-4">
-    {{> quickForm collection="Events" id="insertEventsForm" type="insert"}}
-    <button type="button" class="btn btn-danger" id="cancelEvent">Cancel Event</button>
-  </div>
-  {{/if}}
-  {{#if showMapClicked}}
+    <div class="text-center row">
+      <button type="button" class="btn btn-danger text-center" id="hideMap">Hide Map</button>
+    </div>
     {{> communityNeeds }}
   {{/if}}
 </template>

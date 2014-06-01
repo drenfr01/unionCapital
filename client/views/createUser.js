@@ -2,8 +2,6 @@ Template.createUser.events({
   'click #createNewUser': function(e) {
     e.preventDefault();
 
-    console.log('clicked');
-
     Accounts.createUser({
       email: $('#userEmail').val(),
       password: $('#userPassword').val(),
@@ -16,9 +14,9 @@ Template.createUser.events({
       }
     }, function(error) {
       if(error) {
-        throwError(error.reason, 'alert-danger');
+        addErrorMessage(error.reason);
       }
-      throwError("Successfully Created User", 'alert-success');
+      addSuccessMessage("Successfully Created User");
       Router.go('memberHomePage');
     });
 

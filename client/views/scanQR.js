@@ -6,10 +6,10 @@ AutoForm.addHooks('insertTransactionForm', {
     }
   },
   onSuccess: function(){
-    throwError('Points Added!', 'alert-success');
-    Router.go('memberHomePage');
+    addSuccessMessage('Points Added!');
+    Router.go('checkPoints');
   },
   onError: function(operation, error, template) {
-    throwError(error.message, 'alert-danger');
+    addErrorMessage(error.message);
   },
 });

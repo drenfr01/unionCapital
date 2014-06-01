@@ -8,15 +8,15 @@ Template.review.events({
     e.preventDefault();
     //Grab user input
 
-    //the empty string "", undefined, and null are all falsy 
+    //the empty string "", undefined, and null are all falsy
     Meteor.call('sendEmail', Session.get('emailId'),
         function(error) {
           if(error) {
-            throwError(error.reason, "alert-danger");
+            addErrorMessage(error.reason);
             Router.go('landing');
           }
           Router.go('landing');
-          throwError("Order sent successfully", "alert-success");
+          addErrorMessage("Order sent successfully");
       });
   },
 });

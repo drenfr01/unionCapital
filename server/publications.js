@@ -12,7 +12,6 @@ Meteor.publish('images', function() {
 
 Meteor.publish('userData', function() {
   if (Roles.userIsInRole(this.userId, 'admin')) {
-    console.log(Meteor.users.find().fetch());
     return Meteor.users.find();
   } else {
     this.ready();
