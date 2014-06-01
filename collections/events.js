@@ -22,11 +22,18 @@ Events = new Meteor.Collection('events', {
                          type: Date,
                          label: 'Beginning of Event'
                        },
-            
             endDate: {
                        type: Date,
                        label: 'End of Event'
                      },
+            points: {
+                       type: Number,
+                       label: 'Amount of Points'
+                     },
+            url: {
+                       type: String,
+                       label: 'URL to the event'
+                     }
           }
 });
 

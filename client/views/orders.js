@@ -6,7 +6,7 @@ Template.orders.events({
   'click #reviewOrder': function(e) {
     e.preventDefault();
     targetEmail = $('#targetEmail').val();
-    
+
     //Note: this depends on below event adding the success class
     //to a table row
     if($('.success').length && targetEmail) {
@@ -27,17 +27,16 @@ Template.orders.events({
       Meteor.call('buildEmailForReview', attributes,
         function(error, emailId) {
           if(error) {
-            throwError(error.reason, "alert-danger");
+            addErrorMessage(error.reason);
             Router.go('order');
           }
           Session.set('emailId', emailId);
           Router.go('review');
-          throwError("Review this order", "alert-success");
+          addSuccessMessage("Review this order");
 
       });
     } else {
-      throwError("Please select an order and fill in an email address!", 
-          "alert-danger");
+      addErrorMessage("Please select an order and fill in an email address!");
     }
   },
 
@@ -58,10 +57,10 @@ Template.orders.events({
     orderIds = Session.get('expandedOrderIds');
     orderId = this._id;
     //Using an object here to mimic a set, don't want
-    //multiple clicks to add duplicate orderIds. 
+    //multiple clicks to add duplicate orderIds.
     if(orderId in orderIds) {
       delete orderIds[orderId];
-    } else { 
+    } else {
       orderIds[orderId] = true;
     }
     Session.set('expandedOrderIds', orderIds);
@@ -86,7 +85,7 @@ Template.orders.helpers({
     var html = "<table class='table table-hover'><tr class='info'><th>Measurement</th><th>Value</th></tr>";
     var order = Orders.findOne(orderId);
     _.each(order.measurements, function(value, key) {
-      html += '<tr><td>' + key + '</td><td>' + value + 
+      html += '<tr><td>' + key + '</td><td>' + value +
       '</td></tr>';
     });
     html += '</table>';
@@ -96,7 +95,7 @@ Template.orders.helpers({
     var html = "<table class='table table-hover'><tr class='info'><th>Style Category</th><th>Option</th></tr>";
     var order = Orders.findOne(orderId);
     _.each(order.styleChoices, function(value, key) {
-      html += '<tr><td>' + key + '</td><td>' + value + 
+      html += '<tr><td>' + key + '</td><td>' + value +
       '</td></tr>';
     });
     html += '</table>';

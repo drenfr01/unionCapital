@@ -1,7 +1,34 @@
 <template name="layout">
   <div class="container">
-    {{> errors}}
     <div id="main" class="row">
+      <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Home</a>
+          </div>
+          <div class="collapse navbar-collapse" id="bs-example-vabar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li><a href="{{pathFor 'scanQR'}}">Enter Event Code</a></li>
+              <li><a href="{{pathFor 'checkPoints'}}">View Your Points</a></li>
+              <li><a href="{{pathFor 'listEvents'}}">View Upcoming Events</a></li>
+              <li><a href="{{pathFor 'showMemberRewards'}}">View Rewards</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-left">
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              {{> loginButtons}}
+            </ul>
+          </div>
+        </div>
+      </nav>
+    {{> alerts}}
+
       {{> yield}}
     </div>
   </div>

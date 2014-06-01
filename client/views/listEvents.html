@@ -1,25 +1,99 @@
 <template name="listEvents">
+  {{#if isEventIndex}}
   <h1 class="text-center">Current and Upcoming Events</h1>
   <hr>
   <br>
+  <!--Modal launched when Edit button below clicked -->
+  {{#with modalContext}}
+  <div class="modal fade" id="editModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;</button>
+          <h4 class="modal-title text-center">Edit Events</h4>
+        </div>
+        <div class="modal-body">
+        {{#autoForm collection="Events" doc=editingDoc id="updateEventsForm" type="update"}}
+          <fieldset>
+            <legend>Update Event</legend>
+            {{> afQuickField name="name"}}
+            {{> afQuickField name="address"}}
+            {{> afQuickField name="url"}}
+            {{> afQuickField name="description"}}
+            {{> afQuickField name="active"}}
+            {{> afQuickField name="startDate"}}
+            {{> afQuickField name="endDate"}}
+            {{> afQuickField name="points"}}
+          </fieldset>
+          <button type="submit" class="btn btn-default" id="submit">Submit</button>
+        {{/autoForm}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  {{/with}}
   <table class="table table-hover">
     <thead>
-      <tr> 
+      <tr>
         <th> Name of Event </th>
         <th> Address </th>
-        <th>Start Date </th>
+        <th> URL </th>
+        <th> Points </th>
+        <th> Start Date </th>
         <th> End Date </th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
-    {{#each events}}
+    {{#each upcomingEvents}}
     <tr>
-      <td>{{name}}</td>
-      <td>{{address}}</td>
-      <td>{{formatDate startDate}}</td>
-      <td>{{formatDate endDate}}</td>
+      <td class="eventView">{{name}}</td>
+      <td class="eventView">{{address}}</td>
+      <td class="eventView">{{url}}</td>
+      <td class="eventView">{{points}}</td>
+      <td class="eventView">{{formatDate startDate}}</td>
+      <td class="eventView">{{formatDate endDate}}</td>
+      {{#if isInRole 'admin'}}
+       <td><button type="button" class="btn btn-default editEvent" data-toggle="modal"
+          data-target = "#editModal">Edit</button></td>
+      {{/if}}
     </tr>
     {{/each}}
     </tbody>
   </table>
+  {{else}}
+  		{{#with eventView}}
+  		<div class="container" style="margin:10px;">
+	  		<div class="row" style="margin-bottom:10px;">
+	  			<span class="col-md-12">
+		  			<span class="btn btn-info back">
+		  				<span class="glyphicon glyphicon-arrow-left"></span>
+		  				All Events
+		  			</span>
+		  		</span>
+	  		</div>
+	  		<div class="row" style="margin-bottom:10px;">
+	  			<span class="col-md-7">
+	  				<iframe
+					  width="500"
+					  height="450"
+					  frameborder="0" style="border:0"
+					  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA_ypBd-Tqf2AcLAoiEFLq9z-ZS4LXjAmY&q={{address}}">
+					</iframe>
+	  			</span>
+	  			<span class="col-md-5">
+	  				<h4>{{name}}</h4>
+	  				<p>{{address}}</p>
+            <p>{{url}}</p>
+	  				<p>{{points}}</p>
+	  				<p>{{formatDate startDate}}- {{formatDate endDate}}</p>
+	  			</span>
+	  		</div>
+  		</div>
+		{{/with}}
+  {{/if}}
 </template>

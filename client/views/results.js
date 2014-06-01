@@ -9,7 +9,8 @@ Template.results.helpers({
     if(!_.isUndefined(keyword) && !(keyword === "")){
       var query = new RegExp( keyword, 'i' );
       var results = Meteor.users.find({$or: [{'emails.address': query},
-                                            {'profile.name': query} ]
+                                            {'profile.firstName': query},
+                                            {'profile.lastName': query} ]
                                       }, {limit: 5});
       return results.fetch();
     }

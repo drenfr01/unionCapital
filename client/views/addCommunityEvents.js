@@ -1,5 +1,4 @@
 Template.addCommunityEvents.rendered = function() {
-  Session.set('addEventClicked', false);
   Session.set('showMap', false);
 };
 
@@ -13,17 +12,6 @@ Template.addCommunityEvents.helpers({
 });
 
 Template.addCommunityEvents.events({
-  'click #addEvent': function(e) {
-    e.preventDefault();
-    Session.set('addEventClicked', true);
-  },
-  'submit': function(e) {
-    Session.set('addEventClicked', false);
-  },
-  'click #cancelEvent': function(e) {
-    e.preventDefault();
-    Session.set('addEventClicked', false);
-  },
   'click #showMap': function(e) {
     e.preventDefault();
     Session.set('showMap', true);
