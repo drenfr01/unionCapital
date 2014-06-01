@@ -16,6 +16,9 @@ Template.listEvents.helpers({
   },
   'isAdmin': function() {
   		return false;
+  },
+  'upcomingEvents': function(){
+    return Events.find({endDate: {'$gte': new Date()}, active: 1}, {sort: {startDate: 1}});
   }
 });
 
@@ -26,13 +29,13 @@ Template.listEvents.events({
   'click .eventView': function(e) {
     Session.set('eventIndex', false);
     Session.set('event', this);
-  }, 
+  },
   'click .back': function(e) {
     Session.set('eventIndex', true);
     Session.set('event', null);
   }
 });
 
-Template.listEvents.rendered = function() {  
+Template.listEvents.rendered = function() {
   Session.set('eventIndex', true);
 };
