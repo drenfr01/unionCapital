@@ -7,7 +7,7 @@ AutoForm.addHooks('insertTransactionForm', {
   },
   onSuccess: function(){
     addSuccessMessage('Points Added!');
-    Router.go('memberHomePage');
+    Router.go('checkPoints');
   },
   onError: function(operation, error, template) {
     addErrorMessage(error.message);
