@@ -12,7 +12,7 @@ Rewards = new Meteor.Collection('rewards', {
                        type: Number,
                        label: 'Amount of Points this Reward Costs'
                      },
-            image: {
+            imageId: {
                       type: Number,
                       label: 'ID of image for reward',
                       optional: true
