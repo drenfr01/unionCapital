@@ -11,26 +11,24 @@ Template.listEvents.helpers({
   'isEventIndex': function() {
       return Session.get('eventIndex');
   },
-  'eventView': function() {
+  //Return event in session to be accessed by eventView template
+  'currentEvent': function() {
       return Session.get('event');
   },
-  'isAdmin': function() {
-  		return false;
-  }
 });
 
 Template.listEvents.events({
   'click .editEvent': function(e) {
-    Session.set('modalDataContext', this);
+   	Session.set('modalDataContext', this);
   },
-  'click .eventView': function(e) {
-    Session.set('eventIndex', false);
-    Session.set('event', this);
+  'click #submit': function(e) {
+  		$('#editModal').modal('hide');
   }, 
-  'click .back': function(e) {
-    Session.set('eventIndex', true);
-    Session.set('event', null);
-  }
+  //Set event in session to be accessed by event view
+  'click .to-view': function(e) {
+		Session.set('eventIndex', false);
+		Session.set('event', this);
+	},
 });
 
 Template.listEvents.rendered = function() {  

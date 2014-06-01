@@ -1,0 +1,28 @@
+<template name="eventView">
+	<div class="container" style="margin:10px;">
+  		<div class="row" style="margin-bottom:10px;">
+  			<span class="col-md-12">
+	  			<span class="btn btn-info back">
+	  				<span class="glyphicon glyphicon-arrow-left"></span>
+	  				All Events
+	  			</span>
+	  		</span>
+  		</div>
+  		<div class="row" style="margin-bottom:10px;">
+  			<span class="col-md-7">
+  				<iframe
+				  width="500"
+				  height="450"
+				  frameborder="0" style="border:0"
+				  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA_ypBd-Tqf2AcLAoiEFLq9z-ZS4LXjAmY&q={{address}}">
+				</iframe>
+  			</span>
+  			<span class="col-md-5">
+  				<h4>{{name}}</h4>
+  				<p>{{address}}</p>
+  				<p>{{points}}</p>
+  				<p>{{formatDate startDate}}- {{formatDate endDate}}</p>
+  			</span>
+  		</div>
+	</div>
+</template>

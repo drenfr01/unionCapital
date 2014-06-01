@@ -16,7 +16,6 @@
         <div class="modal-body">
         {{#autoForm collection="Events" doc=editingDoc id="updateEventsForm" type="update"}}
           <fieldset>
-            <legend>Update Event</legend>
             {{> afQuickField name="name"}}
             {{> afQuickField name="address"}}
             {{> afQuickField name="description"}}
@@ -25,11 +24,10 @@
             {{> afQuickField name="endDate"}}
             {{> afQuickField name="points"}}
           </fieldset>
-          <button type="submit" class="btn btn-default" id="submit">Submit</button>
+         <button type="submit" class="btn btn-info pull-right" id="submit">Submit</button>
+			<br>
+			<br>
         {{/autoForm}}
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -49,11 +47,11 @@
     <tbody>
     {{#each communityEvents}}
     <tr>
-      <td class="eventView">{{name}}</td>
-      <td class="eventView">{{address}}</td>
-      <td class="eventView">{{points}}</td>
-      <td class="eventView">{{formatDate startDate}}</td>
-      <td class="eventView">{{formatDate endDate}}</td>
+      <td class="to-view">{{name}}</td>
+      <td class="to-view">{{address}}</td>
+      <td class="to-view">{{points}}</td>
+      <td class="to-view">{{formatDate startDate}}</td>
+      <td class="to-view">{{formatDate endDate}}</td>
       {{#if isInRole 'admin'}}
       	<td><button type="button" class="btn btn-default editEvent" data-toggle="modal" 
           data-target = "#editModal">Edit</button></td>
@@ -63,33 +61,8 @@
     </tbody>
   </table>
   {{else}}
-  		{{#with eventView}}
-  		<div class="container" style="margin:10px;">
-	  		<div class="row" style="margin-bottom:10px;">
-	  			<span class="col-md-12">
-		  			<span class="btn btn-info back">
-		  				<span class="glyphicon glyphicon-arrow-left"></span>
-		  				All Events
-		  			</span>
-		  		</span>
-	  		</div>
-	  		<div class="row" style="margin-bottom:10px;">
-	  			<span class="col-md-7">
-	  				<iframe
-					  width="500"
-					  height="450"
-					  frameborder="0" style="border:0"
-					  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA_ypBd-Tqf2AcLAoiEFLq9z-ZS4LXjAmY&q={{address}}">
-					</iframe>
-	  			</span>
-	  			<span class="col-md-5">
-	  				<h4>{{name}}</h4>
-	  				<p>{{address}}</p>
-	  				<p>{{points}}</p>
-	  				<p>{{formatDate startDate}}- {{formatDate endDate}}</p>
-	  			</span>
-	  		</div>
-  		</div>
+  		{{#with currentEvent}}
+  			{{> eventView}}
 		{{/with}}
   {{/if}}
 </template>
