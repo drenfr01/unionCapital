@@ -14,6 +14,7 @@
             <legend>Update Event</legend>
             {{> afQuickField name="name"}}
             {{> afQuickField name="address"}}
+            {{> afQuickField name="url"}}
             {{> afQuickField name="description"}}
             {{> afQuickField name="active"}}
             {{> afQuickField name="startDate"}}
@@ -32,7 +33,7 @@
   {{#unless showMapClicked}}
     {{>listEvents}}
     <div class="row text-center">
-      <button type="button" class="btn btn-lg btn-default text-center" 
+      <button type="button" class="btn btn-lg btn-default text-center"
         id="addEvent" data-toggle="modal" data-target="#addEventModal">Add Event</button>
       <button type="button" class="btn btn-lg btn-default text-center" id="showMap">
         Show Events on Map</button>
