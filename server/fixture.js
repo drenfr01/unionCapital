@@ -5,20 +5,25 @@ Meteor.startup(function () {
   if ( Meteor.users.find().count() === 0 ) {
     var users = [
       {
-         email: "admin@gmail.com", username: "admin", password: "admin", name: "admin"
+         email: "admin@gmail.com", username: "admin", password: "admin",
+         name: "admin", roles:['admin']
       },
       {
-         email: "user@gmail.com", username: "user", password: "user", name: "user"
+         email: "user@gmail.com", username: "user", password: "user",
+         name: "user", roles:['user']
       }
     ];
 
     _.each(users, function(user){
-      Accounts.createUser({
+      var id = Accounts.createUser({
         email: user.email,
         password: user.password,
         profile: {username: user.username},
         profile: {name: user.name}
       });
+
+      Roles.addUsersToRoles(id, user.roles);
+
     });
   }
 
