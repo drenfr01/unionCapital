@@ -29,6 +29,10 @@ Events = new Meteor.Collection('events', {
             points: {
                        type: Number,
                        label: 'Amount of Points'
+                     },
+            url: {
+                       type: String,
+                       label: 'URL to the event'
                      }
           }
 });
