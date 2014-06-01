@@ -1,5 +1,5 @@
-Template.listEvents.helpers({
+Template.showMemberRewards.helpers({
   'rewards': function(){
-    return Rewards.find();
+    return Rewards.find().fetch();
   }
 })
