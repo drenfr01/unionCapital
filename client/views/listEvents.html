@@ -47,7 +47,7 @@
       </tr>
     </thead>
     <tbody>
-    {{#each communityEvents}}
+    {{#each upcomingEvents}}
     <tr>
       <td class="eventView"><a href="{{pathFor 'adminEventSummary' _id=this._id.toHexString}}">{{name}}</a></td>
       <td class="eventView">{{address}}</td>
@@ -55,7 +55,7 @@
       <td class="eventView">{{formatDate startDate}}</td>
       <td class="eventView">{{formatDate endDate}}</td>
       {{#if isInRole 'admin'}}
-      	<td><button type="button" class="btn btn-default editEvent" data-toggle="modal" 
+       <td><button type="button" class="btn btn-default editEvent" data-toggle="modal"
           data-target = "#editModal">Edit</button></td>
       {{/if}}
     </tr>

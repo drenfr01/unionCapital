@@ -23,3 +23,7 @@ Transactions.allow({
             return true;
           },
 });
+
+Transactions.eventFor = function(transaction) {
+  return Events.findOne({ _id: transaction.eventID });
+};
