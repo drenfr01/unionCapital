@@ -1,18 +1,27 @@
 <template name='takePicture'>
   <div class="text-center">
     <h3><small>Please submit picture</small></h3>
-    {{#each images "Front"}}
-      <img src="{{url}}" alt="an Image" width="400" height="400">
-    {{/each}}
+    <div class="input-group">
+      <input type="text" class="form-control" id="eventName" placeholder="Event Name">
+    </div>
+    <div class="input-group">
+      <input type="text" class="form-control" id="eventDescription" 
+        placeholder="Event Description">
+    </div>
+    <img id="eventImage" src="#" alt="an Image">
     <form role="form">
       <div class="form-group">
-        <input  id="photoInputFront" class="center-block" type="file" accept="image/*" capture="camera"> 
+        <input  id="userInput" class="center-block" type="file" 
+          accept="image/*" capture="camera"> 
       </div>
     </form>
-    <button type="button" class="btn btn-large btn-danger" id="removeFront">Remove</button>
+    {{#if imageLoaded}}
+    <button type="button" class="btn btn-large btn-danger" 
+      id="removeUserInput">Remove</button>
+    {{/if}}
   </div>
   <hr>
   <div class="col-md-4 col-md-offset-4">
-    <button class="btn btn-large btn-block btn-success" id="reviewOrder">Done</button>
+    <button class="btn btn-large btn-block btn-success" id="submitEvent">Done</button>
   </div>
 </template>

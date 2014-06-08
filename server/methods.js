@@ -33,9 +33,21 @@ Meteor.methods({
     return updateOrder(attributes.orderId,attributes.styleChoices);
    },
    removeImage: function(imageId) {
-    return removeSingleImage(imageId);
+    return Images.remove(imageId);
    },
    updateUserPoints: function(attributes) {
-    return Meteor.users.update(attributes.userId, {$inc: { 'profile.points': attributes.points }});
+     return Meteor.users.update(attributes.userId, {$inc: { 'profile.points': attributes.points }});
+   },
+   insertTransaction: function(attributes) {
+     check(attributes, {
+       userId: Match.Optional(String),
+       eventId: Match.Optional(String),
+       imageId: Match.Optional(String),
+       needsApproval: Match.Optional(Boolean),
+       pendingEventName: Match.Optional(String),
+       pendingEventDescription: Match.Optional(String)
+     });
+        
+     return Transactions.insert(attributes);
    }
 });

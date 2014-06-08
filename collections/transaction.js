@@ -7,8 +7,29 @@ Transactions = new Meteor.Collection('transactions', {
              },
      eventID: {
                type: String,
-               label: 'ID of related Event'
-               }
+               label: 'ID of related Event',
+               optional: true
+               },
+     imageId: {
+                type: String,
+                label: 'Image Id',
+                optional: true
+              },
+     needsApproval: {
+                      type: Boolean,
+                      label: 'Needs Approval?',
+                      optional: true
+                    },
+     pendingEventName: {
+                        type: String,
+                        label: 'Event Name',
+                        optional: true
+          },
+     pendingEventDescription: {
+                                type: String,
+                                label: 'Event Description',
+                                optional: true
+                              }
           }
 });
 
