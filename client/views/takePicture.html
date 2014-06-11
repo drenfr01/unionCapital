@@ -8,7 +8,9 @@
       <input type="text" class="form-control" id="eventDescription" 
         placeholder="Event Description">
     </div>
+    {{#if imageLoaded}}
     <img id="eventImage" src="#" alt="an Image">
+    {{/if}}
     <form role="form">
       <div class="form-group">
         <input  id="userInput" class="center-block" type="file" 

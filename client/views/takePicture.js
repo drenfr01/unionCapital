@@ -48,17 +48,14 @@ Template.takePicture.rendered = function() {
 Template.takePicture.events({
   'change #userInput': function(e) {
     e.preventDefault(); 
-    
-    console.log('Event Below');
-    console.log(e);
+
     files = e.target.files; 
-    $('#eventImage')
-      .attr('src', e.target.result)
-      .width(400)
-      .height(400); 
+    //TODO: get Jquery preview working
+    //$('#eventImage').attr('src', e.target.value).width(400).height(400); 
+
     Session.set('imageLoaded', true);
 
-//    insertFiles(files, e, photoType);
+    insertFiles(files, e, photoType);
   },
   'click #removeUserInput': function(e) {
     e.preventDefault();
