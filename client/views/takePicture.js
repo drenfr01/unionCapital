@@ -77,10 +77,10 @@ Template.takePicture.events({
 
     Meteor.call('insertTransaction', attributes, function(error) {
       if(error) {
-        throwError(error.reason, 'alert-danger');
+        addErrorMessage(error.reason);
         Router.go('takePicture'); 
       }
-      throwError('Transaction successfully submitted', 'alert-success');
+      addErrorMessage('Transaction successfully submitted');
       Router.go('memberHomePage');
     }); 
   },
