@@ -1,36 +1,39 @@
 //TODO: this is all copy and pasted code from memberProfiles
 //should abstract this to a single "search members" template
 Template.reviewPhotos.rendered = function() {
-  $('#memberSearch').focus();
-  Session.set("memberProfileSelected", false);
-  Session.set('selectedMemberId', false);
 };
 
-Template.memberProfiles.helpers({  
-  'currentMemberName': function() {
-    memberId =  Session.get('currentMember');
-
-    if(!_.isUndefined(memberId)) {
-      return Meteor.users.findOne({_id: memberId}).fullName;
-    }
-    return '';
+Template.reviewPhotos.helpers({  
+  'pendingTransaction': function() {
+  return Transactions.find( { needsApproval: true});
   },
-  'member': function() {
-    return Meteor.users.findOne(Session.get('selectedMemberId'));
+  'modalData': function() {
+    return Session.get('modalDataContext');
+  },
+  'imageUrl': function(imageId) {
+    return Images.findOne(imageId).url();
   }
 });
 
-Template.memberProfiles.events({
-  'keyup #memberSearch': function(e) {
-    Session.set("searchQuery", e.currentTarget.value);
+Template.reviewPhotos.events({
+  'click .showImage': function(e) {
+    Session.set('modalDataContext', this);
   },
-  'click #addMember': function(e) {
+  'click .rejectEvent': function(e) {
     e.preventDefault();
-    prevValue = Session.get('memberButtonClicked');
-    Session.set("memberButtonClicked",!prevValue);
+
+    var attributes = {
+      imageId: this.imageId,
+      transactionId: this._id 
+    };
+
+    Meteor.call('rejectTransaction', attributes, function(error) {
+      if(error) {
+        addErrorMessage(error.reason);
+      }
+      Router.go('reviewPhotos');
+    });
   },
-  'click .memberNames': function(e) {
-    Session.set('currentMember', this._id);
-  }
+
 });
 

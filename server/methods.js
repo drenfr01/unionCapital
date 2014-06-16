@@ -45,9 +45,21 @@ Meteor.methods({
        imageId: Match.Optional(String),
        needsApproval: Match.Optional(Boolean),
        pendingEventName: Match.Optional(String),
-       pendingEventDescription: Match.Optional(String)
+       pendingEventDescription: Match.Optional(String),
+       transactionDate: Match.Optional(String) 
      });
         
      return Transactions.insert(attributes);
+   },
+   //Note: we don't want to permanently remove any data
+   //so we leave the images intact and just change the flag to false
+   rejectTransaction: function(attributes) {
+    check(attributes, {
+      imageId: String,
+      transactionId: String
+    });
+    removeTransaction(attributes.transactionId);
+    //TODO: mark images as logically deleted
    }
+
 });

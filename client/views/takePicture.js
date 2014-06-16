@@ -69,7 +69,8 @@ Template.takePicture.events({
       imageId: imageId,
       needsApproval: true,
       pendingEventName: $('#eventName').val(),
-      pendingEventDescription: $('#eventDescription').val()
+      pendingEventDescription: $('#eventDescription').val(),
+      transactionDate: $('#eventDate').val()
     };
 
     Meteor.call('insertTransaction', attributes, function(error) {
@@ -77,7 +78,7 @@ Template.takePicture.events({
         addErrorMessage(error.reason);
         Router.go('takePicture'); 
       }
-      addErrorMessage('Transaction successfully submitted');
+      addSuccessMessage('Transaction successfully submitted');
       Router.go('memberHomePage');
     }); 
   },

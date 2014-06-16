@@ -6,7 +6,7 @@ function getEvent(transaction){
 
 Template.checkPoints.helpers({
   activities: function() {
-    return Meteor.users.transactionsFor(Meteor.userId());
+    return Meteor.users.transactionsFor(Meteor.userId(), false);
   },
   eventName: function(){
     return getEvent(this).name;

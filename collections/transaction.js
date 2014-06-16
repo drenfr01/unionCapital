@@ -15,10 +15,10 @@ Transactions = new Meteor.Collection('transactions', {
                 label: 'Image Id',
                 optional: true
               },
+     //Manually set this to false for QR code submissions
      needsApproval: {
                       type: Boolean,
-                      label: 'Needs Approval?',
-                      optional: true
+                      label: 'Needs Approval'
                     },
      pendingEventName: {
                         type: String,
@@ -29,8 +29,13 @@ Transactions = new Meteor.Collection('transactions', {
                                 type: String,
                                 label: 'Event Description',
                                 optional: true
-                              }
-          }
+                              },
+     transactionDate: {
+                       type: String,
+                       label: 'Transaction Date',
+                       optional: true
+         }
+    }
 });
 
 Transactions.allow({
