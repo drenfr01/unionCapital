@@ -1,5 +1,6 @@
 html { height: 100% }
 body { height: 100%; margin: 0; padding: 0 }
+
 #map-canvas { 
   width: 100%;
   /* have to either give pixel value or set all container columns to 100% */
@@ -10,4 +11,10 @@ body { height: 100%; margin: 0; padding: 0 }
   display: inline-block !important;
   vertical-align: middle !important;
   float: none !important;
+}
+
+.nav{
+	background-color: #bddc6f;
+
+
 }
