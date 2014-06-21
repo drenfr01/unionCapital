@@ -39,6 +39,21 @@ Template.reviewPhotos.events({
       Router.go('reviewPhotos');
     });
   },
+  'click .approveEvent': function(e) {
+    e.preventDefault();
+
+    var attributes = {
+      imageId: this.imageId,
+      transactionId: this._id
+    };
+
+    Meteor.call('approveTransaction', attributes, function(error) {
+      if(error) {
+        addErrorMessage(error.reason);
+      }
+      addSuccessMessage('Event submission approved');
+    });
+  }
 
 });
 
