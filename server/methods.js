@@ -36,11 +36,17 @@ Meteor.methods({
    approveTransaction: function(attributes) {
      check(attributes, {
        transactionId: String,
+       userId: String,
+       imageId: String,
+       eventName: String,
+       eventAddress: String,
+       eventDescription: String,
+       eventDate: Date,
        points: Number
      });
      
-     insertEvent(attributes);
-     Transactions.update(attributes.transactionId, {$set: {needsApproval: false} });
-   }
-
+     var eventId = insertEvent(attributes);
+     console.log(eventId);
+     Transactions.update(attributes.transactionId, 
+         {$set: { needsApproval: false, eventId: eventId} }); }
 });

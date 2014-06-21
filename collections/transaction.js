@@ -5,7 +5,7 @@ Transactions = new Meteor.Collection('transactions', {
                label: 'User Identifier',
                optional: true
              },
-     eventID: {
+     eventId: {
                type: String,
                label: 'ID of related Event',
                optional: true
@@ -51,5 +51,5 @@ Transactions.allow({
 });
 
 Transactions.eventFor = function(transaction) {
-  return Events.findOne({ _id: transaction.eventID });
+  return Events.findOne({ _id: transaction.eventId });
 };

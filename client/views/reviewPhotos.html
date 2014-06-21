@@ -18,6 +18,27 @@
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
   {{/with}}
+  {{#with approvalModalData}}
+    <div class="modal fade" id="showApprovalModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+              &times;</button>
+            <h4 class="modal-title text-center">{{pendingEventName}}</h4>
+          </div>
+          <div class="modal-body text-center">
+            <input type="number" class="form-control" 
+              id="pointsInput" placeholder="Enter Points">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" 
+              id="sendApproval" data-dismiss="modal">Approve</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+  {{/with}}
   <div class='row'>
     <h1>List of Pending Transactions</h1>
     <h3 class="text-center">Number of Pending Transactions {{ totalPendingTransactions }}</h3>
@@ -46,7 +67,10 @@
             Show Image</button>
         </td>
         <td>
-          <button type="button" class="btn btn-success btn-xs approveEvent">Approve</button>
+          <button type="button" class="btn btn-success btn-xs approveEvent"
+            data-toggle="modal" data-target="#showApprovalModal">
+            Approve
+          </button>
         </td>
         <td>
           <button type="button" class="btn btn-danger btn-xs rejectEvent">Reject</button>
