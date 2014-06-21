@@ -15,6 +15,13 @@
         <th>Event Date</th>
       </tr>
     </thead>
+    <tfoot>
+    <tr>
+      <td colspan="0">Total Points: </td>
+      <td>{{totalPoints}}</td>
+      <td></td>
+    </tr>
+    </tfoot>
     <tbody>
     {{#each activities}}
       <tr>
@@ -29,8 +36,8 @@
       <h3>No points accrued yet!</h3>
     {{/each}}
     </tbody>
+
   </table>
-  <div class="ptcounter">Total Points: {{totalPoints}}</div>
 </div>
 
 </template>
