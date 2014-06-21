@@ -53,12 +53,16 @@ Template.takePicture.events({
     //TODO: get Jquery preview working
     //$('#eventImage').attr('src', e.target.value).width(400).height(400); 
 
+    console.log("File Name: " + e.target.files[0].name);
+
+    $('#fileName').attr("placeholder", e.target.files[0].name);
     Session.set('imageLoaded', true);
 
     insertFiles(files, e, photoType);
   },
   'click #removeUserInput': function(e) {
     e.preventDefault();
+    $('#fileName').attr("placeholder", "");
     removeImages(photoType);    
   },
   'click #submitEvent': function(e) {
