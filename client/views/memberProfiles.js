@@ -15,11 +15,19 @@ Template.memberProfiles.helpers({
   },
   'member': function() {
     return Meteor.users.findOne(Session.get('selectedMemberId'));
+  },
+  'transactions': function() {
+    return Meteor.users.transactionsFor(Session.get('selectedMemberId'), true);
+  },
+  'imageOf': function(imageId) {
+    console.log(imageId);
+    return Images.findOne(imageId).url();
   }
 });
 
 Template.memberProfiles.events({
   'keyup #memberSearch': function(e) {
+    console.log(e.currentTarget.value);
     Session.set("searchQuery", e.currentTarget.value);
   },
   'click #addMember': function(e) {

@@ -1,6 +1,8 @@
 Template.memberHomePage.helpers({
   'currentMemberName': function() {
-    return Meteor.user().profile.name;
+    if(Meteor.user()) {
+      return Meteor.user().profile.firstName;
+    }
   }
 });
 Template.memberHomePage.events({

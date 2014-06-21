@@ -1,41 +1,52 @@
 Meteor.methods({
-  createNewCustomer: function(attributes) {
-    return addCustomer(attributes.firstName, attributes.lastName, attributes.email);
-  },
-
-  addMeasurements: function(attributes) {
-    customerId = attributes.customerId;
-    addMeasurementsToCustomer(customerId, attributes.measurements);
-  },
-
-  sendEmail: function(emailId) {
-    // TODO: redo the check...
-    //check([to, from, subject, text], [String]);
-
-    //Throw error if fields are null
-
-    //Let other method calls from same client start
-    //running without waiting for email sending to
-    //complete
-
-
-    var email = Emails.findOne(emailId);
-    Email.send(email);
-   },
-   buildEmailForReview: function(attributes) {
-    return buildEmail(attributes.targetEmail, attributes.fromEmail, attributes.customerId, attributes.toBeOrderedArray);
-
-  },
-   createNewOrder: function(customerId) {
-    return addOrder(customerId);
-   },
-   updateCurrentOrder: function(attributes) {
-    return updateOrder(attributes.orderId,attributes.styleChoices);
-   },
    removeImage: function(imageId) {
-    return removeSingleImage(imageId);
+    return Images.remove(imageId);
    },
    updateUserPoints: function(attributes) {
-    return Meteor.users.update(attributes.userId, {$inc: { 'profile.points': attributes.points }});
-   }
+     return Meteor.users.update(attributes.userId, {$inc: { 'profile.points': attributes.points }});
+   },
+   insertTransaction: function(attributes) {
+     check(attributes, {
+       userId: Match.Optional(String),
+       eventId: Match.Optional(String),
+       imageId: Match.Optional(String),
+       needsApproval: Match.Optional(Boolean),
+       pendingEventName: Match.Optional(String),
+       pendingEventDescription: Match.Optional(String),
+       transactionDate: Match.Optional(String) 
+     });
+        
+     return Transactions.insert(attributes);
+   },
+   insertEvents: function(attributes) {
+     check(attributes, {
+       point: Number
+     });
+   },
+   //Note: we don't want to permanently remove any data
+   //so we leave the images intact and just change the flag to false
+   rejectTransaction: function(attributes) {
+    check(attributes, {
+      imageId: String,
+      transactionId: String
+    });
+    removeTransaction(attributes.transactionId);
+    //TODO: mark images as logically deleted
+   },
+   approveTransaction: function(attributes) {
+     check(attributes, {
+       transactionId: String,
+       userId: String,
+       imageId: String,
+       eventName: String,
+       eventAddress: String,
+       eventDescription: String,
+       eventDate: Date,
+       points: Number
+     });
+     
+     var eventId = insertEvent(attributes);
+     console.log(eventId);
+     Transactions.update(attributes.transactionId, 
+         {$set: { needsApproval: false, eventId: eventId} }); }
 });

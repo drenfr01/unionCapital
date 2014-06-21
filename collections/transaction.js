@@ -5,11 +5,37 @@ Transactions = new Meteor.Collection('transactions', {
                label: 'User Identifier',
                optional: true
              },
-     eventID: {
+     eventId: {
                type: String,
-               label: 'ID of related Event'
-               }
-          }
+               label: 'ID of related Event',
+               optional: true
+               },
+     imageId: {
+                type: String,
+                label: 'Image Id',
+                optional: true
+              },
+     //Manually set this to false for QR code submissions
+     needsApproval: {
+                      type: Boolean,
+                      label: 'Needs Approval'
+                    },
+     pendingEventName: {
+                        type: String,
+                        label: 'Event Name',
+                        optional: true
+          },
+     pendingEventDescription: {
+                                type: String,
+                                label: 'Event Description',
+                                optional: true
+                              },
+     transactionDate: {
+                       type: String,
+                       label: 'Transaction Date',
+                       optional: true
+         }
+    }
 });
 
 Transactions.allow({
@@ -25,5 +51,5 @@ Transactions.allow({
 });
 
 Transactions.eventFor = function(transaction) {
-  return Events.findOne({ _id: transaction.eventID });
+  return Events.findOne({ _id: transaction.eventId });
 };

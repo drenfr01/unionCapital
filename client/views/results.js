@@ -10,7 +10,8 @@ Template.results.helpers({
       var query = new RegExp( keyword, 'i' );
       var results = Meteor.users.find({$or: [{'emails.address': query},
                                             {'profile.firstName': query},
-                                            {'profile.lastName': query} ]
+                                            {'profile.lastName': query} ],
+                                       'profile.firstName': {$exists: true}
                                       }, {limit: 5});
       return results.fetch();
     }
