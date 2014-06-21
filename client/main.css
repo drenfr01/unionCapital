@@ -15,6 +15,38 @@ body { height: 100%; margin: 0; padding: 0 }
 
 .nav{
 	background-color: #bddc6f;
+}
 
+.pointstotal {
+	font-size: 30;
+}
 
+h1 small {
+	color:  #255f8a;
+}
+
+.pointstable {
+	width: 50%;
+	margin: auto;
+
+}
+
+caption .pointstable {
+	background-color: #f0f0f0;
+}
+
+.ptheader {
+	width: 100%; 
+	background-color: #f0f0f0; 
+	padding:12px;
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+.ptcounter {
+	width: 100%; 
+	background-color: #f0f0f0; 
+	padding:12px;
+	font-size: 1.5em;
+	font-weight: bold;
 }
