@@ -32,7 +32,8 @@ Events = new Meteor.Collection('events', {
                      },
             url: {
                        type: String,
-                       label: 'URL to the event'
+                       label: 'URL to the event',
+                       optional: true
                      }
           }
 });

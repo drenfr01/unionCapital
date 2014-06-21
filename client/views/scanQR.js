@@ -2,6 +2,7 @@ AutoForm.addHooks('insertTransactionForm', {
   before: {
     insert: function(transaction) {
       transaction.userId = Meteor.userId();
+      transaction.needsApproval = false; //false means it will show up on checkPoints
       return transaction;
     }
   },

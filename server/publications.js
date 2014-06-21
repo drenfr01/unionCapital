@@ -20,5 +20,4 @@ Meteor.publish('userData', function() {
   } else {
     this.ready();
   }
-
 });

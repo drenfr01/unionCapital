@@ -1,5 +1,3 @@
-//TODO: this is all copy and pasted code from memberProfiles
-//should abstract this to a single "search members" template
 Template.reviewPhotos.rendered = function() {
 };
 
@@ -10,8 +8,20 @@ Template.reviewPhotos.helpers({
   'modalData': function() {
     return Session.get('modalDataContext');
   },
+  'approvalModalData': function() {
+    return Session.get('approvalModalDataContext');
+  },
   'imageUrl': function(imageId) {
-    return Images.findOne(imageId).url();
+    if(Images.findOne(imageId)) {
+      return Images.findOne(imageId).url();
+    }
+  },
+  'userName': function(userId) {
+    //Handling delay in loading collections
+    if(Meteor.users.findOne(userId)) {
+      var user = Meteor.users.findOne(userId);
+      return user.profile.firstName + " " + user.profile.lastName;
+    }
   }
 });
 
@@ -34,6 +44,29 @@ Template.reviewPhotos.events({
       Router.go('reviewPhotos');
     });
   },
+  'click .approveEvent': function(e) {
+    Session.set('approvalModalDataContext', this);
+  },
+  'click #sendApproval': function(e) {
+
+    var attributes = {
+      transactionId: this._id,
+      userId: this.userId,
+      imageId: this.imageId,
+      eventName: this.pendingEventName,
+      eventAddress: "temporary",
+      eventDescription: this.pendingEventDescription,
+      eventDate: new Date(this.transactionDate),
+      points: parseInt($("#pointsInput").val())
+    };
+
+    Meteor.call('approveTransaction', attributes, function(error) {
+      if(error) {
+        addErrorMessage(error.reason);
+      }
+      addSuccessMessage('Event submission approved');
+    });
+  }
 
 });
 
