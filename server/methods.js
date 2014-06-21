@@ -18,6 +18,11 @@ Meteor.methods({
         
      return Transactions.insert(attributes);
    },
+   insertEvents: function(attributes) {
+     check(attributes, {
+       point: Number
+     });
+   },
    //Note: we don't want to permanently remove any data
    //so we leave the images intact and just change the flag to false
    rejectTransaction: function(attributes) {

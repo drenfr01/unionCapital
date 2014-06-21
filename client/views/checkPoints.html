@@ -1,15 +1,18 @@
 <template name="checkPoints">
   <div class="text-center">
-    <h1><small>Activity History</small></h1>
+    <h1><small>Your Activity History</small></h1>
     <hr>
     </div>
-    <table class="table table-hover">
+
+      <div class="pointstable">
+    <div class="ptheader">Your UCB Log</div>
+    <table class="table table-striped">
+<!--      <caption>Your UCB Activities</caption> -->
     <thead>
       <tr>
         <th>Event Name</th>
         <th>Points</th>
-        <th>Event Start Date</th>
-        <th>Event End Date</th>
+        <th>Event Date</th>
       </tr>
     </thead>
     <tbody>
@@ -18,15 +21,16 @@
         <td>{{eventName}}</td>
         <td>{{eventPoints}}</td>
         <td>{{formatDate eventStart}} </td>
-        <td>{{formatDate eventEnd}} </td>
-        <td class="text-right">
-          <a href="#" class="btn btn-warning btn-xs">Feedback</a>
-        </td>
+        <!-- <td class="text-right">
+         <a href="#" class="btn btn-warning btn-xs">Feedback</a> 
+        </td>  -->
       </tr>
     {{else}}
-      <h3>No points accrued yet</h3>
+      <h3>No points accrued yet!</h3>
     {{/each}}
     </tbody>
   </table>
-  <h3 class="text-center">Total Points: {{totalPoints}}</h3>
+  <div class="ptcounter">Total Points: {{totalPoints}}</div>
+</div>
+
 </template>

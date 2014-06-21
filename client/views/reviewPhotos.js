@@ -60,7 +60,6 @@ Template.reviewPhotos.events({
       points: parseInt($("#pointsInput").val())
     };
 
-    console.log(attributes);
     Meteor.call('approveTransaction', attributes, function(error) {
       if(error) {
         addErrorMessage(error.reason);
