@@ -22,11 +22,13 @@
       </span>
       <input id="fileName" type="text" class="form-control"
         placeholder="" readonly>
+      {{#if imageLoaded}}
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-large btn-danger" 
+            id="removeUserInput">Remove</button>
+        </span>
+      {{/if}}
     </div>
-    {{#if imageLoaded}}
-    <button type="button" class="btn btn-large btn-danger" 
-      id="removeUserInput">Remove</button>
-    {{/if}}
   <hr>
     <button class="btn btn-large btn-block btn-success" id="submitEvent">Done</button>
   </div>
