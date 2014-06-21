@@ -1,37 +1,4 @@
 Meteor.methods({
-  createNewCustomer: function(attributes) {
-    return addCustomer(attributes.firstName, attributes.lastName, attributes.email);
-  },
-
-  addMeasurements: function(attributes) {
-    customerId = attributes.customerId;
-    addMeasurementsToCustomer(customerId, attributes.measurements);
-  },
-
-  sendEmail: function(emailId) {
-    // TODO: redo the check...
-    //check([to, from, subject, text], [String]);
-
-    //Throw error if fields are null
-
-    //Let other method calls from same client start
-    //running without waiting for email sending to
-    //complete
-
-
-    var email = Emails.findOne(emailId);
-    Email.send(email);
-   },
-   buildEmailForReview: function(attributes) {
-    return buildEmail(attributes.targetEmail, attributes.fromEmail, attributes.customerId, attributes.toBeOrderedArray);
-
-  },
-   createNewOrder: function(customerId) {
-    return addOrder(customerId);
-   },
-   updateCurrentOrder: function(attributes) {
-    return updateOrder(attributes.orderId,attributes.styleChoices);
-   },
    removeImage: function(imageId) {
     return Images.remove(imageId);
    },
@@ -51,6 +18,11 @@ Meteor.methods({
         
      return Transactions.insert(attributes);
    },
+   insertEvents: function(attributes) {
+     check(attributes, {
+       point: Number
+     });
+   },
    //Note: we don't want to permanently remove any data
    //so we leave the images intact and just change the flag to false
    rejectTransaction: function(attributes) {
@@ -60,6 +32,15 @@ Meteor.methods({
     });
     removeTransaction(attributes.transactionId);
     //TODO: mark images as logically deleted
+   },
+   approveTransaction: function(attributes) {
+     check(attributes, {
+       transactionId: String,
+       points: Number
+     });
+     
+     insertEvent(attributes);
+     Transactions.update(attributes.transactionId, {$set: {needsApproval: false} });
    }
 
 });

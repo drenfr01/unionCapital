@@ -1,5 +1,3 @@
-//TODO: this is all copy and pasted code from memberProfiles
-//should abstract this to a single "search members" template
 Template.reviewPhotos.rendered = function() {
 };
 
@@ -12,6 +10,13 @@ Template.reviewPhotos.helpers({
   },
   'imageUrl': function(imageId) {
     return Images.findOne(imageId).url();
+  },
+  'userName': function(userId) {
+    console.log(Meteor.user());
+    console.log(Meteor.users.find().fetch());
+    var user = Meteor.users.findOne(userId);
+    console.log(user);
+    return user.profile.firstName + " " + user.profile.lastName;
   }
 });
 
@@ -34,6 +39,21 @@ Template.reviewPhotos.events({
       Router.go('reviewPhotos');
     });
   },
+  'click .approveEvent': function(e) {
+    e.preventDefault();
+
+    var attributes = {
+      imageId: this.imageId,
+      transactionId: this._id
+    };
+
+    Meteor.call('approveTransaction', attributes, function(error) {
+      if(error) {
+        addErrorMessage(error.reason);
+      }
+      addSuccessMessage('Event submission approved');
+    });
+  }
 
 });
 
