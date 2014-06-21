@@ -24,6 +24,7 @@
     <table class="table table-hover">
     <thead>
       <tr>
+        <th>User Name</th>
         <th>Event Name</th>
         <th>Event Description</th>
         <th>Event Date</th>
@@ -35,6 +36,7 @@
     <tbody>
     {{#each pendingTransaction}}
       <tr>
+        <td>{{userName userId}}</td>
         <td>{{pendingEventName}}</td>
         <td>{{pendingEventDescription}}</td>
         <td>{{formatDate transactionDate}} </td>
