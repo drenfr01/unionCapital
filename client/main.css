@@ -1,5 +1,9 @@
 html { height: 100% }
-body { height: 100%; margin: 0; padding: 0 }
+body { height: 100%; 
+		margin: 0; 
+		padding: 0;
+         
+		 }
 
 #map-canvas { 
   width: 100%;
@@ -19,9 +23,37 @@ body { height: 100%; margin: 0; padding: 0 }
   overflow: hidden;
 }
 
-.nav{
+.navbar-default{
 	background-color: #bddc6f;
+	color: #255f8a !important;
+	border: 0px;
+
 }
+
+#logo-home{
+	float:left;
+	margin-top: 5px;
+	margin-right: 7px;
+}
+
+.navbar-toggle {
+
+	background-color: #f8f8f8 !important;
+	border-color: #dddddd !important;
+
+}
+
+.navbar-toggle .icon-bar{
+ 	background-color: #979797 !important;
+
+}
+
+
+.navbar-brand , .navbar-default .navbar-nav > li > a {
+		color: #255f8a !important;
+
+}
+
 
 .pointstotal {
 	font-size: 30;
@@ -51,6 +83,17 @@ caption .pointstable {
 	padding:12px;
 	font-size: 1.2em;
 	font-weight: bold;
+}
+
+.navbar-default .navbar-nav > li > a:hover {
+    background-color: #75c2e7;
+    color: white !important;
+}
+
+
+.navbar-default .navbar-nav > li > a:active {
+    background-color: #75c2e7;
+    color: white !important;
 }
 
 .ptcounter {

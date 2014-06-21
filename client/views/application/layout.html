@@ -1,8 +1,11 @@
 <template name="layout">
   <div class="container">
     <div id="main" class="row">
-      <nav class="navbar navbar-default" role="navigation">
+     <!-- <nav class="navbar navbar-default" role="navigation">-->
+
+     <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
+          
           <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
               <span class="sr-only">Toggle navigation</span>
@@ -10,10 +13,15 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Home</a>
+           
+            <div id="logo-home"> <img src="images/ucb-small-logo.png" alt="UCB Logo"> </div>
+
+            <a class="navbar-brand" href="/"> Home</a>
           </div>
+
+
           <div class="collapse navbar-collapse" id="bs-example-vabar-collapse-1">
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav nav nav-pills">
               <li><a href="{{pathFor 'scanQR'}}">Log Event</a></li>
               <li><a href="{{pathFor 'checkPoints'}}">Your Points</a></li>
               <li><a href="{{pathFor 'listEvents'}}">Upcoming Events</a></li>
