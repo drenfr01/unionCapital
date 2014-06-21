@@ -31,6 +31,10 @@ h1 small {
 	color:  #255f8a;
 }
 
+h3 small {
+  color: #255f8a;
+}
+
 .pointstable {
 	width: 50%;
 	margin: auto;
@@ -57,6 +61,13 @@ caption .pointstable {
 	font-weight: bold;
 }
 
+tfoot tr {
+  background-color: #f0f0f0; 
+  padding:12px;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
 .btn-file input[type=file] {
   position: absolute;
   top: 0;
@@ -73,3 +84,6 @@ caption .pointstable {
   display: block;
 }
 
+legend {
+  color: #255f8a;
+}
