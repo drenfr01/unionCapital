@@ -1,9 +1,32 @@
+/*general styling */
+
+
 html { height: 100% }
 body { height: 100%; 
 		margin: 0; 
 		padding: 0;
          
 		 }
+
+
+
+button{
+  background-color: #255f8a !important;
+  color: #e5e5e5 !important;
+
+
+}
+
+h1 small {
+  color:  #255f8a;
+}
+
+h3 small {
+  color: #255f8a;
+}
+
+
+/*map ? */
 
 #map-canvas { 
   width: 100%;
@@ -23,6 +46,8 @@ body { height: 100%;
   overflow: hidden;
 }
 
+
+/*nav bar*/
 .navbar-default{
 	background-color: #bddc6f;
 	color: #255f8a !important;
@@ -54,21 +79,27 @@ body { height: 100%;
 
 }
 
+ .navbar-default .navbar-nav > li > a:hover {
+    background-color: #75c2e7;
+    color: white !important;
+}
 
+
+.navbar-default .navbar-nav > li > a:active {
+    background-color: #75c2e7;
+    color: white !important;
+}
+
+
+
+/*tables */
 .pointstotal {
 	font-size: 30;
 }
 
-h1 small {
-	color:  #255f8a;
-}
 
-h3 small {
-  color: #255f8a;
-}
-
-.pointstable {
-	width: 50%;
+.tablesize {
+	width: 85%;
 	margin: auto;
 
 }
@@ -85,16 +116,6 @@ caption .pointstable {
 	font-weight: bold;
 }
 
-.navbar-default .navbar-nav > li > a:hover {
-    background-color: #75c2e7;
-    color: white !important;
-}
-
-
-.navbar-default .navbar-nav > li > a:active {
-    background-color: #75c2e7;
-    color: white !important;
-}
 
 .ptcounter {
 	width: 100%; 
@@ -103,6 +124,9 @@ caption .pointstable {
 	font-size: 1.5em;
 	font-weight: bold;
 }
+
+
+
 
 tfoot tr {
   background-color: #f0f0f0; 
@@ -129,4 +153,22 @@ tfoot tr {
 
 legend {
   color: #255f8a;
+}
+
+
+
+
+/*login page (landing) */
+
+#slogin{
+  text-align:center;
+  font-size: 140%;
+  line-height:95%;
+  max-width: 230px;
+  margin: 0 auto;
+
+}
+
+.landing-logo{
+  margin-top: 20px;
 }

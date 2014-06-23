@@ -1,15 +1,14 @@
 <template name="landing">
 <div class="row">
   <div class="col-md-4 col-md-offset-4">
-    <img class="img-responsive" src="images/ucb-logo-lg.jpg" 
+    <img class="img-responsive landing-logo" src="images/UCB-square.png" 
       alt="Union Capital Logo">
     <br>
-    <p><small>
-      Giving back to people who have given back to their communities
-    </small></p>
+    <p id="slogin">
+      <small><em>Giving back to people who give back to their communities</em></small>
+    </p>
   </div>
 </div>
-<hr>
 <br>
 <div class="row text-center">
   {{#if loginState 'landingPage'}}
