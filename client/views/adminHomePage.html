@@ -1,26 +1,42 @@
 <template name="adminHomePage">
   <h1 class="text-center"><small>Welcome Admin</small></h1>
-  <hr>
-  <div class="col-md-6 col-md-offset-3">
+  
+  <div class="col-md-4 col-md-offset-4">
     <div class="row text-center">
+      
+
       <h1><small>Administer Members</small></h1>
-      <hr>
-      <p><a href="{{pathFor 'memberProfiles'}}" class="btn-lg btn-default btn-block">Member Profiles
-      </a></p>
-      <p><a href="reviewPhotos" class="btn-lg btn-default btn-block">
-          Approve Ad-Hoc Events
-      </a></p>
-      <p><a href="itemPictures" class="btn-lg btn-default btn-block">
-          Update Rewards and Points
-      </a></p>
+      
+      <ul class="list-group">
+
+
+      <a href="{{pathFor 'memberProfiles'}}"><li class="list-group-item">Member Profiles</li>
+      </a>
+
+      <a href="reviewPhotos">
+         <li class="list-group-item">Approve Ad-Hoc Events</li>
+      </a>
+
+      <a href="itemPictures">
+          <li class="list-group-item">Update Rewards and Points</li>
+      </a>
+
+      </ul>
+
+
       <h1><small>Community</small></h1>
-      <hr>
-      <p><a href="addCommunityEvents" class="btn-lg btn-default btn-block">
-          Add, Modify, and View Community Events 
-      </a></p>
-      <p><a href="landing" class="btn-lg btn-default btn-block">
-          Manage Group Activities
-      </a></p>
+      
+      <ul class="list-group">
+      <a href="addCommunityEvents">
+          <li class="list-group-item">Add, Modify, and View Community Events</li> 
+      </a>
+      
+      <a href="landing">
+          <li class="list-group-item">Manage Group Activities</li>
+      </a>
+
+    </ul>
+
     </div>
   </div>
 </template>

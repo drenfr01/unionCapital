@@ -1,12 +1,25 @@
 /*general styling */
 
 
-html { height: 100% }
-body { height: 100%; 
-		margin: 0; 
+html { height: 100%; }
+body { height: 100%;
+		margin: 0 ; 
 		padding: 0;
+    background-color: #e3e3e3;
+    background-image:url('images/background-image2.jpg');
+
+
+
+    
          
 		 }
+
+.container{
+
+  background-color: white;
+  height: 100%;
+
+}
 
 
 
@@ -17,6 +30,11 @@ button{
 
 }
 
+button:hover
+{ 
+background-color:#2d7ac0 !important;
+}
+
 h1 small {
   color:  #255f8a;
 }
@@ -25,6 +43,13 @@ h3 small {
   color: #255f8a;
 }
 
+.navbar-toggle > button:hover  {
+
+  background-color: #f8f8f8 !important;
+  border-color: #dddddd !important;
+
+
+}
 
 /*map ? */
 
@@ -61,17 +86,21 @@ h3 small {
 	margin-right: 7px;
 }
 
-.navbar-toggle {
 
-	background-color: #f8f8f8 !important;
-	border-color: #dddddd !important;
-
-}
 
 .navbar-toggle .icon-bar{
  	background-color: #979797 !important;
 
 }
+
+.navbar-toggle {
+
+  background-color: #f8f8f8 !important;
+  border-color: #dddddd !important;
+
+}
+
+
 
 
 .navbar-brand , .navbar-default .navbar-nav > li > a {
@@ -89,6 +118,7 @@ h3 small {
     background-color: #75c2e7;
     color: white !important;
 }
+
 
 
 
