@@ -1,6 +1,6 @@
 <template name="landing">
 <div class="row">
-  <div class="col-md-4 col-md-offset-4">
+  <div class="col-md-6 col-md-offset-3">
     <img class="img-responsive landing-logo" src="images/ucb-logo-lg.jpg" 
       alt="Union Capital Logo">
     <br>
@@ -14,11 +14,12 @@
 
 
 
+<div class="row text-center landing-background">
+  {{#if loginState 'landingPage'}} 
+        
+      <div class="col-md-6 col-md-offset-3">
 
-  <div class="col-md-4 col-md-offset-4">
-   <div class="row text-center">
-
-    <form role="form">
+        <form role="form">
       <div class="form-group>">
         <label for="userEmail" class="sr-only">User Email</label>
         <input type="email" class="form-control" id="userEmail" placeholder="Enter Email">
@@ -29,18 +30,14 @@
         <input type="password" class="form-control" id="userPassword" 
           placeholder="Enter Password">
       </div>
-      <hr>
-      <button type="submit" class="btn btn-default" id="loginSubmit">Submit</button>
+      <br>
+      <button type="submit" class="button-landing" id="loginSubmit">Login</button>
     </form>
+
+    <button type="button" class="button-landing2" id="signUp">Sign Up</button>
   </div>
 
 
-
-
-
-  {{#if loginState 'landingPage'}}
-    
-    <button type="button" class="btn btn-lg btn-default" id="signUp">Sign Up</button>
   {{else}}
     {{#if loginState 'loginPage'}}
       {{> loginPage }}
@@ -48,8 +45,16 @@
       {{> createUser }}
     {{/if}}
   {{/if}}
-
 </div>
+
+<div class="boston-photo"> </div>
+    
+   
+
+
+
+
+
 
 
 </template>

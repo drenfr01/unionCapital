@@ -3,21 +3,24 @@
 
 html { height: 100%; }
 body { height: 100%;
-		padding: 0;
+    margin: 0 ; 
+    padding: 0;
     background-color: #e3e3e3;
-    /*background-image:url('images/background-image2.jpg');*/
-        background-color: #3a9cd5;
+    background-image:url('images/background-image2.jpg');
 
+
+
+    
          
-		 }
+     }
 
 .container{
 
   background-color: white;
   height: 100%;
+  max-width: 1000px;
 
 }
-
 
 
 button{
@@ -197,5 +200,49 @@ legend {
 }
 
 .landing-logo{
-  margin-top: 20px;
+  margin-top: 10px;
+}
+
+
+.button-landing, .button-landing2{
+  width: 100%;
+  border: 0;
+  margin-bottom: 10px;
+  font-size: 1.3em;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.button-landing2{
+  background-color: #a1cc00 !important;
+}
+
+.button-landing2:hover{
+
+  background-color: #b3e300 !important;
+
+}
+
+.landing-background{
+  width: 100%;
+  margin: 0 auto;
+  background-color: #3a9cd5;
+  padding: 30px 7% 20px 7%;
+
+
+}
+
+.h3-createuser{
+  color: black;
+  padding: 0 !important;
+  margin: 0 !important;
+
+}
+
+.boston-photo{
+  background-image:url('images/Boston-a-lheure-bleue-by-Emmanuel-Huybrechts.jpg');
+  width: 100%;
+  height: 200px;
+
+
 }

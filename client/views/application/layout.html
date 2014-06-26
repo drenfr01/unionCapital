@@ -1,4 +1,3 @@
-
 <template name="layout">
   <div class="container">
     <div id="main" class="row">
@@ -18,8 +17,10 @@
             <div id="logo-home">  <a href="{{pathFor 'memberHomePage'}}">  <img src="images/ucb-small-logo.png" alt="UCB Logo"> </a></div>
 
             <a class="navbar-brand" href="{{pathFor 'memberHomePage'}}"> Home</a>
-          </div>
 
+   
+
+          </div>
 
           <div class="collapse navbar-collapse" id="bs-example-vabar-collapse-1">
             <ul class="nav navbar-nav nav nav-pills">
@@ -36,6 +37,8 @@
           </div>
         </div>
       </nav>
+
+
     {{> alerts}}
 
       {{> yield}}
