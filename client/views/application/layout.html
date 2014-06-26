@@ -3,27 +3,45 @@
     <div id="main" class="row">
      <!-- <nav class="navbar navbar-default" role="navigation">-->
 
+
      
     <nav role="navigation">
 
         <div class="container-fluid">
 
-             <div id="login-button">
-                  {{> loginButtons}}
+
+            <!-- doesn't actually log people out- couldn't get the JS to work -->
+             <a href="/">
+             <div id="login-button" class='logout'>
+                  Sign out
               </div>
-          
+             </a> 
+                     
           <div class="navbar-header">
 
                  <a href="{{pathFor 'memberHomePage'}}"><img id="UCB-nav-logo" border="0" src="images/ucb-logo-lg.jpg" alt="UCB Logo"  height="40"></a>
 
           </div>
 
+            {{#if isInRole 'admin'}}
+               <ul class="nav navbar-nav nav nav-pills">
+              <li><a href="{{pathFor 'memberProfiles'}}">Members</a></li>
+              <li><a href="{{pathFor 'reviewPhotos'}}">Approve Activities</a></li>
+              <li><a href="{{pathFor 'showMemberRewards'}}">Rewards</a></li>
+              <li><a href="{{pathFor  'addCommunityEvents'}}">Events</a></li>
+            </ul>
+            
+
+            {{else}}  
             <ul class="nav navbar-nav nav nav-pills">
               <li><a href="{{pathFor 'scanQR'}}">Check In</a></li>
               <li><a href="{{pathFor 'checkPoints'}}">Points</a></li>
               <li><a href="{{pathFor 'listEvents'}}">Events</a></li>
               <li><a href="{{pathFor 'showMemberRewards'}}">Rewards</a></li>
             </ul>
+
+            {{/if}}
+
            
           </div>
       </nav>

@@ -153,6 +153,12 @@ h3 small {
    height: 30px;
 }
 
+.nav-background{
+  background-color: #798b3d;
+  height: 100px;
+
+}
+
 
 /*tables */
 .pointstotal {

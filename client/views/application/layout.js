@@ -29,3 +29,16 @@ Template.layout.events({
     Session.set('currentCustomer', this._id);
   }
 });
+
+
+/* doesn't work*/
+
+Template.layout.events({
+  'click .logout': function(e) {
+    Meteor.logout(callback);
+  }
+});
+
+
+
+
