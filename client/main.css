@@ -9,19 +9,31 @@ body { height: 100%;
     background-image:url('images/background-image2.jpg');
 
 
-
-    
          
      }
 
-.container{
-
+nav{
   background-color: white;
-  height: 100%;
-  max-width: 1000px;
+  padding: 15px;
+  padding-top: 20px;
 
 }
 
+.container{
+
+  background-color: #3a9cd5;
+  height: 100%;
+  max-width: 1000px;
+  padding: 0px 15px 0px 15px;
+}
+
+#main-content-container{
+background-color: white;
+margin: 3% 4%;
+padding: 3px 10px 10px 10px ;
+
+
+}
 
 button{
   background-color: #255f8a !important;
@@ -120,6 +132,26 @@ h3 small {
 }
 
 
+#UCB-nav-logo{
+
+
+  margin-right: 15px;
+  margin-left: 0px;
+  float:left;
+
+}
+
+#login-button{
+
+  float:right;
+  margin-top: 10px;
+  margin-right: 15px;
+   list-style-type: none;
+
+   padding: 5px 0px 10px 15px;
+   border-left: 1px solid grey;
+   height: 30px;
+}
 
 
 /*tables */

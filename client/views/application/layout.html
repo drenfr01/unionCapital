@@ -3,45 +3,38 @@
     <div id="main" class="row">
      <!-- <nav class="navbar navbar-default" role="navigation">-->
 
-     <nav class="navbar navbar-default" role="navigation">
+     
+    <nav role="navigation">
+
         <div class="container-fluid">
+
+             <div id="login-button">
+                  {{> loginButtons}}
+              </div>
           
           <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-           
-            <div id="logo-home">  <a href="{{pathFor 'memberHomePage'}}">  <img src="images/ucb-small-logo.png" alt="UCB Logo"> </a></div>
 
-            <a class="navbar-brand" href="{{pathFor 'memberHomePage'}}"> Home</a>
-
-   
+                 <a href="{{pathFor 'memberHomePage'}}"><img id="UCB-nav-logo" border="0" src="images/ucb-logo-lg.jpg" alt="UCB Logo"  height="40"></a>
 
           </div>
 
-          <div class="collapse navbar-collapse" id="bs-example-vabar-collapse-1">
             <ul class="nav navbar-nav nav nav-pills">
-              <li><a href="{{pathFor 'scanQR'}}">Log Event</a></li>
-              <li><a href="{{pathFor 'checkPoints'}}">Your Points</a></li>
-              <li><a href="{{pathFor 'listEvents'}}">Upcoming Events</a></li>
+              <li><a href="{{pathFor 'scanQR'}}">Check In</a></li>
+              <li><a href="{{pathFor 'checkPoints'}}">Points</a></li>
+              <li><a href="{{pathFor 'listEvents'}}">Events</a></li>
               <li><a href="{{pathFor 'showMemberRewards'}}">Rewards</a></li>
             </ul>
-            <ul class="nav navbar-nav navbar-left">
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-              {{> loginButtons}}
-            </ul>
+           
           </div>
-        </div>
       </nav>
 
+          <div id="main-content-container">
 
-    {{> alerts}}
+             {{> alerts}}
+            {{> yield}}
 
-      {{> yield}}
+          </div>
+
     </div>
   </div>
 </template>
