@@ -14,27 +14,32 @@ body { height: 100%;
 
 nav{
   background-color: white;
-  padding: 15px;
-  padding-top: 20px;
+  padding: 20px 15px 10px 15px !important;
+
 
 }
 
 .container{
-
-  background-color: #3a9cd5;
-  height: 100%;
+ /* background-color: #3a9cd5;*/
+  /*height: 100%;*/
   max-width: 1000px;
-  padding: 0px 15px 0px 15px;
+  background-color: white;
+  margin:  0 auto;
+  /*padding: 0px 15px 0px 15px;*/
 }
 
-#main-content-container{
-background-color: white;
-margin: 3% 4%;
-padding: 3px 10px 10px 10px ;
-height: 100%;
+ #main-content-container{
+/*background-color: white;*/
+/*margin: 3% 4%;*/
+/*height: 100%;*/
+border: 25px solid  #3a9cd5;
 
+/*need padding for the general pages, messes up front page. Need a solution to template issue...*/
+/*padding: 0px 0px 30px 0px ;*/
 
+/*min-height: 300px;*/
 }
+
 
 button{
   background-color: #255f8a !important;
@@ -132,13 +137,19 @@ h3 small {
     color: white !important;
 }
 
+.nav-background{
+
+  background-color: #255f8a;
+  width: 100%;
+}
 
 #UCB-nav-logo{
 
 
-  margin-right: 15px;
+  margin-right: 20px;
   margin-left: 0px;
   float:left;
+  margin-bottom: 10px;
 
 }
 
@@ -146,12 +157,10 @@ h3 small {
 
   float:right;
   margin-top: 10px;
-  margin-right: 15px;
    list-style-type: none;
 
-   padding: 5px 0px 10px 15px;
-   border-left: 1px solid grey;
-   height: 30px;
+  padding: 5px 0px 10px 15px;
+  border-left: 1px solid grey;
 }
 
 
@@ -260,7 +269,11 @@ legend {
   width: 100%;
   margin: 0 auto;
   background-color: #3a9cd5;
-  padding: 30px 7% 20px 7%;
+
+  /*use when you can get rid of nav bar on landing page*/
+  /*padding: 30px 7% 20px 7%;*/
+
+  padding: 15px 8% 5px 8%;
 
 
 }
@@ -275,7 +288,11 @@ legend {
 .boston-photo{
   background-image:url('images/Boston-a-lheure-bleue-by-Emmanuel-Huybrechts.jpg');
   width: 100%;
-  height: 200px;
+  height: 250px;
 
 
 }
+
+/*Home Page */
+
+

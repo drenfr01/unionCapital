@@ -23,16 +23,16 @@
 
           </div>
 
-          <div id="disapear">Text disapear!!!</div>
+         <!--  <div id="disapear">Text disapear!!!</div>-->
 
               <div class="nav-background">
 
             {{#if isInRole 'admin'}}
                <ul class="nav navbar-nav nav nav-pills">
               <li><a href="{{pathFor 'memberProfiles'}}">Members</a></li>
-              <li><a href="{{pathFor 'reviewPhotos'}}">Approve Activities</a></li>
+              <li><a href="{{pathFor 'reviewPhotos'}}">Approve Points</a></li>
               <li><a href="{{pathFor 'showMemberRewards'}}">Rewards</a></li>
-              <li><a href="{{pathFor  'addCommunityEvents'}}">Events</a></li>
+              <li><a href="{{pathFor  'addCommunityEvents'}}">Add Events</a></li>
             </ul>
             
 
@@ -57,6 +57,9 @@
             {{> yield}}
 
           </div>
+
+          <div class="boston-photo"> </div>
+
 
     </div>
   </div>
