@@ -42,3 +42,16 @@ Template.layout.events({
 
 
 
+Template.layout.events({
+  'click #disapear': function(e) {
+    $('.nav').empty();
+
+  }
+});
+
+
+
+
+
+
+

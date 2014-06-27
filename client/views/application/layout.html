@@ -5,7 +5,7 @@
 
 
      
-    <nav role="navigation">
+    <nav role="navigation" class="nav">
 
         <div class="container-fluid">
 
@@ -13,7 +13,7 @@
             <!-- doesn't actually log people out- couldn't get the JS to work -->
              <a href="/">
              <div id="login-button" class='logout'>
-                  Sign out
+                  {{> loginButtons}}
               </div>
              </a> 
                      
@@ -22,6 +22,10 @@
                  <a href="{{pathFor 'memberHomePage'}}"><img id="UCB-nav-logo" border="0" src="images/ucb-logo-lg.jpg" alt="UCB Logo"  height="40"></a>
 
           </div>
+
+          <div id="disapear">Text disapear!!!</div>
+
+              <div class="nav-background">
 
             {{#if isInRole 'admin'}}
                <ul class="nav navbar-nav nav nav-pills">
@@ -41,6 +45,7 @@
             </ul>
 
             {{/if}}
+          </div>
 
            
           </div>

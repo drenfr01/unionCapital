@@ -31,6 +31,7 @@ nav{
 background-color: white;
 margin: 3% 4%;
 padding: 3px 10px 10px 10px ;
+height: 100%;
 
 
 }
@@ -151,12 +152,6 @@ h3 small {
    padding: 5px 0px 10px 15px;
    border-left: 1px solid grey;
    height: 30px;
-}
-
-.nav-background{
-  background-color: #798b3d;
-  height: 100px;
-
 }
 
 
