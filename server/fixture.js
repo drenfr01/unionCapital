@@ -9,8 +9,15 @@ Meteor.startup(function () {
          name: "admin", roles:['admin']
       },
       {
-         email: "user@gmail.com", username: "user", password: "user",
-         name: "user", roles:['user']
+        email: "user@gmail.com", username: "user", password: "user", 
+        profile: {
+          firstName: 'Duncan',
+          lastName: 'Renfrow',
+          street: '10 Emerson',
+          city: 'Boston',
+          state: 'MA'
+        },
+        roles:['user']
       }
     ];
 
@@ -18,8 +25,7 @@ Meteor.startup(function () {
       var id = Accounts.createUser({
         email: user.email,
         password: user.password,
-        profile: {username: user.username},
-        profile: {name: user.name}
+        profile: user.profile,
       });
 
       Roles.addUsersToRoles(id, user.roles);
