@@ -18,7 +18,10 @@
             {{#if isInRole 'admin'}}
               <a class="navbar-brand" href="{{pathFor 'adminHomePage'}}"> Home</a>
             {{else}}
+              {{#if isInRole 'user'}}
               <a class="navbar-brand" href="{{pathFor 'memberHomePage'}}"> Home</a>
+              {{else}}
+              {{/if}}
             {{/if}}
           </div>
 
@@ -31,12 +34,15 @@
                 <li><a href="{{pathFor 'addCommunityEvents'}}">Modify Events</a></li>
               </ul>
             {{else}}
+              {{#if isInRole 'user'}}
               <ul class="nav navbar-nav nav nav-pills">
                 <li><a href="{{pathFor 'scanQR'}}">Enter Points</a></li>
                 <li><a href="{{pathFor 'checkPoints'}}">Points Trakcer</a></li>
                 <li><a href="{{pathFor 'listEvents'}}">Upcoming Events</a></li>
                 <li><a href="{{pathFor 'showMemberRewards'}}">Community</a></li>
               </ul>
+              {{else}}
+              {{/if}}
             {{/if}}
             <ul class="nav navbar-nav navbar-right">
               {{#if currentUser}}
