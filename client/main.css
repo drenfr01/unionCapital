@@ -20,19 +20,23 @@ nav{
 }
 
 .container{
- /* background-color: #3a9cd5;*/
-  /*height: 100%;*/
-  max-width: 1000px;
-  background-color: white;
-  margin:  0 auto;
-  /*padding: 0px 15px 0px 15px;*/
+   background-color: white;
+   max-width: 1000px;
+   margin:  0 auto;
+
+
+
 }
 
+.event-container{
+  padding: 20px;
+  min-height: 400px;
+
+}
+
+
  #main-content-container{
-/*background-color: white;*/
-/*margin: 3% 4%;*/
-/*height: 100%;*/
-border: 25px solid  #3a9cd5;
+    border: 25px solid  #3a9cd5;
 
 /*need padding for the general pages, messes up front page. Need a solution to template issue...*/
 /*padding: 0px 0px 30px 0px ;*/
@@ -55,6 +59,8 @@ background-color:#2d7ac0 !important;
 
 h1 small {
   color:  #255f8a;
+  font-size: .5em;
+  line-height: 2px !important;
 }
 
 h3 small {
@@ -139,7 +145,7 @@ h3 small {
 
 .nav-background{
 
-  background-color: #255f8a;
+  /*background-color: #255f8a;*/
   width: 100%;
 }
 
@@ -295,4 +301,57 @@ legend {
 
 /*Home Page */
 
+
+.small-screen-event{
+
+  display: none;
+
+}
+
+ .full-screen-event{
+      
+  display: table-row;
+
+  }
+
+   .editEvent{
+
+        font-size: 12px;
+        padding: 5px;
+      }
+
+
+@media (max-width: 770px){
+
+        #main-content-container{
+
+            border: 15px solid  #3a9cd5;
+
+        }
+
+
+
+        .full-screen-event{
+            
+            display: none;
+
+        }
+
+
+      .small-screen-event{
+
+        display: table-row;
+
+      }
+
+      .editEvent{
+
+        font-size: 10px;
+        padding: 5px;
+      }
+
+    
+ 
+  
+}
 
