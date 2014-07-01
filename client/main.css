@@ -355,3 +355,19 @@ legend {
   
 }
 
+/* doesn't work */
+.boston-photo p{
+    /*padding-top: 225px;
+    padding-left: 450px;*/
+
+    position: relative;
+    top: 225px;
+    left: 10px;
+
+    color:white;
+    font-size: 10px;
+}
+
+
+}
+
