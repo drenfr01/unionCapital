@@ -3,7 +3,7 @@ Template.alerts.helpers({
     return Alerts.find();
   }
 });
-Template.alerts.rendered = function() {
+Template.alert.rendered = function() {
   var alert = this.data;
   if (alert) {
     Meteor.defer(function() {
