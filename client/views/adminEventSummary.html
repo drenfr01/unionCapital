@@ -1,0 +1,51 @@
+<template name="adminEventSummary">
+  <div class="container" style="margin:10px;">
+    <div class="row" style="margin-bottom:10px;">
+      <span class="col-md-12">
+        <a href="" class="btn btn-info back">
+          <span class="glyphicon glyphicon-arrow-left"></span>
+          All Events
+        </a>
+      </span>
+    </div>
+    <div class="row" style="margin-bottom:10px;">
+      <span class="col-md-7">
+        <iframe
+        width="500"
+        height="450"
+        frameborder="0" style="border:0"
+        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA_ypBd-Tqf2AcLAoiEFLq9z-ZS4LXjAmY&q={{address}}">
+      </iframe>
+      </span>
+      <span class="col-md-5">
+        <h4>{{name}}</h4>
+        <p>{{address}}</p>
+        <p>{{points}}</p>
+        <p>{{formatDate startDate}}- {{formatDate endDate}}</p>
+      </span>
+    </div>
+  </div>
+  
+  <div>
+    {{#if visitors}}
+      <table class="table table-striped">
+        <tr>
+          <th>Email</th>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Visitor's current total points</th>
+        </tr>
+        {{#each visitors}}
+          {{#each this}}
+            <tr>
+              <td>{{emails[0].address}}</td>
+              <td>{{profile.name}}</td>
+              <td>{{profile.address}}</td>
+              <td></td>
+            </tr>
+          {{/each}}
+        {{/each}}
+      </table>
+    {{/if}}
+  </div>
+</template>

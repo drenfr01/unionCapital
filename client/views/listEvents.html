@@ -53,7 +53,7 @@
     <tbody>
     {{#each upcomingEvents}}
     <tr>
-      <td class="eventView">{{name}}</td>
+      <td class="eventView"><a href="{{pathFor 'adminEventSummary' _id=this._id.toHexString}}">{{name}}</a></td>
       <td class="eventView">{{address}}</td>
       <td class="eventView">{{url}}</td>
       <td class="eventView">{{points}}</td>
