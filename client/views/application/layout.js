@@ -9,4 +9,3 @@ Template.layout.events({
     });
   }
 });
-

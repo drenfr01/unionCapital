@@ -3,9 +3,10 @@
     <div id="main" class="row">
      <!-- <nav class="navbar navbar-default" role="navigation">-->
 
-     <nav class="navbar navbar-default" role="navigation">
+
+     
+    <nav role="navigation" class="nav">
         <div class="container-fluid">
-          
           <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
               <span class="sr-only">Toggle navigation</span>
@@ -16,7 +17,7 @@
            
             <div id="logo-home"> <img src="images/ucb-small-logo.png" alt="UCB Logo"> </div>
             {{#if isInRole 'admin'}}
-              <a class="navbar-brand" href="{{pathFor 'adminHomePage'}}"> Home</a>
+              <a class="navbar-brand" href="{{pathFor 'adminHomePage'}}"><img id="UCB-nav-logo" border="0" src="images/ucb-logo-lg.jpg" alt="UCB Logo"  height="40"></a>
             {{else}}
               {{#if isInRole 'user'}}
               <a class="navbar-brand" href="{{pathFor 'memberHomePage'}}"> Home</a>
@@ -51,12 +52,24 @@
                 <li><a href="{{pathFor 'landing'}}">Sign In</a></li>
               {{/if}}
             </ul>
-          </div>
-        </div>
-      </nav>
-    {{> alerts}}
 
-      {{> yield}}
+            {{/if}}
+          </div>
+
+           
+          </div>
+      </nav>
+
+          <div id="main-content-container">
+
+             {{> alerts}}
+            {{> yield}}
+
+          </div>
+
+          <div class="boston-photo"> </div>
+
+
     </div>
   </div>
 </template>
