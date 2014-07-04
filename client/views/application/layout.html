@@ -6,42 +6,51 @@
 
      
     <nav role="navigation" class="nav">
-
         <div class="container-fluid">
-
-
-            <!-- doesn't actually log people out- couldn't get the JS to work -->
-             <a href="/">
-             <div id="login-button" class='logout'>
-                  {{> loginButtons}}
-              </div>
-             </a> 
-                     
           <div class="navbar-header">
-
-                 <a href="{{pathFor 'memberHomePage'}}"><img id="UCB-nav-logo" border="0" src="images/ucb-logo-lg.jpg" alt="UCB Logo"  height="40"></a>
-
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+           
+            <div id="logo-home"> <img src="images/ucb-small-logo.png" alt="UCB Logo"> </div>
+            {{#if isInRole 'admin'}}
+              <a class="navbar-brand" href="{{pathFor 'adminHomePage'}}"><img id="UCB-nav-logo" border="0" src="images/ucb-logo-lg.jpg" alt="UCB Logo"  height="40"></a>
+            {{else}}
+              {{#if isInRole 'user'}}
+              <a class="navbar-brand" href="{{pathFor 'memberHomePage'}}"> Home</a>
+              {{else}}
+              {{/if}}
+            {{/if}}
           </div>
 
-         <!--  <div id="disapear">Text disapear!!!</div>-->
 
-              <div class="nav-background">
-
+          <div class="collapse navbar-collapse" id="bs-example-vabar-collapse-1">
             {{#if isInRole 'admin'}}
-               <ul class="nav navbar-nav nav nav-pills">
-              <li><a href="{{pathFor 'memberProfiles'}}">Members</a></li>
-              <li><a href="{{pathFor 'reviewPhotos'}}">Approve Points</a></li>
-              <li><a href="{{pathFor 'showMemberRewards'}}">Rewards</a></li>
-              <li><a href="{{pathFor  'addCommunityEvents'}}">Add Events</a></li>
-            </ul>
-            
-
-            {{else}}  
-            <ul class="nav navbar-nav nav nav-pills">
-              <li><a href="{{pathFor 'scanQR'}}">Check In</a></li>
-              <li><a href="{{pathFor 'checkPoints'}}">Points</a></li>
-              <li><a href="{{pathFor 'listEvents'}}">Events</a></li>
-              <li><a href="{{pathFor 'showMemberRewards'}}">Rewards</a></li>
+              <ul class="nav navbar-nav nav nav-pills">
+                <li><a href="{{pathFor 'memberProfiles'}}">Member Profiles</a></li>
+                <li><a href="{{pathFor 'reviewPhotos'}}">Approve Ad-Hoc Events</a></li>
+                <li><a href="{{pathFor 'addCommunityEvents'}}">Modify Events</a></li>
+              </ul>
+            {{else}}
+              {{#if isInRole 'user'}}
+              <ul class="nav navbar-nav nav nav-pills">
+                <li><a href="{{pathFor 'scanQR'}}">Enter Points</a></li>
+                <li><a href="{{pathFor 'checkPoints'}}">Points Trakcer</a></li>
+                <li><a href="{{pathFor 'listEvents'}}">Upcoming Events</a></li>
+                <li><a href="{{pathFor 'showMemberRewards'}}">Community</a></li>
+              </ul>
+              {{else}}
+              {{/if}}
+            {{/if}}
+            <ul class="nav navbar-nav navbar-right">
+              {{#if currentUser}}
+              <li><a href="{{pathFor 'landing'}}" id="signOut">Sign Out</a></li>
+              {{else}}
+                <li><a href="{{pathFor 'landing'}}">Sign In</a></li>
+              {{/if}}
             </ul>
 
             {{/if}}
