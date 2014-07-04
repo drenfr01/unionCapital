@@ -1,9 +1,81 @@
-html { height: 100% }
-body { height: 100%; 
-		margin: 0; 
-		padding: 0;
+/*general styling */
+
+
+html { height: 100%; }
+body { height: 100%;
+    margin: 0 ; 
+    padding: 0;
+    background-color: #e3e3e3;
+    background-image:url('images/background-image2.jpg');
+
+
          
-		 }
+     }
+
+nav{
+  background-color: white;
+  padding: 20px 15px 10px 15px !important;
+
+
+}
+
+.container{
+   background-color: white;
+   max-width: 1000px;
+   margin:  0 auto;
+
+
+
+}
+
+.event-container{
+  padding: 20px;
+  min-height: 400px;
+
+}
+
+
+ #main-content-container{
+    border: 25px solid  #3a9cd5;
+
+/*need padding for the general pages, messes up front page. Need a solution to template issue...*/
+/*padding: 0px 0px 30px 0px ;*/
+
+/*min-height: 300px;*/
+}
+
+
+button{
+  background-color: #255f8a !important;
+  color: #e5e5e5 !important;
+
+
+}
+
+button:hover
+{ 
+background-color:#2d7ac0 !important;
+}
+
+h1 small {
+  color:  #255f8a;
+  font-size: .5em;
+  line-height: 2px !important;
+}
+
+h3 small {
+  color: #255f8a;
+}
+
+.navbar-toggle > button:hover  {
+
+  background-color: #f8f8f8 !important;
+  border-color: #dddddd !important;
+
+
+}
+
+/*map ? */
 
 #map-canvas { 
   width: 100%;
@@ -23,6 +95,8 @@ body { height: 100%;
   overflow: hidden;
 }
 
+
+/*nav bar*/
 .navbar-default{
 	background-color: #bddc6f;
 	color: #255f8a !important;
@@ -36,17 +110,21 @@ body { height: 100%;
 	margin-right: 7px;
 }
 
-.navbar-toggle {
 
-	background-color: #f8f8f8 !important;
-	border-color: #dddddd !important;
-
-}
 
 .navbar-toggle .icon-bar{
  	background-color: #979797 !important;
 
 }
+
+.navbar-toggle {
+
+  background-color: #f8f8f8 !important;
+  border-color: #dddddd !important;
+
+}
+
+
 
 
 .navbar-brand , .navbar-default .navbar-nav > li > a {
@@ -54,21 +132,52 @@ body { height: 100%;
 
 }
 
+ .navbar-default .navbar-nav > li > a:hover {
+    background-color: #75c2e7;
+    color: white !important;
+}
 
+
+.navbar-default .navbar-nav > li > a:active {
+    background-color: #75c2e7;
+    color: white !important;
+}
+
+.nav-background{
+
+  /*background-color: #255f8a;*/
+  width: 100%;
+}
+
+#UCB-nav-logo{
+
+
+  margin-right: 20px;
+  margin-left: 0px;
+  float:left;
+  margin-bottom: 10px;
+
+}
+
+#login-button{
+
+  float:right;
+  margin-top: 10px;
+   list-style-type: none;
+
+  padding: 5px 0px 10px 15px;
+  border-left: 1px solid grey;
+}
+
+
+/*tables */
 .pointstotal {
 	font-size: 30;
 }
 
-h1 small {
-	color:  #255f8a;
-}
 
-h3 small {
-  color: #255f8a;
-}
-
-.pointstable {
-	width: 50%;
+.tablesize {
+	width: 85%;
 	margin: auto;
 
 }
@@ -85,16 +194,6 @@ caption .pointstable {
 	font-weight: bold;
 }
 
-.navbar-default .navbar-nav > li > a:hover {
-    background-color: #75c2e7;
-    color: white !important;
-}
-
-
-.navbar-default .navbar-nav > li > a:active {
-    background-color: #75c2e7;
-    color: white !important;
-}
 
 .ptcounter {
 	width: 100%; 
@@ -103,6 +202,9 @@ caption .pointstable {
 	font-size: 1.5em;
 	font-weight: bold;
 }
+
+
+
 
 tfoot tr {
   background-color: #f0f0f0; 
@@ -130,3 +232,148 @@ tfoot tr {
 legend {
   color: #255f8a;
 }
+
+
+
+
+/*login page (landing) */
+
+#slogin{
+  text-align:center;
+  font-size: 140%;
+  line-height:95%;
+  max-width: 230px;
+  margin: 0 auto;
+
+}
+
+.landing-logo{
+  margin-top: 10px;
+}
+
+
+.button-landing, .button-landing2{
+  width: 100%;
+  border: 0;
+  margin-bottom: 10px;
+  font-size: 1.3em;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.button-landing2{
+  background-color: #a1cc00 !important;
+}
+
+.button-landing2:hover{
+
+  background-color: #b3e300 !important;
+
+}
+
+.landing-background{
+  width: 100%;
+  margin: 0 auto;
+  background-color: #3a9cd5;
+
+  /*use when you can get rid of nav bar on landing page*/
+  /*padding: 30px 7% 20px 7%;*/
+
+  padding: 15px 8% 5px 8%;
+
+
+}
+
+.h3-createuser{
+  color: black;
+  padding: 0 !important;
+  margin: 0 !important;
+
+}
+
+.boston-photo{
+  background-image:url('images/Boston-a-lheure-bleue-by-Emmanuel-Huybrechts.jpg');
+  width: 100%;
+  height: 250px;
+
+
+}
+
+/*Home Page */
+
+
+.small-screen-event{
+
+  display: none;
+
+}
+
+ .full-screen-event{
+      
+  display: table-row;
+
+  }
+
+   .editEvent{
+
+        font-size: 12px;
+        padding: 5px;
+      }
+
+
+@media (max-width: 640px){
+                  /*640px chosen because it is the width of iPhone 5s*/
+
+        #main-content-container{
+
+            border: 15px solid  #3a9cd5;
+
+        }
+
+
+
+        .full-screen-event{
+            
+            display: none;
+
+        }
+
+
+      .small-screen-event{
+
+        display: table-row;
+
+      }
+
+      .editEvent{
+
+        font-size: 10px;
+        padding: 5px;
+      }
+
+    
+ 
+  
+}
+
+/* doesn't work */
+.boston-photo p{
+    /*padding-top: 225px;
+    padding-left: 450px;*/
+
+    position: relative;
+    top: 225px;
+    left: 10px;
+
+    color:white;
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+    font-size: 10px;
+}
+
+
+}
+

@@ -1,8 +1,6 @@
 <template name="listEvents">
   {{#if isEventIndex}}
-  <h1 class="text-center"><small>Current and Upcoming Events</small></h1>
-  <hr>
-  <br>
+  <h1 class="text-center"><small>Upcoming Events</small></h1>
   <!--Modal launched when Edit button below clicked -->
   {{#with modalContext}}
   <div class="modal fade" id="editModal">
@@ -26,6 +24,7 @@
             {{> afQuickField name="endDate"}}
             {{> afQuickField name="points"}}
           </fieldset>
+
           <button type="submit" class="btn btn-default" id="submit">Submit</button>
         {{/autoForm}}
         </div>
@@ -37,40 +36,72 @@
   </div><!-- /.modal -->
   {{/with}}
   
-      <div class="ptheader">Event Details</div>
+
+<div class="tablesize">
+ <div class="ptheader">Event Details</div>
   <table class="table table-striped">
     <thead>
-      <tr>
+     <tr class="full-screen-event">
+        <th> Date </th>
         <th> Name of Event </th>
         <th> Address </th>
         <th> URL </th>
         <th> Points </th>
-        <th> Start Date </th>
-        <th> End Date </th>
         <th></th>
+        {{#if isInRole 'admin'}}
+          <th></th>
+       {{/if}}
+      
+      </tr>
+       <tr class="small-screen-event">
+        <th> Date </th>
+        <th> Name of Event </th>
+        <th> Points </th>
+        {{#if isInRole 'admin'}}
+          <th></th>
+      {{/if}}
+    
       </tr>
     </thead>
     <tbody>
     {{#each upcomingEvents}}
-    <tr>
-      <td class="eventView">{{name}}</td>
+    <tr class="full-screen-event">
+      <td class="eventView">{{formatDate startDate}}-{{formatDate endDate}}</td>
+      <td class="eventView"><a href="">{{name}}</a></td>
       <td class="eventView">{{address}}</td>
-      <td class="eventView">{{url}}</td>
+      <td class="eventView"><a href={{url}}>{{url}}</a></td>
       <td class="eventView">{{points}}</td>
-      <td class="eventView">{{formatDate startDate}}</td>
-      <td class="eventView">{{formatDate endDate}}</td>
+  
       {{#if isInRole 'admin'}}
        <td><button type="button" class="btn btn-default editEvent" data-toggle="modal"
           data-target = "#editModal">Edit</button></td>
+
+      {{/if}}
+      <td></td>
+    
+    </tr>
+
+    <tr class="small-screen-event">
+      <td class="eventView">{{formatDate startDate}}-{{formatDate endDate}}</td>
+      <td class="eventView"><a href="">{{name}}</a></td>
+      <td class="eventView">{{points}}</td>
+      {{#if isInRole 'admin'}}
+       <td><button type="button" class="btn btn-default editEvent">Edit</button></td>
+
+      <!--{{else}}
+
+        <td><button type="button" class="btn btn-default editEvent" data-toggle="modal"
+          data-target = "#editModal">More info</button></td>-->
       {{/if}}
     </tr>
+
     {{/each}}
     </tbody>
   </table>
-
+</div>
   {{else}}
   		{{#with eventView}}
-  		<div class="container" style="margin:10px;">
+  		<div class="event-container">
 	  		<div class="row" style="margin-bottom:10px;">
 	  			<span class="col-md-12">
 		  			<span class="btn btn-info back">
@@ -78,25 +109,26 @@
 		  				All Events
 		  			</span>
 		  		</span>
-	  		</div>
-	  		<div class="row" style="margin-bottom:10px;">
-	  			<span class="col-md-7">
-	  				<iframe
-					  width="500"
-					  height="450"
-					  frameborder="0" style="border:0"
+	  		</div>	  
+	  				<span class="col-md-5">
+            <iframe
+					  width="100%"
+            height="300"
+					  frameborder="0" style="border:0; padding: 0; margin-left: -15px;"
 					  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA_ypBd-Tqf2AcLAoiEFLq9z-ZS4LXjAmY&q={{address}}">
 					</iframe>
-	  			</span>
+          </span>
+
+
 	  			<span class="col-md-5">
 	  				<h4>{{name}}</h4>
-	  				<p>{{address}}</p>
-            <p>{{url}}</p>
-	  				<p>{{points}}</p>
-	  				<p>{{formatDate startDate}}- {{formatDate endDate}}</p>
+            <p> <b>Date:</b> {{formatDate startDate}}-{{formatDate endDate}}</p>
+	  				<p> <b>Address:</b> {{address}}</p>
+            <p> <b>Event website:</b> <a href={{url}} > {{url}} </a></p>
+	  				<p> <b>Points:</b> {{points}}</p>
 	  			</span>
-	  		</div>
   		</div>
 		{{/with}}
   {{/if}}
+
 </template>
