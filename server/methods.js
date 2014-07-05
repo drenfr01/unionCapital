@@ -48,5 +48,32 @@ Meteor.methods({
      var eventId = insertEvent(attributes);
      console.log(eventId);
      Transactions.update(attributes.transactionId, 
-         {$set: { needsApproval: false, eventId: eventId} }); }
+         {$set: { needsApproval: false, eventId: eventId} }); 
+  },
+  createNewUser: function(attributes) {
+    check(attributes, {
+      email: String,
+      password: String,
+      profile: {
+        firstName: String,
+        lastName: String,
+        street: String,
+        city: String,
+        state: String
+      }  
+    });
+    var newUserId = Accounts.createUser({
+      email: attributes.email,
+      password: attributes.password,
+      profile: attributes.profile
+    });
+
+    Roles.addUsersToRoles(newUserId, 'user');
+    var newUser = Meteor.users.findOne(newUserId);
+    console.log(newUser);
+    return {
+      email: newUser.emails[0].address,
+      password: newUser.services.password.srp
+    };
+  }
 });
