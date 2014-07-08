@@ -69,11 +69,5 @@ Meteor.methods({
     });
 
     Roles.addUsersToRoles(newUserId, 'user');
-    var newUser = Meteor.users.findOne(newUserId);
-    console.log(newUser);
-    return {
-      email: newUser.emails[0].address,
-      password: newUser.services.password.srp
-    };
   }
 });

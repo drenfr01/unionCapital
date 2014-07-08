@@ -50,16 +50,12 @@ Template.landing.events({
         state: $('#userState').val()
       }
     };
-    Meteor.call('createNewUser', attributes, function(error, result) {
+    Meteor.call('createNewUser', attributes, function(error) {
       if(error) {
         addErrorMessage(error.reason);
       } else {
         addSuccessMessage("Successfully Created User");
-        Meteor.loginWithPassword(result.email, result.password, 
-          function(error) {
-            addErrorMessage(error.reason);
-          }
-         );
+        Meteor.loginWithPassword(attributes.email, attributes.password);
         Router.go('memberHomePage');
       }
     });
