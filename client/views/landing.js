@@ -50,6 +50,7 @@ Template.landing.events({
         state: $('#userState').val()
       }
     };
+    //TODO: figure out if this can be done client side only?
     Meteor.call('createNewUser', attributes, function(error) {
       if(error) {
         addErrorMessage(error.reason);
