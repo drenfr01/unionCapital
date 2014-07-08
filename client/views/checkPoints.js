@@ -1,5 +1,5 @@
 function getEvent(transaction){
-  var id = transaction.eventID;
+  var id = transaction.eventId;
   var event = Events.findOne({ _id: id });
   return event;
 }

@@ -9,7 +9,8 @@
       "roles": {},
       "autoform": {},
       "collection2": {},
-      "moment": {}
+      "moment": {},
+      "bootflat": {}
     },
     "packages": {
       "bootstrap-3": {
@@ -39,18 +40,23 @@
       },
       "autoform": {
         "git": "https://github.com/aldeed/meteor-autoform.git",
-        "tag": "v0.10.0",
-        "commit": "4b298a025679a7e51892a884c11301c1d6bf19b3"
+        "tag": "v0.12.0",
+        "commit": "24b0284425e446f2d88760a81052eefe74a20bbf"
       },
       "collection2": {
         "git": "https://github.com/aldeed/meteor-collection2.git",
-        "tag": "v0.3.11",
-        "commit": "7e970671305657678e8508d8107d5e6c5e158559"
+        "tag": "v0.4.1",
+        "commit": "a9ffc9b285c3af8ad631f9cda4851b0ffc30c5ce"
       },
       "moment": {
         "git": "https://github.com/acreeger/meteor-moment.git",
         "tag": "v2.6.0",
         "commit": "26156df681750fd6e6ed77043eef32b6653ebbdf"
+      },
+      "bootflat": {
+        "git": "https://github.com/elie222/meteor-bootflat.git",
+        "tag": "v0.0.2",
+        "commit": "4a7ade8f5bff80e16d6aaf9d13d467e26a6ebca8"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
@@ -129,8 +135,8 @@
       },
       "cfs-tempstore": {
         "git": "https://github.com/CollectionFS/Meteor-cfs-tempstore.git",
-        "tag": "v0.0.26",
-        "commit": "0b95e286b94754ca317b968a4d818cc65913dd72"
+        "tag": "v0.0.27",
+        "commit": "d8fe0422b2767391738ab537bf6749395e4030a0"
       },
       "emitter": {
         "git": "https://github.com/Meteor-Reaction/meteor-emitter.git",

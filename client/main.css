@@ -1,13 +1,132 @@
 html { height: 100% }
-body { height: 100%; margin: 0; padding: 0 }
+body { height: 100%; 
+		margin: 0; 
+		padding: 0;
+         
+		 }
+
 #map-canvas { 
   width: 100%;
   /* have to either give pixel value or set all container columns to 100% */
   height: 500px; 
 }
 
-.vcenter {
+.vcenclass="center-block" class="center-block" ter {
   display: inline-block !important;
   vertical-align: middle !important;
   float: none !important;
+  }
+
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+
+.navbar-default{
+	background-color: #bddc6f;
+	color: #255f8a !important;
+	border: 0px;
+
+}
+
+#logo-home{
+	float:left;
+	margin-top: 5px;
+	margin-right: 7px;
+}
+
+.navbar-toggle {
+
+	background-color: #f8f8f8 !important;
+	border-color: #dddddd !important;
+
+}
+
+.navbar-toggle .icon-bar{
+ 	background-color: #979797 !important;
+
+}
+
+
+.navbar-brand , .navbar-default .navbar-nav > li > a {
+		color: #255f8a !important;
+
+}
+
+
+.pointstotal {
+	font-size: 30;
+}
+
+h1 small {
+	color:  #255f8a;
+}
+
+h3 small {
+  color: #255f8a;
+}
+
+.pointstable {
+	width: 50%;
+	margin: auto;
+
+}
+
+caption .pointstable {
+	background-color: #f0f0f0;
+}
+
+.ptheader {
+	width: 100%; 
+	background-color: #f0f0f0; 
+	padding:12px;
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+.navbar-default .navbar-nav > li > a:hover {
+    background-color: #75c2e7;
+    color: white !important;
+}
+
+
+.navbar-default .navbar-nav > li > a:active {
+    background-color: #75c2e7;
+    color: white !important;
+}
+
+.ptcounter {
+	width: 100%; 
+	background-color: #f0f0f0; 
+	padding:12px;
+	font-size: 1.5em;
+	font-weight: bold;
+}
+
+tfoot tr {
+  background-color: #f0f0f0; 
+  padding:12px;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 999px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+
+legend {
+  color: #255f8a;
 }

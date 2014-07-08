@@ -9,10 +9,31 @@
             <h4 class="modal-title text-center">{{pendingEventName}}</h4>
           </div>
           <div class="modal-body text-center">
-            <img src="{{imageUrl this.imageId}}" alt="pending transaction image" height=400 width=400>
+            <img src="{{imageUrl this.imageId}}" alt="pending transaction image" height=100% width=100%>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+  {{/with}}
+  {{#with approvalModalData}}
+    <div class="modal fade" id="showApprovalModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+              &times;</button>
+            <h4 class="modal-title text-center">{{pendingEventName}}</h4>
+          </div>
+          <div class="modal-body text-center">
+            <input type="number" class="form-control" 
+              id="pointsInput" placeholder="Enter Points">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" 
+              id="sendApproval" data-dismiss="modal">Approve</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
@@ -24,6 +45,7 @@
     <table class="table table-hover">
     <thead>
       <tr>
+        <th>User Name</th>
         <th>Event Name</th>
         <th>Event Description</th>
         <th>Event Date</th>
@@ -35,6 +57,7 @@
     <tbody>
     {{#each pendingTransaction}}
       <tr>
+        <td>{{userName userId}}</td>
         <td>{{pendingEventName}}</td>
         <td>{{pendingEventDescription}}</td>
         <td>{{formatDate transactionDate}} </td>
@@ -44,7 +67,10 @@
             Show Image</button>
         </td>
         <td>
-          <button type="button" class="btn btn-success btn-xs approveEvent">Approve</button>
+          <button type="button" class="btn btn-success btn-xs approveEvent"
+            data-toggle="modal" data-target="#showApprovalModal">
+            Approve
+          </button>
         </td>
         <td>
           <button type="button" class="btn btn-danger btn-xs rejectEvent">Reject</button>
