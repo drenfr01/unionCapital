@@ -1,25 +1,20 @@
 <template name="memberProfiles">
-<h1 class="text-center">Search for Existing Members</h1>
-    <hr>
-    <div class="vcenter">
-    <div class="col-md-6 col-md-offset-3">
+<h1 class="text-center"><small>Search for Existing Members</small></h1>
+    <div class="vcenter col-md-6 col-md-offset-3">
       <div class="input-group ">
         <span class="input-group-btn">
           <button class="btn btn-default btn-large" id="addMember">
             Actions</button>
         </span>
-        <input type='text' class="form-control" placeholder='Member Name' id='memberSearch'/><br>
+        <input type='text' class="form-control" placeholder='Member Name' id='memberSearch'/>
       </div>
-    </div>
   </div>
   <div class='text-center row'>
     {{> results}}
   </div>
-  <br>
-  <br>
   <div class='row text-center'>
     {{#with member}}
-      <h3>User Profile</h3>
+      <h3><small>User Profile</small></h3>
       <div>Name: {{profile.firstName}} {{profile.lastName}}</div>
       <div>Address: {{profile.street}} {{profile.city}} {{profile.state}}</div>
       <h3>Pending Transactions for Approval</h3>
