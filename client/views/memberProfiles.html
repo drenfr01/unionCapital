@@ -28,6 +28,7 @@
 
 
   <div class='row text-center'>
+
     {{#with member}}
       <h3><small>User Profile</small></h3>
       <div>Name: {{profile.firstName}} {{profile.lastName}}</div>
@@ -36,6 +37,7 @@
       {{#each transactions}}
       <img src="{{imageOf imageId}}" alt="A pending transaction" width=400 height=400>
       {{/each}}
+      <hr>
     {{/with}}
   </div>
   <div>&nbsp;</div>
