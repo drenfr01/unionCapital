@@ -27,8 +27,8 @@
 
          <!--  <div id="disapear">Text disapear!!!</div>-->
 
-              <div class="nav-background">
-{{#if isInRole 'admin'}}
+          <div class="nav-background">
+            {{#if isInRole 'admin'}}
               <ul class="nav navbar-nav nav nav-pills">
               <li><a href="{{pathFor 'memberProfiles'}}">Members</a></li>
               <li><a href="{{pathFor 'reviewPhotos'}}">Approve Points</a></li>
@@ -54,10 +54,11 @@
                 <li><a href="{{pathFor 'landing'}}">Sign In</a></li>
               {{/if}}
             </ul>
-          </div>
-          </div>
+
 
            
+          </div>
+          </div>
       </nav>
 
           <div id="main-content-container">

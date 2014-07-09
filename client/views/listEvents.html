@@ -1,7 +1,6 @@
 <template name="listEvents">
   {{#if isEventIndex}}
   <h1 class="text-center"><small>Current and Upcoming Events</small></h1>
-  <hr>
   <br>
   <!--Modal launched when Edit button below clicked -->
   {{#with modalContext}}
@@ -37,7 +36,9 @@
   </div><!-- /.modal -->
   {{/with}}
   
-      <div class="ptheader">Event Details</div>
+
+<div class="tablesize">
+ <div class="ptheader">Event Details</div>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -67,7 +68,7 @@
     {{/each}}
     </tbody>
   </table>
-
+</div>
   {{else}}
   		{{#with eventView}}
   		<div class="container" style="margin:10px;">
@@ -99,4 +100,5 @@
   		</div>
 		{{/with}}
   {{/if}}
+
 </template>

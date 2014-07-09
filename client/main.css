@@ -110,8 +110,6 @@ h3 small {
   margin-right: 7px;
 }
 
-
-
 .navbar-toggle .icon-bar{
   background-color: #979797 !important;
 
@@ -123,6 +121,15 @@ h3 small {
   border-color: #dddddd !important;
 
 }
+
+.navbar-toggle {
+
+  background-color: #f8f8f8 !important;
+  border-color: #dddddd !important;
+
+}
+
+
 
 
 
@@ -175,7 +182,6 @@ h3 small {
   font-size: 30;
 }
 
-
 .tablesize {
   width: 85%;
   margin: auto;
@@ -193,6 +199,7 @@ caption .pointstable {
   font-size: 1.2em;
   font-weight: bold;
 }
+>>>>>>> develop
 
 
 .ptcounter {
@@ -301,7 +308,6 @@ legend {
 
 /*Home Page */
 
-
 .small-screen-event{
 
   display: none;
@@ -376,3 +382,4 @@ legend {
 
 
 }
+>>>>>>> develop
