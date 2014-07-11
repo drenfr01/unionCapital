@@ -5,14 +5,16 @@
 
     <nav role="navigation" class="nav">
 
-<span id="login-button">
+
               {{#if currentUser}}
+              <div id="login-button">
               <a href="{{pathFor 'landing'}}" id="signOut">Sign Out</a>
+              </div>
               {{else}}
               {{/if}}
-</span>
 
-<span class="navbar-header">
+
+<div class="navbar-header">
            {{#if isInRole 'admin'}}
               <a href="{{pathFor 'adminHomePage'}}"> 
                 <img class="UCB-nav-logo" border="0" src="images/ucb-logo-lg.jpg" alt="UCB Logo"  height="40">
@@ -26,7 +28,7 @@
                 <img class="UCB-nav-logo" border="0" src="images/ucb-logo-lg.jpg" alt="UCB Logo"  height="40">
               {{/if}}
             {{/if}}
-</span>
+</div>
 
 
 
