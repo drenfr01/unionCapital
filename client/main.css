@@ -359,13 +359,11 @@ legend {
   
 }
 
-/* doesn't work */
 .boston-photo p{
-    /*padding-top: 225px;
-    padding-left: 450px;*/
+   
 
     position: relative;
-    top: 225px;
+    top: 200px;
     left: 10px;
 
     color:white;
