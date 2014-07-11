@@ -1,15 +1,13 @@
 <template name="layout">
-  <div class="container">
-    <div id="main" class="row">
+  <div class="container main row">
      <!-- <nav class="navbar navbar-default" role="navigation">-->
 
 
      
     <nav role="navigation" class="nav">
 
-        <div class="container-fluid">
+        <div class="container-fluid navbar-header">
       
-          <div class="navbar-header">
            {{#if isInRole 'admin'}}
               <a href="{{pathFor 'adminHomePage'}}"> 
                 <img class="UCB-nav-logo" border="0" src="images/ucb-logo-lg.jpg" alt="UCB Logo"  height="40">
@@ -53,11 +51,8 @@
               {{else}}
               {{/if}}
             </ul>
-
-
-           
           </div>
-          </div>
+
       </nav>
 
           <div id="main-content-container">
@@ -72,6 +67,5 @@
           </a></div>
 
 
-    </div>
   </div>
 </template>
