@@ -16,10 +16,10 @@ nav{
 
 }
 
-.container{
+.container-real{
    background-color: white;
    max-width: 1000px;
-   margin:  0 auto;
+   margin:  0px auto;
 
 
 
@@ -419,6 +419,3 @@ button > #addMember {
 
 }
 
-.create-member-div{
-background-color: white;
-}
