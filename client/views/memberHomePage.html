@@ -9,15 +9,11 @@
       <ul class="list-group">
       
       <a href="{{pathFor 'takePicture'}}"><li class="list-group-item">
-        Enter Points
+        Upload photo of individual event
       </li></a>
 
-      <a href="{{pathFor 'checkPoints'}}"><li class="list-group-item">
-        Points Tracker
-      </li></a>
-
-      <a href="{{pathFor 'listEvents'}}"><li class="list-group-item">
-        Upcoming Events 
+      <a href="{{pathFor 'scanQR'}}"><li class="list-group-item">
+        BETA Log in at event with QR Code
       </li></a>
 
       </ul>
@@ -32,9 +28,24 @@
       </li></a>
 
       <a href="landing"><li class="list-group-item">
-        Community
+        BETA Community
       </li></a>
       </ul>
+
+
+
+      <h1><small>Rewards</small></h1>
+
+      <ul class="list-group">
+      <a href="{{pathFor 'checkPoints'}}"><li class="list-group-item">
+        Points Tracker
+      </li></a>
+
+      <a href="{{pathFor 'showMemberRewards'}}"><li class="list-group-item">
+        Claim Rewards
+      </li></a>
+      </ul>
+
     </div>
   </div>
 </template>
