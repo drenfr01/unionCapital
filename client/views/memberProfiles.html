@@ -1,16 +1,8 @@
 <template name="memberProfiles">
 
 
-<h1 class="text-center"><small>Create new Members</small></h1>
-    <div class="vcenter col-md-6 col-md-offset-3">
-
-          <span class="input-group-btn">
-          <button class="btn btn-default btn-large" id="addMember">
-            Create Member</button>
-        </span>
-
 <h1 class="text-center"><small>Search for Existing Members</small></h1>
-      <div class="input-group ">
+      <div class="input-group col-md-6 col-md-offset-3">
 
         <input type='text' class="form-control" placeholder='Member Name' id='memberSearch'/>
 
@@ -18,13 +10,8 @@
           <button class="btn btn-default btn-large" id="membersearch">
             &gt;  </button>
         </span>
+
       </div>
-</div>
-
-<div class='text-center row'>
-    {{> results}}
-</div>
-
 
 
   <div class='row text-center'>
@@ -40,5 +27,21 @@
       <hr>
     {{/with}}
   </div>
-  <div>&nbsp;</div>
+   
+
+
+
+      <div class='text-center' style="padding: 0 20% 5% 20%;">
+
+      <h3 class="text-center"><small>Create New Member</small></h3>
+      
+                <button class="button-landing" id="addMember">
+            Create Member</button>
+
+             {{> results}}
+
+         
+      </div>
+
+
 </template>

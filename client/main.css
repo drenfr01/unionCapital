@@ -410,5 +410,15 @@ legend {
   padding-left: 10px;
 
 
+}
 
+/*member page */
+
+button > #addMember {
+  border: 10px solid red !important;
+
+}
+
+.create-member-div{
+background-color: white;
 }
