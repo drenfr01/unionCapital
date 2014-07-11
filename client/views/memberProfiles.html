@@ -21,11 +21,10 @@
       <h3><small>User Profile</small></h3>
       <div>Name: {{profile.firstName}} {{profile.lastName}}</div>
       <div>Address: {{profile.street}} {{profile.city}} {{profile.state}}</div>
-      <h3>Pending Transactions for Approval</h3>
+      <h3><small>Pending Transactions for Approval</small></h3>
       {{#each transactions}}
       <img src="{{imageOf imageId}}" alt="A pending transaction" width=400 height=400>
       {{/each}}
-      <hr>
     {{/with}}
   </div>
    
@@ -34,7 +33,7 @@
 
       <div class='text-center' style="padding: 0 20% 5% 20%;">
 
-      <h3 class="text-center"><small>Create New Member</small></h3>
+      <h1 class="text-center"><small>Create New Member</small></h1>
       
                 <button class="button-landing" id="addMember">
             Create Member</button>
