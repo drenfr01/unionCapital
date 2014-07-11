@@ -358,13 +358,11 @@ legend {
   
 }
 
-/* doesn't work */
 .boston-photo p{
-    /*padding-top: 225px;
-    padding-left: 450px;*/
+   
 
     position: relative;
-    top: 225px;
+    top: 200px;
     left: 10px;
 
     color:white;
@@ -415,6 +413,11 @@ legend {
 
 button > #addMember {
   border: 10px solid red !important;
+
+}
+
+.bottom-layout{
+  background-color: black;
 
 }
 
