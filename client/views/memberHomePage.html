@@ -1,29 +1,51 @@
 <template name="memberHomePage">
-  <h1 class="text-center"><small>Welcome {{currentMemberName}}
+  <h1 class="text-center"><small>Welcome, {{currentMemberName}}!
   </small></h1>
-  <hr>
- <div class="col-md-4 col-md-offset-4">
    <div class="row text-center">
-      <hr>
+     <div class="col-md-4 col-md-offset-4 min-height">
+
+      <h1><small>Log an Event</small></h1>
 
       <ul class="list-group">
       
       <a href="{{pathFor 'takePicture'}}"><li class="list-group-item">
-        Enter Points
+        Upload photo of individual event
       </li></a>
 
+      <a href="{{pathFor 'scanQR'}}"><li class="list-group-item">
+        BETA Log in at event with QR Code
+      </li></a>
+
+      </ul>
+
+
+
+      <h1><small>Community</small></h1>
+
+      <ul class="list-group">
+      <a href="listEvents"><li class="list-group-item">
+        Current and Upcoming Events 
+      </li></a>
+
+      <a href="landing"><li class="list-group-item">
+        BETA Community
+      </li></a>
+      </ul>
+
+
+
+      <h1><small>Rewards</small></h1>
+
+      <ul class="list-group">
       <a href="{{pathFor 'checkPoints'}}"><li class="list-group-item">
         Points Tracker
       </li></a>
 
-      <a href="{{pathFor 'listEvents'}}"><li class="list-group-item">
-        Upcoming Events 
-      </li></a>
-
-      <a href="#"><li class="list-group-item">
-        Community
+      <a href="{{pathFor 'showMemberRewards'}}"><li class="list-group-item">
+        Claim Rewards
       </li></a>
       </ul>
+
     </div>
   </div>
 </template>

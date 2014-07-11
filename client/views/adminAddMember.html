@@ -1,0 +1,10 @@
+<template name='results2'>
+
+  {{#if addCustomerClicked}}
+    {{#unless searchResults}}
+      <div class='row'>
+        {{> addCustomerForm}}
+      </div>
+    {{/unless}}
+  {{/if}}
+</template>
