@@ -3,11 +3,16 @@
      <!-- <nav class="navbar navbar-default" role="navigation">-->
 
 
-     
     <nav role="navigation" class="nav">
 
-        <div class="container-fluid navbar-header">
-      
+<span id="login-button">
+              {{#if currentUser}}
+              <a href="{{pathFor 'landing'}}" id="signOut">Sign Out</a>
+              {{else}}
+              {{/if}}
+</span>
+
+<span class="navbar-header">
            {{#if isInRole 'admin'}}
               <a href="{{pathFor 'adminHomePage'}}"> 
                 <img class="UCB-nav-logo" border="0" src="images/ucb-logo-lg.jpg" alt="UCB Logo"  height="40">
@@ -21,11 +26,11 @@
                 <img class="UCB-nav-logo" border="0" src="images/ucb-logo-lg.jpg" alt="UCB Logo"  height="40">
               {{/if}}
             {{/if}}
-          </div>
+</span>
 
-         <!--  <div id="disapear">Text disapear!!!</div>-->
 
-          <div class="nav-background">
+
+<span >
             {{#if isInRole 'admin'}}
               <ul class="nav navbar-nav nav nav-pills">
               <li><a href="{{pathFor 'memberProfiles'}}">Members</a></li>
@@ -45,15 +50,9 @@
               {{else}}
               {{/if}}
             {{/if}}
-            <ul class="nav navbar-nav navbar-right">
-              {{#if currentUser}}
-              <li><a href="{{pathFor 'landing'}}" id="signOut">Sign Out</a></li>
-              {{else}}
-              {{/if}}
-            </ul>
-          </div>
-
+          </span>
       </nav>
+     
 
           <div id="main-content-container">
 
