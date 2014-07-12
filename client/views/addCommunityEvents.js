@@ -1,3 +1,15 @@
+AutoForm.hooks({
+  insertEventsForm: {
+    before: {
+      insert: function(doc, template) {
+        doc.latitude = 5;
+        doc.longitude = 5;
+
+        return doc;
+      } 
+    }
+  }
+});
 Template.addCommunityEvents.rendered = function() {
   Session.set('showMap', false);
 };
