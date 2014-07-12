@@ -8,6 +8,7 @@
     "autoform": {},
     "collection2": {},
     "moment": {},
-    "bootflat": {}
+    "bootflat": {},
+    "googlemaps-server": {}
   }
 }

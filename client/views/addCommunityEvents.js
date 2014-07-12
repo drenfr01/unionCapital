@@ -2,9 +2,10 @@ AutoForm.hooks({
   insertEventsForm: {
     before: {
       insert: function(doc, template) {
-        doc.latitude = 5;
-        doc.longitude = 5;
-
+        var result = Meteor.call('geocodeAddress', doc.address);
+        console.log(result);
+        doc.latitude = result.location.lat;
+        doc.longitude = result.location.lng;
         return doc;
       } 
     }
