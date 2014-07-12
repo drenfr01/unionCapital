@@ -1,32 +1,47 @@
 <template name="memberProfiles">
-<h1 class="text-center">Search for Existing Members</h1>
-    <hr>
-    <div class="vcenter">
-    <div class="col-md-6 col-md-offset-3">
-      <div class="input-group ">
+
+
+<h1 class="text-center"><small>Search for Existing Members</small></h1>
+      <div class="input-group col-md-6 col-md-offset-3">
+
+        <input type='text' class="form-control" placeholder='Member Name' id='memberSearch'/>
+
         <span class="input-group-btn">
-          <button class="btn btn-default btn-large" id="addMember">
-            Actions</button>
+          <button class="btn btn-default btn-large" id="membersearch">
+            &gt;  </button>
         </span>
-        <input type='text' class="form-control" placeholder='Member Name' id='memberSearch'/><br>
+
       </div>
-    </div>
-  </div>
-  <div class='text-center row'>
-    {{> results}}
-  </div>
-  <br>
-  <br>
+             {{> results}}
+
+
   <div class='row text-center'>
+
     {{#with member}}
-      <h3>User Profile</h3>
+      <h3><small>User Profile</small></h3>
       <div>Name: {{profile.firstName}} {{profile.lastName}}</div>
       <div>Address: {{profile.street}} {{profile.city}} {{profile.state}}</div>
-      <h3>Pending Transactions for Approval</h3>
+      <h3><small>Pending Transactions for Approval</small></h3>
       {{#each transactions}}
       <img src="{{imageOf imageId}}" alt="A pending transaction" width=400 height=400>
       {{/each}}
-      <hr>
     {{/with}}
   </div>
+   
+
+
+
+      <div class='text-center' style="padding: 0 20% 5% 20%;">
+
+      <h1 class="text-center"><small>Create New Member</small></h1>
+      
+                <button class="button-landing" id="addMember">
+            Create Member</button>
+
+             {{> results2}}
+
+         
+      </div>
+
+
 </template>

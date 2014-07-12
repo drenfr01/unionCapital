@@ -1,15 +1,20 @@
 <template name="layout">
-  <div class="container">
-    <div id="main" class="row">
+  <div class="container-real main row">
      <!-- <nav class="navbar navbar-default" role="navigation">-->
 
 
-     
     <nav role="navigation" class="nav">
 
-        <div class="container-fluid">
-      
-          <div class="navbar-header">
+
+              {{#if currentUser}}
+              <div id="login-button">
+              <a href="{{pathFor 'landing'}}" id="signOut">Sign Out</a>
+              </div>
+              {{else}}
+              {{/if}}
+
+
+<div class="navbar-header">
            {{#if isInRole 'admin'}}
               <a href="{{pathFor 'adminHomePage'}}"> 
                 <img class="UCB-nav-logo" border="0" src="images/ucb-logo-lg.jpg" alt="UCB Logo"  height="40">
@@ -23,11 +28,11 @@
                 <img class="UCB-nav-logo" border="0" src="images/ucb-logo-lg.jpg" alt="UCB Logo"  height="40">
               {{/if}}
             {{/if}}
-          </div>
+</div>
 
-         <!--  <div id="disapear">Text disapear!!!</div>-->
 
-          <div class="nav-background">
+
+<span >
             {{#if isInRole 'admin'}}
               <ul class="nav navbar-nav nav nav-pills">
               <li><a href="{{pathFor 'memberProfiles'}}">Members</a></li>
@@ -38,7 +43,7 @@
             {{else}}
               {{#if isInRole 'user'}}
               <ul class="nav navbar-nav nav nav-pills">
-              <li><a href="{{pathFor 'scanQR'}}">Check In</a></li>
+              <li><a href="{{pathFor 'takePicture'}}">Check In</a></li>
               <li><a href="{{pathFor 'checkPoints'}}">Points</a></li>
               <li><a href="{{pathFor 'listEvents'}}">Events</a></li>
               <li><a href="{{pathFor 'showMemberRewards'}}">Rewards</a></li>
@@ -47,19 +52,9 @@
               {{else}}
               {{/if}}
             {{/if}}
-            <ul class="nav navbar-nav navbar-right">
-              {{#if currentUser}}
-              <li><a href="{{pathFor 'landing'}}" id="signOut">Sign Out</a></li>
-              {{else}}
-                <li><a href="{{pathFor 'landing'}}">Sign In</a></li>
-              {{/if}}
-            </ul>
-
-
-           
-          </div>
-          </div>
+          </span>
       </nav>
+     
 
           <div id="main-content-container">
 
@@ -68,11 +63,17 @@
 
           </div>
 
-          <div class="boston-photo"><a href="https://www.flickr.com/photos/ensh/4769294947">
+          <div class="boston-photo">
+         
+          <p>Union Capital Boston: <a href="http://unioncapitalboston.com/"> www.unioncapitalboston.com </a></p> 
+
+           <a href="https://www.flickr.com/photos/ensh/4769294947">
+
           <p>Photo by Emmanuel Huybrechts</p>
           </a></div>
 
 
-    </div>
+         
+
   </div>
 </template>

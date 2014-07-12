@@ -16,10 +16,10 @@ nav{
 
 }
 
-.container{
+.container-real{
    background-color: white;
    max-width: 1000px;
-   margin:  0 auto;
+   margin:  0px auto;
 
 
 
@@ -170,7 +170,7 @@ h3 small {
    list-style-type: none;
 
   padding: 5px 0px 10px 15px;
-  border-left: 1px solid grey;
+  border-left: 1px solid #dfdfdf;
 }
 
 
@@ -196,7 +196,6 @@ caption .pointstable {
   font-size: 1.2em;
   font-weight: bold;
 }
->>>>>>> develop
 
 
 .ptcounter {
@@ -359,13 +358,11 @@ legend {
   
 }
 
-/* doesn't work */
 .boston-photo p{
-    /*padding-top: 225px;
-    padding-left: 450px;*/
+   
 
     position: relative;
-    top: 225px;
+    top: 200px;
     left: 10px;
 
     color:white;
@@ -379,4 +376,48 @@ legend {
 
 
 }
->>>>>>> develop
+
+/*pills*/
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+  color: white;
+  background-color: #3bafda;
+}
+
+.nav-pills > li > a:hover {
+  color: #434a54;
+  background-color: #b3e300;
+}
+.nav-pills > .active > a > .badge {
+  color: #3bafda;
+}
+.nav-pills .open > a, .nav-pills .open > a:focus, .nav-pills .open > a:hover {
+  color: #434a54;
+  background-color: #e6e9ed;
+}
+
+.nav-pills > li > a {
+  background-color: blue !important;
+  color: black;
+  margin-right: 5px;
+  font-size: 12px;
+  padding-top: 10px ;
+  padding-right: 10px;
+  padding-bottom: 10px ;
+  padding-left: 10px;
+
+
+}
+
+/*member page */
+
+button > #addMember {
+  border: 10px solid red !important;
+
+}
+
+.bottom-layout{
+  background-color: black;
+
+}
+
