@@ -8,6 +8,14 @@ Events = new Meteor.Collection('events', {
                        type: String,
                        label: 'Address of Event'
                      },
+            longitude: {
+                         type: String,
+                         label: 'Longitude'
+                       },
+            latitude: {
+                         type: String,
+                         label: 'Latitude'
+                      },
             description: {
                            type: String,
                            label: 'Description of Event'
