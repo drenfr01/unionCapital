@@ -11,10 +11,10 @@ Meteor.users.transactionsFor = function(userId, needsApprovalFlag) {
 
 Meteor.users.totalPointsFor = function(userId) {
   return Transactions
-    .find({userId: userId, needsApproval: false, eventId: {$exists: true} })
-    .fetch()
-    .reduce(function(sum, transaction) {
-      var event = Transactions.eventFor(transaction);
-      return sum += event.points;
-    }, 0);
+  .find({userId: userId, needsApproval: false, eventId: {$exists: true} })
+  .fetch()
+  .reduce(function(sum, transaction) {
+    var event = Transactions.eventFor(transaction);
+    return sum += event.points;
+  }, 0);
 };
