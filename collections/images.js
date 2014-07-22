@@ -1,5 +1,5 @@
 Images = new FS.Collection("images", {
-    stores: [new FS.Store.GridFS("images", {path: '/Users/duncanrenfrow-symon/Documents/Meteor_App/apparel/uploads', maxTries:10})]
+  stores: [new FS.Store.GridFS("images", {path: '/Users/duncanrenfrow-symon/Documents/Meteor_App/apparel/uploads', maxTries:10})]
 });
 FS.debug = true;
 
@@ -8,7 +8,7 @@ Images.allow({
   insert: function(userId, doc) {
     return true;
   },
-    update: function(userId, doc, fieldNames, modifier) {
+  update: function(userId, doc, fieldNames, modifier) {
     return true;
   },
   remove: function(userId, doc) {

@@ -21,7 +21,10 @@
             {{> afQuickField name="endDate"}}
             {{> afQuickField name="points"}}
           </fieldset>
-          <button type="submit" class="btn btn-default" id="submit">Submit</button>
+          <button type="button" class="btn btn-default" id="geocodeButton">Geocode</button>
+          {{#if geocodeResultsReturned}}
+            <button type="submit" class="btn btn-default" id="submit">Submit</button>
+          {{/if}}
         {{/autoForm}}
         </div>
         <div class="modal-footer">

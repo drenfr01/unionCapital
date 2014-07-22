@@ -1,62 +1,56 @@
 <template name="layout">
-  <div class="container">
-    <div id="main" class="row">
-     <!-- <nav class="navbar navbar-default" role="navigation">-->
-
-     <nav class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-          
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-           
-            <div id="logo-home"> <img src="images/ucb-small-logo.png" alt="UCB Logo"> </div>
-            {{#if isInRole 'admin'}}
-              <a class="navbar-brand" href="{{pathFor 'adminHomePage'}}"> Home</a>
-            {{else}}
-              {{#if isInRole 'user'}}
-              <a class="navbar-brand" href="{{pathFor 'memberHomePage'}}"> Home</a>
-              {{else}}
-              {{/if}}
-            {{/if}}
-          </div>
-
-
-          <div class="collapse navbar-collapse" id="bs-example-vabar-collapse-1">
-            {{#if isInRole 'admin'}}
-              <ul class="nav navbar-nav nav nav-pills">
-                <li><a href="{{pathFor 'memberProfiles'}}">Member Profiles</a></li>
-                <li><a href="{{pathFor 'reviewPhotos'}}">Approve Ad-Hoc Events</a></li>
-                <li><a href="{{pathFor 'addCommunityEvents'}}">Modify Events</a></li>
-              </ul>
-            {{else}}
-              {{#if isInRole 'user'}}
-              <ul class="nav navbar-nav nav nav-pills">
-                <li><a href="{{pathFor 'scanQR'}}">Enter Points</a></li>
-                <li><a href="{{pathFor 'checkPoints'}}">Points Trakcer</a></li>
-                <li><a href="{{pathFor 'listEvents'}}">Upcoming Events</a></li>
-                <li><a href="{{pathFor 'showMemberRewards'}}">Community</a></li>
-              </ul>
-              {{else}}
-              {{/if}}
-            {{/if}}
-            <ul class="nav navbar-nav navbar-right">
-              {{#if currentUser}}
-              <li><a href="{{pathFor 'landing'}}" id="signOut">Sign Out</a></li>
-              {{else}}
-                <li><a href="{{pathFor 'landing'}}">Sign In</a></li>
-              {{/if}}
-            </ul>
-          </div>
+  <div class="container-real main row">
+    <nav role="navigation" class="nav">
+      {{#if currentUser}}
+        <div id="login-button">
+        <a href="{{pathFor 'landing'}}" id="signOut">Sign Out</a>
         </div>
-      </nav>
-    {{> alerts}}
+      {{/if}}
+      <div class="navbar-header">
+       {{#if isInRole 'admin'}}
+          <a href="{{pathFor 'adminHomePage'}}"> 
+            <img class="UCB-nav-logo" border="0" src="images/ucb-logo-lg.jpg" alt="UCB Logo"  height="40">
+          </a>
+        {{else}}
+          {{#if isInRole 'user'}}
+          <a href="{{pathFor 'memberHomePage'}}"> 
+            <img class="UCB-nav-logo" border="0" src="images/ucb-logo-lg.jpg" alt="UCB Logo"  height="40">
+          </a>
+          {{else}}
+            <img class="UCB-nav-logo" border="0" src="images/ucb-logo-lg.jpg" alt="UCB Logo"  height="40">
+          {{/if}}
+        {{/if}}
+      </div>
+      <span>
+        {{#if isInRole 'admin'}}
+          <ul class="nav navbar-nav nav nav-pills">
+          <li><a href="{{pathFor 'memberProfiles'}}">Members</a></li>
+          <li><a href="{{pathFor 'reviewPhotos'}}">Approve Points</a></li>
+          <li><a href="{{pathFor 'showMemberRewards'}}">Rewards</a></li>
+          <li><a href="{{pathFor  'addCommunityEvents'}}">Add Events</a></li>
+          </ul>
+        {{else}}
+          {{#if isInRole 'user'}}
+          <ul class="nav navbar-nav nav nav-pills">
+          <li><a href="{{pathFor 'takePicture'}}">Check In</a></li>
+          <li><a href="{{pathFor 'checkPoints'}}">Points</a></li>
+          <li><a href="{{pathFor 'listEvents'}}">Events</a></li>
+          <li><a href="{{pathFor 'showMemberRewards'}}">Rewards</a></li>
 
-      {{> yield}}
-    </div>
+          </ul>
+          {{/if}}
+        {{/if}}
+      </span>
+      </nav>
+      <div id="main-content-container">
+        {{> alerts}}
+        {{> yield}}
+      </div>
+      <div class="boston-photo">
+        <p>Union Capital Boston: <a href="http://unioncapitalboston.com/"> www.unioncapitalboston.com </a></p> 
+        <a href="https://www.flickr.com/photos/ensh/4769294947">
+          <p>Photo by Emmanuel Huybrechts</p>
+        </a>
+      </div>
   </div>
 </template>

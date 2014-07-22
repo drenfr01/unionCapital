@@ -1,53 +1,53 @@
 Transactions = new Meteor.Collection('transactions', {
   schema: {
-     userId: {
-               type: String,
-               label: 'User Identifier',
-               optional: true
-             },
-     eventId: {
-               type: String,
-               label: 'ID of related Event',
-               optional: true
-               },
-     imageId: {
-                type: String,
-                label: 'Image Id',
-                optional: true
-              },
-     //Manually set this to false for QR code submissions
-     needsApproval: {
-                      type: Boolean,
-                      label: 'Needs Approval'
-                    },
-     pendingEventName: {
-                        type: String,
-                        label: 'Event Name',
-                        optional: true
-          },
-     pendingEventDescription: {
-                                type: String,
-                                label: 'Event Description',
-                                optional: true
-                              },
-     transactionDate: {
-                       type: String,
-                       label: 'Transaction Date',
-                       optional: true
-         }
+    userId: {
+      type: String,
+      label: 'User Identifier',
+      optional: true
+    },
+    eventId: {
+      type: String,
+      label: 'ID of related Event',
+      optional: true
+    },
+    imageId: {
+      type: String,
+      label: 'Image Id',
+      optional: true
+    },
+    //Manually set this to false for QR code submissions
+    needsApproval: {
+      type: Boolean,
+      label: 'Needs Approval'
+    },
+    pendingEventName: {
+      type: String,
+      label: 'Event Name',
+      optional: true
+    },
+    pendingEventDescription: {
+      type: String,
+      label: 'Event Description',
+      optional: true
+    },
+    transactionDate: {
+      type: String,
+      label: 'Transaction Date',
+      optional: true
     }
+  }
 });
 
 Transactions.allow({
   insert: function() {
-            return true;
-          },
+    return true;
+  },
   update: function() {
-            return true;
-          },
+    return true;
+  },
   remove: function() {
-            return true;
-          },
+    return true;
+  },
 });
 
 Transactions.eventFor = function(transaction) {

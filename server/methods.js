@@ -69,5 +69,20 @@ Meteor.methods({
     });
 
     Roles.addUsersToRoles(newUserId, 'user');
+  },
+  geocodeAddress: function(address) {
+    var myFuture = new Future(); 
+    googlemaps.geocode(
+      address, 
+      function(err, data) {
+        if(err) {
+          myFuture.throw(error);
+        } else {
+          console.log(data.results[0].geometry);
+          myFuture.return(data.results[0].geometry);
+        }
+    });
+
+    return myFuture.wait();
   }
 });
