@@ -78,7 +78,6 @@ Meteor.methods({
         if(err) {
           myFuture.throw(error);
         } else {
-          console.log(data.results[0].geometry);
           myFuture.return(data.results[0].geometry);
         }
     });
