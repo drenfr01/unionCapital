@@ -219,6 +219,7 @@ tfoot tr {
   min-height: 100%;
   font-size: 999px;
   text-align: right;
+  opacity: 0;
   outline: none;
   background: white;
   cursor: inherit;
@@ -379,4 +380,18 @@ button > #addMember {
   background-color: black;
 
 }
+
+form {
+  margin-right: 10%;
+  margin-left: 10%;
+  margin-bottom: 20px;
+}
+
+.list-group {
+  width: 80%;
+margin-left: auto;
+margin-right: auto;
+}
+
+
 
