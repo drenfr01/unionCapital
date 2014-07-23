@@ -80,11 +80,6 @@ h3 small {
   height: 500px; 
 }
 
-.vcenclass="center-block" class="center-block" ter {
-  display: inline-block !important;
-  vertical-align: middle !important;
-  float: none !important;
-  }
 
 
 .btn-file {
@@ -170,13 +165,13 @@ h3 small {
    list-style-type: none;
 
   padding: 5px 0px 10px 15px;
-  border-left: 1px solid #dfdfdf;
+  /*border-left: 1px solid #dfdfdf;*/
 }
 
 
 /*tables */
 .pointstotal {
-  font-size: 30;
+  font-size: 30px;
 }
 
 .tablesize {
@@ -224,8 +219,6 @@ tfoot tr {
   min-height: 100%;
   font-size: 999px;
   text-align: right;
-  filter: alpha(opacity=0);
-  opacity: 0;
   outline: none;
   background: white;
   cursor: inherit;
@@ -358,7 +351,7 @@ legend {
   
 }
 
-.boston-photo p{
+.boston-photo p {
    
 
     position: relative;
@@ -374,40 +367,6 @@ legend {
     font-size: 10px;
 }
 
-
-}
-
-/*pills*/
-
-.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
-  color: white;
-  background-color: #3bafda;
-}
-
-.nav-pills > li > a:hover {
-  color: #434a54;
-  background-color: #b3e300;
-}
-.nav-pills > .active > a > .badge {
-  color: #3bafda;
-}
-.nav-pills .open > a, .nav-pills .open > a:focus, .nav-pills .open > a:hover {
-  color: #434a54;
-  background-color: #e6e9ed;
-}
-
-.nav-pills > li > a {
-  background-color: blue !important;
-  color: black;
-  margin-right: 5px;
-  font-size: 12px;
-  padding-top: 10px ;
-  padding-right: 10px;
-  padding-bottom: 10px ;
-  padding-left: 10px;
-
-
-}
 
 /*member page */
 
