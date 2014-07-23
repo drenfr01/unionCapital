@@ -3,6 +3,12 @@
     <h1><small>Scan a QR Code</small></h1>
     <hr>
     <p>This geolocates the user to an event and displays the result</p>
+    {{#autoForm collection="Transactions" id="insertTransactionForm" type="insert"}}
+      <fieldset>
+      <legend>Add points from Event</legend>
+      {{> afFieldInput name='eventId' options=eventOptions}}
+      </fieldset>
+    {{/autoForm}}
     <button type="button" class="btn btn-large btn-default" id="geoLocate">
       GeoLocate!
     </button>

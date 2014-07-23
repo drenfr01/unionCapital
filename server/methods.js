@@ -83,5 +83,13 @@ Meteor.methods({
     });
 
     return myFuture.wait();
+  },
+  //accepts a transactionID and a geolocation lat/lng
+  //gets the eventId from transaction and then 
+  //compares distance of lat long. If it's "close enough" returns true and adds points
+  //if its not returns false. Calling client side function displays appropriate message
+  //Note: ideally figure out how to add function to Collection
+  geolocateUser: function(transactionId, userCoordinates) {
+    
   }
 });
