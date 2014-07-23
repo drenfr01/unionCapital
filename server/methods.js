@@ -1,3 +1,7 @@
+function toRadians(x) {
+     return x * (Math.PI / 180);
+}
+
 Meteor.methods({
    removeImage: function(imageId) {
     return Images.remove(imageId);
@@ -89,7 +93,27 @@ Meteor.methods({
   //compares distance of lat long. If it's "close enough" returns true and adds points
   //if its not returns false. Calling client side function displays appropriate message
   //Note: ideally figure out how to add function to Collection
-  geolocateUser: function(transactionId, userCoordinates) {
-    
+  geolocateUser: function(eventId, userLong, userLat) {
+    check(eventId, String);
+    check(userLong, Number);
+    check(userLat, Number);
+    var event = Events.findOne(eventId);
+
+    var eventLat = event.latitude;
+    var eventLong = event.longitude;
+
+    //Haversine formula, source: http://www.movable-type.co.uk/scripts/latlong.html
+    var R = 6371; // km
+    var userLatRadians = toRadians(userLat);
+    var eventLatRadians = toRadians(eventLat);
+    var deltaLatRadians = toRadians(eventLat-userLat);
+    var deltaLongRadians = toRadians(eventLong-userLong);
+
+    var a = Math.sin(deltaLatRadians/2) * Math.sin(deltaLatRadians/2) +
+      Math.cos(userLatRadians) * Math.cos(eventLatRadians) *
+      Math.sin(deltaLongRadians/2) * Math.sin(deltaLongRadians/2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+    var d = R * c;
   }
 });

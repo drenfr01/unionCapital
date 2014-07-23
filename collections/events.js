@@ -46,7 +46,7 @@ Events = new Meteor.Collection('events', {
   }
 });
 
-Events.fromTransaction = function(transactionId) {
+Events.eventFromTransaction = function(transactionId) {
   return Transactions.find(transactionId).eventId;
 };
 
