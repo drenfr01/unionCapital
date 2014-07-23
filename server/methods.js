@@ -97,6 +97,9 @@ Meteor.methods({
     check(eventId, String);
     check(userLong, Number);
     check(userLat, Number);
+
+    var maxDistance = 0.1; //maximum distance in kilometers to check in
+
     var event = Events.findOne(eventId);
 
     var eventLat = event.latitude;
@@ -114,6 +117,16 @@ Meteor.methods({
       Math.sin(deltaLongRadians/2) * Math.sin(deltaLongRadians/2);
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
-    var d = R * c;
+    var distance = R * c;
+    console.log("Distance: " + distance);
+
+    if(distance < maxDistance) {
+      return "Congrats, you are within: " + distance +  " km of your event. Adding " + event.points + " points to your total!";
+    } else {
+      throw new Meteor.Error(400, "You are too far away from the event" +
+                             "(" + distance + " km ), please move closer and try again OR take a photo " +
+                             "and submit it for manually approval");
+    }
+
   }
 });

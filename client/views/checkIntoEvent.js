@@ -33,10 +33,6 @@ Template.checkIntoEvent.events({
     if(navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
 
-        var str = "Latitude: " + position.coords.latitude +
-          "Longitude: " + position.coords.longitude;
-        console.log(str);
-        $("#geoText").append(str);
 
         Session.set('longitude', position.coords.longitude);
         Session.set('latitude', position.coords.latitude);
@@ -58,7 +54,7 @@ Template.checkIntoEvent.events({
           addErrorMessage(error.reason);
         } else {
           //TODO: give points here
-          addSuccessMessage('Successfully added points!');
+          addSuccessMessage(result);
         }
 
     });
