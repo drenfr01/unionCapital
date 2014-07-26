@@ -17,6 +17,22 @@ Template.landing.events({
     e.preventDefault();
     Session.set('loginStateVar', 'signUp');
   },
+  'click #facebook': function(e) {
+    e.preventDefault();
+    Meteor.loginWithFacebook(function(error) {
+      if(error) {
+        addErrorMessage(error.reason || 'Unknown Error');
+      } else {
+        //TODO: login with facebook. But have to figure out how to pull
+        //correct info
+        if(Roles.userIsInRole(Meteor.userId(), 'admin')) {
+          Router.go('adminHomePage');
+        } else {
+          Router.go('memberHomePage');
+        }
+      }
+    });
+  },
   'click #loginSubmit': function(e) {
     e.preventDefault();
 
