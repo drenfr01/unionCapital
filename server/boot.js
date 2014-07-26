@@ -23,3 +23,5 @@ if(facebookConfig) {
       console.log('Got settings for facebook', facebookConfig);
       configureFacebook(facebookConfig);
 }
+
+Future = Npm.require('fibers/future');
