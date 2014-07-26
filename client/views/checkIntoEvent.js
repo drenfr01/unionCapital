@@ -49,6 +49,7 @@ Template.checkIntoEvent.events({
 
     Meteor.call('geolocateUser', Session.get('eventId'), 
       Session.get('longitude'), Session.get('latitude'), 
+      Meteor.userId(),
       function(error, result) {
         if(error) {
           addErrorMessage(error.reason);

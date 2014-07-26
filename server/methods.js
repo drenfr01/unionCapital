@@ -88,16 +88,12 @@ Meteor.methods({
 
     return myFuture.wait();
   },
-  //accepts a transactionID and a geolocation lat/lng
-  //gets the eventId from transaction and then 
-  //compares distance of lat long. If it's "close enough" returns true and adds points
-  //if its not returns false. Calling client side function displays appropriate message
-  //Note: ideally figure out how to add function to Collection
-  geolocateUser: function(eventId, userLong, userLat) {
+  geolocateUser: function(eventId, userLong, userLat, userId) {
     check(eventId, String);
     check(userLong, Number);
     check(userLat, Number);
 
+    //TODO: make this an admin configurable option
     var maxDistance = 0.1; //maximum distance in kilometers to check in
 
     var event = Events.findOne(eventId);
@@ -121,6 +117,7 @@ Meteor.methods({
     console.log("Distance: " + distance);
 
     if(distance < maxDistance) {
+      Meteor.users.update(userId, {$inc: { 'profile.points': event.points }});
       return "Congrats, you are within: " + distance +  " km of your event. Adding " + event.points + " points to your total!";
     } else {
       throw new Meteor.Error(400, "You are too far away from the event" +
