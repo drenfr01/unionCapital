@@ -46,10 +46,6 @@ Events = new Meteor.Collection('events', {
   }
 });
 
-Events.eventFromTransaction = function(transactionId) {
-  return Transactions.find(transactionId).eventId;
-};
-
 Events.allow({
   insert: function() {
     return true;

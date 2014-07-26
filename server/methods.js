@@ -117,6 +117,9 @@ Meteor.methods({
     console.log("Distance: " + distance);
 
     if(distance < maxDistance) {
+      //TODO: consider adding user geolocation info to transaction?
+      Transactions.insert({userId: userId, eventId: event._id, needsApproval: false, 
+                        transactionDate: Date() }); 
       Meteor.users.update(userId, {$inc: { 'profile.points': event.points }});
       return "Congrats, you are within: " + distance +  " km of your event. Adding " + event.points + " points to your total!";
     } else {
