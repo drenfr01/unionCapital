@@ -20,6 +20,13 @@ Meteor.methods({
        transactionDate: Match.Optional(String) 
      });
         
+     //TODO: setup MAIL URL for union capital website
+     Email.send({
+       to: 'duncanrenfrow@gmail.com',
+       from: 'duncanrenfrow@gmail.com',
+       subject: 'A user has submitted a photo for approval',
+       text: 'Please log on to the admin website and approve or reject the photo'
+     });
      return Transactions.insert(attributes);
    },
    insertEvents: function(attributes) {
@@ -97,6 +104,11 @@ Meteor.methods({
     var maxDistance = 0.1; //maximum distance in kilometers to check in
 
     var event = Events.findOne(eventId);
+    
+    if(Transactions.findOne({userId: userId, eventId: event._id})) {
+      throw new Meteor.Error(400, "You have already checked into this event");
+    }
+
 
     var eventLat = event.latitude;
     var eventLong = event.longitude;

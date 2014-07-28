@@ -11,7 +11,12 @@
       "collection2": {},
       "moment": {},
       "bootflat": {},
-      "googlemaps-server": {}
+      "googlemaps-server": {},
+      "jasmine-unit": {},
+      "jasmine": {},
+      "velocity-html-reporter": {},
+      "velocity-quick-start": {},
+      "mocha-web-velocity": {}
     },
     "packages": {
       "bootstrap-3": {
@@ -64,6 +69,31 @@
         "tag": "v1.0.1",
         "commit": "0841fd5e12f2b2ea7c83b5f97e0cdf18ab94a442"
       },
+      "jasmine-unit": {
+        "git": "https://github.com/xolvio/jasmine-unit.git",
+        "tag": "v0.1.24",
+        "commit": "885dde77a96390d0fd31b03756f837f482db2ef1"
+      },
+      "jasmine": {
+        "git": "https://github.com/Sanjo/meteor-jasmine.git",
+        "tag": "v0.1.17",
+        "commit": "e7aa40942fbfb4e1393c4b14ec5ba2c63bb7f899"
+      },
+      "velocity-html-reporter": {
+        "git": "https://github.com/rdickert/velocity-html-reporter.git",
+        "tag": "v0.1.4",
+        "commit": "55f973519fb6db831678219057854b94a4cec846"
+      },
+      "velocity-quick-start": {
+        "git": "https://github.com/alanning/meteor-velocity-quick-start.git",
+        "tag": "v0.0.8",
+        "commit": "76975566981224c3440c4909e7b6a33bdfc294b2"
+      },
+      "mocha-web-velocity": {
+        "git": "https://github.com/mad-eye/meteor-mocha-web.git",
+        "tag": "v0.3.4",
+        "commit": "5b68e18104c00687748b190b04a7752478472d17"
+      },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
         "tag": "v0.2.4",
@@ -91,8 +121,8 @@
       },
       "cfs-access-point": {
         "git": "https://github.com/CollectionFS/Meteor-cfs-access-point.git",
-        "tag": "v0.0.31",
-        "commit": "e2ccc9cdcfdf1a26d40acaeff3f3a6b5324e1ef6"
+        "tag": "v0.0.32",
+        "commit": "e8f51b804db5163cecda616d07b1286d239e8955"
       },
       "cfs-worker": {
         "git": "https://github.com/CollectionFS/Meteor-cfs-worker.git",
@@ -108,6 +138,21 @@
         "git": "https://github.com/aldeed/meteor-simple-schema.git",
         "tag": "v0.6.0",
         "commit": "418ec496612fb2afc853e342f0d2269b6674a2fe"
+      },
+      "velocity": {
+        "git": "https://github.com/xolvio/velocity.git",
+        "tag": "v0.1.16",
+        "commit": "047ee02ce4e6340bbd6229b6bed9ff81940bc22b"
+      },
+      "package-stubber": {
+        "git": "https://github.com/alanning/meteor-package-stubber.git",
+        "tag": "v0.0.15",
+        "commit": "62ad08f8486aacbbc5ec22ea6e2a31573748b7d7"
+      },
+      "mirror": {
+        "git": "https://github.com/xdissent/meteor-mirror.git",
+        "tag": "v0.0.2",
+        "commit": "03d965dcab2f976a1fdc6ce513edcd4c17b75746"
       },
       "cfs-filesaver": {
         "git": "https://github.com/CollectionFS/Meteor-cfs-filesaver.git",

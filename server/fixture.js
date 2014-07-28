@@ -32,7 +32,7 @@ Meteor.startup(function () {
 
     });
   }
-
+/*
   //Events fixture
   if ( Events.find().count() === 0 ) {
     var events = [
@@ -91,5 +91,5 @@ Meteor.startup(function () {
       });
     });
   }
-
+*/
 });

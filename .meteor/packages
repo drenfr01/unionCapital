@@ -24,3 +24,10 @@ googlemaps-server
 accounts-facebook
 service-configuration
 
+jasmine-unit
+jasmine
+velocity-html-reporter
+velocity-quick-start
+
+mocha-web-velocity
+coffeescript
