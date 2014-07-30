@@ -71,10 +71,17 @@ Template.landing.events({
         addErrorMessage(error.reason);
       } else {
         addSuccessMessage("Successfully Created User");
-        Meteor.loginWithPassword(attributes.email, attributes.password);
-        Router.go('memberHomePage');
+        console.log(attributes);
+        Meteor.loginWithPassword(attributes.email, attributes.password,
+                                 function(error) {
+                                   if(error) {
+                                     addErrorMessage(error.reason); 
+                                     Router.go('landing');
+                                   } else {
+                                     Router.go('memberHomePage');
+                                   }
+                                 });
       }
     });
-
   }
 });

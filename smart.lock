@@ -26,8 +26,8 @@
       },
       "iron-router": {
         "git": "https://github.com/EventedMind/iron-router.git",
-        "tag": "v0.7.1",
-        "commit": "d1ffb3f06ea4c112132b030f2eb1a70b81675ecb"
+        "tag": "v0.8.1",
+        "commit": "74e867557fd9cb81173e048e5f81cf4a0a1160a8"
       },
       "accounts-ui-bootstrap-3": {
         "git": "https://github.com/mangasocial/meteor-accounts-ui-bootstrap-3.git",
@@ -94,10 +94,10 @@
         "tag": "v0.3.4",
         "commit": "5b68e18104c00687748b190b04a7752478472d17"
       },
-      "blaze-layout": {
-        "git": "https://github.com/EventedMind/blaze-layout.git",
-        "tag": "v0.2.4",
-        "commit": "b40e9b0612329288d75cf52ad14a7da64bb8618f"
+      "iron-layout": {
+        "git": "https://github.com/EventedMind/iron-layout.git",
+        "tag": "v0.2.0",
+        "commit": "4a2d53e35ba036b0c189c7ceca34be494d4c6c97"
       },
       "cfs-base-package": {
         "git": "https://github.com/CollectionFS/Meteor-cfs-base-package.git",
@@ -141,8 +141,8 @@
       },
       "velocity": {
         "git": "https://github.com/xolvio/velocity.git",
-        "tag": "v0.1.16",
-        "commit": "047ee02ce4e6340bbd6229b6bed9ff81940bc22b"
+        "tag": "v0.1.18",
+        "commit": "1958c117417e832c3e9025088cca845b4a82728f"
       },
       "package-stubber": {
         "git": "https://github.com/alanning/meteor-package-stubber.git",
@@ -153,6 +153,21 @@
         "git": "https://github.com/xdissent/meteor-mirror.git",
         "tag": "v0.0.2",
         "commit": "03d965dcab2f976a1fdc6ce513edcd4c17b75746"
+      },
+      "blaze-layout": {
+        "git": "https://github.com/EventedMind/blaze-layout.git",
+        "tag": "v0.2.5",
+        "commit": "273e3ab7d005d91a1a59c71bd224533b4dae2fbd"
+      },
+      "iron-core": {
+        "git": "https://github.com/EventedMind/iron-core.git",
+        "tag": "v0.2.0",
+        "commit": "0e48b5dc50d03f01025b7b900fb5ce2f13d52cad"
+      },
+      "iron-dynamic-template": {
+        "git": "https://github.com/EventedMind/iron-dynamic-template.git",
+        "tag": "v0.2.1",
+        "commit": "4dd1185c4d9d616c9abdb3f33e4a7d5a88db7e18"
       },
       "cfs-filesaver": {
         "git": "https://github.com/CollectionFS/Meteor-cfs-filesaver.git",
@@ -201,8 +216,8 @@
       },
       "cfs-gridfs": {
         "git": "https://github.com/CollectionFS/Meteor-cfs-gridfs.git",
-        "tag": "v0.0.22",
-        "commit": "2d008d4594e55d07006674b25a7e9cf8d25a3917"
+        "tag": "v0.0.24",
+        "commit": "46be5cbc2339783f59f0b2e38caa0c7bba88eba1"
       },
       "power-queue": {
         "git": "https://github.com/CollectionFS/Meteor-power-queue.git",

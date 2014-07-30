@@ -42,3 +42,6 @@
 /velocity
 /package-stubber
 /mirror
+/iron-layout
+/iron-core
+/iron-dynamic-template
