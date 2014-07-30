@@ -16,9 +16,7 @@ Template.facebookLogin.events({
       profile: {
         firstName: $('#firstName').val(),
         lastName: $('#lastName').val(),
-        street: $('#userStreet').val(),
-        city: $('#userCity').val(),
-        state: $('#userState').val()
+        zip: $('#zip').val()
       }
     };
     //TODO: figure out if this can be done client side only?

@@ -62,15 +62,14 @@ Meteor.methods({
          {$set: { needsApproval: false, eventId: eventId} }); 
   },
   createNewUser: function(attributes) {
+    console.log(attributes);
     check(attributes, {
       email: String,
       password: String,
       profile: {
         firstName: String,
         lastName: String,
-        street: String,
-        city: String,
-        state: String
+        zip: String
       }  
     });
     var newUserId = Accounts.createUser({
@@ -88,9 +87,7 @@ Meteor.methods({
       profile: {
         firstName: String,
         lastName: String,
-        street: String,
-        city: String,
-        state: String
+        zip: Number
       }  
     });
     Meteor.users.update(attributes.userId,
