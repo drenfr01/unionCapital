@@ -1,3 +1,7 @@
+function toRadians(x) {
+     return x * (Math.PI / 180);
+}
+
 Meteor.methods({
    removeImage: function(imageId) {
     return Images.remove(imageId);
@@ -16,6 +20,13 @@ Meteor.methods({
        transactionDate: Match.Optional(String) 
      });
         
+     //TODO: setup MAIL URL for union capital website
+     Email.send({
+       to: 'duncanrenfrow@gmail.com',
+       from: 'duncanrenfrow@gmail.com',
+       subject: 'A user has submitted a photo for approval',
+       text: 'Please log on to the admin website and approve or reject the photo'
+     });
      return Transactions.insert(attributes);
    },
    insertEvents: function(attributes) {
@@ -51,15 +62,14 @@ Meteor.methods({
          {$set: { needsApproval: false, eventId: eventId} }); 
   },
   createNewUser: function(attributes) {
+    console.log(attributes);
     check(attributes, {
       email: String,
       password: String,
       profile: {
         firstName: String,
         lastName: String,
-        street: String,
-        city: String,
-        state: String
+        zip: String
       }  
     });
     var newUserId = Accounts.createUser({
@@ -70,6 +80,24 @@ Meteor.methods({
 
     Roles.addUsersToRoles(newUserId, 'user');
   },
+  updateUserProfile: function(attributes) {
+    check(attributes, {
+      userId: String,
+      email: String,
+      profile: {
+        firstName: String,
+        lastName: String,
+        zip: String
+      }  
+    });
+    Meteor.users.update(attributes.userId,
+                        {$set: { profile: attributes.profile
+                        }});
+    Meteor.users.update(attributes.userId,
+                        {$push: {emails: {address: attributes.email
+                        }}});
+    Roles.addUsersToRoles(attributes.userId, 'user');
+  },
   geocodeAddress: function(address) {
     var myFuture = new Future(); 
     googlemaps.geocode(
@@ -78,11 +106,56 @@ Meteor.methods({
         if(err) {
           myFuture.throw(error);
         } else {
-          console.log(data.results[0].geometry);
           myFuture.return(data.results[0].geometry);
         }
     });
 
     return myFuture.wait();
+  },
+  geolocateUser: function(eventId, userLong, userLat, userId) {
+    check(eventId, String);
+    check(userLong, Number);
+    check(userLat, Number);
+
+    //TODO: make this an admin configurable option
+    var maxDistance = 0.1; //maximum distance in kilometers to check in
+
+    var event = Events.findOne(eventId);
+    
+    if(Transactions.findOne({userId: userId, eventId: event._id})) {
+      throw new Meteor.Error(400, "You have already checked into this event");
+    }
+
+
+    var eventLat = event.latitude;
+    var eventLong = event.longitude;
+
+    //Haversine formula, source: http://www.movable-type.co.uk/scripts/latlong.html
+    var R = 6371; // km
+    var userLatRadians = toRadians(userLat);
+    var eventLatRadians = toRadians(eventLat);
+    var deltaLatRadians = toRadians(eventLat-userLat);
+    var deltaLongRadians = toRadians(eventLong-userLong);
+
+    var a = Math.sin(deltaLatRadians/2) * Math.sin(deltaLatRadians/2) +
+      Math.cos(userLatRadians) * Math.cos(eventLatRadians) *
+      Math.sin(deltaLongRadians/2) * Math.sin(deltaLongRadians/2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+    var distance = R * c;
+    console.log("Distance: " + distance);
+
+    if(distance < maxDistance) {
+      //TODO: consider adding user geolocation info to transaction?
+      Transactions.insert({userId: userId, eventId: event._id, needsApproval: false, 
+                        transactionDate: Date() }); 
+      Meteor.users.update(userId, {$inc: { 'profile.points': event.points }});
+      return "Congrats, you are within: " + distance +  " km of your event. Adding " + event.points + " points to your total!";
+    } else {
+      throw new Meteor.Error(400, "You are too far away from the event" +
+                             "(" + distance + " km ), please move closer and try again OR take a photo " +
+                             "and submit it for manually approval");
+    }
+
   }
 });

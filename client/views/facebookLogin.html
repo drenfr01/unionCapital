@@ -1,0 +1,35 @@
+<template name="facebookLogin">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <h3 class="text-center"><small>Please update your profile</small></h3>
+      <!--TODO: put this in partial with landing.html -->
+      <form role="form">
+        <br>
+        <div class="form-group>">
+          <label for="firsName" class="sr-only">First Name</label>
+          <input type="text" class="form-control" id="firstName" 
+          value="{{firstName}}">
+        </div>
+        <br>
+        <div class="form-group>">
+          <label for="lastName" class="sr-only">Last Name</label>
+          <input type="text" class="form-control" id="lastName" 
+          value="{{lastName}}">
+        </div>
+        <br>
+        <div class="form-group>">
+          <label for="userZip" class="sr-only">Zip</label>
+          <input type="text" class="form-control" id="zip" 
+          placeholder="Enter Zip Code">
+        </div>
+        <br>
+        <div class="form-group>">
+          <label for="userEmail" class="sr-only">Email Address</label>
+          <input type="email" class="form-control" id="userEmail" placeholder="Enter Email">
+        </div>
+        <br>
+        <button type="submit" class="button-landing" id="addInformation">Submit</button>
+      </form>
+    </div>
+  </div>
+</template>

@@ -10,11 +10,13 @@ Events = new Meteor.Collection('events', {
     },
     longitude: {
       type: String,
-      label: 'Longitude'
+      label: 'Longitude',
+      optional: true
     },
     latitude: {
       type: String,
-      label: 'Latitude'
+      label: 'Latitude',
+      optional: true
     },
     description: {
       type: String,

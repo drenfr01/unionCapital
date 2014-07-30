@@ -4,7 +4,7 @@ Template.landing.rendered = function() {
 
 Template.landing.helpers({
   'loginState': function(state) {
-    return Session.get('loginStateVar') === state;
+    return Session.equals('loginStateVar', state);
   },
 });
 
@@ -16,6 +16,21 @@ Template.landing.events({
   'click #signUp': function(e) {
     e.preventDefault();
     Session.set('loginStateVar', 'signUp');
+  },
+  'click #facebook': function(e) {
+    e.preventDefault();
+    Meteor.loginWithFacebook(function(error) {
+      if(error) {
+        addErrorMessage(error.reason || 'Unknown Error');
+      } else {
+        //Facebook logins populate profile.name
+        if(_.isUndefined(Meteor.user().profile.name)) {
+          Router.go('memberHomePage');
+        } else {
+          Router.go('facebookLogin');
+        }
+      }
+    });
   },
   'click #loginSubmit': function(e) {
     e.preventDefault();
@@ -45,9 +60,7 @@ Template.landing.events({
       profile: {
         firstName: $('#firstName').val(),
         lastName: $('#lastName').val(),
-        street: $('#userStreet').val(),
-        city: $('#userCity').val(),
-        state: $('#userState').val()
+        zip: $('#zip').val(),
       }
     };
     //TODO: figure out if this can be done client side only?
@@ -56,10 +69,17 @@ Template.landing.events({
         addErrorMessage(error.reason);
       } else {
         addSuccessMessage("Successfully Created User");
-        Meteor.loginWithPassword(attributes.email, attributes.password);
-        Router.go('memberHomePage');
+        console.log(attributes);
+        Meteor.loginWithPassword(attributes.email, attributes.password,
+                                 function(error) {
+                                   if(error) {
+                                     addErrorMessage(error.reason); 
+                                     Router.go('landing');
+                                   } else {
+                                     Router.go('memberHomePage');
+                                   }
+                                 });
       }
     });
-
   }
 });
