@@ -81,6 +81,25 @@ Meteor.methods({
 
     Roles.addUsersToRoles(newUserId, 'user');
   },
+  updateUserProfile: function(attributes) {
+    check(attributes, {
+      userId: String,
+      email: String,
+      profile: {
+        firstName: String,
+        lastName: String,
+        street: String,
+        city: String,
+        state: String
+      }  
+    });
+    Meteor.users.update(attributes.userId,
+                        {$set: { profile: attributes.profile
+                        }});
+    Meteor.users.update(attributes.userId,
+                        {$push: {emails: {address: attributes.email
+                        }}});
+  },
   geocodeAddress: function(address) {
     var myFuture = new Future(); 
     googlemaps.geocode(

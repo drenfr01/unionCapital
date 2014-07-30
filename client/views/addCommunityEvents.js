@@ -45,6 +45,7 @@ Template.addCommunityEvents.events({
                     addErrorMessage(error.reason);
                     Router.go('addCommunityEvents');
                   } else {
+                    console.log(result.location);
                     Session.set('latitude', result.location.lat);
                     Session.set('longitude', result.location.lng);
                   }

@@ -4,7 +4,7 @@ Template.landing.rendered = function() {
 
 Template.landing.helpers({
   'loginState': function(state) {
-    return Session.get('loginStateVar') === state;
+    return Session.get('loginStateVar', state);
   },
 });
 
@@ -23,12 +23,11 @@ Template.landing.events({
       if(error) {
         addErrorMessage(error.reason || 'Unknown Error');
       } else {
-        //TODO: login with facebook. But have to figure out how to pull
-        //correct info
-        if(Roles.userIsInRole(Meteor.userId(), 'admin')) {
-          Router.go('adminHomePage');
-        } else {
+        //Facebook logins populate profile.name
+        if(_.isUndefined(Meteor.user().profile.name)) {
           Router.go('memberHomePage');
+        } else {
+          Router.go('facebookLogin');
         }
       }
     });
