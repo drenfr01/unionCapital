@@ -99,6 +99,7 @@ Meteor.methods({
     Meteor.users.update(attributes.userId,
                         {$push: {emails: {address: attributes.email
                         }}});
+    Roles.addUsersToRoles(attributes.userId, 'user');
   },
   geocodeAddress: function(address) {
     var myFuture = new Future(); 

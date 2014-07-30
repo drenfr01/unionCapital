@@ -4,7 +4,7 @@ Template.landing.rendered = function() {
 
 Template.landing.helpers({
   'loginState': function(state) {
-    return Session.get('loginStateVar', state);
+    return Session.equals('loginStateVar', state);
   },
 });
 
