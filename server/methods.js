@@ -87,7 +87,7 @@ Meteor.methods({
       profile: {
         firstName: String,
         lastName: String,
-        zip: Number
+        zip: String
       }  
     });
     Meteor.users.update(attributes.userId,
