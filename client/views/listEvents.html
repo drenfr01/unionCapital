@@ -1,6 +1,6 @@
 <template name="listEvents">
 {{#if isEventIndex}}
-<h1 class="text-center"><small>Upcoming Events</small></h1>
+<h1 class="text-center"><small>{{title}}</small></h1>
 <!--Modal launched when Edit button below clicked -->
 {{#with modalContext}}
 <div class="modal fade" id="editModal">
@@ -35,26 +35,26 @@
 </div><!-- /.modal -->
 {{/with}}
 <div class="tablesize">
-  <div class="ptheader">Event Details</div>
   <table class="table table-striped">
     <thead>
       <tr class="full-screen-event">
-        <th> Date </th>
         <th> Name of Event </th>
+        <th> Date </th>
         <th> Address </th>
-        <th> URL </th>
-        <th> Points </th>
+        <th> {{eventActionTitle}}</th>
         <th></th>
         {{#if isInRole 'admin'}}
+        <th> Points </th>
         <th></th>
         {{/if}}
 
       </tr>
       <tr class="small-screen-event">
-        <th> Date </th>
         <th> Name of Event </th>
-        <th> Points </th>
+        <th> Date </th>
+        <th>{{eventActionTitle}}</th>
         {{#if isInRole 'admin'}}
+        <th> Points </th>
         <th></th>
         {{/if}}
 
@@ -63,22 +63,23 @@
     <tbody>
       {{#each upcomingEvents}}
       <tr class="full-screen-event">
-        <td class="eventView">{{formatDate startDate}}-{{formatDate endDate}}</td>
         <td class="eventView"><a href="">{{name}}</a></td>
-        <td class="eventView">{{address}}</td>
-        <td class="eventView"><a href={{url}}>{{url}}</a></td>
-        <td class="eventView">{{points}}</td>
+        <td>{{formatDate startDate}}-{{formatDate endDate}}</td>
+        <td>{{address}}</td>
+        <td>{{{eventAction}}}</td>
         {{#if isInRole 'admin'}}
+        <td class="eventView">{{points}}</td>
         <td><button type="button" class="btn btn-default editEvent" data-toggle="modal"
             data-target = "#editModal">Edit</button></td>
         {{/if}}
         <td></td>
       </tr>
       <tr class="small-screen-event">
-        <td class="eventView">{{formatDate startDate}}-{{formatDate endDate}}</td>
         <td class="eventView"><a href="">{{name}}</a></td>
-        <td class="eventView">{{points}}</td>
+        <td>{{formatDate startDate}}-{{formatDate endDate}}</td>
+        <td>{{{eventAction}}}</td>
         {{#if isInRole 'admin'}}
+        <td class="eventView">{{points}}</td>
         <td><button type="button" class="btn btn-default editEvent">Edit</button></td>
         <!--{{else}}
         <td><button type="button" class="btn btn-default editEvent" data-toggle="modal"

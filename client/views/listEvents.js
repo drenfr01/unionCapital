@@ -14,11 +14,26 @@ Template.listEvents.helpers({
   'eventView': function() {
       return Session.get('event');
   },
-  'isAdmin': function() {
-  		return false;
-  },
   'upcomingEvents': function(){
     return Events.find({endDate: {'$gte': new Date()}, active: 1}, {sort: {startDate: 1}});
+  },
+  'title': function() {
+    //this here is set by data context in iron-router (lib/router.js)
+    return this + " Events";
+  },
+  'eventActionTitle': function() {
+    if(Session.equals('eventType', 'Current')) {
+      return "";
+    } else {
+      return "Will Attend";
+    }
+  },
+  'eventAction': function() {
+    if(Session.equals('eventType', 'Current')) {
+      return "<button class='btn btn-small checkIn'>Check In</button>";
+    } else {
+      return "<input type='checkbox' value=''>";
+    }
   }
 });
 
@@ -37,5 +52,6 @@ Template.listEvents.events({
 });
 
 Template.listEvents.rendered = function() {
+  Session.set('eventType', this.data);
   Session.set('eventIndex', true);
 };
