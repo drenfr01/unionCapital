@@ -3,3 +3,5 @@
 startup.js
 uploads/
 private/
+tests/.profile/
+tests/a1-package-stubs.js
