@@ -63,8 +63,9 @@ Template.reviewPhotos.events({
     Meteor.call('approveTransaction', attributes, function(error) {
       if(error) {
         addErrorMessage(error.reason);
+      } else {
+        addSuccessMessage('Event submission approved');
       }
-      addSuccessMessage('Event submission approved');
     });
   }
 

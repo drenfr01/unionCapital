@@ -1,20 +1,22 @@
 <template name="checkIntoEvent">
-  <div class="col-md-4 col-md-offset-4">
-    <h1><small>Scan a QR Code</small></h1>
-    <hr>
-    <p>This geolocates the user to an event and displays the result</p>
-    <select id="eventSelector">
-      {{#each currentEvents}}
-        <option value="{{_id}}">{{name}}</option>
-      {{/each}}
-    </select>
-    <button type="button" class="btn btn-large btn-default" id="geoLocate">
-      GeoLocate!
-    </button>
-    {{#if geolocationSuccessful}}
-    <button type="button" class="btn btn-large btn-default" id="submit">
-      Submit
-    </button>
-    {{/if}}
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+      <h1><small>Scan a QR Code</small></h1>
+      <hr>
+      <p>This geolocates the user to an event and displays the result</p>
+      <select id="eventSelector">
+        {{#each currentEvents}}
+          <option value="{{_id}}">{{name}}</option>
+        {{/each}}
+      </select>
+      <button type="button" class="btn btn-large btn-default" id="geoLocate">
+        GeoLocate!
+      </button>
+      {{#if geolocationSuccessful}}
+      <button type="button" class="btn btn-large btn-default" id="submit">
+        Submit
+      </button>
+      {{/if}}
+    </div>
   </div>
 </template>
