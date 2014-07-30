@@ -67,14 +67,20 @@ Template.takePicture.events({
   },
   'click #submitEvent': function(e) {
     e.preventDefault();
+    
+    var eventName = $('#eventName').val();
+    var eventDescription = $('#eventDescription').val();
+    var transactionDate = $('#eventDate').val();
 
+    if(eventName && eventDescription && transactionDate && imageId) {
+    
     var attributes = {
       userId: Meteor.userId(),
       imageId: imageId,
       needsApproval: true,
-      pendingEventName: $('#eventName').val(),
-      pendingEventDescription: $('#eventDescription').val(),
-      transactionDate: $('#eventDate').val()
+      pendingEventName: eventName,
+      pendingEventDescription: eventDescription,
+      transactionDate: transactionDate 
     };
 
     Meteor.call('insertTransaction', attributes, function(error) {
@@ -85,6 +91,10 @@ Template.takePicture.events({
       addSuccessMessage('Transaction successfully submitted');
       Router.go('memberHomePage');
     }); 
+    } else {
+      addErrorMessage('Please ensure event name, description, ' +
+                      'date, and photo are filled in');
+    }
   },
 });
 
