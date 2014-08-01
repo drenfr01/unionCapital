@@ -258,6 +258,11 @@ legend {
   margin-top: 15px;
 }
 
+.button-landing1 {
+  background-color: #255f8a !important;
+  color:white;
+}
+
 .button-landing2{
   background-color: #a1cc00 !important;
 }
@@ -393,5 +398,14 @@ margin-left: auto;
 margin-right: auto;
 }
 
+/* CODE I INSERTED FOR THE "OR" ON checkIntoEvent.html */
+.strike {
+    display: block;
+    text-align: center;
+    font-size: 1.5em;
+    color:#255f8a; 
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
 
 
