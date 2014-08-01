@@ -1,0 +1,15 @@
+<template name="quickCheckIn">
+  <div class="row text-center">
+    <button class="btn btn-large btn-primary" id="closestEvent">Find Closest Event</button>
+    <br>
+    {{#if closestEvent}}
+      Found Event: {{closestEvent.name}}
+      <br>
+      <button class="btn btn-large btn-primary" id="checkIn">
+        Check In
+      </button>
+      <br>
+    {{/if}}
+    <button class="btn btn btn-default">Submit Photo</button>
+  </div>
+</template>
