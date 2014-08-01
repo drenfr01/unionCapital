@@ -1,22 +1,31 @@
 <template name="checkIntoEvent">
   <div class="row">
     <div class="col-md-4 col-md-offset-4">
-      <h1><small>Scan a QR Code</small></h1>
+      <h1><small>Check in to Event</small></h1>
       <hr>
-      <p>This geolocates the user to an event and displays the result</p>
+      <p>Choose an event currently happening, and "Check In" when
+        you are at the event. Press "Submit" to confirm attendance.</p>
       <select id="eventSelector">
         {{#each currentEvents}}
           <option value="{{_id}}">{{name}}</option>
         {{/each}}
       </select>
       <button type="button" class="btn btn-large btn-default" id="geoLocate">
-        GeoLocate!
+        Check In
       </button>
       {{#if geolocationSuccessful}}
       <button type="button" class="btn btn-large btn-default" id="submit">
         Submit
       </button>
       {{/if}}
+
+<span class="strike">----OR----</span>
+<a href="{{pathFor 'takePicture'}}">
+  <input type="button" value="Upload Photo" class="button-landing button-landing1" style="margin-top:0;"/>
+</a>
+      <em>Use this option if the check in option with geolocation data isn't 
+        working or if you are submiting a DIY event.</em>
     </div>
   </div>
+
 </template>
