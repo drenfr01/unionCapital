@@ -1,134 +1,96 @@
 <template name="listEvents">
-  {{#if isEventIndex}}
-  <h1 class="text-center"><small>Upcoming Events</small></h1>
-  <!--Modal launched when Edit button below clicked -->
-  {{#with modalContext}}
-  <div class="modal fade" id="editModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-            &times;</button>
-          <h4 class="modal-title text-center">Edit Events</h4>
-        </div>
-        <div class="modal-body">
+{{#if isEventIndex}}
+<h1 class="text-center"><small>{{title}}</small></h1>
+<!--Modal launched when Edit button below clicked -->
+{{#with modalContext}}
+<div class="modal fade" id="editModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          &times;</button>
+        <h4 class="modal-title text-center">Edit Events</h4>
+      </div>
+      <div class="modal-body">
         {{#autoForm collection="Events" doc=editingDoc id="updateEventsForm" type="update"}}
-          <fieldset>
-            <legend>Update Event</legend>
-            {{> afQuickField name="name"}}
-            {{> afQuickField name="address"}}
-            {{> afQuickField name="url"}}
-            {{> afQuickField name="description"}}
-            {{> afQuickField name="active"}}
-            {{> afQuickField name="startDate"}}
-            {{> afQuickField name="endDate"}}
-            {{> afQuickField name="points"}}
-          </fieldset>
-
-          <button type="submit" class="btn btn-default" id="submit">Submit</button>
+        <fieldset>
+          <legend>Update Event</legend>
+          {{> afQuickField name="name"}}
+          {{> afQuickField name="address"}}
+          {{> afQuickField name="url"}}
+          {{> afQuickField name="description"}}
+          {{> afQuickField name="active"}}
+          {{> afQuickField name="startDate"}}
+          {{> afQuickField name="endDate"}}
+          {{> afQuickField name="points"}}
+        </fieldset>
+        <button type="submit" class="btn btn-default" id="submit">Submit</button>
         {{/autoForm}}
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
-  {{/with}}
-  
-
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{/with}}
 <div class="tablesize">
- <div class="ptheader">Event Details</div>
   <table class="table table-striped">
     <thead>
-     <tr class="full-screen-event">
-        <th> Date </th>
+      <tr class="full-screen-event">
         <th> Name of Event </th>
+        <th> Date </th>
         <th> Address </th>
-        <th> URL </th>
-        <th> Points </th>
+        <th> {{eventActionTitle}}</th>
         <th></th>
         {{#if isInRole 'admin'}}
-          <th></th>
-       {{/if}}
-      
-      </tr>
-       <tr class="small-screen-event">
-        <th> Date </th>
-        <th> Name of Event </th>
         <th> Points </th>
+        <th></th>
+        {{/if}}
+
+      </tr>
+      <tr class="small-screen-event">
+        <th> Name of Event </th>
+        <th> Date </th>
+        <th>{{eventActionTitle}}</th>
         {{#if isInRole 'admin'}}
-          <th></th>
-      {{/if}}
-    
+        <th> Points </th>
+        <th></th>
+        {{/if}}
+
       </tr>
     </thead>
     <tbody>
-    {{#each upcomingEvents}}
-    <tr class="full-screen-event">
-      <td class="eventView">{{formatDate startDate}}-{{formatDate endDate}}</td>
-      <td class="eventView"><a href="">{{name}}</a></td>
-      <td class="eventView">{{address}}</td>
-      <td class="eventView"><a href={{url}}>{{url}}</a></td>
-      <td class="eventView">{{points}}</td>
-  
-      {{#if isInRole 'admin'}}
-       <td><button type="button" class="btn btn-default editEvent" data-toggle="modal"
-          data-target = "#editModal">Edit</button></td>
-
-      {{/if}}
-      <td></td>
-    
-    </tr>
-
-    <tr class="small-screen-event">
-      <td class="eventView">{{formatDate startDate}}-{{formatDate endDate}}</td>
-      <td class="eventView"><a href="">{{name}}</a></td>
-      <td class="eventView">{{points}}</td>
-      {{#if isInRole 'admin'}}
-       <td><button type="button" class="btn btn-default editEvent">Edit</button></td>
-
-      <!--{{else}}
-
+      {{#each upcomingEvents}}
+      <tr class="full-screen-event">
+        <td class="eventView"><a href="">{{name}}</a></td>
+        <td>{{formatDate startDate}}-{{formatDate endDate}}</td>
+        <td>{{address}}</td>
+        <td>{{{eventAction}}}</td>
+        {{#if isInRole 'admin'}}
+        <td class="eventView">{{points}}</td>
         <td><button type="button" class="btn btn-default editEvent" data-toggle="modal"
-          data-target = "#editModal">More info</button></td>-->
-      {{/if}}
-    </tr>
-
-    {{/each}}
+            data-target = "#editModal">Edit</button></td>
+        {{/if}}
+        <td></td>
+      </tr>
+      <tr class="small-screen-event">
+        <td class="eventView"><a href="">{{name}}</a></td>
+        <td>{{formatDate startDate}}-{{formatDate endDate}}</td>
+        <td>{{{eventAction}}}</td>
+        {{#if isInRole 'admin'}}
+        <td class="eventView">{{points}}</td>
+        <td><button type="button" class="btn btn-default editEvent">Edit</button></td>
+        <!--{{else}}
+        <td><button type="button" class="btn btn-default editEvent" data-toggle="modal"
+            data-target = "#editModal">More info</button></td>-->
+        {{/if}}
+      </tr>
+      {{/each}}
     </tbody>
   </table>
 </div>
-  {{else}}
-      {{#with eventView}}
-      <div class="event-container">
-        <div class="row" style="margin-bottom:10px;">
-          <span class="col-md-12">
-            <span class="btn btn-info back">
-              <span class="glyphicon glyphicon-arrow-left"></span>
-              All Events
-            </span>
-          </span>
-        </div>    
-            <span class="col-md-5">
-            <iframe
-            width="100%"
-            height="300"
-            frameborder="0" style="border:0; padding: 0; margin-left: -15px;"
-            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA_ypBd-Tqf2AcLAoiEFLq9z-ZS4LXjAmY&q={{address}}">
-          </iframe>
-          </span>
-
-
-          <span class="col-md-5">
-            <h4>{{name}}</h4>
-            <p> <b>Date:</b> {{formatDate startDate}}-{{formatDate endDate}}</p>
-            <p> <b>Address:</b> {{address}}</p>
-            <p> <b>Event website:</b> <a href={{url}} > {{url}} </a></p>
-            <p> <b>Points:</b> {{points}}</p>
-          </span>
-      </div>
-    {{/with}}
-  {{/if}}
-
+{{else}}
+  {{>singleEvent eventView}}
+{{/if}}
 </template>

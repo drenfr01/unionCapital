@@ -1,13 +1,6 @@
-function toRadians(x) {
-     return x * (Math.PI / 180);
-}
-
 Meteor.methods({
    removeImage: function(imageId) {
     return Images.remove(imageId);
-   },
-   updateUserPoints: function(attributes) {
-     return Meteor.users.update(attributes.userId, {$inc: { 'profile.points': attributes.points }});
    },
    insertTransaction: function(attributes) {
      check(attributes, {
@@ -21,13 +14,19 @@ Meteor.methods({
      });
         
      //TODO: setup MAIL URL for union capital website
-     Email.send({
-       to: 'duncanrenfrow@gmail.com',
-       from: 'duncanrenfrow@gmail.com',
-       subject: 'A user has submitted a photo for approval',
-       text: 'Please log on to the admin website and approve or reject the photo'
-     });
+     if(attributes.needsApproval) {
+       Email.send({
+         to: 'duncanrenfrow@gmail.com',
+         from: 'duncanrenfrow@gmail.com',
+         subject: 'A user has submitted a photo for approval',
+         text: 'Please log on to the admin website and approve or reject the photo'
+       });
+     }
+    if(Transactions.findOne({userId: attributes.userId, eventId: attributes.eventId})) {
+      throw new Meteor.Error(400, "You have already checked into this event");
+    } else {
      return Transactions.insert(attributes);
+    }
    },
    insertEvents: function(attributes) {
      check(attributes, {
@@ -44,6 +43,7 @@ Meteor.methods({
     removeTransaction(attributes.transactionId);
     //TODO: mark images as logically deleted
    },
+   //TODO: change this to DIY transaction
    approveTransaction: function(attributes) {
      check(attributes, {
        transactionId: String,
@@ -119,30 +119,11 @@ Meteor.methods({
 
     //TODO: make this an admin configurable option
     var maxDistance = 0.1; //maximum distance in kilometers to check in
-
     var event = Events.findOne(eventId);
-    
     if(Transactions.findOne({userId: userId, eventId: event._id})) {
       throw new Meteor.Error(400, "You have already checked into this event");
     }
-
-
-    var eventLat = event.latitude;
-    var eventLong = event.longitude;
-
-    //Haversine formula, source: http://www.movable-type.co.uk/scripts/latlong.html
-    var R = 6371; // km
-    var userLatRadians = toRadians(userLat);
-    var eventLatRadians = toRadians(eventLat);
-    var deltaLatRadians = toRadians(eventLat-userLat);
-    var deltaLongRadians = toRadians(eventLong-userLong);
-
-    var a = Math.sin(deltaLatRadians/2) * Math.sin(deltaLatRadians/2) +
-      Math.cos(userLatRadians) * Math.cos(eventLatRadians) *
-      Math.sin(deltaLongRadians/2) * Math.sin(deltaLongRadians/2);
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-
-    var distance = R * c;
+    var distance = haversineFormula(event, userLong, userLat);
     console.log("Distance: " + distance);
 
     if(distance < maxDistance) {
@@ -156,6 +137,5 @@ Meteor.methods({
                              "(" + distance + " km ), please move closer and try again OR take a photo " +
                              "and submit it for manually approval");
     }
-
   }
 });
