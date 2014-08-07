@@ -1,30 +1,38 @@
 <template name="checkIntoEvent">
-  <div class="row">
+  <div class="row text-center">
     <div class="col-md-4 col-md-offset-4">
-      <h1><small>Check in to Event</small></h1>
+      <h1><small>Check into Event</small></h1>
       <hr>
-      <p>Choose an event currently happening, and "Check In" when
-        you are at the event. Press "Submit" to confirm attendance.</p>
+      <p>Below is a list of current events. Select one and then log in via geolocation or by submitting a photo</p>
+      <br>
       <select id="eventSelector">
         {{#each currentEvents}}
           <option value="{{_id}}">{{name}}</option>
         {{/each}}
       </select>
-      <button type="button" class="btn btn-large btn-default" id="geoLocate">
-        Check In
-      </button>
-      {{#if geolocationSuccessful}}
-      <button type="button" class="btn btn-large btn-default" id="submit">
-        Submit
-      </button>
+      <br>
+      <br>
+      {{#if eventSelected}}
+          <button type="button" class="btn btn-large btn-default" id="geoLocate">
+            Check In by Location
+          </button>
+          <button type="button" class="btn btn-large btn-default" id="checkInByPhoto">
+            Check In by Photo
+          </button>
+        {{#if geolocationSuccessful}}
+          <br>
+          <p>Ready to check in!</p>
+          <button type="button" class="btn btn-large btn-default" id="submit">
+            Submit
+          </button>
+        {{/if}}
       {{/if}}
 
 <span class="strike">----OR----</span>
-<a href="{{pathFor 'takePicture'}}">
-  <input type="button" value="Upload Photo" class="button-landing button-landing1" style="margin-top:0;"/>
+<a href="{{pathFor 'submitNewEvent'}}">
+  <input type="button" value="Upload New Event" class="button-landing button-landing1" style="margin-top:0;"/>
 </a>
-      <em>Use this option if the check in option with geolocation data isn't 
-        working or if you are submiting a DIY event.</em>
+      <em>Use this option to submit an event not listed above</em>
     </div>
   </div>
 

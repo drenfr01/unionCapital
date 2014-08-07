@@ -1,3 +1,4 @@
+//TODO: this code sucks, please clean it up
 var photoType = "userEvent";
 var imageId;
 var files;
@@ -42,6 +43,14 @@ function removeImages(type) {
 
 Template.takePicture.rendered = function() {
   Session.set('imageLoaded', false);
+  var currentDate = moment().format("YYYY-MM-DD");
+  $('#eventDate').val(currentDate);
+  if(this.data) {
+    $('#eventName').prop('readonly',true);
+    $('#eventName').val(this.data.name);
+    $('#eventDescription').prop('readonly',true);
+    $('#eventDescription').val(this.data.description);}
+    $('#eventDate').prop('readonly',true);
 };
 
 //TODO: this code needs to be DRY
@@ -68,29 +77,33 @@ Template.takePicture.events({
   'click #submitEvent': function(e) {
     e.preventDefault();
     
+    //TODO: this is probably a security risk to only check on
+    //the client side. Should implement server side checks
     var eventName = $('#eventName').val();
     var eventDescription = $('#eventDescription').val();
     var transactionDate = $('#eventDate').val();
 
     if(eventName && eventDescription && transactionDate && imageId) {
     
-    var attributes = {
-      userId: Meteor.userId(),
-      imageId: imageId,
-      needsApproval: true,
-      pendingEventName: eventName,
-      pendingEventDescription: eventDescription,
-      transactionDate: transactionDate 
-    };
+      var attributes = {
+        userId: Meteor.userId(),
+        imageId: imageId,
+        eventId: this._id,
+        needsApproval: true,
+        pendingEventName: eventName,
+        pendingEventDescription: eventDescription,
+        transactionDate: transactionDate 
+      };
 
-    Meteor.call('insertTransaction', attributes, function(error) {
-      if(error) {
-        addErrorMessage(error.reason);
-        Router.go('takePicture'); 
-      }
-      addSuccessMessage('Transaction successfully submitted');
-      Router.go('memberHomePage');
-    }); 
+      Meteor.call('insertTransaction', attributes, function(error) {
+        if(error) {
+          addErrorMessage(error.reason);
+          Router.go('checkIntoEvent'); 
+        } else {
+        addSuccessMessage('Transaction successfully submitted');
+        Router.go('memberHomePage');
+        }
+      }); 
     } else {
       addErrorMessage('Please ensure event name, description, ' +
                       'date, and photo are filled in');

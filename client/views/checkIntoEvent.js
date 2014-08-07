@@ -13,6 +13,10 @@ Template.checkIntoEvent.helpers({
   //TODO: make sure this is actually only active events
   'currentEvents': function() {
     return Events.find({active: 1});
+  },
+  //TODO: have a graceful "please wait" screen while geolocating
+  'eventSelected': function() {
+    return Session.get('eventId');
   }
 });
 
@@ -44,6 +48,11 @@ Template.checkIntoEvent.events({
       addErrorMessage('Geolocation not supported');
     }
   },
+  'click #checkInByPhoto': function(e) {
+    e.preventDefault();
+
+    Router.go('takePicture', {_id: Session.get('eventId')});
+  },
   'click #submit': function(e) {
     e.preventDefault();
 
@@ -53,6 +62,10 @@ Template.checkIntoEvent.events({
       function(error, result) {
         if(error) {
           addErrorMessage(error.reason);
+          Session.set('longitude', null);
+          Session.set('latitude', null);
+          Session.set('eventId', null);
+          $('#eventSelector').prop('selectedIndex',-1);
         } else {
           //TODO: give points here
           addSuccessMessage(result);

@@ -12,6 +12,8 @@ Meteor.methods({
        pendingEventDescription: Match.Optional(String),
        transactionDate: Match.Optional(String) 
      });
+
+     console.log(attributes);
         
      //TODO: setup MAIL URL for union capital website
      if(attributes.needsApproval) {
@@ -22,10 +24,11 @@ Meteor.methods({
          text: 'Please log on to the admin website and approve or reject the photo'
        });
      }
-    if(Transactions.findOne({userId: attributes.userId, eventId: attributes.eventId})) {
+    if(attributes.eventId && Transactions.findOne({userId: attributes.userId, eventId: attributes.eventId})) {
       throw new Meteor.Error(400, "You have already checked into this event");
     } else {
-     return Transactions.insert(attributes);
+      console.log('inserting transaction!!!');
+      return Transactions.insert(attributes);
     }
    },
    insertEvents: function(attributes) {
