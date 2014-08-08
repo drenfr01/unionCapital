@@ -1,9 +1,12 @@
 Template.facebookLogin.helpers({
   'firstName': function() {
-    return  Meteor.user().profile.name.split(" ").shift();
+    return  Meteor.user().services.facebook.first_name;
   },
   'lastName': function() {
-    return  Meteor.user().profile.name.split(" ").pop();
+    return  Meteor.user().services.facebook.last_name;
+  },
+  'email': function() {
+    return Meteor.user().services.facebook.email;
   }
 });
 Template.facebookLogin.events({
