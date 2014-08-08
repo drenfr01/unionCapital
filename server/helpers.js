@@ -1,3 +1,4 @@
+//TODO: toRadians and haversineFormula should be removed
 //This is shared between client/server because I can't block on RPC calls client side, so 
 //need this to be here 
 //used in both geoLocate user in meteor.methods server side and helpers/shortestDistance on client side
@@ -23,4 +24,13 @@ haversineFormula = function(event, userLong, userLat) {
     var distance = R * c;
   
     return distance;
+};
+
+emailHelper = function(to, from, subject, text) {
+      Email.send({
+         to: to,
+         from: from,
+         subject: subject,
+         text: text
+      });
 };

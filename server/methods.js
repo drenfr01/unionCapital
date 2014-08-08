@@ -17,18 +17,18 @@ Meteor.methods({
         
      //TODO: setup MAIL URL for union capital website
      if(attributes.needsApproval) {
-       Email.send({
-         to: 'duncanrenfrow@gmail.com',
-         from: 'duncanrenfrow@gmail.com',
-         subject: 'A Union Capitalist has submitted a photo for approval',
-         text: currentUser.profile.firstName + ' ' + currentUser.profile.lastName + ' requests that you log onto the admin website and approve or reject their event.' +
-         ' If there is any questions they can be reached at: ' + currentUser.emails[0].address
-       });
+       emailHelper('duncanrenfrow@gmail.com',
+                   'duncanrenfrow@gmail.com',
+                   'A Union Capitalist has submitted a photo for approval',
+                   currentUser.profile.firstName + ' ' + currentUser.profile.lastName + 
+                     ' requests that you log onto the admin website and approve or reject their event.' +
+                     ' If there is any questions they can be reached at: ' + currentUser.emails[0].address
+                  );
      }
+
     if(attributes.eventId && Transactions.findOne({userId: attributes.userId, eventId: attributes.eventId})) {
       throw new Meteor.Error(400, "You have already checked into this event");
     } else {
-      console.log('inserting transaction!!!');
       return Transactions.insert(attributes);
     }
    },
@@ -61,12 +61,10 @@ Meteor.methods({
      });
      
      var eventId = insertEvent(attributes);
-     console.log(eventId);
      Transactions.update(attributes.transactionId, 
          {$set: { needsApproval: false, eventId: eventId} }); 
   },
   createNewUser: function(attributes) {
-    console.log(attributes);
     check(attributes, {
       email: String,
       password: String,
@@ -141,5 +139,20 @@ Meteor.methods({
                              "(" + distance + " km ), please move closer and try again OR take a photo " +
                              "and submit it for manually approval");
     }
+  },
+  sendEmail: function(attributes) {
+    check(attributes, {
+      userId: String,
+      comment: String
+    });
+
+    var currentUser = Meteor.users.findOne(attributes.userId);
+
+    emailHelper('duncanrenfrow@gmail.com', 
+                'duncanrenfrow@gmail.com', 
+                'A Union Capitalist has sent you a comment',
+                currentUser.profile.firstName + ' ' + currentUser.profile.lastName + 
+                  ' says: ' + attributes.comment
+               );
   }
 });
