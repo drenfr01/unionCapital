@@ -13,15 +13,16 @@ Meteor.methods({
        transactionDate: Match.Optional(String) 
      });
 
-     console.log(attributes);
+     var currentUser = Meteor.users.findOne(attributes.userId);
         
      //TODO: setup MAIL URL for union capital website
      if(attributes.needsApproval) {
        Email.send({
          to: 'duncanrenfrow@gmail.com',
          from: 'duncanrenfrow@gmail.com',
-         subject: 'A user has submitted a photo for approval',
-         text: 'Please log on to the admin website and approve or reject the photo'
+         subject: 'A Union Capitalist has submitted a photo for approval',
+         text: currentUser.profile.firstName + ' ' + currentUser.profile.lastName + ' requests that you log onto the admin website and approve or reject their event.' +
+         ' If there is any questions they can be reached at: ' + currentUser.emails[0].address
        });
      }
     if(attributes.eventId && Transactions.findOne({userId: attributes.userId, eventId: attributes.eventId})) {
