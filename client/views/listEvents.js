@@ -1,7 +1,4 @@
 Template.listEvents.helpers({
-  'communityEvents': function() {
-    return Events.find({active: 1}, {sort: {startDate: 1}});
-  },
   'modalContext': function() {
     return Session.get('modalDataContext');
   },
@@ -14,8 +11,19 @@ Template.listEvents.helpers({
   'eventView': function() {
       return Session.get('event');
   },
-  'upcomingEvents': function(){
-    return Events.find({endDate: {'$gte': new Date()}, active: 1}, {sort: {startDate: 1}});
+  'eventsToDisplay': function(){
+    if(Session.equals('eventType', 'Current')) {
+      return Events.find({startDate: {'$lte': new Date()}, 
+                         endDate: {'$gte': new Date()}, 
+                         active: 1},
+                         {sort: {startDate: 1}});
+    } else if (Session.equals('eventType', 'Upcoming')) {
+      return Events.find({startDate: {'$gt': new Date()}, active: 1},
+                         {sort: {startDate: 1}});
+    } else {
+      return Events.find({endDate: {'$gte': new Date()}, active: 1},
+                         {sort: {startDate: 1}});
+    }
   },
   'title': function() {
     //this here is set by data context in iron-router (lib/router.js)
