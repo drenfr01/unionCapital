@@ -2,6 +2,12 @@ Template.checkIntoEvent.rendered = function() {
   Session.set('longitude', null);
   Session.set('latitude', null);
 
+  //using pathFor, you can only pass in query strings (i.e. not a true null)
+  //this means that we have to convert the null to a real null here
+  if(this.data === "null") {
+    this.data = null;
+  }
+
   if(this.data) {
     $('#eventSelector').val(this.data);
     Session.set('eventId', this.data);
