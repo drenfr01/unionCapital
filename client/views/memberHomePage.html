@@ -1,29 +1,28 @@
 <template name="memberHomePage">
-  <h1 class="text-center"><small>Welcome, {{currentMemberName}}!
-  </small></h1>
   <div class="row text-center">
+    <h1> 
+      <small>
+        Welcome, {{currentMemberName}}!
+      </small>
+    </h1>
     <div class="col-md-4 col-md-offset-4 min-height">
-      <ul class="list-group">
-        <a href="{{pathFor 'quickCheckIn'}}">
-          <li class="list-group-item">
-          Check into Nearest Event
-          </li>
-        </a>
-        <a href="{{pathFor 'checkIntoEvent'}}"><li class="list-group-item">
-          Check into Selected Event 
-          </li>
-        </a>
-        <a href="{{pathFor 'exploreEvents'}}">
-          <li class="list-group-item">
-            Explore Events 
-          </li>
-        </a>
-        <a href="{{pathFor 'checkPoints'}}">
-          <li class="list-group-item">
-          Points Tracker
-          </li>
-        </a>
-      </ul>
+      <button type="button" class="button-landing" id="quickCheckIn">
+        Check Into Nearest Event
+      </button>
+      <br>
+      <button type="button" class="button-landing" id="checkIntoEvent">
+        Check into Selected Event 
+      </button>
+      <br>
+      <button type="button" class="button-landing" id="exploreEvents">
+        Explore Events
+      </button>
+      <br>
+      <button type="button" class="button-landing" id="checkPoints">
+        Points Tracker
+      </button>
+      <br>
+      <br>
     </div>
   </div>
 </template>

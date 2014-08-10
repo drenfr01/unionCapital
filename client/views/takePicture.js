@@ -98,7 +98,7 @@ Template.takePicture.events({
       Meteor.call('insertTransaction', attributes, function(error) {
         if(error) {
           addErrorMessage(error.reason);
-          Router.go('checkIntoEvent'); 
+          Router.go('checkIntoEvent', {eventId: null}); 
         } else {
         addSuccessMessage('Transaction successfully submitted');
         Router.go('memberHomePage');

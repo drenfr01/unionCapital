@@ -59,7 +59,7 @@ Template.quickCheckIn.events({
     Meteor.call('insertTransaction', attributes, function(error) {
       if(error) {
         addErrorMessage(error.reason + ". Transferring you to more check-in options.");
-        Router.go('checkIntoEvent');
+        Router.go('checkIntoEvent', {eventId: null});
       } else {
         addSuccessMessage('Added points to your total!');
         Router.go('checkPoints');
