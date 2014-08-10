@@ -49,11 +49,15 @@ Meteor.methods({
     removeTransaction(attributes.transactionId);
     //TODO: mark images as logically deleted
   },
-  //TODO: change this to DIY transaction
+  //This approves photos for existing events as well as
+  //"DIY" events
   approveTransaction: function(attributes) {
+    var eventId;
+
     check(attributes, {
       transactionId: String,
       userId: String,
+      eventId: Match.Optional(String),
       imageId: String,
       eventName: String,
       eventAddress: String,
@@ -62,7 +66,15 @@ Meteor.methods({
       points: Number
     });
 
-    var eventId = insertEvent(attributes);
+    //this creates a new event if the transaction isn't tied to an existing one
+    //Currently the only way to tell DIY events is the active flag, which 
+    //isn't ideal because a regular event could be de-activated 
+    if(attributes.eventId) {
+      eventId = attributes.eventId;
+    } else {
+      attributes.active = 0;
+      eventId = insertEvent(attributes);
+    }
     Transactions.update(attributes.transactionId, 
                         {$set: { needsApproval: false, eventId: eventId} }); 
   },

@@ -52,6 +52,7 @@ Template.reviewPhotos.events({
     var attributes = {
       transactionId: this._id,
       userId: this.userId,
+      eventId: this.eventId,
       imageId: this.imageId,
       eventName: this.pendingEventName,
       eventAddress: "temporary",
