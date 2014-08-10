@@ -41,46 +41,50 @@
   {{/with}}
 
 
-  <div class='tablesize'>
-    <h1 class="text-center"><small>{{ totalPendingTransactions }} Pending Transactions</small></h1>
-    <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>User Name</th>
-        <th>Event Name</th>
-        <th>Event Description</th>
-        <th>Event Date</th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-    {{#each pendingTransaction}}
-      <tr>
-        <td>{{userName userId}}</td>
-        <td>{{pendingEventName}}</td>
-        <td>{{pendingEventDescription}}</td>
-        <td>{{formatDate transactionDate}} </td>
-        <td>
-          <button type="button" class="btn btn-warning btn-xs showImage"
-            data-toggle="modal" data-target="#showImageModal">
-            Show Image</button>
-        </td>
-        <td>
-          <button type="button" class="btn btn-success btn-xs approveEvent"
-            data-toggle="modal" data-target="#showApprovalModal">
-            Approve
-          </button>
-        </td>
-        <td>
-          <button type="button" class="btn btn-danger btn-xs rejectEvent">Reject</button>
-        </td>
-      </tr>
+  {{#if pendingTransaction.count}} 
+    <div class='tablesize'>
+      <h1 class="text-center"><small>{{ totalPendingTransactions }} Pending Transactions</small></h1>
+      <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>User Name</th>
+          <th>Event Name</th>
+          <th>Event Description</th>
+          <th>Event Date</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      {{#each pendingTransaction}}
+        <tr>
+          <td>{{userName userId}}</td>
+          <td>{{pendingEventName}}</td>
+          <td>{{pendingEventDescription}}</td>
+          <td>{{formatDate transactionDate}} </td>
+          <td>
+            <button type="button" class="btn btn-warning btn-xs showImage"
+              data-toggle="modal" data-target="#showImageModal">
+              Show Image</button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-success btn-xs approveEvent"
+              data-toggle="modal" data-target="#showApprovalModal">
+              Approve
+            </button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-danger btn-xs rejectEvent">Reject</button>
+          </td>
+        </tr>
+      {{/each}}
+      </tbody>
+      </table>
+    </div>
     {{else}}
-      <h3>No points accrued yet</h3>
-    {{/each}}
-    </tbody>
-    </table>
-  </div>
+      <h3 class="text-center">
+        There are currently no user submissions that require approval
+      </h3>
+    {{/if}}
 </template>
