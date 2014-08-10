@@ -17,10 +17,16 @@ Template.reviewPhotos.helpers({
     }
   },
   'userName': function(userId) {
+    var user = Meteor.users.findOne(userId);
     //Handling delay in loading collections
-    if(Meteor.users.findOne(userId)) {
-      var user = Meteor.users.findOne(userId);
+    if(user) {
       return user.profile.firstName + " " + user.profile.lastName;
+    }
+  },
+  'getPoints': function(eventId) {
+    var event = Events.findOne(eventId);
+    if(event) {
+      return event.points;
     }
   }
 });
