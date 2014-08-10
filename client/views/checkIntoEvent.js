@@ -3,7 +3,11 @@ Template.checkIntoEvent.rendered = function() {
   Session.set('latitude', null);
   Session.set('eventId', null);
 
-  $('#eventSelector').prop('selectedIndex',-1);
+  if(this.data) {
+    $('#eventSelector').val(this.data);
+  } else {
+    $('#eventSelector').prop('selectedIndex',-1);
+  }
 };
 
 Template.checkIntoEvent.helpers({
