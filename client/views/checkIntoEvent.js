@@ -1,12 +1,13 @@
 Template.checkIntoEvent.rendered = function() {
   Session.set('longitude', null);
   Session.set('latitude', null);
-  Session.set('eventId', null);
 
   if(this.data) {
     $('#eventSelector').val(this.data);
+    Session.set('eventId', this.data);
   } else {
     $('#eventSelector').prop('selectedIndex',-1);
+    Session.set('eventId', null);
   }
 };
 
