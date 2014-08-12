@@ -13,16 +13,11 @@ Template.listEvents.helpers({
   },
   'eventsToDisplay': function(){
     if(Session.equals('eventType', 'Current')) {
-      return Events.find({startDate: {'$lte': new Date()}, 
-                         endDate: {'$gte': new Date()}, 
-                         active: 1},
-                         {sort: {startDate: 1}});
+      return Events.currentEvents();
     } else if (Session.equals('eventType', 'Upcoming')) {
-      return Events.find({startDate: {'$gt': new Date()}, active: 1},
-                         {sort: {startDate: 1}});
+      return Events.upcomingEvents();
     } else {
-      return Events.find({endDate: {'$gte': new Date()}, active: 1},
-                         {sort: {startDate: 1}});
+      return Events.allEvents();
     }
   },
   'title': function() {

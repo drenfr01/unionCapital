@@ -23,7 +23,7 @@ Template.checkIntoEvent.helpers({
   },
   //TODO: make sure this is actually only active events
   'currentEvents': function() {
-    return Events.find({active: 1});
+    return Events.currentEvents();
   },
   //TODO: have a graceful "please wait" screen while geolocating
   'eventSelected': function() {

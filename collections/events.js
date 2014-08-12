@@ -48,6 +48,23 @@ Events = new Meteor.Collection('events', {
   }
 });
 
+Events.currentEvents = function() {
+  return Events.find({startDate: {'$lte': new Date()}, 
+                     endDate: {'$gte': new Date()}, 
+                     active: 1},
+                     {sort: {startDate: 1}});
+};
+
+Events.upcomingEvents = function() {
+  return Events.find({startDate: {'$gt': new Date()}, active: 1},
+                     {sort: {startDate: 1}});
+};
+
+Events.allEvents = function() {
+  return Events.find({endDate: {'$gte': new Date()}, active: 1},
+                     {sort: {startDate: 1}});
+};
+
 Events.allow({
   insert: function() {
     return true;
