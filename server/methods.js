@@ -84,7 +84,7 @@ Meteor.methods({
                 'duncanrenfrow@gmail.com',
                 'Your Event has been approved',
                 'Thanks for attending ' + attributes.eventName + "!" +
-                  "You have earned " + attributes.points + " for your service!"
+                  "You have earned " + attributes.points + " points for your service!"
                );
   },
   createNewUser: function(attributes) {
