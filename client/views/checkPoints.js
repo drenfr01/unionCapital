@@ -5,8 +5,11 @@ function getEvent(transaction){
 }
 
 Template.checkPoints.helpers({
-  activities: function() {
+  approvedEvents: function() {
     return Meteor.users.transactionsFor(Meteor.userId(), false);
+  },
+  pendingEvents: function() {
+    return Meteor.users.transactionsFor(Meteor.userId(), true);
   },
   eventName: function(){
     return getEvent(this).name;
