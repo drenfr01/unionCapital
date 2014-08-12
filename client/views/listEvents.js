@@ -25,17 +25,13 @@ Template.listEvents.helpers({
     return this + " Events";
   },
   'eventActionTitle': function() {
-    if(Session.equals('eventType', 'Current')) {
-      return "";
-    } else {
-      return "Will Attend";
-    }
+    return "";
   },
   'eventAction': function() {
     if(Session.equals('eventType', 'Current')) {
       return "<button class='btn btn-small checkIn'>Check In</button>";
     } else {
-      return "<input type='checkbox' value=''>";
+      return "";
     }
   }
 });

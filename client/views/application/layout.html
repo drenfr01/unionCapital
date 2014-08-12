@@ -24,10 +24,9 @@
       <span>
         {{#if isInRole 'admin'}}
           <ul class="nav navbar-nav nav nav-pills">
-          <li><a href="{{pathFor 'memberProfiles'}}">Members</a></li>
+          <li><a href="{{pathFor 'memberProfiles'}}">Member Profiles</a></li>
           <li><a href="{{pathFor 'reviewPhotos'}}">Approve Points</a></li>
-          <li><a href="{{pathFor 'showMemberRewards'}}">Rewards</a></li>
-          <li><a href="{{pathFor  'addCommunityEvents'}}">Add Events</a></li>
+          <li><a href="{{pathFor  'addCommunityEvents'}}">Manage Events</a></li>
           </ul>
         {{else}}
           {{#if isInRole 'user'}}
