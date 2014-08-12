@@ -12,7 +12,6 @@ Template.checkIntoEvent.rendered = function() {
     $('#eventSelector').val(this.data);
     Session.set('eventId', this.data);
   } else {
-    $('#eventSelector').prop('selectedIndex',-1);
     Session.set('eventId', null);
   }
 };
@@ -64,6 +63,11 @@ Template.checkIntoEvent.events({
 
     Router.go('takePicture', {_id: Session.get('eventId')});
   },
+  'click #cancel': function(e) {
+    Session.set('eventId', null);
+    Session.set('longitude', null);
+    Session.set('latitude', null);
+  },
   'click #submit': function(e) {
     e.preventDefault();
 
@@ -76,7 +80,6 @@ Template.checkIntoEvent.events({
           Session.set('longitude', null);
           Session.set('latitude', null);
           Session.set('eventId', null);
-          $('#eventSelector').prop('selectedIndex',-1);
         } else {
           //TODO: give points here
           addSuccessMessage(result);
