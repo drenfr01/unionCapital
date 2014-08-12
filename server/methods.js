@@ -77,6 +77,15 @@ Meteor.methods({
     }
     Transactions.update(attributes.transactionId, 
                         {$set: { needsApproval: false, eventId: eventId} }); 
+
+    var user = Meteor.users.findOne(attributes.userId);
+
+    emailHelper(user.emails[0].address,
+                'duncanrenfrow@gmail.com',
+                'Your Event has been approved',
+                'Thanks for attending ' + attributes.eventName + "!" +
+                  "You have earned " + attributes.points + " for your service!"
+               );
   },
   createNewUser: function(attributes) {
     check(attributes, {
