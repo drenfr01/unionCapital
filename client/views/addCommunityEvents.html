@@ -17,8 +17,8 @@
             {{> afQuickField name="url"}}
             {{> afQuickField name="description"}}
             {{> afQuickField name="active"}}
-            {{> afQuickField name="startDate"}}
-            {{> afQuickField name="endDate"}}
+            {{> afQuickField name="startDate" type="datetime-local" offset="-05:00"}}
+            {{> afQuickField name="endDate" type="datetime-local" offset="-05:00"}}
             {{> afQuickField name="points"}}
           </fieldset>
           <button type="button" class="btn btn-default" id="geocodeButton">Geocode</button>
