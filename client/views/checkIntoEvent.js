@@ -71,9 +71,16 @@ Template.checkIntoEvent.events({
   'click #submit': function(e) {
     e.preventDefault();
 
-    Meteor.call('geolocateUser', Session.get('eventId'), 
-      Session.get('longitude'), Session.get('latitude'), 
-      Meteor.userId(),
+    var attributes = {
+      userId: Meteor.userId(),
+      eventId: Session.get('eventId'),
+      userLong: Session.get('longitude'),
+      userLat: Session.get('latitude'),
+      hoursSpent: parseInt($('#hours').val(),10),
+      minutesSpent: parseInt($('#minutes').val(),10),
+    };
+
+    Meteor.call('geolocateUser', attributes,
       function(error, result) {
         if(error) {
           addErrorMessage(error.reason);
@@ -81,8 +88,8 @@ Template.checkIntoEvent.events({
           Session.set('latitude', null);
           Session.set('eventId', null);
         } else {
-          //TODO: give points here
           addSuccessMessage(result);
+          Router.go('checkPoints');
         }
 
     });

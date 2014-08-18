@@ -4,6 +4,14 @@ AutoForm.hooks({
       insert: function(doc, template) {
         doc.latitude = Session.get('latitude');
         doc.longitude = Session.get('longitude');
+        //UTC is not DST sensitive. So during Winter the US East Coast (EST) is 
+        //5 hours behind UTC, but during summer it is 4 hours behind
+        if(moment(doc.startDate).isDST()) {
+          doc.startDate = moment(doc.startDate).subtract('hours',1).toDate();
+          doc.endDate = moment(doc.endDate).subtract('hours',1).toDate();
+          console.log(doc.startDate);
+          console.log(doc.endDate);
+        }
         return doc;
       } 
     }
@@ -13,6 +21,7 @@ Template.addCommunityEvents.rendered = function() {
   Session.set('showMap', false);
   Session.set('latitude', null);
   Session.set('longitude', null);
+  Session.set('displayPointsPerHour', false);
 };
 
 Template.addCommunityEvents.helpers({
@@ -24,6 +33,9 @@ Template.addCommunityEvents.helpers({
   },
   'geocodeResultsReturned': function() {
     return Session.get('latitude');
+  },
+  'displayPointsPerHour': function() {
+    return Session.get('displayPointsPerHour');
   }
 });
 
@@ -50,5 +62,8 @@ Template.addCommunityEvents.events({
                     Session.set('longitude', result.location.lng);
                   }
                 });
+  },
+  'click #pointsCheckbox': function(e) {
+    Session.set('displayPointsPerHour', $('#pointsCheckbox').prop('checked'));
   }
 });

@@ -38,22 +38,13 @@
   <table class="table table-striped">
     <thead>
       <tr class="full-screen-event">
-        <th> Name of Event </th>
-        <th> Date </th>
-        <th> Address </th>
-        <th> {{eventActionTitle}}</th>
-        {{#if isInRole 'admin'}}
-        <th> Points </th>
-        <th></th>
-        {{/if}}
-
-      </tr>
-      <tr class="small-screen-event">
-        <th> Name of Event </th>
-        <th> Date </th>
+        <th>Name of Event</th>
+        <th>Date</th>
+        <th>Address</th>
         <th>{{eventActionTitle}}</th>
         {{#if isInRole 'admin'}}
-        <th> Points </th>
+        <th>Points</th>
+        <th>Points Type</th>
         <th></th>
         {{/if}}
 
@@ -67,23 +58,12 @@
         <td>{{address}}</td>
         <td>{{{eventAction}}}</td>
         {{#if isInRole 'admin'}}
-        <td class="eventView">{{points}}</td>
+        <td class="eventView">{{pointsToDisplay}}</td>
+        <td class="eventView">{{pointType}}</td>
         <td><button type="button" class="btn btn-default editEvent" data-toggle="modal"
             data-target = "#editModal">Edit</button></td>
         {{/if}}
         <td></td>
-      </tr>
-      <tr class="small-screen-event">
-        <td class="eventView"><a href="">{{name}}</a></td>
-        <td>{{formatDate startDate}}-{{formatDate endDate}}</td>
-        <td>{{{eventAction}}}</td>
-        {{#if isInRole 'admin'}}
-        <td class="eventView">{{points}}</td>
-        <td><button type="button" class="btn btn-default editEvent">Edit</button></td>
-        <!--{{else}}
-        <td><button type="button" class="btn btn-default editEvent" data-toggle="modal"
-            data-target = "#editModal">More info</button></td>-->
-        {{/if}}
       </tr>
       {{/each}}
     </tbody>

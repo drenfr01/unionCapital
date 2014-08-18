@@ -24,7 +24,7 @@ Template.quickCheckIn.rendered = function() {
       if(closestEvent.distance < 0.1)  {
         Session.set('closestEvent',closestEvent.event);
       } else {
-        addErrorMessage('The closest event is further than 100 m away. Please' +
+        addErrorMessage('The closest event is further than 100 meters away. Please' +
                         ' move closer or Submit a Photo');
         Router.go('memberHomePage');
       }
@@ -53,9 +53,10 @@ Template.quickCheckIn.events({
       userId: Meteor.userId(),
       eventId: Session.get('closestEvent')._id,
       needsApproval: false,
+      hoursSpent: parseInt($('#hours').val(),10),
+      minutesSpent: parseInt($('#minutes').val(),10),
       transactionDate: Date()
     };
-
     Meteor.call('insertTransaction', attributes, function(error) {
       if(error) {
         addErrorMessage(error.reason + ". Transferring you to more check-in options.");

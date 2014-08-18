@@ -33,6 +33,20 @@ Template.listEvents.helpers({
     } else {
       return "";
     }
+  },
+  'pointType': function() {
+    if(this.isPointsPerHour) {
+      return "Points Per Hour";
+    } else {
+      return "Points";
+    }
+  },
+  'pointsToDisplay': function() {
+    if(this.isPointsPerHour) {
+      return this.pointsPerHour;
+    } else {
+      return this.points;
+    }
   }
 });
 
