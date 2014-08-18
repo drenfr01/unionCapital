@@ -100,11 +100,11 @@ Meteor.methods({
       profile: attributes.profile
     });
 
-    //TODO: make this dry with facebook helper above
+    //TODO: make this dry with updateUserProfile helper above
     emailHelper(attributes.email,
                 'duncanrenfrow@gmail.com',
                 'Thanks for Registering!',
-                "We're excited work with you! Please use the contact button in the applicaton " +
+                "We're excited to work with you! Please use the contact button in the applicaton " +
                   "if you have any trouble using the application."
                );
 
@@ -138,7 +138,7 @@ Meteor.methods({
     emailHelper(attributes.email,
                 'duncanrenfrow@gmail.com',
                 'Thanks for Registering!',
-                "We're excited work with you! Please use the contact button in the applicaton " +
+                "We're excited to work with you! Please use the contact button in the applicaton " +
                   "if you have any trouble using the application."
                );
 
