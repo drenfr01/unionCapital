@@ -69,7 +69,6 @@ Template.landing.events({
         addErrorMessage(error.reason);
       } else {
         addSuccessMessage("Successfully Created User");
-        console.log(attributes);
         Meteor.loginWithPassword(attributes.email, attributes.password,
                                  function(error) {
                                    if(error) {

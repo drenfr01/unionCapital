@@ -9,8 +9,6 @@ AutoForm.hooks({
         if(moment(doc.startDate).isDST()) {
           doc.startDate = moment(doc.startDate).subtract('hours',1).toDate();
           doc.endDate = moment(doc.endDate).subtract('hours',1).toDate();
-          console.log(doc.startDate);
-          console.log(doc.endDate);
         }
         return doc;
       } 
@@ -50,14 +48,12 @@ Template.addCommunityEvents.events({
   },
   'click #geocodeButton': function(e) {
     e.preventDefault();
-    console.log('Geocode button clicked: ' + $('#eventAddress').val());
     Meteor.call('geocodeAddress', $('#eventAddress').val(), 
                 function(error, result) {
                   if(error) {
                     addErrorMessage(error.reason);
                     Router.go('addCommunityEvents');
                   } else {
-                    console.log(result.location);
                     Session.set('latitude', result.location.lat);
                     Session.set('longitude', result.location.lng);
                   }

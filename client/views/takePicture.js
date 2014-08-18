@@ -62,8 +62,6 @@ Template.takePicture.events({
     //TODO: get Jquery preview working
     //$('#eventImage').attr('src', e.target.value).width(400).height(400); 
 
-    console.log("File Name: " + e.target.files[0].name);
-
     $('#fileName').attr("placeholder", e.target.files[0].name);
     Session.set('imageLoaded', true);
 
@@ -97,8 +95,6 @@ Template.takePicture.events({
         transactionDate: transactionDate 
       };
       
-      console.log(attributes);
-
       Meteor.call('insertTransaction', attributes, function(error) {
         if(error) {
           addErrorMessage(error.reason);
