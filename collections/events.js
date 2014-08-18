@@ -38,7 +38,17 @@ Events = new Meteor.Collection('events', {
     },
     points: {
       type: Number,
-      label: 'Amount of Points'
+      label: 'Amount of Points',
+      optional: true
+    },
+    isPointsPerHour: {
+      type: Boolean,
+      label: 'Points per Hour?'
+    },
+    pointsPerHour: {
+      type: Number,
+      label: 'Points per Hour',
+      optional: true
     },
     url: {
       type: String,

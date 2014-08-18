@@ -4,6 +4,8 @@
     <h1><small>Check into Event</small></h1>
     {{#if geolocationSuccessful}}
       <br>
+      {{> timeSelection}}
+      <br>
       <p>Ready to check in!</p>
       <button type="button" class="button-landing" id="submit">
         Submit

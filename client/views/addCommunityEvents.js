@@ -21,6 +21,7 @@ Template.addCommunityEvents.rendered = function() {
   Session.set('showMap', false);
   Session.set('latitude', null);
   Session.set('longitude', null);
+  Session.set('displayPointsPerHour', false);
 };
 
 Template.addCommunityEvents.helpers({
@@ -33,6 +34,9 @@ Template.addCommunityEvents.helpers({
   'geocodeResultsReturned': function() {
     return Session.get('latitude');
   },
+  'displayPointsPerHour': function() {
+    return Session.get('displayPointsPerHour');
+  }
 });
 
 Template.addCommunityEvents.events({
@@ -58,5 +62,8 @@ Template.addCommunityEvents.events({
                     Session.set('longitude', result.location.lng);
                   }
                 });
+  },
+  'click #pointsCheckbox': function(e) {
+    Session.set('displayPointsPerHour', $('#pointsCheckbox').prop('checked'));
   }
 });

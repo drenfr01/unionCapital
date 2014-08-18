@@ -6,7 +6,7 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
             &times;</button>
-          <h4 class="modal-title text-center">Edit Events</h4>
+          <h4 class="modal-title text-center">Add Event</h4>
         </div>
         <div class="modal-body">
         {{#autoForm collection="Events" id="insertEventsForm" type="insert"}}
@@ -19,7 +19,12 @@
             {{> afQuickField name="active"}}
             {{> afQuickField name="startDate" type="datetime-local" offset="-05:00"}}
             {{> afQuickField name="endDate" type="datetime-local" offset="-05:00"}}
-            {{> afQuickField name="points"}}
+            {{> afQuickField name="isPointsPerHour" id="pointsCheckbox" value="checked"}}
+            {{#if displayPointsPerHour}}
+              {{> afQuickField name="pointsPerHour"}}
+            {{else}}
+              {{> afQuickField name="points"}}
+            {{/if}}
           </fieldset>
           <button type="button" class="btn btn-default" id="geocodeButton">Geocode</button>
           {{#if geocodeResultsReturned}}

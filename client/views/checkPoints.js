@@ -15,7 +15,12 @@ Template.checkPoints.helpers({
     return getEvent(this).name;
   },
   eventPoints: function(){
-    return getEvent(this).points;
+    var event = getEvent(this);
+    if(event.isPointsPerHour) {
+      return Math.round(event.pointsPerHour * totalHours(this.hoursSpent,this.minutesSpent));
+    } else {
+      return event.points;
+    }
   },
   eventStart: function(){
     return getEvent(this).startDate;

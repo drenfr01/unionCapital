@@ -6,6 +6,8 @@ Meteor.methods({
     check(attributes, {
       userId: Match.Optional(String),
       eventId: Match.Optional(String),
+      hoursSpent: Match.Optional(Number),
+      minutesSpent: Match.Optional(Number),
       imageId: Match.Optional(String),
       needsApproval: Match.Optional(Boolean),
       pendingEventName: Match.Optional(String),
@@ -33,11 +35,6 @@ Meteor.methods({
     } else {
       return Transactions.insert(attributes);
     }
-  },
-  insertEvents: function(attributes) {
-    check(attributes, {
-      point: Number
-    });
   },
   //Note: we don't want to permanently remove any data
   //so we leave the images intact and just change the flag to false
@@ -137,26 +134,33 @@ Meteor.methods({
 
       return myFuture.wait();
   },
-  geolocateUser: function(eventId, userLong, userLat, userId) {
-    check(eventId, String);
-    check(userLong, Number);
-    check(userLat, Number);
+  geolocateUser: function(attributes) {
+    console.log(attributes);
+    check(attributes, {
+      eventId: String,
+      hoursSpent: Number,
+      minutesSpent: Number,
+      userId: String,
+      userLong: Number,
+      userLat: Number
+    });
 
     //TODO: make this an admin configurable option
     var maxDistance = 0.1; //maximum distance in kilometers to check in
-    var event = Events.findOne(eventId);
-    if(Transactions.findOne({userId: userId, eventId: event._id})) {
+    var event = Events.findOne(attributes.eventId);
+    if(Transactions.findOne({userId: attributes.userId, eventId: event._id})) {
       throw new Meteor.Error(400, "You have already checked into this event");
     }
-    var distance = haversineFormula(event, userLong, userLat);
+    var distance = haversineFormula(event, attributes.userLong, attributes.userLat);
     console.log("Distance: " + distance);
 
     if(distance < maxDistance) {
       //TODO: consider adding user geolocation info to transaction?
-      Transactions.insert({userId: userId, eventId: event._id, needsApproval: false, 
-                          transactionDate: Date() }); 
-                          Meteor.users.update(userId, {$inc: { 'profile.points': event.points }});
-                          return "Congrats, you are within: " + distance +  " km of your event. Adding " + event.points + " points to your total!";
+      Transactions.insert({userId: attributes.userId, eventId: event._id, needsApproval: false, 
+                          transactionDate: Date(), hoursSpent: attributes.hoursSpent, 
+                          minutesSpent: attributes.minutesSpent
+      }); 
+      return "Congrats, you are within: " + distance +  " km of your event. Adding points to your total!";
     } else {
       throw new Meteor.Error(400, "You are too far away from the event" +
                              "(" + distance + " km ), please move closer and try again OR take a photo " +
