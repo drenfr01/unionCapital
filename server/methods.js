@@ -100,6 +100,21 @@ Meteor.methods({
       profile: attributes.profile
     });
 
+    //TODO: make this dry with facebook helper above
+    emailHelper(attributes.email,
+                'duncanrenfrow@gmail.com',
+                'Thanks for Registering!',
+                "We're excited work with you! Please use the contact button in the applicaton " +
+                  "if you have any trouble using the application."
+               );
+
+    emailHelper('duncanrenfrow@gmail.com',
+                'duncanrenfrow@gmail.com',
+                'New User Registered',
+                attributes.profile.firstName + " " + attributes.profile.lastName + 
+                 " has created an account! They can be reached at: " +
+                 attributes.email
+               );
     Roles.addUsersToRoles(newUserId, 'user');
   },
   updateUserProfile: function(attributes) {
@@ -119,6 +134,21 @@ Meteor.methods({
                                             {$push: {emails: {address: attributes.email
                                             }}});
                                             Roles.addUsersToRoles(attributes.userId, 'user');
+    //TODO: make this dry with new user helper below
+    emailHelper(attributes.email,
+                'duncanrenfrow@gmail.com',
+                'Thanks for Registering!',
+                "We're excited work with you! Please use the contact button in the applicaton " +
+                  "if you have any trouble using the application."
+               );
+
+    emailHelper('duncanrenfrow@gmail.com',
+                'duncanrenfrow@gmail.com',
+                'New User Registered through Facebook',
+                attributes.profile.firstName + " " + attributes.profile.lastName + 
+                 " has created an account! They can be reached at: " +
+                 attributes.email
+               );
   },
   geocodeAddress: function(address) {
     var myFuture = new Future(); 
