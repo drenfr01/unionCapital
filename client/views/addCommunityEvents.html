@@ -21,7 +21,7 @@
             {{> afQuickField name="endDate" type="datetime-local" offset="-05:00"}}
             {{> afQuickField name="isPointsPerHour" id="pointsCheckbox" value="checked"}}
             {{#if displayPointsPerHour}}
-              {{> afQuickField name="pointsPerHour"}}
+              {{> afQuickField name="pointsPerHour" value=100}}
             {{else}}
               {{> afQuickField name="points"}}
             {{/if}}
@@ -39,6 +39,7 @@
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
   {{#unless showMapClicked}}
+    <h3 class="text-center"><small>Note: All events are 100 points per hour by default. </small></h3>
     {{>listEvents 'All'}}
     <div class="row text-center">
       <button type="button" class="btn btn-lg btn-default text-center"
