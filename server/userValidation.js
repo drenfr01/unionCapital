@@ -1,3 +1,4 @@
+/*
 Accounts.validateNewUser(function(user) {
   //this grabs the email address out of the user email
   var emails = _.pluck(_.flatten(_.pluck(Meteor.users.find().fetch(),
@@ -8,3 +9,4 @@ Accounts.validateNewUser(function(user) {
     return true;
   }
 });
+*/
