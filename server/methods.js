@@ -12,7 +12,7 @@ Meteor.methods({
       needsApproval: Match.Optional(Boolean),
       pendingEventName: Match.Optional(String),
       pendingEventDescription: Match.Optional(String),
-      transactionDate: Match.Optional(String) 
+      transactionDate: Match.Optional(String)
     });
 
     var currentUser = Meteor.users.findOne(attributes.userId);
@@ -28,8 +28,6 @@ Meteor.methods({
                  );
     }
 
-    console.log('Inserting Transaction!');
-    console.log(attributes);
     if(attributes.eventId && Transactions.findOne({userId: attributes.userId, eventId: attributes.eventId})) {
       throw new Meteor.Error(400, "You have already checked into this event");
     } else {
@@ -60,7 +58,8 @@ Meteor.methods({
       eventAddress: String,
       eventDescription: String,
       eventDate: Date,
-      points: Number
+      points: Match.Optional(Number),
+      pointsPerHour: Match.Optional(Number)
     });
 
     //this creates a new event if the transaction isn't tied to an existing one
@@ -70,6 +69,7 @@ Meteor.methods({
       eventId = attributes.eventId;
     } else {
       attributes.active = 0;
+      attributes.isPointsPerHour = false;
       eventId = insertEvent(attributes);
     }
     Transactions.update(attributes.transactionId, 
@@ -165,7 +165,6 @@ Meteor.methods({
       return myFuture.wait();
   },
   geolocateUser: function(attributes) {
-    console.log(attributes);
     check(attributes, {
       eventId: String,
       hoursSpent: Number,
