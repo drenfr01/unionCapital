@@ -14,7 +14,6 @@
     "jasmine": {},
     "velocity-html-reporter": {},
     "velocity-quick-start": {},
-    "mocha-web-velocity": {},
-    "facebook-sdk": {}
+    "mocha-web-velocity": {}
   }
 }

@@ -16,8 +16,7 @@
       "jasmine": {},
       "velocity-html-reporter": {},
       "velocity-quick-start": {},
-      "mocha-web-velocity": {},
-      "facebook-sdk": {}
+      "mocha-web-velocity": {}
     },
     "packages": {
       "bootstrap-3": {
@@ -32,8 +31,8 @@
       },
       "accounts-ui-bootstrap-3": {
         "git": "https://github.com/mangasocial/meteor-accounts-ui-bootstrap-3.git",
-        "tag": "v0.3.4",
-        "commit": "9f006ee48d869877d90d54ac75b54550a587df8f"
+        "tag": "v0.3.5",
+        "commit": "bbd0a8a46ae02526c2ebfee05fa8075d8d04a9ba"
       },
       "collectionFS": {
         "git": "https://github.com/CollectionFS/Meteor-CollectionFS.git",
@@ -47,8 +46,8 @@
       },
       "autoform": {
         "git": "https://github.com/aldeed/meteor-autoform.git",
-        "tag": "v0.17.0",
-        "commit": "c6e49dc0563a827eede2861745d7e42ee094f044"
+        "tag": "v0.17.1",
+        "commit": "a4688e7d77019a68ef43c2a303e905748beeb860"
       },
       "collection2": {
         "git": "https://github.com/aldeed/meteor-collection2.git",
@@ -94,11 +93,6 @@
         "git": "https://github.com/mad-eye/meteor-mocha-web.git",
         "tag": "v0.3.4",
         "commit": "5b68e18104c00687748b190b04a7752478472d17"
-      },
-      "facebook-sdk": {
-        "git": "https://github.com/hugesuccess/facebook-sdk.git",
-        "tag": "v0.0.44",
-        "commit": "cb71b860085ec6453b61644b31f6351e7de2c1b0"
       },
       "iron-layout": {
         "git": "https://github.com/EventedMind/iron-layout.git",

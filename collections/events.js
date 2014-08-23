@@ -30,7 +30,7 @@ Events = new Meteor.Collection('events', {
     },
     startDate: {
       type: Date,
-      label: 'Beginning of Event'
+      label: 'Start of Event'
     },
     endDate: {
       type: Date,
