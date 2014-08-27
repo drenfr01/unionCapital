@@ -1,9 +1,19 @@
 Template.checkIntoEvent.rendered = function() {
   Session.set('longitude', null);
   Session.set('latitude', null);
-  Session.set('eventId', null);
 
-  $('#eventSelector').prop('selectedIndex',-1);
+  //using pathFor, you can only pass in query strings (i.e. not a true null)
+  //this means that we have to convert the null to a real null here
+  if(this.data === "null") {
+    this.data = null;
+  }
+
+  if(this.data) {
+    $('#eventSelector').val(this.data);
+    Session.set('eventId', this.data);
+  } else {
+    Session.set('eventId', null);
+  }
 };
 
 Template.checkIntoEvent.helpers({
@@ -12,7 +22,11 @@ Template.checkIntoEvent.helpers({
   },
   //TODO: make sure this is actually only active events
   'currentEvents': function() {
-    return Events.find({active: 1});
+    return Events.currentEvents();
+  },
+  //TODO: have a graceful "please wait" screen while geolocating
+  'eventSelected': function() {
+    return Session.get('eventId');
   }
 });
 
@@ -44,18 +58,38 @@ Template.checkIntoEvent.events({
       addErrorMessage('Geolocation not supported');
     }
   },
+  'click #checkInByPhoto': function(e) {
+    e.preventDefault();
+
+    Router.go('takePicture', {_id: Session.get('eventId')});
+  },
+  'click #cancel': function(e) {
+    Session.set('eventId', null);
+    Session.set('longitude', null);
+    Session.set('latitude', null);
+  },
   'click #submit': function(e) {
     e.preventDefault();
 
-    Meteor.call('geolocateUser', Session.get('eventId'), 
-      Session.get('longitude'), Session.get('latitude'), 
-      Meteor.userId(),
+    var attributes = {
+      userId: Meteor.userId(),
+      eventId: Session.get('eventId'),
+      userLong: Session.get('longitude'),
+      userLat: Session.get('latitude'),
+      hoursSpent: parseInt($('#hours').val(),10),
+      minutesSpent: parseInt($('#minutes').val(),10),
+    };
+
+    Meteor.call('geolocateUser', attributes,
       function(error, result) {
         if(error) {
           addErrorMessage(error.reason);
+          Session.set('longitude', null);
+          Session.set('latitude', null);
+          Session.set('eventId', null);
         } else {
-          //TODO: give points here
           addSuccessMessage(result);
+          Router.go('checkPoints');
         }
 
     });

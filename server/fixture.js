@@ -34,6 +34,7 @@ Meteor.startup(function () {
   }
   //Events fixture
   if ( Events.find().count() === 0 ) {
+    //NOTE: months are 0 based for dates
     var events = [
       {
         name: 'Cambridge Science Festival',
@@ -43,9 +44,10 @@ Meteor.startup(function () {
         url: 'http://example.com/CSF',
         description: 'A festival of science for everybody',
         active: 1,
-        startDate: new Date(2014,6,6),
-        endDate: new Date(2014,7,7),
-        points: 50
+        startDate: new Date(2014,7,10,13,30),
+        endDate: new Date(2014,7,30,17,30),
+        isPointsPerHour: true,
+        pointsPerHour: 100
       },
       {
         name: 'Somerville Cooking Festival',
@@ -57,6 +59,7 @@ Meteor.startup(function () {
         active: 1,
         startDate: new Date(),
         endDate: new Date(),
+        isPointsPerHour: false,
         points: 50
       },
       {
@@ -67,9 +70,10 @@ Meteor.startup(function () {
         url: 'http://example.com/BMF',
         description: 'Music festival; all styles - join us soon!',
         active: 1,
-        startDate: new Date(2014,6,6),
-        endDate: new Date(2014,8,8),
-        points: 25
+        startDate: new Date(2014,7,10,13,30),
+        endDate: new Date(2014,7,30,17,30),
+        isPointsPerHour: true,
+        pointsPerHour: 100
       },
       {
         name: 'Cambridge Film Festival',
@@ -79,8 +83,9 @@ Meteor.startup(function () {
         url: 'http://example.com/CFF',
         description: 'Watch as many films as you can in just 3 days of mandness!',
         active: 1,
-        startDate: new Date(2014,7,7),
-        endDate: new Date(2014,8,8),
+        startDate: new Date(2014,7,10,13,30),
+        endDate: new Date(2014,7,30,17,30),
+        isPointsPerHour: false,
         points: 150
       }
     ];
@@ -96,7 +101,9 @@ Meteor.startup(function () {
         active: event.active,
         startDate: event.startDate,
         endDate: event.endDate,
-        points: event.points
+        isPointsPerHour: event.isPointsPerHour,
+        points: event.points,
+        pointsPerHour: event.pointsPerHour
       });
     });
   }

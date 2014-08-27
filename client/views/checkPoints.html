@@ -1,43 +1,72 @@
 <template name="checkPoints">
-  <div class="text-center">
-    <h1><small>Your Activity History</small></h1>
-    <br>
-    </div>
+<div class="text-center">
+  <h1><small>Your Activity History</small></h1>
+  <br>
+</div>
 
-      <div class="tablesize">
-    <div class="ptheader">Your UCB Log</div>
-    <table class="table table-striped">
-<!--      <caption>Your UCB Activities</caption> -->
+<div class="tablesize">
+  {{#if pendingEvents.count}}
+  <div class="ptheader text-center">Pending Events</div>
+  <table class="table table-striped">
+    <!--      <caption>Your UCB Activities</caption> -->
+    <thead>
+      <tr>
+        <th>Event Name</th>
+        <th>Event Description</th>
+        <th>Submitted Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each pendingEvents}}
+      <tr>
+        <td>{{pendingEventName}}</td>
+        <td>{{pendingEventDescription}}</td>
+        <td>{{formatDate transactionDate}} </td>
+        <!-- <td class="text-right">
+          <a href="#" class="btn btn-warning btn-xs">Feedback</a> 
+        </td>  -->
+      </tr>
+    {{/each}}
+    </tbody>
+    </table>
+    {{else}}
+      <h3 class="text-center"><small>No pending transactions!</small></h3>
+    {{/if}}
+  <hr/>
+  {{#if approvedEvents.count}}
+  <div class="ptheader text-center">Approved Events</div>
+  <table class="table table-striped">
+    <!--      <caption>Your UCB Activities</caption> -->
     <thead>
       <tr>
         <th>Event Name</th>
         <th>Points</th>
-        <th>Event Date</th>
+        <th>Check-In Date</th>
       </tr>
     </thead>
     <tfoot>
-    <tr>
-      <td colspan="0">Total Points: </td>
-      <td>{{totalPoints}}</td>
-      <td></td>
-    </tr>
+      <tr>
+        <td colspan="0">Total Points: </td>
+        <td>{{totalPoints}}</td>
+        <td></td>
+      </tr>
     </tfoot>
     <tbody>
-    {{#each activities}}
+      {{#each approvedEvents}}
       <tr>
         <td>{{eventName}}</td>
         <td>{{eventPoints}}</td>
-        <td>{{formatDate eventStart}} </td>
+        <td>{{formatDate transactionDate}} </td>
         <!-- <td class="text-right">
-         <a href="#" class="btn btn-warning btn-xs">Feedback</a> 
+          <a href="#" class="btn btn-warning btn-xs">Feedback</a> 
         </td>  -->
       </tr>
-    {{else}}
-      <h3>No points accrued yet!</h3>
-    {{/each}}
+      {{/each}}
     </tbody>
-
   </table>
+      {{else}}
+      <h3 class="text-center"><small>No points accrued yet!</small></h3>
+      {{/if}}
 </div>
 
 </template>

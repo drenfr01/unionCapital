@@ -30,7 +30,7 @@ Events = new Meteor.Collection('events', {
     },
     startDate: {
       type: Date,
-      label: 'Beginning of Event'
+      label: 'Start of Event'
     },
     endDate: {
       type: Date,
@@ -38,7 +38,17 @@ Events = new Meteor.Collection('events', {
     },
     points: {
       type: Number,
-      label: 'Amount of Points'
+      label: 'Amount of Points',
+      optional: true
+    },
+    isPointsPerHour: {
+      type: Boolean,
+      label: 'Points per Hour?'
+    },
+    pointsPerHour: {
+      type: Number,
+      label: 'Points per Hour',
+      optional: true
     },
     url: {
       type: String,
@@ -47,6 +57,23 @@ Events = new Meteor.Collection('events', {
     }
   }
 });
+
+Events.currentEvents = function() {
+  return Events.find({startDate: {'$lte': new Date()}, 
+                     endDate: {'$gte': new Date()}, 
+                     active: 1},
+                     {sort: {startDate: 1}});
+};
+
+Events.upcomingEvents = function() {
+  return Events.find({startDate: {'$gt': new Date()}, active: 1},
+                     {sort: {startDate: 1}});
+};
+
+Events.allEvents = function() {
+  return Events.find({endDate: {'$gte': new Date()}, active: 1},
+                     {sort: {startDate: 1}});
+};
 
 Events.allow({
   insert: function() {

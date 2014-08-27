@@ -17,10 +17,18 @@ Template.reviewPhotos.helpers({
     }
   },
   'userName': function(userId) {
+    var user = Meteor.users.findOne(userId);
     //Handling delay in loading collections
-    if(Meteor.users.findOne(userId)) {
-      var user = Meteor.users.findOne(userId);
+    if(user) {
       return user.profile.firstName + " " + user.profile.lastName;
+    }
+  },
+  'getPoints': function(eventId) {
+    var event = Events.findOne(eventId);
+    if(event.isPointsPerHour) {
+      return event.pointsPerHour * totalHours(this.hoursSpent, this.minutesSpent);
+    } else {
+      return event.points;
     }
   }
 });
@@ -52,6 +60,7 @@ Template.reviewPhotos.events({
     var attributes = {
       transactionId: this._id,
       userId: this.userId,
+      eventId: this.eventId,
       imageId: this.imageId,
       eventName: this.pendingEventName,
       eventAddress: "temporary",

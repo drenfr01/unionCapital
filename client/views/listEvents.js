@@ -1,7 +1,4 @@
 Template.listEvents.helpers({
-  'communityEvents': function() {
-    return Events.find({active: 1}, {sort: {startDate: 1}});
-  },
   'modalContext': function() {
     return Session.get('modalDataContext');
   },
@@ -14,11 +11,42 @@ Template.listEvents.helpers({
   'eventView': function() {
       return Session.get('event');
   },
-  'isAdmin': function() {
-  		return false;
+  'eventsToDisplay': function(){
+    if(Session.equals('eventType', 'Current')) {
+      return Events.currentEvents();
+    } else if (Session.equals('eventType', 'Upcoming')) {
+      return Events.upcomingEvents();
+    } else {
+      return Events.allEvents();
+    }
   },
-  'upcomingEvents': function(){
-    return Events.find({endDate: {'$gte': new Date()}, active: 1}, {sort: {startDate: 1}});
+  'title': function() {
+    //this here is set by data context in iron-router (lib/router.js)
+    return this + " Events";
+  },
+  'eventActionTitle': function() {
+    return "";
+  },
+  'eventAction': function() {
+    if(Session.equals('eventType', 'Current')) {
+      return "<button class='btn btn-small checkIn'>Check In</button>";
+    } else {
+      return "";
+    }
+  },
+  'pointType': function() {
+    if(this.isPointsPerHour) {
+      return "Points Per Hour";
+    } else {
+      return "Points";
+    }
+  },
+  'pointsToDisplay': function() {
+    if(this.isPointsPerHour) {
+      return this.pointsPerHour;
+    } else {
+      return this.points;
+    }
   }
 });
 
@@ -33,9 +61,14 @@ Template.listEvents.events({
   'click .back': function(e) {
     Session.set('eventIndex', true);
     Session.set('event', null);
+  },
+  'click .checkIn': function(e) {
+    e.preventDefault();
+    Router.go('checkIntoEvent', {eventId: this._id});
   }
 });
 
 Template.listEvents.rendered = function() {
+  Session.set('eventType', this.data);
   Session.set('eventIndex', true);
 };

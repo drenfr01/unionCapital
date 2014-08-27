@@ -10,7 +10,8 @@ insertEvent = function(attributes) {
      active: 0,
      startDate: attributes.eventDate,
      endDate: attributes.eventDate,
-     points: attributes.points
+     points: attributes.points,
+     isPointsPerHour: attributes.isPointsPerHour
    }
  );  
 };
