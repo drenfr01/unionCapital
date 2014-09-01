@@ -43,7 +43,11 @@
         {{/if}}
       </span>
       </nav>
-      {{> alerts}}
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          {{> alerts}}
+        </div>
+      </div>
       <div id="main-content-container">
         {{> yield}}
       </div>
