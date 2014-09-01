@@ -11,8 +11,8 @@ Meteor.startup(function () {
       {
         email: "user@gmail.com", username: "user", password: "user", 
         profile: {
-          firstName: 'Duncan',
-          lastName: 'Renfrow',
+          firstName: 'Test',
+          lastName: 'User',
           street: '10 Emerson',
           city: 'Boston',
           state: 'MA'

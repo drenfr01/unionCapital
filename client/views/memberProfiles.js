@@ -28,11 +28,6 @@ Template.memberProfiles.events({
   'keyup #memberSearch': function(e) {
     Session.set("searchQuery", e.currentTarget.value);
   },
-  'click #addMember': function(e) {
-    e.preventDefault();
-    prevValue = Session.get('memberButtonClicked');
-    Session.set("memberButtonClicked",!prevValue);
-  },
   'click .memberNames': function(e) {
     Session.set('currentMember', this._id);
   }
