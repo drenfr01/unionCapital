@@ -215,5 +215,14 @@ Meteor.methods({
                 currentUser.profile.firstName + ' ' + currentUser.profile.lastName + 
                   ' says: ' + attributes.comment
                );
+  },
+  deleteEvent: function(eventId) {
+    check(eventId, String);
+
+    if(Transactions.findOne({eventId: eventId})) {
+      throw new Meteor.Error(400, "Users have already checked into this event. Please contact technical support");
+    } else {
+      Events.remove(eventId);
+    }
   }
 });

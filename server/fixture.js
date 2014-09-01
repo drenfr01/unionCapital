@@ -45,7 +45,7 @@ Meteor.startup(function () {
         description: 'A festival of science for everybody',
         active: 1,
         startDate: new Date(2014,7,10,13,30),
-        endDate: new Date(2014,7,30,17,30),
+        endDate: new Date(2014,9,30,17,30),
         isPointsPerHour: true,
         pointsPerHour: 100
       },
@@ -71,7 +71,7 @@ Meteor.startup(function () {
         description: 'Music festival; all styles - join us soon!',
         active: 1,
         startDate: new Date(2014,7,10,13,30),
-        endDate: new Date(2014,7,30,17,30),
+        endDate: new Date(2014,9,30,17,30),
         isPointsPerHour: true,
         pointsPerHour: 100
       },
@@ -84,7 +84,7 @@ Meteor.startup(function () {
         description: 'Watch as many films as you can in just 3 days of mandness!',
         active: 1,
         startDate: new Date(2014,7,10,13,30),
-        endDate: new Date(2014,7,30,17,30),
+        endDate: new Date(2014,9,30,17,30),
         isPointsPerHour: false,
         points: 150
       }

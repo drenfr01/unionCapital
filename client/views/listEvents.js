@@ -65,6 +65,17 @@ Template.listEvents.events({
   'click .checkIn': function(e) {
     e.preventDefault();
     Router.go('checkIntoEvent', {eventId: this._id});
+  },
+  'click .deleteEvent': function(e) {
+    e.preventDefault();
+
+    Meteor.call('deleteEvent', this._id, function(error) {
+      if(error) {
+        addErrorMessage(error.reason);
+      } else {
+        addSuccessMessage("Event successfully deleted");
+      }
+    });
   }
 });
 

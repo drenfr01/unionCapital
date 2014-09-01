@@ -25,3 +25,7 @@ if(facebookConfig) {
 }
 
 Future = Npm.require('fibers/future');
+
+//Global Variables below
+
+adminEmail = 'eric.leslie@unioncapitalboston.com';

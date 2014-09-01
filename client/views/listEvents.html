@@ -46,6 +46,7 @@
         <th>Points</th>
         <th>Points Type</th>
         <th></th>
+        <th></th>
         {{/if}}
 
       </tr>
@@ -60,8 +61,17 @@
         {{#if isInRole 'admin'}}
         <td class="eventView">{{pointsToDisplay}}</td>
         <td class="eventView">{{pointType}}</td>
-        <td><button type="button" class="btn btn-default editEvent" data-toggle="modal"
-            data-target = "#editModal">Edit</button></td>
+        <td>
+          <button type="button" class="btn btn-default btn-sm editEvent"
+            data-toggle="modal" data-target = "#editModal">
+            Edit
+          </button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-default btn-sm deleteEvent">
+            Delete
+          </button>
+        </td>
         {{/if}}
         <td></td>
       </tr>
