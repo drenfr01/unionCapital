@@ -1,9 +1,3 @@
-function getEvent(transaction){
-  var id = transaction.eventId;
-  var event = Events.findOne({ _id: id });
-  return event;
-}
-
 Template.checkPoints.helpers({
   approvedEvents: function() {
     return Meteor.users.transactionsFor(Meteor.userId(), false);
