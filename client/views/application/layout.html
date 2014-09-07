@@ -31,15 +31,11 @@
         {{else}}
           {{#if isInRole 'user'}}
           <ul class="nav navbar-nav nav nav-pills">
-
-          <li><a href="{{pathFor 'memberHomePage'}}">Home</a></li>
-          <li><a href="{{pathFor 'checkIntoEvent' eventId=null}}">Check In</a></li>
-          <li><a href="{{pathFor 'currentEvents'}}">Events</a></li>
-          {{#with currentUser}}
-            <li><a href="{{pathFor 'checkPoints'}}">Points</a></li>
-          {{/with}}
-          <li><a href="{{pathFor 'contactUs'}}">Contact</a></li>
-
+            <li><a href="{{pathFor 'currentEvents'}}">Events</a></li>
+            {{#with currentUser}}
+              <li><a href="{{pathFor 'checkPoints'}}">Points</a></li>
+            {{/with}}
+            <li><a href="{{pathFor 'contactUs'}}">Contact</a></li>
           </ul>
           {{/if}}
         {{/if}}
