@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-3 col-md-offset-3">
       <label for="hours">Hours: </label>
-      <select id="hours">
+      <select id="hours" class="time">
         {{#each hours}}
           <option>{{this}}</option>
         {{/each}}
@@ -10,7 +10,7 @@
     </div>
     <div class="col-md-4">
       <label for="minutes">Minutes: </label>
-      <select id="minutes">
+      <select id="minutes" class="time">
         {{#each minutes}}
           <option>{{this}}</option>
         {{/each}}
