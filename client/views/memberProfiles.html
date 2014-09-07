@@ -1,20 +1,25 @@
 <template name="memberProfiles">
-  <h1 class="text-center"><small>Search for Existing Members</small></h1>
+  <br>
   <div class="input-group col-md-6 col-md-offset-3">
-    <input type='text' class="form-control" placeholder='Member Name' id='memberSearch'/>
+    <input type='text' class="form-control" placeholder='Search Member Name' id='memberSearch'/>
     <span class="input-group-btn">
       <button class="btn btn-default btn-large" id="membersearch">
         &gt;  </button>
     </span>
   </div>
-  {{> results}}
-  <div class='row text-center'>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      {{> results}}
+    </div>
+  </div>
+  <div class='row'>
     {{#with member}}
-    <h3><small>User Profile</small></h3>
-    <div>Name: {{profile.firstName}} {{profile.lastName}}</div>
-    <div>Address: {{profile.zip}}</div>
-    <br>
-    <div class="col-md-4 col-md-offset-4">
+    <div class="col-md-6 col-md-offset-3">
+      <h1 class="text-center">User Profile</h1>
+      <hr>
+      <div>Name: {{profile.firstName}} {{profile.lastName}}</div>
+      <div>Address: {{profile.zip}}</div>
+      <br>
       <div class="input-group">
         <input type="text" class="form-control" 
           id="pointsInput" placeholder="Enter Points here">
