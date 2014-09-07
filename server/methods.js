@@ -224,5 +224,26 @@ Meteor.methods({
     } else {
       Events.remove(eventId);
     }
+  },
+  addPointsToUser: function(attributes) {
+    check(attributes, {
+      userId: String,
+      points: Number,
+      description: String
+    });
+
+    //calculate appropriate hours and minutes based on Administer AdHoc events
+    var hours = Math.floor(attributes.points / 100);
+    var minutes = Math.ceil((attributes.points % 100) / 100 * 60);
+
+    //insert Transaction
+    var event = Events.findOne({name: 'Admin Add Points'});
+
+    Transactions.insert({userId: attributes.userId, eventId: event._id, 
+                        needsApproval: false, 
+                        transactionDate: Date(), hoursSpent: hours, 
+                        minutesSpent: minutes
+    });
+
   }
 });

@@ -87,6 +87,20 @@ Meteor.startup(function () {
         endDate: new Date(2014,9,30,17,30),
         isPointsPerHour: false,
         points: 150
+      },
+      //This is quite hacky, but the below event only exists to allow admins to add
+      //transactions linked to this event. Basically we'll adjust the hours / minutes
+      //to give the appropriate number of points an admin gives
+      {
+        name: 'Admin Add Points',
+        address: 'Boston, MA',
+        url: 'unioncapitalboston.com',
+        description: 'Union Capital administrator adding points to your account',
+        active: 0,
+        startDate: new Date(1900,1,1,1,1),
+        endDate: new Date(3000,1,1,1,1),
+        isPointsPerHour: true,
+        pointsPerHour: 100
       }
     ];
 

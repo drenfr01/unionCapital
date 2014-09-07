@@ -30,6 +30,24 @@ Template.memberProfiles.events({
   },
   'click .memberNames': function(e) {
     Session.set('currentMember', this._id);
+  },
+  'click #addPoints': function(e) {
+    var points = parseInt($('#pointsInput').val(),10);
+
+    //TODO: have description for points
+    var attributes = {
+      userId: this._id,
+      points: points,
+      description: '' 
+    };
+
+    Meteor.call('addPointsToUser', attributes, function(error) {
+      if(error) {
+        addErrorMessage(error.reason);
+      } else {
+        addSuccessMessage("Added " + points + " points to user!");
+      }
+    });
   }
 });
 

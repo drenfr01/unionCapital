@@ -13,6 +13,18 @@
     <h3><small>User Profile</small></h3>
     <div>Name: {{profile.firstName}} {{profile.lastName}}</div>
     <div>Address: {{profile.zip}}</div>
+    <br>
+    <div class="col-md-4 col-md-offset-4">
+      <div class="input-group">
+        <input type="text" class="form-control" 
+          id="pointsInput" placeholder="Enter Points here">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button" id="addPoints">
+            Add!
+          </button>
+        </span>
+      </div>
+    </div>
     {{/with}}
   </div>
   <br>
