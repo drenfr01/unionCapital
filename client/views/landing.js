@@ -1,5 +1,11 @@
 Template.landing.rendered = function() {
-  Session.set('loginStateVar', 'loginPage');
+  //TODO: this may inadvertently bounce an admin user
+  //to the member home page...
+  if (Meteor.userId()) {
+    Router.go('memberHomePage');
+  } else {
+    Session.set('loginStateVar', 'loginPage');
+  }
 };
 
 Template.landing.helpers({
