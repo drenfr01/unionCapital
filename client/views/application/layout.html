@@ -7,10 +7,16 @@
         </div>
       {{/if}}
       <div class="navbar-header">
-       {{#if currentUser}}
+       {{#if isInRole 'admin'}}
           <a href="{{pathFor 'adminHomePage'}}"> 
             <img class="UCB-nav-logo" border="0" src="images/UCB-Logo-Acronym.jpg" alt="UCB Logo"  height="40">
           </a>
+        {{else}}
+          {{#if isInRole 'user'}}
+          <a href="{{pathFor 'memberHomePage'}}"> 
+            <img class="UCB-nav-logo" border="0" src="images/UCB-Logo-Acronym.jpg" alt="UCB Logo"  height="40">
+          </a>
+          {{/if}}
         {{/if}}
       </div>
       <span>
