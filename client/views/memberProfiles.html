@@ -12,8 +12,8 @@
       {{> results}}
     </div>
   </div>
+  {{#with member}}
   <div class='row'>
-    {{#with member}}
     <div class="col-md-6 col-md-offset-3">
       <h1 class="text-center">User Profile</h1>
       <hr>
@@ -30,8 +30,13 @@
         </span>
       </div>
     </div>
-    {{/with}}
   </div>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      {{> checkPoints}}
+    </div>
+  </div>
+  {{/with}}
   <br>
   <br>
 </template>
