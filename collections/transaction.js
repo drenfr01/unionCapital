@@ -37,11 +37,13 @@ Transactions = new Meteor.Collection('transactions', {
     },
     hoursSpent: {
       type: Number,
-      label: 'Number of Hour Spent'
+      label: 'Number of Hour Spent',
+      optional: true
     },
     minutesSpent: {
       type: Number,
-      label: 'Number of Minutes Spent'
+      label: 'Number of Minutes Spent',
+      optional: true
     }
 
   }
