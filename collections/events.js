@@ -58,9 +58,13 @@ Events = new Meteor.Collection('events', {
   }
 });
 
-Events.currentEvents = function() {
-  return Events.find({startDate: {'$lte': new Date()}, 
-                     endDate: {'$gte': new Date()}, 
+Events.currentEvents = function(offset) {
+  var currentDate = new Date();
+  currentDate.setDate(currentDate.getDate() + offset);
+  var offsetDate = new Date(currentDate);
+
+  return Events.find({startDate: {'$lte': offsetDate}, 
+                     endDate: {'$gte': offsetDate}, 
                      active: 1},
                      {sort: {startDate: 1}});
 };

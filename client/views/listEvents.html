@@ -41,7 +41,6 @@
         <th>Name of Event</th>
         <th>Date</th>
         <th>Address</th>
-        <th>{{eventActionTitle}}</th>
         {{#if isInRole 'admin'}}
         <th>Points</th>
         <th>Points Type</th>
@@ -57,7 +56,6 @@
         <td class="eventView"><a href="">{{name}}</a></td>
         <td>{{formatDate startDate}}-{{formatDate endDate}}</td>
         <td>{{address}}</td>
-        <td>{{{eventAction}}}</td>
         {{#if isInRole 'admin'}}
         <td class="eventView">{{pointsToDisplay}}</td>
         <td class="eventView">{{pointType}}</td>
@@ -79,6 +77,22 @@
     </tbody>
   </table>
 </div>
+<br>
+<br>
+<div class="row">
+  <div class="col-md-4 col-md-offset-2">
+    <button type="button" class="btn btn-lg btn-primary" id="prevEvents">
+      Prev Week's Events
+    </button>
+  </div>
+  <div class="col-md-4">
+    <button type="button" class="btn btn-lg btn-primary" id="nextEvents">
+      Next Week's Events
+    </button>
+  </div>
+</div>
+<br>
+<br>
 {{else}}
   {{>singleEvent eventView}}
 {{/if}}
