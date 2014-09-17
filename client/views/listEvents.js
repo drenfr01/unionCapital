@@ -1,3 +1,9 @@
+Template.listEvents.rendered = function() {
+  Session.set('eventType', this.data);
+  Session.set('eventIndex', true);
+  Session.set('eventsOffset', 0);
+};
+
 Template.listEvents.helpers({
   'modalContext': function() {
     return Session.get('modalDataContext');
@@ -13,7 +19,8 @@ Template.listEvents.helpers({
   },
   'eventsToDisplay': function(){
     if(Session.equals('eventType', 'Current')) {
-      return Events.currentEvents();
+      console.log("Event offset: " + Session.get('eventsOffset'));
+      return Events.currentEvents(Session.get('eventsOffset'));
     } else if (Session.equals('eventType', 'Upcoming')) {
       return Events.upcomingEvents();
     } else {
@@ -23,16 +30,6 @@ Template.listEvents.helpers({
   'title': function() {
     //this here is set by data context in iron-router (lib/router.js)
     return this + " Events";
-  },
-  'eventActionTitle': function() {
-    return "";
-  },
-  'eventAction': function() {
-    if(Session.equals('eventType', 'Current')) {
-      return "<button class='btn btn-small checkIn'>Check In</button>";
-    } else {
-      return "";
-    }
   },
   'pointType': function() {
     if(this.isPointsPerHour) {
@@ -65,10 +62,26 @@ Template.listEvents.events({
   'click .checkIn': function(e) {
     e.preventDefault();
     Router.go('checkIntoEvent', {eventId: this._id});
+  },
+  'click .deleteEvent': function(e) {
+    e.preventDefault();
+
+    Meteor.call('deleteEvent', this._id, function(error) {
+      if(error) {
+        addErrorMessage(error.reason);
+      } else {
+        addSuccessMessage("Event successfully deleted");
+      }
+    });
+  },
+  'click #prevEvents': function(e) {
+    e.preventDefault();
+
+    Session.set('eventsOffset', Session.get('eventsOffset') - 7);
+  },
+  'click #nextEvents': function(e) {
+    e.preventDefault();
+
+    Session.set('eventsOffset', Session.get('eventsOffset') + 7);
   }
 });
-
-Template.listEvents.rendered = function() {
-  Session.set('eventType', this.data);
-  Session.set('eventIndex', true);
-};

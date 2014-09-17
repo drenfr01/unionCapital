@@ -22,44 +22,7 @@
 
     </form>
     {{else}}
-    <h3 class="h3-createuser"><small class="h3-createuser">Create an Account</small></h3>
-    <form role="form">
-      <br>
-      <div class="form-group>">
-        <label for="firsName" class="sr-only">First Name</label>
-        <input type="text" class="form-control" id="firstName" placeholder="Enter First Name">
-      </div>
-      <br>
-      <div class="form-group>">
-        <label for="lastName" class="sr-only">Last Name</label>
-        <input type="text" class="form-control" id="lastName" placeholder="Enter Last Name">
-      </div>
-      <br>
-      <div class="form-group>">
-        <label for="userZip" class="sr-only">Zip</label>
-        <input type="text" class="form-control" id="zip" 
-        placeholder="Enter Zip Code">
-      </div>
-      <br>
-      <div class="form-group>">
-        <label for="userEmail" class="sr-only">Email Address</label>
-        <input type="email" class="form-control" id="userEmail" placeholder="Enter Email">
-      </div>
-      <br>
-      <div class="form-group>">
-        <label for="userPassword" class="sr-only">Password</label>
-        <input type="password" class="form-control" id="userPassword" 
-        placeholder="Enter Password">
-      </div>
-      <br>
-      <div class="form-group>">
-        <label for="userPasswordConfirm" class="sr-only">Confirm Password</label>
-        <input type="password" class="form-control" id="userPasswordConfirm" 
-        placeholder="Enter Password Again">
-      </div>
-      <button type="submit" class="button-landing" id="createNewUser">Login</button>
-      <button type="button" class="button-landing2" id="signIn">Back</button>
-    </form>
+      {{> createNewUser}}
     {{/if}}
   </div>
 </div>

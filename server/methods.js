@@ -19,8 +19,8 @@ Meteor.methods({
 
     //TODO: setup MAIL URL for union capital website
     if(attributes.needsApproval) {
-      emailHelper('duncanrenfrow@gmail.com',
-                  'duncanrenfrow@gmail.com',
+      emailHelper(adminEmail,
+                  adminEmail,
                   'A Union Capitalist has submitted a photo for approval',
                   currentUser.profile.firstName + ' ' + currentUser.profile.lastName + 
                     ' requests that you log onto the admin website and approve or reject their event.' +
@@ -83,7 +83,7 @@ Meteor.methods({
     var user = Meteor.users.findOne(attributes.userId);
 
     emailHelper(user.emails[0].address,
-                'duncanrenfrow@gmail.com',
+                adminEmail,
                 'Your Event has been approved',
                 'Thanks for attending ' + attributes.eventName + "!" +
                   "You have earned " + attributes.points + " points for your service!"
@@ -107,14 +107,14 @@ Meteor.methods({
 
     //TODO: make this dry with updateUserProfile helper above
     emailHelper(attributes.email,
-                'duncanrenfrow@gmail.com',
+                adminEmail,
                 'Thanks for Registering!',
                 "We're excited to work with you! Please use the contact button in the applicaton " +
                   "if you have any trouble using the application."
                );
 
-    emailHelper('duncanrenfrow@gmail.com',
-                'duncanrenfrow@gmail.com',
+    emailHelper(adminEmail,
+                adminEmail,
                 'New User Registered',
                 attributes.profile.firstName + " " + attributes.profile.lastName + 
                  " has created an account! They can be reached at: " +
@@ -141,14 +141,14 @@ Meteor.methods({
                                             Roles.addUsersToRoles(attributes.userId, 'user');
     //TODO: make this dry with new user helper below
     emailHelper(attributes.email,
-                'duncanrenfrow@gmail.com',
+                adminEmail,
                 'Thanks for Registering!',
                 "We're excited to work with you! Please use the contact button in the applicaton " +
                   "if you have any trouble using the application."
                );
 
-    emailHelper('duncanrenfrow@gmail.com',
-                'duncanrenfrow@gmail.com',
+    emailHelper(adminEmail,
+                adminEmail,
                 'New User Registered through Facebook',
                 attributes.profile.firstName + " " + attributes.profile.lastName + 
                  " has created an account! They can be reached at: " +
@@ -209,11 +209,41 @@ Meteor.methods({
 
     var currentUser = Meteor.users.findOne(attributes.userId);
 
-    emailHelper('duncanrenfrow@gmail.com', 
-                'duncanrenfrow@gmail.com', 
+    emailHelper(adminEmail, 
+                adminEmail, 
                 'A Union Capitalist has sent you a comment',
                 currentUser.profile.firstName + ' ' + currentUser.profile.lastName + 
                   ' says: ' + attributes.comment
                );
+  },
+  deleteEvent: function(eventId) {
+    check(eventId, String);
+
+    if(Transactions.findOne({eventId: eventId})) {
+      throw new Meteor.Error(400, "Users have already checked into this event. Please contact technical support");
+    } else {
+      Events.remove(eventId);
+    }
+  },
+  addPointsToUser: function(attributes) {
+    check(attributes, {
+      userId: String,
+      points: Number,
+      description: String
+    });
+
+    //calculate appropriate hours and minutes based on Administer AdHoc events
+    var hours = Math.floor(attributes.points / 100);
+    var minutes = Math.ceil((attributes.points % 100) / 100 * 60);
+
+    //insert Transaction
+    var event = Events.findOne({name: 'Admin Add Points'});
+
+    Transactions.insert({userId: attributes.userId, eventId: event._id, 
+                        needsApproval: false, 
+                        transactionDate: Date(), hoursSpent: hours, 
+                        minutesSpent: minutes
+    });
+
   }
 });

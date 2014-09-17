@@ -1,6 +1,20 @@
 <template name="timeSelection">
   <div class="row">
-    <input type="number" id="hours" placeholder="Enter hours spent">
-    <input type="number" id="minutes" placeholder="Enter minutes spent">
+    <div class="col-md-3 col-md-offset-3">
+      <label for="hours">Hours: </label>
+      <select id="hours" class="time">
+        {{#each hours}}
+          <option>{{this}}</option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label for="minutes">Minutes: </label>
+      <select id="minutes" class="time">
+        {{#each minutes}}
+          <option>{{this}}</option>
+        {{/each}}
+      </select>
+    </div>
   </div>
 </template>

@@ -1,15 +1,9 @@
-function getEvent(transaction){
-  var id = transaction.eventId;
-  var event = Events.findOne({ _id: id });
-  return event;
-}
-
 Template.checkPoints.helpers({
   approvedEvents: function() {
-    return Meteor.users.transactionsFor(Meteor.userId(), false);
+    return Meteor.users.transactionsFor(this._id, false);
   },
   pendingEvents: function() {
-    return Meteor.users.transactionsFor(Meteor.userId(), true);
+    return Meteor.users.transactionsFor(this._id, true);
   },
   eventName: function(){
     return getEvent(this).name;
@@ -29,6 +23,6 @@ Template.checkPoints.helpers({
     return getEvent(this).endDate;
   },
   totalPoints: function() {
-    return Meteor.users.totalPointsFor(Meteor.userId());
+    return Meteor.users.totalPointsFor(this._id);
   }
 });

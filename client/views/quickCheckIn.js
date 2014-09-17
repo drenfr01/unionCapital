@@ -53,17 +53,15 @@ Template.quickCheckIn.events({
       userId: Meteor.userId(),
       eventId: Session.get('closestEvent')._id,
       needsApproval: false,
-      hoursSpent: parseInt($('#hours').val(),10),
-      minutesSpent: parseInt($('#minutes').val(),10),
       transactionDate: Date()
     };
     Meteor.call('insertTransaction', attributes, function(error) {
       if(error) {
         addErrorMessage(error.reason + ". Transferring you to more check-in options.");
-        Router.go('checkIntoEvent', {eventId: null});
+        Router.go('memberHomePage');
       } else {
         addSuccessMessage('Added points to your total!');
-        Router.go('checkPoints');
+        Router.go('checkPoints', {_id: Meteor.userId()});
       }
     });
   }

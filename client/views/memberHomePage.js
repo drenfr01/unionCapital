@@ -6,23 +6,12 @@ Template.memberHomePage.helpers({
   }
 });
 Template.memberHomePage.events({
-  'click #addItem': function(e) {
-    e.preventDefault();
-  },
-  'click #checkIntoEvent': function(e) {
-    e.preventDefault();
-    Router.go('checkIntoEvent', {eventId: null});
-  },
   'click #quickCheckIn': function(e) {
     e.preventDefault();
     Router.go('quickCheckIn');
   },
-  'click #exploreEvents': function(e) {
+  'click #takePhoto': function(e) {
     e.preventDefault();
-    Router.go('exploreEvents');
-  },
-  'click #checkPoints': function(e) {
-    e.preventDefault();
-    Router.go('checkPoints');
+    Router.go('submitNewEvent');
   }
 });
