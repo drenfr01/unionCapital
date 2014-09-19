@@ -1,19 +1,4 @@
 {
   "packages": {
-    "bootstrap-3": {},
-    "iron-router": {},
-    "accounts-ui-bootstrap-3": {},
-    "collectionFS": {},
-    "roles": {},
-    "autoform": {},
-    "collection2": {},
-    "moment": {},
-    "bootflat": {},
-    "googlemaps-server": {},
-    "jasmine-unit": {},
-    "jasmine": {},
-    "velocity-html-reporter": {},
-    "velocity-quick-start": {},
-    "mocha-web-velocity": {}
   }
 }

@@ -1,5 +1,5 @@
-Transactions = new Meteor.Collection('transactions', {
-  schema: {
+Transactions = new Meteor.Collection('transactions');
+Transactions.attachSchema(new SimpleSchema({
     userId: {
       type: String,
       label: 'User Identifier',
@@ -45,9 +45,7 @@ Transactions = new Meteor.Collection('transactions', {
       label: 'Number of Minutes Spent',
       optional: true
     }
-
-  }
-});
+}));
 
 Transactions.allow({
   insert: function() {
