@@ -61,7 +61,7 @@ Meteor.methods({
       imageId: String,
       eventName: String,
       eventAddress: String,
-      eventDescription: String,
+      eventDescription: Match.Optional(String),
       eventDate: Date,
       points: Match.Optional(Number),
       pointsPerHour: Match.Optional(Number)
