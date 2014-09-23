@@ -29,6 +29,7 @@ Meteor.methods({
     if(attributes.eventId && Transactions.findOne({userId: attributes.userId, eventId: attributes.eventId})) {
       throw new Meteor.Error(400, "You have already checked into this event");
     } else {
+      attributes.deleteInd = false;
       return Transactions.insert(attributes);
     }
   },
@@ -190,7 +191,7 @@ Meteor.methods({
       //TODO: consider adding user geolocation info to transaction?
       Transactions.insert({userId: attributes.userId, eventId: event._id, needsApproval: false, 
                           transactionDate: Date(), hoursSpent: attributes.hoursSpent, 
-                          minutesSpent: attributes.minutesSpent
+                          minutesSpent: attributes.minutesSpent, deleteInd: false
       }); 
       return "Congrats, you are within: " + distance +  " km of your event. Adding points to your total!";
     } else {
@@ -240,7 +241,8 @@ Meteor.methods({
     Transactions.insert({userId: attributes.userId, eventId: event._id, 
                         needsApproval: false, 
                         transactionDate: Date(), hoursSpent: hours, 
-                        minutesSpent: minutes
+                        minutesSpent: minutes,
+                        deleteInd: false
     });
 
   }

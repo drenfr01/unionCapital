@@ -44,6 +44,12 @@ Transactions.attachSchema(new SimpleSchema({
       type: Number,
       label: 'Number of Minutes Spent',
       optional: true
+    },
+    //TODO: remove optional flag once all transactions update
+    deleteInd: {
+      type: Boolean,
+      label: 'Logical Deletion',
+      optional: true
     }
 }));
 

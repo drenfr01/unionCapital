@@ -3,7 +3,7 @@ Meteor.users.transactionsFor = function(userId, needsApprovalFlag) {
   //TODO: the check for pendingEventName is a complete hack. we need to have a way to logically separate 
   //ad-hoc events from schedule ones, or better yet convert pending events to regular ones once they've been approved
   return Transactions.find(
-    { userId: userId, needsApproval: needsApprovalFlag },
+    { userId: userId, needsApproval: needsApprovalFlag , deleteInd: { $ne: true }},
     { sort: { transactionDate: 1 } });
 };
 
