@@ -19,9 +19,7 @@ Meteor.methods({
 
     //TODO: setup MAIL URL for union capital website
     if(attributes.needsApproval) {
-      emailHelper(adminEmail,
-                  adminEmail,
-                  'A Union Capitalist has submitted a photo for approval',
+      console.log('A Union Capitalist has submitted a photo for approval',
                   currentUser.profile.firstName + ' ' + currentUser.profile.lastName + 
                     ' requests that you log onto the admin website and approve or reject their event.' +
                     ' If there is any questions they can be reached at: ' + currentUser.emails[0].address
@@ -31,6 +29,7 @@ Meteor.methods({
     if(attributes.eventId && Transactions.findOne({userId: attributes.userId, eventId: attributes.eventId})) {
       throw new Meteor.Error(400, "You have already checked into this event");
     } else {
+      attributes.deleteInd = false;
       return Transactions.insert(attributes);
     }
   },
@@ -61,7 +60,7 @@ Meteor.methods({
       imageId: String,
       eventName: String,
       eventAddress: String,
-      eventDescription: String,
+      eventDescription: Match.Optional(String),
       eventDate: Date,
       points: Match.Optional(Number),
       pointsPerHour: Match.Optional(Number)
@@ -192,7 +191,7 @@ Meteor.methods({
       //TODO: consider adding user geolocation info to transaction?
       Transactions.insert({userId: attributes.userId, eventId: event._id, needsApproval: false, 
                           transactionDate: Date(), hoursSpent: attributes.hoursSpent, 
-                          minutesSpent: attributes.minutesSpent
+                          minutesSpent: attributes.minutesSpent, deleteInd: false
       }); 
       return "Congrats, you are within: " + distance +  " km of your event. Adding points to your total!";
     } else {
@@ -242,7 +241,8 @@ Meteor.methods({
     Transactions.insert({userId: attributes.userId, eventId: event._id, 
                         needsApproval: false, 
                         transactionDate: Date(), hoursSpent: hours, 
-                        minutesSpent: minutes
+                        minutesSpent: minutes,
+                        deleteInd: false
     });
 
   }

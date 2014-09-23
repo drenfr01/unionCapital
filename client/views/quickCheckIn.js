@@ -1,5 +1,6 @@
 Template.quickCheckIn.rendered = function() {
   Session.set('closestEvent', null);
+  Session.set('timeEntered', false);
   
   var geoOptions = {
     enableHighAccuracy: true,
@@ -40,11 +41,18 @@ Template.quickCheckIn.rendered = function() {
 Template.quickCheckIn.helpers({
   'closestEvent': function() {
     return Session.get('closestEvent');
+  },
+  'isPointsPerHour': function() {
+    return Session.get('closestEvent').isPointsPerHour;
   }
 });
 
 Template.quickCheckIn.events({
   'click #closestEvent': function(e) {
+  },
+  'change .time': function(e) {
+    e.preventDefault();
+    Session.set('timeEntered', true);
   },
   'click #checkIn': function(e) {
     e.preventDefault();
@@ -53,17 +61,28 @@ Template.quickCheckIn.events({
       userId: Meteor.userId(),
       eventId: Session.get('closestEvent')._id,
       needsApproval: false,
-      transactionDate: Date()
+      transactionDate: Date(),
+      hoursSpent: parseInt($('#hours').val(),10) || 0,
+      minutesSpent: parseInt($('#minutes').val(),10) || 0
     };
-    Meteor.call('insertTransaction', attributes, function(error) {
-      if(error) {
-        addErrorMessage(error.reason + ". Transferring you to more check-in options.");
-        Router.go('memberHomePage');
-      } else {
-        addSuccessMessage('Added points to your total!');
-        Router.go('checkPoints', {_id: Meteor.userId()});
-      }
-    });
+    //if you are a points per hour event than the user
+    //has to enter points
+    if(!Session.get('closestEvent').isPointsPerHour || 
+       Session.get('timeEntered')) {
+      
+      Meteor.call('insertTransaction', attributes, function(error) {
+        if(error) {
+          addErrorMessage(error.reason + ". Transferring you to more check-in options.");
+          Router.go('memberHomePage');
+        } else {
+          addSuccessMessage('Added points to your total!');
+          Router.go('checkPoints', {_id: Meteor.userId()});
+        }
+      });
+    } else {
+      addErrorMessage('Please ensure you have filled in the time spent');
+    }
+
   }
 });
 

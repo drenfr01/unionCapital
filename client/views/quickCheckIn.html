@@ -7,8 +7,11 @@
         <p>Event Name: {{closestEvent.name}}</p>
         <p>Event Description: {{closestEvent.description}}</p>
         <p>Event Address: {{closestEvent.address}}</p>
-      <!-- TODO: put in details about event -->
-      <br>
+      {{#if isPointsPerHour}}
+        <br>
+          {{> timeSelection}}
+        <br>
+      {{/if}}
       <button class="button-landing" id="checkIn">
         Check In
       </button>

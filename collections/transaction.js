@@ -1,5 +1,5 @@
-Transactions = new Meteor.Collection('transactions', {
-  schema: {
+Transactions = new Meteor.Collection('transactions');
+Transactions.attachSchema(new SimpleSchema({
     userId: {
       type: String,
       label: 'User Identifier',
@@ -44,10 +44,14 @@ Transactions = new Meteor.Collection('transactions', {
       type: Number,
       label: 'Number of Minutes Spent',
       optional: true
+    },
+    //TODO: remove optional flag once all transactions update
+    deleteInd: {
+      type: Boolean,
+      label: 'Logical Deletion',
+      optional: true
     }
-
-  }
-});
+}));
 
 Transactions.allow({
   insert: function() {
