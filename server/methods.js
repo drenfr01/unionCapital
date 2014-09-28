@@ -17,6 +17,11 @@ Meteor.methods({
 
     var currentUser = Meteor.users.findOne(attributes.userId);
 
+    var duplicateTransaction = Transactions.findOne({userId: attributes.userId, imageId: attributes.imageId,
+                                                    pendingEventName: attributes.pendingEventName, 
+                                                    pendingEventDescription: attributes.pendingEventDescription
+    });
+
     //TODO: setup MAIL URL for union capital website
     if(attributes.needsApproval) {
       console.log('A Union Capitalist has submitted a photo for approval',
@@ -28,6 +33,8 @@ Meteor.methods({
 
     if(attributes.eventId && Transactions.findOne({userId: attributes.userId, eventId: attributes.eventId})) {
       throw new Meteor.Error(400, "You have already checked into this event");
+    } else if (duplicateTransaction){
+     throw new Meteor.Error(400, "This may be a duplicate submission");
     } else {
       attributes.deleteInd = false;
       return Transactions.insert(attributes);
