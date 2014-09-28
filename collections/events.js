@@ -61,9 +61,11 @@ Events.currentEvents = function(offset) {
   var currentDate = new Date();
   currentDate.setDate(currentDate.getDate() + offset);
   var offsetDate = new Date(currentDate);
+  console.log("Event offset date: " + offsetDate);
 
+  //the offset defaults to one week ahead
   return Events.find({startDate: {'$lte': offsetDate}, 
-                     endDate: {'$gte': offsetDate}, 
+                     endDate: {'$lte': offsetDate}, 
                      active: 1},
                      {sort: {startDate: 1}});
 };

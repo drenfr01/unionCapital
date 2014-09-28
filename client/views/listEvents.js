@@ -1,7 +1,7 @@
 Template.listEvents.rendered = function() {
   Session.set('eventType', this.data);
   Session.set('eventIndex', true);
-  Session.set('eventsOffset', 0);
+  Session.set('eventsOffset', 7);
 };
 
 Template.listEvents.helpers({
@@ -19,7 +19,6 @@ Template.listEvents.helpers({
   },
   'eventsToDisplay': function(){
     if(Session.equals('eventType', 'Current')) {
-      console.log("Event offset: " + Session.get('eventsOffset'));
       return Events.currentEvents(Session.get('eventsOffset'));
     } else if (Session.equals('eventType', 'Upcoming')) {
       return Events.upcomingEvents();
