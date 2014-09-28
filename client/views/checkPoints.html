@@ -1,6 +1,6 @@
 <template name="checkPoints">
 <div class="text-center">
-  <h1><small>Your Activity History</small></h1>
+  <h1><small>Total Points: {{totalPoints}}</small></h1>
   <br>
 </div>
 
@@ -44,13 +44,6 @@
         <th>Check-In Date</th>
       </tr>
     </thead>
-    <tfoot>
-      <tr>
-        <td colspan="0">Total Points: </td>
-        <td>{{totalPoints}}</td>
-        <td></td>
-      </tr>
-    </tfoot>
     <tbody>
       {{#each approvedEvents}}
       <tr>
