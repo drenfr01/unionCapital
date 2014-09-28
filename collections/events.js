@@ -57,15 +57,22 @@ Events.attachSchema(new SimpleSchema({
   }
 }));
 
-Events.currentEvents = function(offset) {
+Events.calculateStartEndDates = function(offset) {
   var currentDate = new Date();
-  currentDate.setDate(currentDate.getDate() + offset);
-  var offsetDate = new Date(currentDate);
-  console.log("Event offset date: " + offsetDate);
+  //set start of week date
+  currentDate.setDate(currentDate.getDate() + (offset - 7));
+  var startWeekDate = new Date(currentDate);
+  currentDate = new Date();
 
-  //the offset defaults to one week ahead
-  return Events.find({startDate: {'$lte': offsetDate}, 
-                     endDate: {'$lte': offsetDate}, 
+  //set end of week date
+  currentDate.setDate(currentDate.getDate() + offset);
+  var endWeekDate = new Date(currentDate);
+  return [startWeekDate, endWeekDate];
+};
+
+Events.currentEvents = function(startWeekDate, endWeekDate) {
+  return Events.find({startDate: {'$lte': endWeekDate}, 
+                     endDate: {'$gte': startWeekDate}, 
                      active: 1},
                      {sort: {startDate: 1}});
 };
