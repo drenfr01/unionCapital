@@ -75,6 +75,12 @@ Template.listEvents.events({
   },
   'click .insertReservations': function(e) {
     Session.set('reservationModalDataContext', this);
+    console.log(e);
+    console.log("Testing: " + $(e.target).text());
+    $(e.target).removeClass('insertReservations');
+    $(e.target).removeClass('btn-default');
+    $(e.target).addClass('btn-success');
+    $(e.target).text('Remove RSVP');
   },
   'click .eventView': function(e) {
     Session.set('eventIndex', false);
