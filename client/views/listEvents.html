@@ -1,8 +1,7 @@
 <template name="listEvents">
 {{#if isEventIndex}}
 <h1 class="text-center"><small>{{title}}</small></h1>
-<!--Modal launched when Edit button below clicked -->
-{{#with modalContext}}
+{{#with eventModalContext}}
 <div class="modal fade" id="editModal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -34,6 +33,32 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 {{/with}}
+<!--Modal launched when RSVP button below clicked -->
+{{#with reservationModalContext}}
+<div class="modal fade" id="rsvpModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          &times;</button>
+        <h4 class="modal-title text-center">{{name}}</h4>
+      </div>
+      <div class="modal-body">
+        {{#autoForm collection="Reservations" id="insertReservationsForm" type="insert"}}
+        <fieldset>
+          <legend>Add Reservation</legend>
+          {{> afQuickField name="numberOfPeople"}}
+        </fieldset>
+        <button type="submit" class="btn btn-default" id="submit">Submit</button>
+        {{/autoForm}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{/with}}
 <div class="tablesize">
   <table class="table table-striped">
     <thead>
@@ -41,6 +66,9 @@
         <th>Name of Event</th>
         <th>Date</th>
         <th>Address</th>
+        {{#if isInRole 'user'}}
+          <th></th>
+        {{/if}}
         {{#if isInRole 'admin'}}
         <th>Points</th>
         <th>Points Type</th>
@@ -56,6 +84,14 @@
         <td class="eventView"><a href="">{{name}}</a></td>
         <td>{{formatDate startDate}}-{{formatDate endDate}}</td>
         <td>{{address}}</td>
+        {{#if isInRole 'user'}}
+        <td>
+          <button type="button" class="btn btn-default btn-sm insertReservations"
+            data-toggle="modal" data-target = "#rsvpModal">
+            RSVP
+          </button>
+        </td>
+        {{/if}}
         {{#if isInRole 'admin'}}
         <td class="eventView">{{pointsToDisplay}}</td>
         <td class="eventView">{{pointType}}</td>

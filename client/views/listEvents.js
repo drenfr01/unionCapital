@@ -1,3 +1,15 @@
+AutoForm.hooks({
+  insertReservationsForm: {
+    before: {
+      insert: function(doc, template) {
+        var rsvpEvent = Session.get('reservationModalDataContext');
+        doc.eventId = rsvpEvent._id;
+        doc.dateEntered = new Date();
+        return doc;
+      } 
+    }
+  }
+});
 Template.listEvents.rendered = function() {
   Session.set('eventType', this.data);
   Session.set('eventIndex', true);
@@ -5,11 +17,14 @@ Template.listEvents.rendered = function() {
 };
 
 Template.listEvents.helpers({
-  'modalContext': function() {
-    return Session.get('modalDataContext');
+  'eventModalContext': function() {
+    return Session.get('eventModalDataContext');
+  },
+  'reservationModalContext': function() {
+    return Session.get('reservationModalDataContext');
   },
   'editingDoc': function() {
-    return Events.findOne(Session.get('modalDataContext')._id);
+    return Events.findOne(Session.get('eventModalDataContext')._id);
   },
   'isEventIndex': function() {
       return Session.get('eventIndex');
@@ -56,7 +71,10 @@ Template.listEvents.helpers({
 
 Template.listEvents.events({
   'click .editEvent': function(e) {
-    Session.set('modalDataContext', this);
+    Session.set('eventModalDataContext', this);
+  },
+  'click .insertReservations': function(e) {
+    Session.set('reservationModalDataContext', this);
   },
   'click .eventView': function(e) {
     Session.set('eventIndex', false);
