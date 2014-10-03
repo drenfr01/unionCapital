@@ -1,133 +1,133 @@
 <template name="listEvents">
-{{#if isEventIndex}}
-<h1 class="text-center"><small>{{title}}</small></h1>
-{{#with eventModalContext}}
-<div class="modal fade" id="editModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-          &times;</button>
-        <h4 class="modal-title text-center">Edit Events</h4>
-      </div>
-      <div class="modal-body">
-        {{#autoForm collection="Events" doc=editingDoc id="updateEventsForm" type="update"}}
-        <fieldset>
-          <legend>Update Event</legend>
-          {{> afQuickField name="name"}}
-          {{> afQuickField name="address"}}
-          {{> afQuickField name="url"}}
-          {{> afQuickField name="description"}}
-          {{> afQuickField name="active"}}
-          {{> afQuickField name="startDate"}}
-          {{> afQuickField name="endDate"}}
-          {{> afQuickField name="points"}}
-        </fieldset>
-        <button type="submit" class="btn btn-default" id="submit">Submit</button>
-        {{/autoForm}}
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-{{/with}}
-<!--Modal launched when RSVP button below clicked -->
-{{#with reservationModalContext}}
-<div class="modal fade" id="rsvpModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-          &times;</button>
-        <h4 class="modal-title text-center">{{name}}</h4>
-      </div>
-      <div class="modal-body">
-        {{#autoForm collection="Reservations" id="insertReservationsForm" type="insert"}}
-        <fieldset>
-          <legend>Add Reservation</legend>
-          {{> afQuickField name="numberOfPeople"}}
-        </fieldset>
-        <button type="submit" class="btn btn-default" id="submit">Submit</button>
-        {{/autoForm}}
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-{{/with}}
-<div class="tablesize">
-  <table class="table table-striped">
-    <thead>
-      <tr class="full-screen-event">
-        <th>Name of Event</th>
-        <th>Date</th>
-        <th>Address</th>
-        {{#if isInRole 'user'}}
+  {{#if isEventIndex}}
+  <h1 class="text-center"><small>{{title}}</small></h1>
+  {{#with eventModalContext}}
+  <div class="modal fade" id="editModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;</button>
+          <h4 class="modal-title text-center">Edit Events</h4>
+        </div>
+        <div class="modal-body">
+          {{#autoForm collection="Events" doc=editingDoc id="updateEventsForm" type="update"}}
+          <fieldset>
+            <legend>Update Event</legend>
+            {{> afQuickField name="name"}}
+            {{> afQuickField name="address"}}
+            {{> afQuickField name="url"}}
+            {{> afQuickField name="description"}}
+            {{> afQuickField name="active"}}
+            {{> afQuickField name="startDate"}}
+            {{> afQuickField name="endDate"}}
+            {{> afQuickField name="points"}}
+          </fieldset>
+          <button type="submit" class="btn btn-default" id="submit">Submit</button>
+          {{/autoForm}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  {{/with}}
+  <!--Modal launched when RSVP button below clicked -->
+  {{#with reservationModalContext}}
+  <div class="modal fade" id="rsvpModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;</button>
+          <h4 class="modal-title text-center">{{name}}</h4>
+        </div>
+        <div class="modal-body">
+          {{#autoForm collection="Reservations" id="insertReservationsForm" type="insert"}}
+          <fieldset>
+            <legend>Add Reservation</legend>
+            {{> afQuickField name="numberOfPeople"}}
+          </fieldset>
+          <button type="submit" class="btn btn-default" id="submit">Submit</button>
+          {{/autoForm}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  {{/with}}
+  <div class="col-sm-10 col-sm-offset-1">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name of Event</th>
+          <th>Date</th>
+          <th>Address</th>
+          {{#if isInRole 'user'}}
+            <th></th>
+          {{/if}}
+          {{#if isInRole 'admin'}}
+          <th>Points</th>
+          <th>Points Type</th>
           <th></th>
-        {{/if}}
-        {{#if isInRole 'admin'}}
-        <th>Points</th>
-        <th>Points Type</th>
-        <th></th>
-        <th></th>
-        {{/if}}
+          <th></th>
+          {{/if}}
 
-      </tr>
-    </thead>
-    <tbody>
-      {{#each eventsToDisplay}}
-      <tr class="full-screen-event">
-        <td class="eventView"><a href="">{{name}}</a></td>
-        <td>{{formatDate startDate}}-{{formatDate endDate}}</td>
-        <td>{{address}}</td>
-        {{#if isInRole 'user'}}
-        <td>
-          <button type="button" class="btn btn-default btn-sm insertReservations"
-            data-toggle="modal" data-target = "#rsvpModal">RSVP</button>
-        </td>
-        {{/if}}
-        {{#if isInRole 'admin'}}
-        <td class="eventView">{{pointsToDisplay}}</td>
-        <td class="eventView">{{pointType}}</td>
-        <td>
-          <button type="button" class="btn btn-default btn-sm editEvent"
-            data-toggle="modal" data-target = "#editModal">
-            Edit
-          </button>
-        </td>
-        <td>
-          <button type="button" class="btn btn-default btn-sm deleteEvent">
-            Delete
-          </button>
-        </td>
-        {{/if}}
-        <td></td>
-      </tr>
-      {{/each}}
-    </tbody>
-  </table>
-</div>
-<br>
-<br>
-<div class="row">
-  <div class="col-md-4 col-md-offset-2">
-    <button type="button" class="btn btn-lg btn-primary" id="prevEvents">
-      Prev Week's Events
-    </button>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each eventsToDisplay}}
+        <tr>
+          <td class="eventView"><a href="">{{name}}</a></td>
+          <td>{{formatDate startDate}}-{{formatDate endDate}}</td>
+          <td>{{address}}</td>
+          {{#if isInRole 'user'}}
+          <td>
+            <button type="button" class="btn btn-default btn-sm insertReservations"
+              data-toggle="modal" data-target = "#rsvpModal">RSVP</button>
+          </td>
+          {{/if}}
+          {{#if isInRole 'admin'}}
+          <td class="eventView">{{pointsToDisplay}}</td>
+          <td class="eventView">{{pointType}}</td>
+          <td>
+            <button type="button" class="btn btn-default btn-sm editEvent"
+              data-toggle="modal" data-target = "#editModal">
+              Edit
+            </button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-default btn-sm deleteEvent">
+              Delete
+            </button>
+          </td>
+          {{/if}}
+          <td></td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
   </div>
-  <div class="col-md-4">
-    <button type="button" class="btn btn-lg btn-primary" id="nextEvents">
-      Next Week's Events
-    </button>
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-sm-4 col-sm-offset-2">
+      <button type="button" class="btn btn-lg btn-primary" id="prevEvents">
+        Prev Week's Events
+      </button>
+    </div>
+    <div class="col-sm-4">
+      <button type="button" class="btn btn-lg btn-primary" id="nextEvents">
+        Next Week's Events
+      </button>
+    </div>
   </div>
-</div>
-<br>
-<br>
-{{else}}
-  {{>singleEvent eventView}}
-{{/if}}
+  <br>
+  <br>
+  {{else}}
+    {{>singleEvent eventView}}
+  {{/if}}
 </template>

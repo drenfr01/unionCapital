@@ -13,6 +13,7 @@ AutoForm.hooks({
 Template.listEvents.rendered = function() {
   Session.set('eventType', this.data);
   Session.set('eventIndex', true);
+  //TODO: remove magic number 7 below and make variable
   Session.set('eventsOffset', 7);
 };
 
