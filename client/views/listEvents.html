@@ -1,6 +1,5 @@
 <template name="listEvents">
   {{#if isEventIndex}}
-  <h1 class="text-center"><small>{{title}}</small></h1>
   {{#with eventModalContext}}
   <div class="modal fade" id="editModal">
     <div class="modal-dialog">
@@ -18,9 +17,11 @@
             {{> afQuickField name="address"}}
             {{> afQuickField name="url"}}
             {{> afQuickField name="description"}}
+            {{> afQuickField name="institution" options="allowed"}}
+            {{> afQuickField name="category" options="allowed"}}
             {{> afQuickField name="active"}}
-            {{> afQuickField name="startDate"}}
-            {{> afQuickField name="endDate"}}
+            {{> afQuickField name="startDate" type="datetime-local" offset="-0400"}}
+            {{> afQuickField name="endDate" type="datetime-local" offset="-0400"}}
             {{> afQuickField name="points"}}
           </fieldset>
           <button type="submit" class="btn btn-default" id="submit">Submit</button>
@@ -59,74 +60,120 @@
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
   {{/with}}
-  <div class="col-sm-10 col-sm-offset-1">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Name of Event</th>
-          <th>Date</th>
-          <th>Address</th>
-          {{#if isInRole 'user'}}
-            <th></th>
-          {{/if}}
-          {{#if isInRole 'admin'}}
-          <th>Points</th>
-          <th>Points Type</th>
-          <th></th>
-          <th></th>
-          {{/if}}
-
-        </tr>
-      </thead>
-      <tbody>
-        {{#each eventsToDisplay}}
-        <tr>
-          <td class="eventView"><a href="">{{name}}</a></td>
-          <td>{{formatDate startDate}}-{{formatDate endDate}}</td>
-          <td>{{address}}</td>
-          {{#if isInRole 'user'}}
-          <td>
-            <button type="button" class="btn btn-default btn-sm insertReservations"
-              data-toggle="modal" data-target = "#rsvpModal">RSVP</button>
-          </td>
-          {{/if}}
-          {{#if isInRole 'admin'}}
-          <td class="eventView">{{pointsToDisplay}}</td>
-          <td class="eventView">{{pointType}}</td>
-          <td>
-            <button type="button" class="btn btn-default btn-sm editEvent"
-              data-toggle="modal" data-target = "#editModal">
-              Edit
-            </button>
-          </td>
-          <td>
-            <button type="button" class="btn btn-default btn-sm deleteEvent">
-              Delete
-            </button>
-          </td>
-          {{/if}}
-          <td></td>
-        </tr>
+  {{#if showMapClicked}}
+    <div class="text-center row">
+      <button type="button" class="btn btn-danger text-center" id="hideMap">Hide Map</button>
+    </div>
+    {{> communityNeeds }}
+  {{else}}
+    <h1 class="text-center"><small>{{title}}</small></h1>
+    <div class="input-group col-sm-6 col-sm-offset-3">
+      <input type='text' class="form-control" 
+        placeholder='Start typing Event Names here' id='eventSearch'/>
+      <span class="input-group-btn">
+        <button class="btn btn-default" id="clearSearch">
+          &times;</button>
+      </span>
+    </div>
+    <div class="col-sm-3 col-sm-offset-3">
+      <span class="text-center">Institution:</span>
+      <br>
+      <select id="institutions">
+        <option></option>
+        {{#each affiliatedInstitutions}}
+          <option value="{{this}}">{{this}}</option>
         {{/each}}
-      </tbody>
-    </table>
-  </div>
-  <br>
-  <br>
-  <div class="row">
-    <div class="col-sm-4 col-sm-offset-2">
-      <button type="button" class="btn btn-lg btn-primary" id="prevEvents">
-        Prev Week's Events
-      </button>
+      </select>
     </div>
-    <div class="col-sm-4">
-      <button type="button" class="btn btn-lg btn-primary" id="nextEvents">
-        Next Week's Events
-      </button>
+    <div class="col-sm-3">
+      <span class="text-center">Category:</span>
+      <br>
+      <select id="categories">
+        <option></option>
+        {{#each eventCategories}}
+          <option value="{{this}}">{{this}}</option>
+        {{/each}}
+      </select>
     </div>
-  </div>
-  <br>
-  <br>
+    <div class="col-sm-4 col-sm-offset-4">
+      <br>
+      <button type="button" class="btn btn-lg btn-default text-center" id="showMap">
+        Show Events on Map</button>
+    </div>
+    <div class="col-sm-10 col-sm-offset-1">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Name of Event</th>
+            <th>Date</th>
+            <th>Address</th>
+            {{#if isInRole 'user'}}
+              <th></th>
+            {{/if}}
+            {{#if isInRole 'admin'}}
+            <th>Points</th>
+            <th>Points Type</th>
+            <th></th>
+            <th></th>
+            {{/if}}
+
+          </tr>
+        </thead>
+        <tbody>
+          {{#each eventsToDisplay}}
+          <tr>
+            <td class="eventView"><a href="">{{name}}</a></td>
+
+            <td>{{formatDate startDate }}-{{justTime endDate }}</td>
+            <!--<td>{{address}}</td>-->
+
+            {{#if isInRole 'user'}}
+            <td>
+              <button type="button" class="btn btn-default btn-sm insertReservations"
+                data-toggle="modal" data-target = "#rsvpModal">RSVP</button>
+            </td>
+            {{/if}}
+            {{#if isInRole 'admin'}}
+            <td>{{address}}</td>
+            <td class="eventView">{{pointsToDisplay}}</td>
+            <td class="eventView">{{pointType}}</td>
+            <td>
+              <button type="button" class="btn btn-default btn-sm editEvent"
+                data-toggle="modal" data-target = "#editModal">
+                Edit
+              </button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-default btn-sm deleteEvent">
+                Delete
+              </button>
+            </td>
+            {{/if}}
+            <td></td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+      {{#if displayNextLastWeekButtons}}
+        <div class="col-sm-4 col-sm-offset-2">
+          <button type="button" class="btn btn-lg btn-primary" id="prevEvents">
+            Prev Week's Events
+          </button>
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-lg btn-primary" id="nextEvents">
+            Next Week's Events
+          </button>
+        </div>
+      {{/if}}
+    </div>
+    <br>
+    <br>
+    {{/if}}
   {{else}}
     {{>singleEvent eventView}}
   {{/if}}

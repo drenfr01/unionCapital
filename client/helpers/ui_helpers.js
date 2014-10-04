@@ -1,5 +1,9 @@
 UI.registerHelper('formatDate', function(unformattedDate) {
-    return moment(unformattedDate).format('MMMM DD YYYY hh:mm A');
+    return moment(unformattedDate).format('MMMM DD hh:mm A');
+});
+
+UI.registerHelper('justTime', function(unformattedDate) {
+    return moment(unformattedDate).format('hh:mm A');
 });
 
 UI.registerHelper("eventOptions", function() {
