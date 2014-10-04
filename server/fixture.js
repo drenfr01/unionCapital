@@ -44,7 +44,7 @@ Meteor.startup(function () {
         url: 'http://example.com/CSF',
         description: 'A festival of science for everybody',
         active: 1,
-        startDate: new Date(2014,7,10,13,30),
+        startDate: new Date(2014,9,30,16,30),
         endDate: new Date(2014,9,30,17,30),
         isPointsPerHour: true,
         pointsPerHour: 100
@@ -70,8 +70,8 @@ Meteor.startup(function () {
         url: 'http://example.com/BMF',
         description: 'Music festival; all styles - join us soon!',
         active: 1,
-        startDate: new Date(2014,7,10,13,30),
-        endDate: new Date(2014,9,30,17,30),
+        startDate: new Date(2014,10,6,17,30),
+        endDate: new Date(2014,10,6,19,30),
         isPointsPerHour: true,
         pointsPerHour: 100
       },
@@ -83,8 +83,8 @@ Meteor.startup(function () {
         url: 'http://example.com/CFF',
         description: 'Watch as many films as you can in just 3 days of mandness!',
         active: 1,
-        startDate: new Date(2014,7,10,13,30),
-        endDate: new Date(2014,9,30,17,30),
+        startDate: new Date(2014,10,15,13,30),
+        endDate: new Date(2014,10,15,17,30),
         isPointsPerHour: false,
         points: 150
       },
