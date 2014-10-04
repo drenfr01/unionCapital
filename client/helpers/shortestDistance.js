@@ -10,7 +10,7 @@ closestLocation = function(userLocation, events) {
   }
   function locationDistance(loc1, loc2) {
     var dx = loc1.latitude - loc2.latitude,
-        dy = loc1.longitude - loc2.longitude;
+    dy = loc1.longitude - loc2.longitude;
 
     return vectorDistance(dx, dy);
   }
@@ -19,7 +19,7 @@ closestLocation = function(userLocation, events) {
   //and stupid and quick was neccessary over long and elegant on August 1, 2014
   var shortestDistanceEvent = events.reduce(function(prev, current) {
     var prevDistance = locationDistance(userLocation, prev);
-        currentDistance = locationDistance(userLocation, current);
+    currentDistance = locationDistance(userLocation, current);
     return (prevDistance < currentDistance) ? prev : current;
   });
 
