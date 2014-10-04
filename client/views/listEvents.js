@@ -36,18 +36,24 @@ Template.listEvents.helpers({
   'eventsToDisplay': function(){
     if(Session.equals('eventType', 'Current')) {
       var startEndDates = Events.calculateStartEndDates(Session.get('eventsOffset'));
-      return Events.currentEvents(startEndDates[0], startEndDates[1]);
+
+      var startDate = startEndDates[0];
+      var endDate = startEndDates[1];
+      
+      return Events.currentEvents(startDate, endDate);
     } else if (Session.equals('eventType', 'Upcoming')) {
       return Events.upcomingEvents();
     } else {
       return Events.allEvents();
     }
   },
+
+
   'title': function() {
     //this here is set by data context in iron-router (lib/router.js)
     if(Session.equals('eventType', 'Current')) {
       var startEndDates = Events.calculateStartEndDates(Session.get('eventsOffset'));
-      var startDate = moment(startEndDates[0]).format('MMMM DD YYYY');
+      var startDate = moment(startEndDates[0]).format('MMMM DD ');
       var endDate = moment(startEndDates[1]).format('MMMM DD YYYY');
       return startDate + " - " + endDate;
     } else {
