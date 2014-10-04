@@ -59,6 +59,14 @@
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
   {{/with}}
+  <div class="input-group col-sm-6 col-sm-offset-3">
+    <input type='text' class="form-control" 
+      placeholder='Start typing Event Names here' id='eventSearch'/>
+    <span class="input-group-btn">
+      <button class="btn btn-default" id="clearSearch">
+        &times;</button>
+    </span>
+  </div>
   <div class="col-sm-10 col-sm-offset-1">
     <table class="table table-striped">
       <thead>
@@ -114,16 +122,18 @@
   <br>
   <br>
   <div class="row">
-    <div class="col-sm-4 col-sm-offset-2">
-      <button type="button" class="btn btn-lg btn-primary" id="prevEvents">
-        Prev Week's Events
-      </button>
-    </div>
-    <div class="col-sm-4">
-      <button type="button" class="btn btn-lg btn-primary" id="nextEvents">
-        Next Week's Events
-      </button>
-    </div>
+    {{#if displayNextLastWeekButtons}}
+      <div class="col-sm-4 col-sm-offset-2">
+        <button type="button" class="btn btn-lg btn-primary" id="prevEvents">
+          Prev Week's Events
+        </button>
+      </div>
+      <div class="col-sm-4">
+        <button type="button" class="btn btn-lg btn-primary" id="nextEvents">
+          Next Week's Events
+        </button>
+      </div>
+    {{/if}}
   </div>
   <br>
   <br>

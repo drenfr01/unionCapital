@@ -15,6 +15,7 @@ Template.listEvents.rendered = function() {
   Session.set('eventIndex', true);
   //TODO: remove magic number 7 below and make variable
   Session.set('eventsOffset', 7);
+  Session.set('searchQuery', null);
 };
 
 Template.listEvents.helpers({
@@ -39,6 +40,18 @@ Template.listEvents.helpers({
       return Events.currentEvents(startEndDates[0], startEndDates[1]);
     } else if (Session.equals('eventType', 'Upcoming')) {
       return Events.upcomingEvents();
+    } else if (Session.equals('eventType', 'Searching')) {
+      var keyword = Session.get("searchQuery");
+      // TODO: Unit test this....
+      if(!_.isUndefined(keyword) && !(keyword === "")){
+        var query = new RegExp( keyword, 'i' );
+        var currentDate = new Date();
+        return Events.find({name: query, 
+                           active: 1, 
+                           endDate: {'$gte': currentDate}}, 
+                           {limit: 5});
+      }
+      return false;
     } else {
       return Events.allEvents();
     }
@@ -50,6 +63,8 @@ Template.listEvents.helpers({
       var startDate = moment(startEndDates[0]).format('MMMM DD YYYY');
       var endDate = moment(startEndDates[1]).format('MMMM DD YYYY');
       return startDate + " - " + endDate;
+    } else if (Session.equals('eventType', 'Searching')) {
+      return "Search Results";
     } else {
       return this + " Events";
     }
@@ -67,6 +82,13 @@ Template.listEvents.helpers({
     } else {
       return this.points;
     }
+  },
+  'displayNextLastWeekButtons': function() {
+    if (Session.equals("eventType", "Current")) {
+      return true;
+    } else {
+      return false;
+    }
   }
 });
 
@@ -76,8 +98,6 @@ Template.listEvents.events({
   },
   'click .insertReservations': function(e) {
     Session.set('reservationModalDataContext', this);
-    console.log(e);
-    console.log("Testing: " + $(e.target).text());
     $(e.target).removeClass('insertReservations');
     $(e.target).removeClass('btn-default');
     $(e.target).addClass('btn-success');
@@ -115,5 +135,20 @@ Template.listEvents.events({
     e.preventDefault();
 
     Session.set('eventsOffset', Session.get('eventsOffset') + 7);
+  },
+  'keyup #eventSearch': function(e) {
+    Session.set("searchQuery", e.currentTarget.value);
+    if(Session.equals("searchQuery","")) { 
+      Session.set("eventType", "Current");
+    } else {
+      Session.set("eventType", "Searching");
+    }
+  },
+  'click #clearSearch': function(e) {
+    e.preventDefault();
+
+    $("#eventSearch").val("");
+    Session.set("eventType","Current");
+    Session.set("searchQuery", null);
   }
 });
