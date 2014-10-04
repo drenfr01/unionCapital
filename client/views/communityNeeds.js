@@ -14,7 +14,7 @@ Template.communityNeeds.rendered = function() {
       var mapOptions = {
         center: new google.maps.LatLng(position.coords.latitude, 
                                        position.coords.longitude),
-        zoom: 13
+        zoom: 11
       };
       map = new google.maps.Map(document.getElementById("map-canvas"),
         mapOptions);
@@ -32,7 +32,8 @@ Template.communityNeeds.rendered = function() {
         activeEvents = Events.find({startDate: {'$lte': endDayDate}, 
                          endDate: {'$gte': startDayDate}, 
                          active: 1},
-                         {sort: {startDate: 1}});
+                         {sort: {startDate: 1}, limit: 10}
+                                  );
      
       var geocoder = new google.maps.Geocoder();
 
