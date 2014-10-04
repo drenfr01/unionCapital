@@ -67,6 +67,26 @@
         &times;</button>
     </span>
   </div>
+  <div class="col-sm-3 col-sm-offset-3">
+    <span class="text-center">Institution:</span>
+    <br>
+    <select id="institutions">
+      <option></option>
+      {{#each affiliatedInstitutions}}
+        <option value="{{this}}">{{this}}</option>
+      {{/each}}
+    </select>
+  </div>
+  <div class="col-sm-3">
+    <span class="text-center">Category:</span>
+    <br>
+    <select id="categories">
+      <option></option>
+      {{#each eventCategories}}
+        <option value="{{this}}">{{this}}</option>
+      {{/each}}
+    </select>
+  </div>
   <div class="col-sm-10 col-sm-offset-1">
     <table class="table table-striped">
       <thead>
