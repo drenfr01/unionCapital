@@ -8,10 +8,21 @@ Template.communityNeeds.rendered = function() {
   map = new google.maps.Map(document.getElementById("map-canvas"),
     mapOptions);
 
-    activeEvents = Events.find({active: 1, 
-                               endDate: {'$gte': new Date()}}, 
-                               {limit: 10}
-                              );
+    //set start of week date
+    var currentDate = new Date();
+    currentDate.setHours(0,0,0,0);
+    var startDayDate = new Date(currentDate);
+
+    //set end of week date
+    currentDate = new Date();
+    currentDate.setHours(23,59,59,59);
+    var endDayDate = new Date(currentDate);
+
+    activeEvents = Events.find({startDate: {'$lte': endDayDate}, 
+                     endDate: {'$gte': startDayDate}, 
+                     active: 1},
+                     {sort: {startDate: 1}});
+ 
   var geocoder = new google.maps.Geocoder();
 
   activeEvents.forEach(function (place) {
