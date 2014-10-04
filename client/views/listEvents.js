@@ -22,9 +22,13 @@ Template.listEvents.rendered = function() {
   Session.set('searchQuery', "");
   Session.set('institutionQuery', "");
   Session.set('categoryQuery', "");
+  Session.set('showMap', false);
 };
 
 Template.listEvents.helpers({
+  'showMapClicked': function() {
+    return Session.get('showMap');
+  },
   'eventModalContext': function() {
     return Session.get('eventModalDataContext');
   },
@@ -57,6 +61,8 @@ Template.listEvents.helpers({
       var institution = Session.get('institutionQuery');
       var category = Session.get('categoryQuery');
       var currentDate = new Date();
+      //TODO: I hate the below block of statements. At least
+      //refactor the magic numbers out
       //only the search name box is filled in
       if(keyword !== "" && institution === "" && category === "") {
         console.log("query only");
@@ -253,5 +259,13 @@ Template.listEvents.events({
     } else {
       Session.set("eventType","Searching");
     }
-  }
+  },
+  'click #showMap': function(e) {
+    e.preventDefault();
+    Session.set('showMap', true);
+  },
+  'click #hideMap': function(e) {
+    e.preventDefault();
+    Session.set('showMap', false);
+  },
 });
