@@ -11,7 +11,10 @@ AutoForm.hooks({
     }
   }
 });
+var originalDataContext = "";
+
 Template.listEvents.rendered = function() {
+  originalDataContext = this.data;
   Session.set('eventType', this.data);
   Session.set('eventIndex', true);
   //TODO: remove magic number 7 below and make variable
@@ -207,7 +210,7 @@ Template.listEvents.events({
     if(Session.equals("searchQuery","") && 
        $("#categories").val() === "" && 
        $("#institutions").val() === "") { 
-      Session.set("eventType", "Current");
+      Session.set("eventType", originalDataContext);
     } else {
       Session.set("eventType", "Searching");
     }
@@ -218,7 +221,7 @@ Template.listEvents.events({
     $("#eventSearch").val("");
     $("#institutions").val("");
     $("#categories").val("");
-    Session.set("eventType","Current");
+    Session.set("eventType", originalDataContext);
     Session.set("searchQuery", "");
     Session.set("institutionQuery", "");
     Session.set("categoryQuery", "");
@@ -229,7 +232,7 @@ Template.listEvents.events({
     if(Session.equals("searchQuery","") && 
        $("#categories").val() === "" && 
        $("#institutions").val() === "") {
-      Session.set("eventType", "Current");
+      Session.set("eventType", originalDataContext);
     } else {
       Session.set("eventType","Searching");
     }
@@ -240,7 +243,7 @@ Template.listEvents.events({
     if(Session.equals("searchQuery","") && 
        $("#categories").val() === "" && 
        $("#institutions").val() === "") {
-      Session.set("eventType", "Current");
+      Session.set("eventType", originalDataContext);
     } else {
       Session.set("eventType","Searching");
     }
