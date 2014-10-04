@@ -1,3 +1,4 @@
+//TODO: this whole file needs to be refactored...
 AutoForm.hooks({
   insertReservationsForm: {
     before: {
@@ -10,12 +11,17 @@ AutoForm.hooks({
     }
   }
 });
+var originalDataContext = "";
+
 Template.listEvents.rendered = function() {
+  originalDataContext = this.data;
   Session.set('eventType', this.data);
   Session.set('eventIndex', true);
   //TODO: remove magic number 7 below and make variable
   Session.set('eventsOffset', 7);
-  Session.set('searchQuery', null);
+  Session.set('searchQuery', "");
+  Session.set('institutionQuery', "");
+  Session.set('categoryQuery', "");
 };
 
 Template.listEvents.helpers({
@@ -47,15 +53,72 @@ Template.listEvents.helpers({
     } else if (Session.equals('eventType', 'Searching')) {
       var keyword = Session.get("searchQuery");
       // TODO: Unit test this....
-      if(!_.isUndefined(keyword) && !(keyword === "")){
-        var query = new RegExp( keyword, 'i' );
-        var currentDate = new Date();
+      var query = new RegExp( keyword, 'i' );
+      var institution = Session.get('institutionQuery');
+      var category = Session.get('categoryQuery');
+      var currentDate = new Date();
+      //only the search name box is filled in
+      if(keyword !== "" && institution === "" && category === "") {
+        console.log("query only");
         return Events.find({name: query, 
                            active: 1, 
                            endDate: {'$gte': currentDate}}, 
-                           {limit: 5});
+                           {limit: 10});
+      } //only the institution is selected
+      else if(keyword === "" && institution !== "" && category === ""){
+        console.log("institution only");
+        return Events.find({institution: institution,
+                           active: 1, 
+                           endDate: {'$gte': currentDate}}, 
+                           {limit: 10});
+      } //only the cateogry is selected
+      else if(keyword === "" && institution === "" && category !== "") {
+        console.log("category only");
+        return Events.find({category: category,
+                           active: 1, 
+                           endDate: {'$gte': currentDate}}, 
+                           {limit: 10});
+      } //the search name and institution are selected
+      else if(keyword !== "" && institution !== "" && category === "") {
+        console.log("name and institution only");
+        return Events.find({$and: [{name: query}, 
+                                   {institution: institution}
+                           ],
+                           active: 1, 
+                           endDate: {'$gte': currentDate}}, 
+                           {limit: 10});
+      } //the search name and category are selected 
+      else if(keyword !== "" && institution === "" && category !== "") {
+        console.log("name and category only");
+        return Events.find({$and: [{name: query}, 
+                                   {category: category}
+                           ],
+                           active: 1, 
+                           endDate: {'$gte': currentDate}}, 
+                           {limit: 10});
+      } //the institution and category are selected
+      else if(keyword === "" && institution !== "" && category !== "") {
+        console.log("institution and category only");
+        return Events.find({$and: [{institution: institution},
+                                   {category: category}
+                           ],
+                           active: 1, 
+                           endDate: {'$gte': currentDate}}, 
+                           {limit: 10});
+      } //the search name, instution, and category are all selected
+      else if(keyword !== "" && institution !== "" && category !== "") {
+        console.log("everything selected");
+        return Events.find({$and: [{name: query}, 
+                                   {institution: institution},
+                                   {category: category}
+                           ],
+                           active: 1, 
+                           endDate: {'$gte': currentDate}}, 
+                           {limit: 10});
+      } //this should never happen, throw an error
+      else {
+        throw new Meteor.Error(500, "Something went wrong with filtering...");
       }
-      return false;
     } else {
       return Events.allEvents();
     }
@@ -95,6 +158,12 @@ Template.listEvents.helpers({
     } else {
       return false;
     }
+  },
+  affiliatedInstitutions: function() {
+    return institutions;
+  },
+  eventCategories: function() {
+    return eventCategories;
   }
 });
 
@@ -144,8 +213,10 @@ Template.listEvents.events({
   },
   'keyup #eventSearch': function(e) {
     Session.set("searchQuery", e.currentTarget.value);
-    if(Session.equals("searchQuery","")) { 
-      Session.set("eventType", "Current");
+    if(Session.equals("searchQuery","") && 
+       $("#categories").val() === "" && 
+       $("#institutions").val() === "") { 
+      Session.set("eventType", originalDataContext);
     } else {
       Session.set("eventType", "Searching");
     }
@@ -154,7 +225,33 @@ Template.listEvents.events({
     e.preventDefault();
 
     $("#eventSearch").val("");
-    Session.set("eventType","Current");
-    Session.set("searchQuery", null);
+    $("#institutions").val("");
+    $("#categories").val("");
+    Session.set("eventType", originalDataContext);
+    Session.set("searchQuery", "");
+    Session.set("institutionQuery", "");
+    Session.set("categoryQuery", "");
+  },
+  'change #institutions': function(e) {
+    e.preventDefault();
+    Session.set("institutionQuery",$("#institutions").val());
+    if(Session.equals("searchQuery","") && 
+       $("#categories").val() === "" && 
+       $("#institutions").val() === "") {
+      Session.set("eventType", originalDataContext);
+    } else {
+      Session.set("eventType","Searching");
+    }
+  },
+  'change #categories': function(e) {
+    e.preventDefault();
+    Session.set("categoryQuery",$("#categories").val());
+    if(Session.equals("searchQuery","") && 
+       $("#categories").val() === "" && 
+       $("#institutions").val() === "") {
+      Session.set("eventType", originalDataContext);
+    } else {
+      Session.set("eventType","Searching");
+    }
   }
 });

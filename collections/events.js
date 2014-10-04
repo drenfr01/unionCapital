@@ -22,6 +22,18 @@ Events.attachSchema(new SimpleSchema({
     type: String,
     label: 'Description of Event'
   },
+  institution: {
+    type: String,
+    label: 'Affiliated Institution',
+    allowedValues: institutions,
+    optional: true
+  },
+  category: {
+    type: String,
+    label: 'Category of Event',
+    allowedValues: eventCategories,
+    optional: true
+  },
   active: {
     type: Number,
     label: 'Is event active?',
@@ -69,8 +81,6 @@ Events.calculateStartEndDates = function(offset) {
   //set end of week date
   currentDate.setDate(currentDate.getDate() + offset);
   var endWeekDate = new Date(currentDate);
-  console.log(startWeekDate);
-  console.log(endWeekDate);
   return [startWeekDate, endWeekDate];
 };
 
