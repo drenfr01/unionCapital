@@ -91,7 +91,7 @@
         <tr>
           <td class="eventView"><a href="">{{name}}</a></td>
           <td>{{formatDate startDate}}-{{formatDate endDate}}</td>
-          <td>{{address}}</td>
+          <!--Address taken out of here-->
           {{#if isInRole 'user'}}
           <td>
             <button type="button" class="btn btn-default btn-sm insertReservations"
@@ -99,6 +99,7 @@
           </td>
           {{/if}}
           {{#if isInRole 'admin'}}
+          <td>{{address}}</td>
           <td class="eventView">{{pointsToDisplay}}</td>
           <td class="eventView">{{pointType}}</td>
           <td>
