@@ -252,5 +252,13 @@ Meteor.methods({
                         deleteInd: false
     });
 
+  },
+  removeReservation: function(attributes) {
+   check(attributes, {
+    userId: String,
+    eventId: String
+   });
+
+   Reservations.remove({userId: attributes.userId, eventId: attributes.eventId});
   }
 });

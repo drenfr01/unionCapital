@@ -4,6 +4,7 @@ AutoForm.hooks({
     before: {
       insert: function(doc, template) {
         var rsvpEvent = Session.get('reservationModalDataContext');
+        doc.userId = Meteor.userId();
         doc.eventId = rsvpEvent._id;
         doc.dateEntered = new Date();
         return doc;
@@ -26,6 +27,18 @@ Template.listEvents.rendered = function() {
 };
 
 Template.listEvents.helpers({
+  'rsvpButton': function(context) {
+    var rsvpForEvent = Reservations.findOne({ userId: Meteor.userId(),
+                                            eventId: this._id
+    });
+    if(rsvpForEvent) {
+      return "<button type='button' class='btn btn-danger btn-sm removeReservation'>" + 
+        "Remove RSVP</button>";
+    } else {
+      return "<button type='button' class='btn btn-default btn-sm insertReservation' " + 
+        "data-toggle='modal' data-target = '#rsvpModal'>RSVP</button>";
+    }
+  },
   'showMapClicked': function() {
     return Session.get('showMap');
   },
@@ -174,15 +187,28 @@ Template.listEvents.helpers({
 });
 
 Template.listEvents.events({
+  'click #submitRSVP': function(e) {
+    $('#rsvpModal').modal('hide');
+  },
   'click .editEvent': function(e) {
     Session.set('eventModalDataContext', this);
   },
-  'click .insertReservations': function(e) {
+  'click .insertReservation': function(e) {
     Session.set('reservationModalDataContext', this);
-    $(e.target).removeClass('insertReservations');
-    $(e.target).removeClass('btn-default');
-    $(e.target).addClass('btn-success');
-    $(e.target).text('Remove RSVP');
+  },
+  'click .removeReservation': function(e) {
+    //make server side call to remove that reservation
+    var attributes = {
+      userId: Meteor.userId(),
+      eventId: this._id
+    };
+    Meteor.call('removeReservation', attributes, function(error) {
+      if(error) {
+        addErrorMessage(error.reason);
+      } else {
+        addSuccessMessage("Your reservation has been removed");
+      }
+    });
   },
   'click .eventView': function(e) {
     Session.set('eventIndex', false);
