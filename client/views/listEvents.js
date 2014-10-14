@@ -214,10 +214,6 @@ Template.listEvents.events({
     Session.set('eventIndex', false);
     Session.set('event', this);
   },
-  'click .back': function(e) {
-    Session.set('eventIndex', true);
-    Session.set('event', null);
-  },
   'click .checkIn': function(e) {
     e.preventDefault();
     Router.go('checkIntoEvent', {eventId: this._id});

@@ -1,5 +1,4 @@
 <template name="listEvents">
-  {{#if isEventIndex}}
   {{#with eventModalContext}}
   <div class="modal fade" id="editModal">
     <div class="modal-dialog">
@@ -105,7 +104,6 @@
           <tr>
             <th>Name of Event</th>
             <th>Date</th>
-            <th>Address</th>
             {{#if isInRole 'user'}}
               <th></th>
             {{/if}}
@@ -115,17 +113,14 @@
             <th></th>
             <th></th>
             {{/if}}
-
           </tr>
         </thead>
         <tbody>
           {{#each eventsToDisplay}}
           <tr>
-            <td class="eventView"><a href="">{{name}}</a></td>
-
+            <td class="eventView"><a href="{{pathFor 'singleEvent'}}">
+                {{name}}</a></td>
             <td>{{formatDate startDate }}-{{justTime endDate }}</td>
-            <!--<td>{{address}}</td>-->
-
             {{#if isInRole 'user'}}
             <td>
               {{{rsvpButton this}}}
@@ -171,8 +166,5 @@
     </div>
     <br>
     <br>
-    {{/if}}
-  {{else}}
-    {{>singleEvent eventView}}
   {{/if}}
 </template>
