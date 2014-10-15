@@ -22,6 +22,10 @@ Template.singleEvent.helpers({
 
 Template.singleEvent.events({
   'click .back': function(e) {
-    Router.go('currentEvents');
+    if(Session.get('eventType') === 'All') {
+      Router.go('addCommunityEvents');
+    } else {
+      Router.go('currentEvents');
+    }
   }
 });
