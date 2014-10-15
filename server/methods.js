@@ -268,7 +268,7 @@ Meteor.methods({
     //I don't know if Meteor is smart enough to cache mongo cursor
     var returnValue =  _.map(reservations, function(reservation) {
       var user = Meteor.users.findOne({_id: reservation.userId});
-      return {firstName: user.profile.firstName, lastName: user.profile.lastName, numberOfPeople: reservation.numberOfPeople};
+      return {firstName: user.profile.firstName, lastName: user.profile.lastName.substring(0,1), numberOfPeople: reservation.numberOfPeople};
     });
     return returnValue;
   }
