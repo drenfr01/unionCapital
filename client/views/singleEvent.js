@@ -22,7 +22,6 @@ Template.singleEvent.helpers({
 
 Template.singleEvent.events({
   'click .back': function(e) {
-    Session.set('eventIndex', true);
-    Session.set('event', null);
+    Router.go('currentEvents');
   }
 });
