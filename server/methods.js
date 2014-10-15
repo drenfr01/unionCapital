@@ -252,5 +252,24 @@ Meteor.methods({
                         deleteInd: false
     });
 
+  },
+  removeReservation: function(attributes) {
+   check(attributes, {
+    userId: String,
+    eventId: String
+   });
+
+   Reservations.remove({userId: attributes.userId, eventId: attributes.eventId});
+  },
+  'getRsvpList': function(eventId) {
+    check(eventId, String);
+    var reservations = Reservations.getReservationsForEvent(eventId).fetch();
+    //WARNING: this may not scale well, running repeated calls against db
+    //I don't know if Meteor is smart enough to cache mongo cursor
+    var returnValue =  _.map(reservations, function(reservation) {
+      var user = Meteor.users.findOne({_id: reservation.userId});
+      return {firstName: user.profile.firstName, lastName: user.profile.lastName.substring(0,1), numberOfPeople: reservation.numberOfPeople};
+    });
+    return returnValue;
   }
 });

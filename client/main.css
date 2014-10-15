@@ -42,18 +42,6 @@ nav{
 }
 
 
-button{
-  background-color: #255f8a !important;
-  color: #e5e5e5 !important;
-
-
-}
-
-button:hover
-{ 
-background-color:#2d7ac0 !important;
-}
-
 h1 small {
   color:  #255f8a;
   font-size: .5em;
