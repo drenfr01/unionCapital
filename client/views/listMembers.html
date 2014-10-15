@@ -18,6 +18,8 @@
         <thead>
           <th id="firstName">Member Name</th>
           <th id="zip">Member Zip</th>
+          <th id="lastEvent">Last Event</th>
+          <th id="lastEventDate">Last Event Date</th>
           <th id="transactions">Number of Transactions</th>
           <th id="points">Number of Points</th>
         </thead>
@@ -26,6 +28,8 @@
             <tr>
               <td>{{firstName}} {{lastName}}</td>
               <td>{{zip}}</td>
+              <td>{{lastEvent}}</td>
+              <td>{{formatDate lastEventDate}}</td>
               <td>{{numberOfTransactions}}</td>
               <td>{{totalPoints}}</td>
             </tr>
