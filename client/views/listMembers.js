@@ -15,7 +15,6 @@ Template.listMembers.helpers({
         numberOfTransactions: transactionCount, 
         totalPoints: totalPoints};
     });
-    console.log(tableRows);
     var results = _.sortBy(tableRows, Session.get('sortOn'));
     // _.sortBy doesn't have a flag for ascending / descending
     // for some reason...
@@ -41,7 +40,6 @@ Template.listMembers.events({
     Session.set('sortOn', 'totalPoints');
   },
   'change .radio-inline': function(e) {
-    console.log(e.target.value);
     if(e.target.value === "ascending") {
       Session.set('sortOrder',1);
     } else {
