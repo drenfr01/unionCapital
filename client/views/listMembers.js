@@ -5,13 +5,26 @@ Session.setDefault('sortOrder', 1);
 Template.listMembers.helpers({
   'members': function() {
     var users =  Meteor.users.find().fetch();
+
     var tableRows = _.map(users, function(user) {
+      
+      //WARNING: unclear if below is a big performance hit (2 cursor calls)
       var transactionCount = Transactions.find({userId: user._id}).count();
+
+      var mostRecentTransaction = Transactions.find({userId: user._id}, 
+                            {sort: {transactionDate: -1}, limit: 1}).fetch()[0] ||
+                              { eventId: "", transactionDate: ""};
+      var mostRecentEvent = Events.findOne(mostRecentTransaction.eventId) || {name: ""};
+      
+
       var totalPoints = Meteor.users.totalPointsFor(user._id);
       var userProfile = user.profile || {firstName: 'admin', lastName: '', zip: ''};
+
       return {firstName: userProfile.firstName.toLowerCase() || "",
         lastName: userProfile.lastName.toLowerCase() || "", 
         zip: userProfile.zip || "",
+        lastEvent: mostRecentEvent.name,
+        lastEventDate: mostRecentTransaction.transactionDate,
         numberOfTransactions: transactionCount, 
         totalPoints: totalPoints};
     });
@@ -38,6 +51,12 @@ Template.listMembers.events({
   },
   'click #points': function(e) {
     Session.set('sortOn', 'totalPoints');
+  },
+  'click #lastEvent': function(e) {
+    Session.set('sortOn', 'lastEvent');
+  },
+  'click #lastEventDate': function(e) {
+    Session.set('sortOn', 'lastEventDate');
   },
   'change .radio-inline': function(e) {
     if(e.target.value === "ascending") {

@@ -11,7 +11,6 @@ Template.singleEvent.rendered = function() {
 };
 Template.singleEvent.helpers({
   'rsvpList': function() {
-    console.log('rsvpList');
     return Session.get('rsvpList');
   },
   'totalReservations': function() {
