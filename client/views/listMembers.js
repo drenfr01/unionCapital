@@ -19,10 +19,16 @@ Template.listMembers.helpers({
 
       var totalPoints = Meteor.users.totalPointsFor(user._id);
       var userProfile = user.profile || {firstName: 'admin', lastName: '', zip: ''};
+      //if user is logging in with facebook
+      var userFirstName = user.profile.firstName || user.profile.name || "";
+      var userLastName = user.profile.lastName || user.profile.name || "";
+      var userZip = user.profile.zip || "";
 
-      return {firstName: userProfile.firstName.toLowerCase() || "",
-        lastName: userProfile.lastName.toLowerCase() || "", 
-        zip: userProfile.zip || "",
+
+
+      return {firstName: userFirstName.toLowerCase(),
+        lastName: userLastName.toLowerCase(), 
+        zip: userZip,
         lastEvent: mostRecentEvent.name,
         lastEventDate: mostRecentTransaction.transactionDate,
         numberOfTransactions: transactionCount, 
