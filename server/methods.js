@@ -271,5 +271,17 @@ Meteor.methods({
       return {firstName: user.profile.firstName, lastName: user.profile.lastName.substring(0,1), numberOfPeople: reservation.numberOfPeople};
     });
     return returnValue;
+  },
+  'adminResetPassword': function(attributes) {
+    check(attributes, {
+      email: String,
+      password: String
+    });
+    var user = Meteor.users.findOne({'emails': { $elemMatch: { address: attributes.email}}});
+    if(user) {
+      Accounts.setPassword(user._id, attributes.password);
+    } else {
+      throw new Meteor.Error(404, "User with that email not found");
+    }
   }
 });

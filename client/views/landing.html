@@ -15,14 +15,20 @@
         <input type="password" class="form-control" id="userPassword" 
         placeholder="Enter Password">
       </div>
-
+      <button type="button" class="button-landing2" id="forgotPassword">
+        Forgot Password?
+      </button>
       <button type="submit" class="button-landing" id="loginSubmit">Login</button>
       <button type="button" class="button-landing2" id="signUp">Sign Up</button>
       <button type="button" class="button-landing" id="facebook">Login with Facebook</button>
 
     </form>
     {{else}}
-      {{> createNewUser}}
+      {{#if loginState 'forgotPassword'}}
+        {{> forgotPassword}}
+      {{else}}
+        {{> createNewUser}}
+      {{/if}} 
     {{/if}}
   </div>
 </div>
