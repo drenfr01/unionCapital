@@ -25,6 +25,23 @@
       <p> <b>Affiliated Institution:</b> {{institution}}</p>
       <p> <b>Category:</b> {{category}}</p>
       <p> <b>Points:</b> {{points}}</p>
+      <p> <b>Number of Union Capitalists Attending: </b> {{totalReservations}}</p>
+      <table class="table table-striped">
+        <thead>
+          <th>Name</th>
+          <th>Party Size</th>
+        </thead>
+        <tbody>
+        {{#each rsvpList}}
+          <tr>
+            <td>{{firstName}} {{lastName}}</td>
+            <td> {{numberOfPeople}}</td>
+          </tr>
+        {{/each}}
+        </tbody>
+      </table>
     </span>
   </div>
+  <br>
+  <br>
 </template>

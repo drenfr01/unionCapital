@@ -1,5 +1,4 @@
 <template name="listEvents">
-  {{#if isEventIndex}}
   {{#with eventModalContext}}
   <div class="modal fade" id="editModal">
     <div class="modal-dialog">
@@ -44,18 +43,17 @@
             &times;</button>
           <h4 class="modal-title text-center">{{name}}</h4>
         </div>
+        {{#autoForm collection="Reservations" id="insertReservationsForm" type="insert"}}
         <div class="modal-body">
-          {{#autoForm collection="Reservations" id="insertReservationsForm" type="insert"}}
           <fieldset>
             <legend>Add Reservation</legend>
             {{> afQuickField name="numberOfPeople"}}
           </fieldset>
-          <button type="submit" class="btn btn-default" id="submit">Submit</button>
-          {{/autoForm}}
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-default" id="submitRSVP">Submit</button>
         </div>
+        {{/autoForm}}
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
@@ -106,7 +104,6 @@
           <tr>
             <th>Name of Event</th>
             <th>Date</th>
-            <th>Address</th>
             {{#if isInRole 'user'}}
               <th></th>
             {{/if}}
@@ -116,21 +113,17 @@
             <th></th>
             <th></th>
             {{/if}}
-
           </tr>
         </thead>
         <tbody>
           {{#each eventsToDisplay}}
           <tr>
-            <td class="eventView"><a href="">{{name}}</a></td>
-
+            <td class="eventView"><a href="{{pathFor 'singleEvent'}}">
+                {{name}}</a></td>
             <td>{{formatDate startDate }}-{{justTime endDate }}</td>
-            <!--<td>{{address}}</td>-->
-
             {{#if isInRole 'user'}}
             <td>
-              <button type="button" class="btn btn-default btn-sm insertReservations"
-                data-toggle="modal" data-target = "#rsvpModal">RSVP</button>
+              {{{rsvpButton this}}}
             </td>
             {{/if}}
             {{#if isInRole 'admin'}}
@@ -173,8 +166,5 @@
     </div>
     <br>
     <br>
-    {{/if}}
-  {{else}}
-    {{>singleEvent eventView}}
   {{/if}}
 </template>

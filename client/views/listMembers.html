@@ -1,0 +1,41 @@
+<template name="listMembers">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <br>
+      <br>
+      <div class="text-center">
+      <label class="radio-inline">
+        <input type="radio" name="orderRadioButtons" id="ascending" value="ascending">
+          ascending
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="orderRadioButtons" id="descending" value="descending">
+          descending
+      </label>
+      </div>
+      <br>
+      <table class="table table-striped">
+        <thead>
+          <th id="firstName">Member Name</th>
+          <th id="zip">Member Zip</th>
+          <th id="lastEvent">Last Event</th>
+          <th id="lastEventDate">Last Event Date</th>
+          <th id="transactions">Number of Transactions</th>
+          <th id="points">Number of Points</th>
+        </thead>
+        <tbody>
+          {{#each members}}
+            <tr>
+              <td>{{firstName}} {{lastName}}</td>
+              <td>{{zip}}</td>
+              <td>{{lastEvent}}</td>
+              <td>{{formatDate lastEventDate}}</td>
+              <td>{{numberOfTransactions}}</td>
+              <td>{{totalPoints}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</template>

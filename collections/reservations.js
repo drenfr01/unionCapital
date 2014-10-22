@@ -1,20 +1,21 @@
 Reservations = new Meteor.Collection('reservations');
 Reservations.attachSchema(new SimpleSchema({
+  userId: {
+    type: String,
+    label: 'Member'
+  },
   eventId: {
     type: String,
     label: 'Name of Event',
-    optional: true
   },
   dateEntered: {
     type: Date,
     label: 'Date RSVP made',
-    optional: true
   },
   numberOfPeople: {
     type: Number,
     label: 'Size of Party',
     defaultValue: 1,
-    optional: true
   }
 }));
 
