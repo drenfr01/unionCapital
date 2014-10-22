@@ -10,18 +10,17 @@ Template.listMembers.helpers({
       
       //WARNING: unclear if below is a big performance hit (2 cursor calls)
       var transactionCount = Transactions.find({userId: user._id}).count();
-
+      var totalPoints = Meteor.users.totalPointsFor(user._id);
       var mostRecentTransaction = Transactions.find({userId: user._id}, 
                             {sort: {transactionDate: -1}, limit: 1}).fetch()[0] ||
                               { eventId: "", transactionDate: ""};
       var mostRecentEvent = Events.findOne(mostRecentTransaction.eventId) || {name: ""};
       
-
-      var totalPoints = Meteor.users.totalPointsFor(user._id);
+      //if user is admin
       var userProfile = user.profile || {firstName: 'admin', lastName: '', zip: ''};
       //if user is logging in with facebook
-      var userFirstName = userProfile.firstName || user.profile.name || "";
-      var userLastName = userProfile.lastName || user.profile.name || "";
+      var userFirstName = userProfile.firstName || userProfile.name || "";
+      var userLastName = userProfile.lastName || userProfile.name || "";
       var userZip = userProfile.zip || "";
 
 
