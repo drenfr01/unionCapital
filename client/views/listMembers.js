@@ -20,9 +20,9 @@ Template.listMembers.helpers({
       var totalPoints = Meteor.users.totalPointsFor(user._id);
       var userProfile = user.profile || {firstName: 'admin', lastName: '', zip: ''};
       //if user is logging in with facebook
-      var userFirstName = user.profile.firstName || user.profile.name || "";
-      var userLastName = user.profile.lastName || user.profile.name || "";
-      var userZip = user.profile.zip || "";
+      var userFirstName = userProfile.firstName || user.profile.name || "";
+      var userLastName = userProfile.lastName || user.profile.name || "";
+      var userZip = userProfile.zip || "";
 
 
 
