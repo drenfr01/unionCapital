@@ -22,3 +22,4 @@ Meteor.users.totalPointsFor = function(userId) {
     }
   }, 0);
 };
+
