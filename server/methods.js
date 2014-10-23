@@ -321,7 +321,6 @@ Meteor.methods({
         totalPoints: totalPoints};
     });
     var results = _.sortBy(tableRows, attributes.sortOn);
-    console.log("Returning Data!");
     // _.sortBy doesn't have a flag for ascending / descending
     // for some reason...
     if(attributes.sortOrder === 1) {
