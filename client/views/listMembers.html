@@ -1,6 +1,6 @@
 <template name="listMembers">
   <div class="row">
-    <div class="col-md-8 col-md-offset-2">
+    <div class="col-md-10 col-md-offset-1">
       <br>
       <br>
       <div class="text-center">
@@ -9,19 +9,19 @@
           ascending
       </label>
       <label class="radio-inline">
-        <input type="radio" name="orderRadioButtons" id="descending" value="descending">
+        <input type="radio" name="orderRadioButtons" id="descending" value="descending" checked>
           descending
       </label>
       </div>
       <br>
-      <table class="table table-striped">
+      <table class="table table-hover text-center">
         <thead>
-          <th id="firstName">Member Name</th>
-          <th id="zip">Member Zip</th>
-          <th id="lastEvent">Last Event</th>
-          <th id="lastEventDate">Last Event Date</th>
-          <th id="transactions">Number of Transactions</th>
-          <th id="points">Number of Points</th>
+          <th id="firstName" class="tableSort">Member Name</th>
+          <th id="zip" class="tableSort">Member Zip</th>
+          <th id="lastEvent" class="tableSort">Last Event</th>
+          <th id="lastEventDate" class="tableSort">Last Event Date</th>
+          <th id="transactions" class="tableSort"># Transactions</th>
+          <th id="totalPoints" class="tableSort"># Points</th>
         </thead>
         <tbody>
           {{#each members}}

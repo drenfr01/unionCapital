@@ -1,5 +1,4 @@
 Meteor.startup(function () {
-  console.log('Loading User data from Fixtures [Users, Events]');
 
   // Users fixture
   if ( Meteor.users.find().count() === 0 ) {

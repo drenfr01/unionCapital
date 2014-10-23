@@ -1,4 +1,5 @@
 Transactions = new Meteor.Collection('transactions');
+
 Transactions.attachSchema(new SimpleSchema({
     userId: {
       type: String,

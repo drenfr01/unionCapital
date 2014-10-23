@@ -271,5 +271,62 @@ Meteor.methods({
       return {firstName: user.profile.firstName, lastName: user.profile.lastName.substring(0,1), numberOfPeople: reservation.numberOfPeople};
     });
     return returnValue;
+  },
+  'adminResetPassword': function(attributes) {
+    check(attributes, {
+      email: String,
+      password: String
+    });
+    var user = Meteor.users.findOne({'emails': { $elemMatch: { address: attributes.email}}});
+    if(user) {
+      Accounts.setPassword(user._id, attributes.password);
+    } else {
+      throw new Meteor.Error(404, "User with that email not found");
+    }
+  },
+  'insertMemberData': function(attributes) {
+
+    check(attributes, {
+      sortOn: String,
+      sortOrder: Number
+    });
+
+    var users =  Meteor.users.find().fetch();
+
+    var tableRows = _.map(users, function(user) {
+      
+      //WARNING: unclear if below is a big performance hit (2 cursor calls)
+      var transactionCount = Transactions.find({userId: user._id}).count();
+      var totalPoints = Meteor.users.totalPointsFor(user._id);
+      var mostRecentTransaction = Transactions.find({userId: user._id}, 
+                            {sort: {transactionDate: -1}, limit: 1}).fetch()[0] ||
+                              { eventId: "", transactionDate: ""};
+      var mostRecentEvent = Events.findOne(mostRecentTransaction.eventId) || {name: ""};
+      
+      //if user is admin
+      var userProfile = user.profile || {firstName: 'admin', lastName: '', zip: ''};
+      //if user is logging in with facebook
+      var userFirstName = userProfile.firstName || userProfile.name || "";
+      var userLastName = userProfile.lastName || userProfile.name || "";
+      var userZip = userProfile.zip || "";
+
+
+
+      return {firstName: userFirstName.toLowerCase(),
+        lastName: userLastName.toLowerCase(), 
+        zip: userZip,
+        lastEvent: mostRecentEvent.name,
+        lastEventDate: mostRecentTransaction.transactionDate,
+        numberOfTransactions: transactionCount, 
+        totalPoints: totalPoints};
+    });
+    var results = _.sortBy(tableRows, attributes.sortOn);
+    // _.sortBy doesn't have a flag for ascending / descending
+    // for some reason...
+    if(attributes.sortOrder === 1) {
+      return results;
+    } else {
+      return results.reverse();
+    }
   }
 });

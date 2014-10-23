@@ -19,6 +19,10 @@ Template.landing.events({
     e.preventDefault();
     Session.set('loginStateVar', 'signUp');
   },
+  'click #forgotPassword': function(e) {
+    e.preventDefault();
+    Session.set('loginStateVar', 'forgotPassword');
+  },
   'click #facebook': function(e) {
     e.preventDefault();
     Meteor.loginWithFacebook(function(error) {
