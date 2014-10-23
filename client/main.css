@@ -1,5 +1,8 @@
 /*general styling */
 
+.tableSort {
+  text-align: center;
+}
 
 html { height: 100%; }
 body { height: 100%;

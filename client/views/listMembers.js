@@ -19,7 +19,6 @@ Tracker.autorun(function() {
 });
 
 var highlightSortedColumn = function(target) {
-    console.log(target);
     $(".tableSort").css('color', 'black');
     $(target).css('color','red');
 };
@@ -37,7 +36,6 @@ Template.listMembers.helpers({
 
 Template.listMembers.events({
   'click #firstName': function(e) {
-    console.log(e.target);
     Session.set('sortOn', 'firstName');
     highlightSortedColumn(e.target);
   },

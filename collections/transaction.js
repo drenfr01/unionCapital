@@ -1,9 +1,5 @@
 Transactions = new Meteor.Collection('transactions');
 
-UserData = new Meteor.Collection("memberData");
-//Trying to get user pagination
-Users = new Meteor.Pagination(UserData);
-
 Transactions.attachSchema(new SimpleSchema({
     userId: {
       type: String,
