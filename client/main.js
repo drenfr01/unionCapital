@@ -1,4 +1,3 @@
-Meteor.subscribe('events');
 Meteor.subscribe('transactions');
 Meteor.subscribe('images');
 Meteor.subscribe('userData');
