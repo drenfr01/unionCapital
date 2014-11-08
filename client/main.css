@@ -399,4 +399,27 @@ margin-right: auto;
     margin-bottom: 15px;
 }
 
+/* Below taken from Discover Meteor */
 
+@-webkit-keyframes fadeOut { 0% {opacity: 0;}
+  10% {opacity: 1;}
+  90% {opacity: 1;}
+  100% {opacity: 0;} 
+}
+
+@keyframes fadeOut { 0% {opacity: 0;} 10% {opacity: 1;} 90% {opacity: 1;} 100% {opacity: 0;}
+}
+
+.alerts{
+  position: fixed; 
+  z-index: 10000; 
+  padding: 10px; 
+  pointer-events: none; 
+}
+.alert {
+  animation: fadeOut 2700ms ease-in 0s 1 forwards;
+  -webkit-animation: fadeOut 2700ms ease-in 0s 1 forwards; -moz-animation: fadeOut 2700ms ease-in 0s 1 forwards;
+  width: 250px;
+  float: right;
+  clear: both; margin-bottom: 5px; pointer-events: auto;
+}
