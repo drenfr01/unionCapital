@@ -64,7 +64,7 @@ Meteor.methods({
       transactionId: String,
       userId: String,
       eventId: Match.Optional(String),
-      imageId: String,
+      imageId: Match.Optional(String),
       eventName: String,
       eventAddress: String,
       eventDescription: Match.Optional(String),
