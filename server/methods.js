@@ -354,7 +354,6 @@ Meteor.methods({
         topEarners.push({firstName: user.profile.firstName, lastName: user.profile.lastName, zip: user.profile.zip, totalPoints: earner.totalPoints});
       }
     });
-    console.log(topEarners);
     return topEarners;
   }
 });
