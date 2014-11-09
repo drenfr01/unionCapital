@@ -13,8 +13,10 @@ Template.memberHomePage.rendered = function() {
 
 Template.memberHomePage.helpers({
   'currentMemberName': function() {
-    if(Meteor.user()) {
+    if(Meteor.user() && Meteor.user().profile) {
       return Meteor.user().profile.firstName || "";
+    } else {
+      return "";
     }
   }
 });
