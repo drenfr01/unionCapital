@@ -332,5 +332,29 @@ Meteor.methods({
   'deleteMember': function(userId) {
     check(userId, String);
     Meteor.users.remove({_id: userId});
+  },
+  'getTopEarners': function(limit) {
+    //map reduce over transactions, returning array of objects with userId & total Points
+    //sort that list, and return top <limit> of results
+    //populate that list as needed with other information from Users collection
+    //return that array of objects
+
+    var allEarners = [];
+    Meteor.users.find().forEach(function(user) {
+      allEarners.push({userId: user._id, totalPoints: parseInt(Meteor.users.totalPointsFor(user._id),10)});
+    });
+
+    //note: not sure why > or < didn't work in below comparator but "-" did...
+    var results =  allEarners.sort(function(m1, m2) { return parseInt(m2.totalPoints,10) - parseInt(m1.totalPoints,10); }).slice(0,limit);
+    
+    var topEarners = [];
+    results.forEach(function(earner) {
+      var user = Meteor.users.findOne(earner.userId);
+      if(user.profile) {
+        topEarners.push({firstName: user.profile.firstName, lastName: user.profile.lastName, zip: user.profile.zip, totalPoints: earner.totalPoints});
+      }
+    });
+    console.log(topEarners);
+    return topEarners;
   }
 });
