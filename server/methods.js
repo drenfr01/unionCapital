@@ -328,5 +328,9 @@ Meteor.methods({
     } else {
       return results.reverse();
     }
+  },
+  'deleteMember': function(userId) {
+    check(userId, String);
+    Meteor.users.remove({_id: userId});
   }
 });
