@@ -48,6 +48,18 @@ Template.memberProfiles.events({
         addSuccessMessage("Added " + points + " points to user!");
       }
     });
+  },
+  'click #deleteMember': function(e) {
+    var buttonReturn = confirm("Confirm Deletion of Member");
+    if(buttonReturn) {
+      Meteor.call('deleteMember',this._id, function(error) {
+        if(error) {
+          addErrorMessage(error.reason);
+        } else {
+          addSuccessMessage("Successfully deleted member");
+        }
+      });
+    }
   }
 });
 

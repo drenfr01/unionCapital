@@ -6,10 +6,15 @@ Meteor.publish("reservations", function() {
   return Reservations.find();
 });
 
-Meteor.publish('transactions', function() {
-  return Transactions.find();
+Meteor.publish('transactions', function(userId) {
+  if (Roles.userIsInRole(this.userId, 'admin')) {
+    return Transactions.find();
+  } else {
+    return Transactions.find({userId: userId});
+  }
 });
 
+//TODO: limit this 
 Meteor.publish('images', function() {
   return Images.find();
 });

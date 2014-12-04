@@ -16,6 +16,3 @@ addSuccessMessage = function(message) {
   Alerts.insert({message: message, seen: false, type: 'alert-success'});
 };
 
-clearAlerts = function() {
-  Alerts.remove({seen: true});
-};

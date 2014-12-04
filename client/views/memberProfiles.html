@@ -18,7 +18,7 @@
       <h1 class="text-center">User Profile</h1>
       <hr>
       <div>Name: {{profile.firstName}} {{profile.lastName}}</div>
-      <div>Address: {{profile.zip}}</div>
+      <div>Zip: {{profile.zip}}</div>
       <br>
       <div class="input-group">
         <input type="text" class="form-control" 
@@ -29,6 +29,15 @@
           </button>
         </span>
       </div>
+      <br>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-4 col-xs-offset-4">
+      <button type="button" class="btn btn-block btn-danger"
+        id="deleteMember">
+        Delete User
+      </button>
     </div>
   </div>
   <div class="row">

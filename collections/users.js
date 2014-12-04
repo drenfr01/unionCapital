@@ -4,7 +4,7 @@ Meteor.users.transactionsFor = function(userId, needsApprovalFlag) {
   //ad-hoc events from schedule ones, or better yet convert pending events to regular ones once they've been approved
   return Transactions.find(
     { userId: userId, needsApproval: needsApprovalFlag , deleteInd: { $ne: true }},
-    { sort: { transactionDate: 1 } });
+    { sort: { transactionDate: -1 } });
 };
 
 

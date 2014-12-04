@@ -89,10 +89,10 @@ Template.takePicture.events({
     //TODO: this is probably a security risk to only check on
     //the client side. Should implement server side checks
     var eventName = Session.get('eventName');
-    var imageId = Session.get('imageId');
+    var imageId = Session.get('imageId') || "";
     var eventDescription = $('#eventDescription').val();
 
-    if(eventName && imageId && Session.get('timeEntered') ) {
+    if(eventName && Session.get('timeEntered') ) {
     
       var attributes = {
         userId: Meteor.userId(),

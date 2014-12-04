@@ -34,11 +34,12 @@ Events.attachSchema(new SimpleSchema({
     allowedValues: eventCategories,
     optional: true
   },
-  active: {
+  deleteInd: {
     type: Number,
     label: 'Is event active?',
     allowedValues: [0,1],
-    defaultValue: 1
+    defaultValue: 0,
+    optional: true
   },
   startDate: {
     type: Date,
