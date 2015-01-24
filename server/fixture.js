@@ -128,7 +128,7 @@ Meteor.startup(function () {
         description: 'Union Capital administrator adding points to your account',
         active: 0,
         startDate: new Date(1900,1,1,1,1),
-        endDate: new Date(3000,1,1,1,1),
+        endDate: new Date(1900,1,1,1,1),
         isPointsPerHour: true,
         pointsPerHour: 100
       }

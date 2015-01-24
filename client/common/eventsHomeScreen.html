@@ -37,6 +37,11 @@
           </select>
         </div>
       </div>
+      <!-- Display events below -->
+      {{#each eventsToDisplay}}
+        {{name}}
+        <br>
+      {{/each}}
     {{/if}}
   </div>
 </template>

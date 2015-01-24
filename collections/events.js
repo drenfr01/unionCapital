@@ -88,8 +88,8 @@ Events.calculateStartEndDates = function(offset) {
 
 Events.currentEvents = function(startWeekDate, endWeekDate) {
   return Events.find({startDate: {'$lte': endWeekDate}, 
-                     endDate: {'$gte': startWeekDate}, 
-                     active: 1},
+                     endDate: {'$gte': startWeekDate}
+                     },
                      {sort: {startDate: 1}});
 };
 
