@@ -1,3 +1,11 @@
+Meteor.publish("eventOrgs", function() {
+  return EventOrgs.find();
+});
+
+Meteor.publish("eventCategories", function() {
+  return EventCategories.find();
+});
+
 Meteor.publish("events", function() {
   return Events.find();
 });

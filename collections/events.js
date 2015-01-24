@@ -1,3 +1,6 @@
+EventCategories = new Meteor.Collection('eventCategories');
+EventOrgs = new Meteor.Collection('eventOrgs');
+
 Events = new Meteor.Collection('events');
 Events.attachSchema(new SimpleSchema({
   name: {
@@ -25,13 +28,11 @@ Events.attachSchema(new SimpleSchema({
   institution: {
     type: String,
     label: 'Affiliated Institution',
-    allowedValues: institutions,
     optional: true
   },
   category: {
     type: String,
     label: 'Category of Event',
-    allowedValues: eventCategories,
     optional: true
   },
   deleteInd: {

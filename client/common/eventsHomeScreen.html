@@ -1,5 +1,42 @@
 <template name="eventsHomeScreen">
-  <div class="col-xs-10 col-xs-offset-1">
-
+  <div class="col-xs-12">
+    <div class="row text-center">
+      <h1>Welcome to Union Capital!</h1>       
+    </div>
+    {{#if showMapClicked}}
+      <div class="text-center row">
+        <button type="button" class="btn btn-danger text-center" id="hideMap">
+          Hide Map
+        </button>
+      </div>
+    {{> communityNeeds }}
+    {{else}}
+      <div class="text-center">
+        <h3><small>Select a Date Below</small></h3>
+        <input type="date"  class="form-control" id="eventDate">
+        <h3><small>Choose Organization or Event Type</small></h3>
+        <span class="text-center">Institution:</span>
+        <br>
+        <div>
+          <select id="institutions">
+            <option></option>
+            {{#each affiliatedInstitutions}}
+            <option value="{{organization}}">{{organization}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <br>
+        <div>
+          <span class="text-center">Category:</span>
+          <br>
+          <select id="categories">
+            <option></option>
+            {{#each eventCategories}}
+            <option value="{{category}}">{{category}}</option>
+            {{/each}}
+          </select>
+        </div>
+      </div>
+    {{/if}}
   </div>
 </template>
