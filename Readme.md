@@ -8,9 +8,6 @@ etc.
 Install Node, and NPM with it:
 `curl -L https://npmjs.org/install.sh | sh`
 
-Install Meteorite
-`npm install -g meteorite`
-
 Install Meteor
 `curl https://install.meteor.com/ | sh`
 
