@@ -178,12 +178,6 @@ Template.listEvents.helpers({
       return false;
     }
   },
-  affiliatedInstitutions: function() {
-    return institutions;
-  },
-  eventCategories: function() {
-    return eventCategories;
-  }
 });
 
 Template.listEvents.events({

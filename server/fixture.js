@@ -1,5 +1,36 @@
 Meteor.startup(function () {
 
+  //Seeding event categories 
+  if(EventCategories.find().count() === 0) {
+    var eventCategories = 
+      ['Education (Child/Adult)',
+        'Health (Physical & Mental)',
+        'Finances/Employment',
+        'Community & Service'
+    ];
+    _.each(eventCategories, function(category) {
+      EventCategories.insert({category: category});
+    });
+  }
+
+  //Seeding affiliate organizations
+  if(EventOrgs.find().count() === 0) {
+    var organizations = 
+      [ 'Other',
+        'BMC Health Net Plan',
+        'Codman Academy',
+        'Codman Health Center',
+        'FII',
+        'Kipp Boston',
+        'Nurtury',
+        'Thrive in 5'
+    ];
+
+    _.each(organizations, function(organization) {
+      EventOrgs.insert({organization: organization});
+    });
+  }
+
   // Users fixture
   if ( Meteor.users.find().count() === 0 ) {
     var users = [
@@ -97,7 +128,7 @@ Meteor.startup(function () {
         description: 'Union Capital administrator adding points to your account',
         active: 0,
         startDate: new Date(1900,1,1,1,1),
-        endDate: new Date(3000,1,1,1,1),
+        endDate: new Date(1900,1,1,1,1),
         isPointsPerHour: true,
         pointsPerHour: 100
       }
