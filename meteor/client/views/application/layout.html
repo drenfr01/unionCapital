@@ -19,9 +19,9 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
       {{#if isInRole 'admin'}}
       <ul class="nav navbar-nav">
-        <li><a href="{{pathFor 'memberProfiles'}}">Member Profiles</a></li>
-        <li><a href="{{pathFor 'reviewPhotos'}}">Approve Points</a></li>
-        <li><a href="{{pathFor  'addCommunityEvents'}}">Manage Events</a></li>
+        <li><a href="{{pathFor 'memberProfiles'}}" id="navSAMemberProfiles">Member Profiles</a></li>
+        <li><a href="{{pathFor 'reviewPhotos'}}" id="navSAApprovePoints">Approve Points</a></li>
+        <li><a href="{{pathFor  'addCommunityEvents'}}" id="navSAManageEvents">Manage Events</a></li>
       </ul>
       {{else}}
         {{#if isInRole 'user'}}

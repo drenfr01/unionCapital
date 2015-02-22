@@ -1,4 +1,6 @@
-casper.test.begin('Landing Page', 6, function suite(test) {
+casper.test.comment("Testing Member Home Page");
+
+casper.test.begin('Landing Page', 7, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsUser();
   });
@@ -15,6 +17,10 @@ casper.test.begin('Landing Page', 6, function suite(test) {
     test.assertExists("#navMemberPoints");
     test.assertExists("#navMemberContact");
     test.assertExists("#navMemberShare");
+  });
+
+  casper.then(function() {
+    casper.logout(test);
   });
 
   casper.run(function() {

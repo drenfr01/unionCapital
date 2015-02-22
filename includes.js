@@ -7,13 +7,26 @@ casper.options.logLevel = "debug";
 user = "casperjs@gmail.com";
 newPassword = "duncan";
 
+superAdmin = "admin@gmail.com";
+superAdminPassword = "admin";
+
 casper.loginAsUser = function loginAsUser() {
+  casper.capture("start.png");
   this.waitForSelector("#loginSubmit", function() {
     this.sendKeys("#userEmail", user);
     this.sendKeys("#userPassword", newPassword);
     this.click("#loginSubmit");
   });
 };
+
+casper.loginAsSuperAdmin = function loginAsSuperAdmin() {
+  this.waitForSelector("#loginSubmit", function() {
+    this.sendKeys("#userEmail", superAdmin);
+    this.sendKeys("#userPassword", superAdminPassword);
+    this.click("#loginSubmit");
+  });
+};
+
 
 casper.logout = function logout(test) {
   casper.then(function() {
