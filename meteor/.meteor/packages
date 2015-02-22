@@ -20,10 +20,10 @@ underscore
 email
 mrt:googlemaps-server
 mdg:camera
-accounts-ui
 alethes:pages
 sacha:spin
 
 momentjs:moment
 alanning:roles
 twbs:bootstrap
+ian:accounts-ui-bootstrap-3
