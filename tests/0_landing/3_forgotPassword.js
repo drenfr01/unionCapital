@@ -1,0 +1,44 @@
+casper.test.comment('Signing In');
+
+casper.test.begin('Landing Page', 7, function suite(test) {
+  casper.start(homeURL, function() {
+  });
+  
+  casper.waitForSelector("#forgotPassword", function() {
+    this.click("#forgotPassword");
+  });
+
+  casper.wait(1000, function(){
+    test.assertExists("#userEmail");
+    test.assertExists("#newPassword");
+    test.assertExists("#confirmPassword");
+
+    test.assertExists("#submit");
+    test.assertExists("#back");
+  });
+
+  casper.then(function() {
+    this.sendKeys("#userEmail", user);
+    this.sendKeys("#newPassword", newPassword);
+    this.sendKeys("#confirmPassword", newPassword);
+
+    this.click("#submit");
+  });
+
+  casper.wait(1000, function() {
+    test.assertExists("#loginSubmit");
+
+    this.sendKeys("#userEmail", user);
+    this.sendKeys("#userPassword", newPassword);
+    
+    this.click("#loginSubmit");
+  });
+
+  casper.wait(3000, function() {
+    test.assertExists("#quickCheckIn");
+  });
+
+  casper.run(function() {
+    test.done();
+  });
+});
