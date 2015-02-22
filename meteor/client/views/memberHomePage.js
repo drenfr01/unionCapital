@@ -25,8 +25,8 @@ Template.memberHomePage.events({
     e.preventDefault();
     Router.go('quickCheckIn');
   },
-  'click #takePhoto': function(e) {
+  'click #eventsButton': function(e) {
     e.preventDefault();
-    Router.go('submitNewEvent');
+    Router.go("currentEvents");
   }
 });

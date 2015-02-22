@@ -23,6 +23,9 @@ Router.map(function() {
   this.route('facebookLogin', {path: '/facebookLogin'});
   this.route('memberHomePage', {path: '/memberHome'});
   this.route('communityNeeds', {path: '/communityNeeds'});
+  this.route('/share', function() {
+    this.render('share');
+  });
   this.route('submitNewEvent', {
     path: '/submitNewEvent',
     template: 'takePicture'
