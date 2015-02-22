@@ -14,7 +14,6 @@ accounts-facebook
 accounts-base
 accounts-password
 service-configuration
-mizzao:bootstrap-3
 coffeescript
 jquery
 underscore
@@ -27,3 +26,4 @@ sacha:spin
 
 momentjs:moment
 alanning:roles
+twbs:bootstrap
