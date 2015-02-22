@@ -1,59 +1,55 @@
 <template name="layout">
-  <div class="container-real main row">
-    <nav role="navigation" class="nav">
-      {{#if currentUser}}
-        <div id="login-button">
-        <a href="{{pathFor 'landing'}}" id="signOut">Sign Out</a>
-        </div>
+<div class="nav-layout-padding">
+  <nav role="navigation" class="navbar navbar-default navbar-fixed-top">
+    <div class="navbar-header">
+      {{#if isInRole 'admin'}}
+      <a href="{{pathFor 'adminHomePage'}}"> 
+        <img class="UCB-nav-logo" border="0" src="images/UCB-Logo-Acronym.jpg" alt="UCB Logo"  height="40">
+      </a>
+      {{else}}
+        {{#if isInRole 'user'}}
+        <a href="{{pathFor 'memberHomePage'}}"> 
+          <img class="UCB-nav-logo" border="0" src="images/UCB-Logo-Acronym.jpg" alt="UCB Logo"  height="40">
+        </a>
+        {{else}}
+        <img class="UCB-nav-logo" border="0" src="images/ucb-logo-lg.jpg" alt="UCB Logo"  height="40">
+        {{/if}}
       {{/if}}
-      <div class="navbar-header">
-       {{#if isInRole 'admin'}}
-          <a href="{{pathFor 'adminHomePage'}}"> 
-            <img class="UCB-nav-logo" border="0" src="images/UCB-Logo-Acronym.jpg" alt="UCB Logo"  height="40">
-          </a>
-        {{else}}
-          {{#if isInRole 'user'}}
-          <a href="{{pathFor 'memberHomePage'}}"> 
-            <img class="UCB-nav-logo" border="0" src="images/UCB-Logo-Acronym.jpg" alt="UCB Logo"  height="40">
-          </a>
-          {{else}}
-            <img class="UCB-nav-logo" border="0" src="images/ucb-logo-lg.jpg" alt="UCB Logo"  height="40">
-          {{/if}}
+    </div>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      {{#if isInRole 'admin'}}
+      <ul class="nav navbar-nav">
+        <li><a href="{{pathFor 'memberProfiles'}}">Member Profiles</a></li>
+        <li><a href="{{pathFor 'reviewPhotos'}}">Approve Points</a></li>
+        <li><a href="{{pathFor  'addCommunityEvents'}}">Manage Events</a></li>
+      </ul>
+      {{else}}
+        {{#if isInRole 'user'}}
+        <ul class="nav navbar-nav">
+          <li><a href="{{pathFor 'currentEvents'}}">Events</a></li>
+          {{#with currentUser}}
+          <li><a href="{{pathFor 'checkPoints'}}">Points</a></li>
+          {{/with}}
+          <li><a href="{{pathFor 'contactUs'}}">Contact</a></li>
+          <li><a href="{{pathFor 'share'}}">Share</a></li>
+        </ul>
         {{/if}}
-      </div>
-      <span>
-        {{#if isInRole 'admin'}}
-          <ul class="nav navbar-nav nav nav-pills">
-          <li><a href="{{pathFor 'memberProfiles'}}">Member Profiles</a></li>
-          <li><a href="{{pathFor 'reviewPhotos'}}">Approve Points</a></li>
-          <li><a href="{{pathFor  'addCommunityEvents'}}">Manage Events</a></li>
-          </ul>
-        {{else}}
-          {{#if isInRole 'user'}}
-          <ul class="nav navbar-nav nav nav-pills">
-            <li><a href="{{pathFor 'currentEvents'}}">Events</a></li>
-            {{#with currentUser}}
-              <li><a href="{{pathFor 'checkPoints'}}">Points</a></li>
-            {{/with}}
-            <li><a href="{{pathFor 'contactUs'}}">Contact</a></li>
-            <li><a href="{{pathFor 'share'}}">Share</a></li>
-          </ul>
-          {{/if}}
-        {{/if}}
-      </span>
-      </nav>
-      <div class="row">
-        <div class="col-xs-4 col-xs-offset-8">
-          {{> alerts}}
-        </div>
-      </div>
-      <div id="main-content-container">
-        {{> yield}}
-      </div>
-      <!-- 
-      <div class="col-xs-12">
-        <img src="images/boston.jpg" class="img-responsive">
-      </div>
-      -->
+      {{/if}}
+      <ul class="nav navbar-nav navbar-right">
+        <li>{{> loginButtons}}</li>
+      </ul>
+    </div>
+  </nav>
+</div>
+<br>
+<br>
+<br>
+<div class="row">
+  <div class="col-xs-4 col-xs-offset-8">
+    {{> alerts}}
   </div>
+</div>
+<div id="container-fluid">
+  {{> yield}}
+</div>
 </template>
