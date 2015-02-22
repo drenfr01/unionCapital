@@ -10,7 +10,6 @@ cfs:gridfs
 aldeed:simple-schema
 aldeed:collection2
 aldeed:autoform
-digilord:roles
 accounts-facebook
 accounts-base
 accounts-password
@@ -27,3 +26,4 @@ alethes:pages
 sacha:spin
 
 momentjs:moment
+alanning:roles
