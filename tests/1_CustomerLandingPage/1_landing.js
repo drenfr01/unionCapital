@@ -1,13 +1,20 @@
-casper.test.begin('Landing Page', 7, function suite(test) {
+casper.test.begin('Landing Page', 6, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsUser();
   });
   
+  //check home page main panel
   casper.waitForSelector("#quickCheckIn", function() {
-    test.assertExists("#takePhoto");
-    test.assertExists(".fb_iframe_widget");
-    test.assertExists(".UCB-nav-logo");
-    test.assertExists("#signOut");
+    test.assertExists("#login-dropdown-list");
+    test.assertExists("#eventsButton");
+  });
+
+  //check navbar
+  casper.then(function() {
+    test.assertExists("#navMemberEvents");
+    test.assertExists("#navMemberPoints");
+    test.assertExists("#navMemberContact");
+    test.assertExists("#navMemberShare");
   });
 
   casper.run(function() {

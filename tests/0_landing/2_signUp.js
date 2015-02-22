@@ -1,6 +1,6 @@
 casper.test.comment('Signing In');
 
-casper.test.begin('Landing Page', 9, function suite(test) {
+casper.test.begin('Landing Page', 10, function suite(test) {
   casper.start(homeURL, function() {
   });
   
@@ -36,7 +36,7 @@ casper.test.begin('Landing Page', 9, function suite(test) {
   });
 
   casper.then(function() {
-    this.click("#signOut");
+    casper.logout(test);
   });
 
   casper.run(function() {

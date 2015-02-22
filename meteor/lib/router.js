@@ -110,6 +110,14 @@ var requireMemberLogin = function() {
   }
 };
 
+Router.onBeforeAction(function() {
+  if (! Meteor.userId()) {
+    this.render('landing');
+  } else {
+    this.next();
+  }
+});
+
 /*
 Router.onBeforeAction(requireMemberLogin,{except: ['landing']} );
 Router.onBeforeAction(requireAdminLogin,

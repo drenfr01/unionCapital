@@ -26,12 +26,12 @@
       {{else}}
         {{#if isInRole 'user'}}
         <ul class="nav navbar-nav">
-          <li><a href="{{pathFor 'currentEvents'}}">Events</a></li>
+          <li><a href="{{pathFor 'currentEvents'}}" id="navMemberEvents">Events</a></li>
           {{#with currentUser}}
-          <li><a href="{{pathFor 'checkPoints'}}">Points</a></li>
+          <li><a href="{{pathFor 'checkPoints'}}" id="navMemberPoints">Points</a></li>
           {{/with}}
-          <li><a href="{{pathFor 'contactUs'}}">Contact</a></li>
-          <li><a href="{{pathFor 'share'}}">Share</a></li>
+          <li><a href="{{pathFor 'contactUs'}}" id="navMemberContact">Contact</a></li>
+          <li><a href="{{pathFor 'share'}}" id="navMemberShare">Share</a></li>
         </ul>
         {{/if}}
       {{/if}}
