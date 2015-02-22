@@ -1,10 +1,7 @@
 <template name="memberHomePage">
   <div class="row text-center">
-    <h1> 
-      <small>
-        Welcome, {{currentMemberName}}!
-      </small>
-    </h1>
+    <h1>Welcome, {{currentMemberName}}!</h1>
+    <h3><a href="{{pathFor 'checkPoints'}}">Total Points: {{totalPoints}}</a></h3>
     <div class="col-md-6 col-md-offset-3">
       <img src="images/UCBbutton.png" alt="Check Into Event" id="quickCheckIn" height="200" width="200">
       <br>

@@ -18,6 +18,9 @@ Template.memberHomePage.helpers({
     } else {
       return "";
     }
+  },
+  totalPoints: function() {
+    return Meteor.users.totalPointsFor(Meteor.userId());
   }
 });
 Template.memberHomePage.events({
