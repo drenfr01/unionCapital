@@ -1,0 +1,25 @@
+<template name="memberNav">
+<div class="nav-layout-padding">
+  <nav role="navigation" class="navbar navbar-default navbar-fixed-top">
+    <div class="navbar-header">
+      <a href="{{pathFor 'memberHomePage'}}"> 
+        <img class="UCB-nav-logo" border="0" src="images/UCB-Logo-Acronym.jpg" 
+        alt="UCB Logo"  height="40">
+      </a>
+    </div>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="nav navbar-nav">
+        <li><a href="{{pathFor 'currentEvents'}}" id="navMemberEvents">Events</a></li>
+        {{#with currentUser}}
+        <li><a href="{{pathFor 'checkPoints'}}" id="navMemberPoints">Points</a></li>
+        {{/with}}
+        <li><a href="{{pathFor 'contactUs'}}" id="navMemberContact">Contact</a></li>
+        <li><a href="{{pathFor 'share'}}" id="navMemberShare">Share</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>{{> loginButtons}}</li>
+      </ul>
+    </div>
+  </nav>
+</div>
+</template>
