@@ -1,46 +1,13 @@
 <template name="layout">
-<div class="nav-layout-padding">
-  <nav role="navigation" class="navbar navbar-default navbar-fixed-top">
-    <div class="navbar-header">
-      {{#if isInRole 'admin'}}
-      <a href="{{pathFor 'adminHomePage'}}"> 
-        <img class="UCB-nav-logo" border="0" src="images/UCB-Logo-Acronym.jpg" alt="UCB Logo"  height="40">
-      </a>
-      {{else}}
-        {{#if isInRole 'user'}}
-        <a href="{{pathFor 'memberHomePage'}}"> 
-          <img class="UCB-nav-logo" border="0" src="images/UCB-Logo-Acronym.jpg" alt="UCB Logo"  height="40">
-        </a>
-        {{else}}
-        <img class="UCB-nav-logo" border="0" src="images/ucb-logo-lg.jpg" alt="UCB Logo"  height="40">
-        {{/if}}
-      {{/if}}
-    </div>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-      {{#if isInRole 'admin'}}
-      <ul class="nav navbar-nav">
-        <li><a href="{{pathFor 'memberProfiles'}}" id="navSAMemberProfiles">Member Profiles</a></li>
-        <li><a href="{{pathFor 'reviewPhotos'}}" id="navSAApprovePoints">Approve Points</a></li>
-        <li><a href="{{pathFor  'addCommunityEvents'}}" id="navSAManageEvents">Manage Events</a></li>
-      </ul>
-      {{else}}
-        {{#if isInRole 'user'}}
-        <ul class="nav navbar-nav">
-          <li><a href="{{pathFor 'currentEvents'}}" id="navMemberEvents">Events</a></li>
-          {{#with currentUser}}
-          <li><a href="{{pathFor 'checkPoints'}}" id="navMemberPoints">Points</a></li>
-          {{/with}}
-          <li><a href="{{pathFor 'contactUs'}}" id="navMemberContact">Contact</a></li>
-          <li><a href="{{pathFor 'share'}}" id="navMemberShare">Share</a></li>
-        </ul>
-        {{/if}}
-      {{/if}}
-      <ul class="nav navbar-nav navbar-right">
-        <li>{{> loginButtons}}</li>
-      </ul>
-    </div>
-  </nav>
-</div>
+{{#if isInRole 'admin'}}
+  {{> superAdminNav}}
+{{/if}}
+
+
+{{#if isInRole 'user'}}
+  {{> memberNav}}
+{{/if}}
+
 <br>
 <br>
 <br>
