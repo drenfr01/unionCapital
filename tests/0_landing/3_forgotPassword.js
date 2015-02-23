@@ -1,6 +1,6 @@
 casper.test.comment('Signing In');
 
-casper.test.begin('Landing Page', 7, function suite(test) {
+casper.test.begin('Landing Page', 8, function suite(test) {
   casper.start(homeURL, function() {
   });
   
@@ -36,6 +36,10 @@ casper.test.begin('Landing Page', 7, function suite(test) {
 
   casper.wait(3000, function() {
     test.assertExists("#quickCheckIn");
+  });
+
+  casper.then(function() {
+    casper.logout(test);
   });
 
   casper.run(function() {

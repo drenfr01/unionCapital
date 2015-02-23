@@ -48,6 +48,19 @@ Meteor.startup(function () {
           state: 'MA'
         },
         roles:['user']
+      },
+      {
+        email: "partnerAdmin@gmail.com", username: "partnerAdmin",
+        password: "partnerAdmin",
+        profile: {
+          firstName: 'KIPP',
+          lastName: 'Academy',
+          street: 'Warren Street',
+          city: 'Boston',
+          state: 'MA',
+          zip: '02119'
+        },
+        roles: ['partnerAdmin']
       }
     ];
 

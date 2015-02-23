@@ -23,6 +23,9 @@ Router.map(function() {
   this.route('facebookLogin', {path: '/facebookLogin'});
   this.route('memberHomePage', {path: '/memberHome'});
   this.route('communityNeeds', {path: '/communityNeeds'});
+  this.route('/share', function() {
+    this.render('share');
+  });
   this.route('submitNewEvent', {
     path: '/submitNewEvent',
     template: 'takePicture'
@@ -106,6 +109,14 @@ var requireMemberLogin = function() {
     this.next();
   }
 };
+
+Router.onBeforeAction(function() {
+  if (! Meteor.userId()) {
+    this.render('landing');
+  } else {
+    this.next();
+  }
+});
 
 /*
 Router.onBeforeAction(requireMemberLogin,{except: ['landing']} );

@@ -18,6 +18,9 @@ Template.memberHomePage.helpers({
     } else {
       return "";
     }
+  },
+  totalPoints: function() {
+    return Meteor.users.totalPointsFor(Meteor.userId());
   }
 });
 Template.memberHomePage.events({
@@ -25,8 +28,8 @@ Template.memberHomePage.events({
     e.preventDefault();
     Router.go('quickCheckIn');
   },
-  'click #takePhoto': function(e) {
+  'click #eventsButton': function(e) {
     e.preventDefault();
-    Router.go('submitNewEvent');
+    Router.go("currentEvents");
   }
 });

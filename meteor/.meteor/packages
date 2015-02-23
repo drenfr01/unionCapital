@@ -10,20 +10,20 @@ cfs:gridfs
 aldeed:simple-schema
 aldeed:collection2
 aldeed:autoform
-digilord:roles
 accounts-facebook
 accounts-base
 accounts-password
 service-configuration
-mizzao:bootstrap-3
 coffeescript
 jquery
 underscore
 email
 mrt:googlemaps-server
 mdg:camera
-accounts-ui
 alethes:pages
 sacha:spin
 
 momentjs:moment
+alanning:roles
+twbs:bootstrap
+ian:accounts-ui-bootstrap-3
