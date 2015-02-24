@@ -1,0 +1,80 @@
+<template name="collectUserDemographics">
+<div class="row text-center landing-background">
+  <div class="col-md-6 col-md-offset-3">
+    <h3 class="h3-createuser"><small class="h3-createuser">
+        Please fill in Demographics
+    </small></h3>
+    <!-- Address, income bracket, kids, race, ethnicity, occupation Status, fb, twitter -->
+    <form role="form">
+      <br>
+      <div class="form-group>">
+        <label for="street1" class="sr-only">Street</label>
+        <input type="text" class="form-control" id="street1" 
+        placeholder="Enter Street Address">
+      </div>
+      <br>
+      <div class="form-group>">
+        <label for="street2" class="sr-only">Apartment Number</label>
+        <input type="text" class="form-control" id="street2" 
+        placeholder="Enter Apartment Number">
+      </div>
+      <br>
+      <div class="form-group>">
+        <label for="city" class="sr-only">City</label>
+        <input type="text" class="form-control" id="city" 
+        placeholder="Enter City">
+      </div>
+      <br>
+      <div class="form-group>">
+        <label for="state" class="sr-only">State</label>
+        <input type="text" class="form-control" id="state" 
+        placeholder="Enter State">
+      </div>
+      <br>
+      <div class="form-group>">
+        <label for="zip" class="sr-only">Zip</label>
+        <input type="text" class="form-control" id="zip" 
+        placeholder="Enter Zip Code">
+      </div>
+      <br>
+      <div class="form-group>">
+        <label for="organizations">Partner Affiliation</label>
+        <select class="form-control" id="organizations">
+          {{#each organizations}}
+            <option>{{name}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <br>
+      <div class="form-group>">
+        <label for="incomeBrackets">Income Bracket</label>
+        <select class="form-control" id="incomeBrackets">
+          {{#each incomeBrackets}}
+            <option>{{bracket}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <br>
+      <div class="form-group>">
+        <label for="numberOfKids">Number of Kids</label>
+        <select class="form-control" id="numberOfKids">
+          {{#each kids}}
+            <option>{{number}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <br>
+      <div class="form-group>">
+        <label for="races">Race</label>
+        <select class="form-control" id="races">
+          {{#each races}}
+            <option>{{name}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <button type="submit" class="button-landing" id="createNewUser">Sign Up</button>
+      <button type="button" class="button-landing2" id="back">Back</button>
+    </form>
+  </div>
+</div>
+</template>

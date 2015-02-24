@@ -24,6 +24,6 @@ Template.forgotPassword.events({
     }
   },
   'click #back': function(e) {
-    Session.set("loginStateVar", "loginPage");
+    Router.go('login');
   }
 });

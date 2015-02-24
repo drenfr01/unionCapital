@@ -4,3 +4,8 @@ Meteor.subscribe('userData');
 Meteor.subscribe('reservations');
 Meteor.subscribe('eventCategories');
 Meteor.subscribe('eventOrgs');
+Meteor.subscribe('partnerOrganizations');
+Meteor.subscribe('incomeBrackets');
+Meteor.subscribe('kids');
+Meteor.subscribe('races');
+Meteor.subscribe('ethnicities');

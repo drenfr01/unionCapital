@@ -1,3 +1,21 @@
+Meteor.publish('races', function() {
+  return Races.find();
+});
+Meteor.publish('ethnicities', function() {
+  return Ethnicities.find();
+});
+Meteor.publish('kids', function() {
+  return Kids.find();
+});
+
+Meteor.publish('partnerOrganizations', function() {
+  return PartnerOrgs.find();
+});
+
+Meteor.publish('incomeBrackets', function() {
+  return IncomeBrackets.find();
+});
+
 Meteor.publish("eventOrgs", function() {
   return EventOrgs.find();
 });

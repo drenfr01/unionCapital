@@ -19,6 +19,17 @@ Router.map(function() {
     this.render('landing');
   });
 
+  this.route('/createNewUser', function() {
+    this.render('createNewUser');
+  });
+
+  this.route('/collectUserDemographics', function() {
+    this.render('collectUserDemographics');
+  });
+
+  this.route('/forgotPassword', function() {
+    this.render('forgotPassword');
+  });
   //Member Routes
   this.route('facebookLogin', {path: '/facebookLogin'});
   this.route('memberHomePage', {path: '/memberHome'});
@@ -86,6 +97,8 @@ Router.map(function() {
 
 });
 
+//TODO: route level security
+/*
 var requireAdminLogin = function() {
   if (! Roles.userIsInRole(Meteor.userId(), ['admin'])) {
     if(Meteor.loggingIn()) {
@@ -109,7 +122,11 @@ var requireMemberLogin = function() {
     this.next();
   }
 };
+*/
 
+//TODO: basically we need this to include the createNewUser & 
+//forgotPassword routes
+/*
 Router.onBeforeAction(function() {
   if (! Meteor.userId()) {
     this.render('landing');
@@ -117,6 +134,7 @@ Router.onBeforeAction(function() {
     this.next();
   }
 });
+*/
 
 /*
 Router.onBeforeAction(requireMemberLogin,{except: ['landing']} );

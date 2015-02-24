@@ -1,5 +1,90 @@
 Meteor.startup(function () {
 
+  //Seeding Partner Organizations
+  if(PartnerOrgs.find().count() === 0) {
+    var partnerOrgs = [
+      "KIPP Academy",
+      "Thrive in Five",
+      "Rosie's Place"
+    ];
+
+    _.each(partnerOrgs, function(org) {
+      PartnerOrgs.insert({name: org, deleteInd: false});
+    });
+  }
+
+  //Seeding Income Brackets
+  if(IncomeBrackets.find().count() === 0) {
+    var incomeBrackets = [
+      "0-9,999",
+      "10,000-19,999",
+      "20,000-24,999",
+      "25,000-29,999",
+      "30,000-39,999",
+      "40,000-49,999",
+      "50,000+"
+    ];
+
+    _.each(incomeBrackets, function(bracket) {
+      IncomeBrackets.insert({bracket: bracket, deleteInd: false});
+    });
+  }
+
+  //Seeding Number of Kids
+  if(Kids.find().count() === 0) {
+    var kids = [
+      '0',
+      '1',
+      '2',
+      '3',
+      '4',
+      '5',
+      '6',
+      '7',
+      '8',
+      '9',
+      '10+'
+    ];
+
+    _.each(kids, function(kid) {
+      Kids.insert({number: kid, deleteInd: false});
+    });
+  }
+  //Seeding Races
+  if(Races.find().count() === 0) {
+    var races = [
+      'African-American or Black',
+      'White',
+      'Alaskan Native or American Indian',
+      'Asian',
+      'Hawaiian Native or Pacific Islander',
+      'Other',
+      '2+ Races'
+    ];
+
+    _.each(races, function(race) {
+      Races.insert({name: race, deleteInd: false});
+    });
+  }
+  //Seeding Ethnicities
+  if(Ethnicities.find().count() === 0) {
+    var ethnicities = [
+      '1',
+      '2',
+      '3',
+      '4',
+      '5',
+      '6',
+      '7',
+      '8',
+      '9',
+      '10+'
+    ];
+
+    _.each(ethnicities, function(ethnicity) {
+      Ethnicities.insert({name: ethnicity, deleteInd: false});
+    });
+  }
   //Seeding event categories 
   if(EventCategories.find().count() === 0) {
     var eventCategories = 
