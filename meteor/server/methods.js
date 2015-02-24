@@ -102,7 +102,15 @@ Meteor.methods({
       profile: {
         firstName: String,
         lastName: String,
-        zip: String
+        street1: String,
+        street2: String,
+        city: String,
+        state: String,
+        zip: String,
+        partnerOrg: String,
+        incomeBracket: String,
+        numberOfKids: String,
+        race: String
       }  
     });
     var newUserId = Accounts.createUser({

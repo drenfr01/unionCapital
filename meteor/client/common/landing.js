@@ -3,25 +3,20 @@ Template.landing.rendered = function() {
   //to the member home page...
   if (Meteor.userId()) {
     Router.go('memberHomePage');
-  } else {
-    Session.set('loginStateVar', 'loginPage');
-  }
+  } 
 };
 
 Template.landing.helpers({
-  'loginState': function(state) {
-    return Session.equals('loginStateVar', state);
-  },
 });
 
 Template.landing.events({
   'click #signUp': function(e) {
     e.preventDefault();
-    Session.set('loginStateVar', 'signUp');
+    Router.go('createNewUser');
   },
   'click #forgotPassword': function(e) {
     e.preventDefault();
-    Session.set('loginStateVar', 'forgotPassword');
+    Router.go('forgotPassword');
   },
   'click #facebook': function(e) {
     e.preventDefault();
