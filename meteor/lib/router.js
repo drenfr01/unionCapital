@@ -32,6 +32,10 @@ Router.map(function() {
   });
   //Member Routes
   this.route('facebookLogin', {path: '/facebookLogin'});
+  this.route('/memberProfile', function() {
+    this.render('memberProfile');
+  });
+
   this.route('memberHomePage', {path: '/memberHome'});
   this.route('communityNeeds', {path: '/communityNeeds'});
   this.route('/share', function() {
