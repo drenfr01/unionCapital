@@ -92,6 +92,9 @@ Router.map(function() {
   this.route('topPointsList', {path: 'topPointsList'});
 
   //Admin Routes
+  this.route('/allMembers', function() {
+    this.render('allMembers');
+  });
   this.route('adminHomePage', {path: '/admin'});
   this.route('addCommunityEvents', {path: '/addCommunityEvents'});
   this.route('addRewards', {path: '/addRewards'});

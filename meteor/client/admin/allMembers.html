@@ -1,0 +1,21 @@
+<template name="allMembers">
+<br>
+<br>
+  <div class="col-xs-12 text-center">
+    <div class="input-group">
+      <input type='text' class="form-control" placeholder='Search Member Name' 
+      id='search-box'/>
+      <span class="input-group-btn">
+        <!-- TODO: MAKE THIS A CANCEL BUTTON -->
+        <button class="btn btn-default btn-large">
+          &gt;  
+        </button>
+      </span>
+    </div>
+    {{#each getMembers}}
+      Name: {{{profile.firstName}}} {{profile.lastName}}
+      <br>
+    {{/each}}
+  </div>
+  
+</template>
