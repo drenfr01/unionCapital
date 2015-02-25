@@ -102,7 +102,6 @@ Router.map(function() {
 });
 
 //TODO: route level security
-/*
 var requireAdminLogin = function() {
   if (! Roles.userIsInRole(Meteor.userId(), ['admin'])) {
     if(Meteor.loggingIn()) {
@@ -126,7 +125,6 @@ var requireMemberLogin = function() {
     this.next();
   }
 };
-*/
 
 //TODO: basically we need this to include the createNewUser & 
 //forgotPassword routes
