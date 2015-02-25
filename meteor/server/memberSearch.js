@@ -32,7 +32,7 @@ SearchSource.defineSource('memberSearch', function(searchText, options) {
       var mostRecentEvent = Events.findOne(mostRecentTransaction.eventId) || {name: ""};
       
       //if user is admin
-      var userProfile = user.profile || {firstName: 'admin', lastName: '', zip: ''};
+      var userProfile = user.profile || {firstName: 'admin', lastName: 'd', zip: ''};
       //if user is logging in with facebook
       var userFirstName = userProfile.firstName || userProfile.name || "";
       var userLastName = userProfile.lastName || userProfile.name || "";

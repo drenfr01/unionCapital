@@ -15,6 +15,23 @@ var highlightSortedColumn = function(target) {
     $(target).css('color','red');
 };
 
+var getMembersData = function(sortOn, sortOrder) {
+  var membersArray = MemberNameSearch.getData({
+    transform: function(matchText, regExp) {
+      return matchText.replace(regExp, "<b>$&</b>");
+    },
+    sort: {sortOn: sortOrder}
+  });
+  //HACK: couldn't figure out how to get Search-Source to
+  //sort client side reatively in above getData.sort object
+  console.log(membersArray);
+  if(sortOrder === 1) { //ascending order
+    return _.sortBy(membersArray, sortOn);
+  } else { //descending order
+    return _.sortBy(membersArray, sortOn).reverse();
+  }
+};
+
 Template.allMembers.rendered = function() {
   MemberNameSearch.search("");
   highlightSortedColumn("#" + Session.get('sortOn'));
@@ -22,18 +39,11 @@ Template.allMembers.rendered = function() {
 
 Template.allMembers.helpers({
   getMembers: function() {
-    var sortOn = function() {return Session.get("sortOn"); };
-    var sortOrder = function() {return Session.get("sortOrder"); };
-    return MemberNameSearch.getData({
-      transform: function(matchText, regExp) {
-        console.log(sortOn);
-        return matchText.replace(regExp, "<b>$&</b>");
-      },
-      sort: {sortOn: sortOrder}
-    });
+    return getMembersData(Session.get('sortOn'), Session.get('sortOrder'));
   }
 });
 
+//TODO: have each change try to re-render members?
 Template.allMembers.events({
   "keyup #search-box": _.throttle(function(e) {
     var text = $(e.target).val().trim();
