@@ -270,6 +270,9 @@ Router.map(function() {
   this.route('adminHomePage', {path: '/adminHomePage'});
   this.route('addCommunityEvents', {path: '/addCommunityEvents'});
   this.route('addRewards', {path: '/addRewards'});
+  this.route('/exportPage', function() {
+    this.render('exportPage');
+  });
   this.route('reviewPhotos', {path: '/reviewPhotos'});
   this.route('memberProfiles', {path: '/memberProfiles'});
   this.route('listMembers', {path: '/listMembers'});
