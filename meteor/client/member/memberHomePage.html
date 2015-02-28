@@ -1,26 +1,37 @@
 <template name="memberHomePage">
+  <div class="col-xs-10 col-xs-offset-1 thin-gutters" style="background-color: white;">
   <div class="row text-center">
     <h1>Welcome, {{currentMemberName}}!</h1>
-    <h3><a href="{{pathFor 'checkPoints'}}">Total Points: {{totalPoints}}</a></h3>
-    <div class="col-md-6 col-md-offset-3">
+  </div>
+  <div class="row text-center">
+    <div class="col-xs-8 col-xs-offset-2">
+      <div class="well well-sm">
+        <a href="{{pathFor 'checkPoints'}}">Total Points: {{totalPoints}}</a>
+      </div>
+    </div>
+  </div>
+  <div class="row text-center page-section">
+    <a href="#">
       <img src="images/UCBbutton.png" alt="Check Into Event" id="quickCheckIn" height="200" width="200">
       <br>
-      <em>Quick Check In</em>
-      <br>
-      <br>
+      <em>Check In</em>
+    </a>
+  </div>
+  <div class="row text-center page-section">
+    <div class="col-xs-8 col-xs-offset-2">
       <button type="button" class="btn btn-block btn-default" id="eventsButton">
         Today in Boston
       </button>
-      <br>
-      <br>
     </div>
   </div>
-  <div class="row text-center">
-    <div class="col-md-6 col-md-offset-3">
-    <div id="fb-root"></div>
-    <div class="fb-like-box" data-href="https://www.facebook.com/unioncapitalboston" 
-      data-colorscheme="light" data-show-faces="true" data-header="false" 
-      data-stream="true" data-show-border="true"></div>
+  <br>
+  <div class="row text-center page-section">
+    <div class="col-xs-12">
+      <div id="fb-root"></div>
+      <div class="fb-like-box" data-href="https://www.facebook.com/unioncapitalboston" 
+        data-colorscheme="light" data-show-faces="true" data-header="false" 
+        data-stream="false" data-show-border="true" style="width=100%;"></div>
+      </div>
     </div>
   </div>
 </template>
