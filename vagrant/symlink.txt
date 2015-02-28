@@ -1,0 +1,6 @@
+﻿// Use this to create symlink
+sudo mount --bind /home/vagrant/unionCapital/meteor/.meteor/ /vagrant/unionCapital/meteor/.meteor/
+echo “sudo mount --bind /home/vagrant/unionCapital/meteor/.meteor/ /vagrant/unionCapital/meteor/.meteor/” >> ~/.bashrc && source ~/.bashrc
+
+//when it bugs out, use this
+rm .meteor/local/db/mongod.lock .meteor/local/db/local.*

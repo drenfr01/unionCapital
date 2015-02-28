@@ -1,0 +1,11 @@
+run meteor with
+BIND_IP="0.0.0.0" meteor
+
+Robomongo connection properties
+Connection ->
+	Address: localhost:3001
+SSH ->
+	SSH Address: localhost:2222
+	SSH Username: vagrant
+	SSH Autho Method: Password
+	SSH Password: vagrant

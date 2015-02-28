@@ -36,7 +36,7 @@ Router.map(function() {
     this.render('memberProfile');
   });
 
-  this.route('memberHomePage', {path: '/memberHome'});
+  this.route('memberHomePage', {path: '/memberHomePage'});
   this.route('communityNeeds', {path: '/communityNeeds'});
   this.route('/share', function() {
     this.render('share');
