@@ -92,6 +92,9 @@ Router.map(function() {
   this.route('topPointsList', {path: 'topPointsList'});
 
   //Admin Routes
+  this.route('/allMembers', function() {
+    this.render('allMembers');
+  });
   this.route('adminHomePage', {path: '/admin'});
   this.route('addCommunityEvents', {path: '/addCommunityEvents'});
   this.route('addRewards', {path: '/addRewards'});
@@ -102,7 +105,6 @@ Router.map(function() {
 });
 
 //TODO: route level security
-/*
 var requireAdminLogin = function() {
   if (! Roles.userIsInRole(Meteor.userId(), ['admin'])) {
     if(Meteor.loggingIn()) {
@@ -126,7 +128,6 @@ var requireMemberLogin = function() {
     this.next();
   }
 };
-*/
 
 //TODO: basically we need this to include the createNewUser & 
 //forgotPassword routes

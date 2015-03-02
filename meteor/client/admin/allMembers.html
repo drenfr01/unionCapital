@@ -1,0 +1,55 @@
+<template name="allMembers">
+<br>
+<br>
+  <div class="col-xs-6 col-xs-offset-3">
+    <div class="input-group">
+      <input type='text' class="form-control" placeholder='Search Member Name' 
+      id='search-box'/>
+      <span class="input-group-btn">
+        <!-- TODO: MAKE THIS A CANCEL BUTTON -->
+        <button class="btn btn-default btn-large">
+          &gt;  
+        </button>
+      </span>
+    </div>
+  </div>
+  <div class="col-xs-12">
+    <br>
+    <div class="text-center">
+      <label class="radio-inline">
+        <input type="radio" name="orderRadioButtons" id="ascending" value="ascending">
+          ascending
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="orderRadioButtons" id="descending" 
+        value="descending" checked>
+          descending
+      </label>
+    </div>
+    <br>
+    <table class="table table-hover text-center">
+      <thead>
+        <th id="firstName" class="tableSort">Member Name</th>
+        <th id="zip" class="tableSort">Member Zip</th>
+        <th id="lastEvent" class="tableSort">Last Event</th>
+        <th id="lastEventDate" class="tableSort">Last Event Date</th>
+        <th id="transactions" class="tableSort"># Transactions</th>
+        <th id="totalPoints" class="tableSort"># Points</th>
+      </thead>
+      <tbody>
+        {{#each getMembers}}
+          <tr>
+            <td>{{firstName}} {{lastName}}</td>
+            <td>{{zip}}</td>
+            <td>{{lastEvent}}</td>
+            <td>{{formatDate lastEventDate}}</td>
+            <td>{{numberOfTransactions}}</td>
+            <td>{{totalPoints}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    <br>
+  </div>
+  
+</template>

@@ -1,7 +1,7 @@
 Template.adminHomePage.events({
-  'click #listMembers': function(e) {
+  'click #allMembers': function(e) {
     e.preventDefault();
-    Router.go('listMembers');
+    Router.go('allMembers');
   },
   'click #memberProfiles': function(e) {
     e.preventDefault();
