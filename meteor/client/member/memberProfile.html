@@ -1,6 +1,19 @@
 <template name="memberProfile">
 <h1>Member Profile</h1>
+<span class="input-group-btn">
+  <span class="btn btn-block btn-default btn-file">
+    Take Photo
+    <input  id="profilePhoto" 
+    type="file" accept="image/*" capture="camera">
+  </span>
+</span>
 <div class="col-xs-12">
+  {{#each memberPhoto}}
+    URL: {{this.url}}
+      <div>
+        <a href="{{this.url}}" target="_blank"><img src="{{this.url store='thumbs' uploading='/images/uploading.gif' storing='/images/storing.gif'}}" alt="" class="thumbnail" /></a>
+      </div>
+    {{/each}}
   {{#with memberProfile}}
     Name: {{firstName}} {{lastName}}
     <br>
