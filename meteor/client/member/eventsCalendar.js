@@ -22,7 +22,11 @@ Template.eventsCalendar.rendered = function() {
 
 Template.eventsCalendar.helpers({
   getEvents: function() {
-    return getEventsData();
+    var events = getEventsData();
+    var eventsByDate = _.groupBy(events, function(event) {
+      return moment(event.startDate).format("YYYY MM DD");
+    });
+    return eventsByDate;
   }
 });
 

@@ -22,5 +22,6 @@ SearchSource.defineSource('eventsSearch', function(searchText, options) {
 
 function buildRegExp(searchText) {
   var parts = searchText.trim().split(' ');
+  // note that \\s intrepets to \s, a single whitespace character
   return new RegExp("(" + parts.join("\\s") + ")", "ig");
 }

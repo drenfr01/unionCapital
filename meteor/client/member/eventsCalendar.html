@@ -13,14 +13,18 @@
       </span>
     </div>
   <br>
-  {{#each getEvents}}
-  Name: {{{name}}}
+  {{#each arrayify getEvents}}
+    <b> {{name}} </b>
     <br>
-    Description: {{{description}}}
-    <br>
-    Date: {{startDaet}}
-    <br>
-    <hr>
+    {{#each value}}
+      Name: {{{name}}}
+      <br>
+      Description: {{{description}}}
+      <br>
+      Date: {{startDaet}}
+      <br>
+      <hr>
+    {{/each}}
   {{/each}}
   </div>
 </template>
