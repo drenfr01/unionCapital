@@ -159,6 +159,10 @@ Meteor.startup(function () {
       Roles.addUsersToRoles(id, user.roles);
 
     });
+
+    //Add Houston Admin users
+    var admin = Meteor.users.findOne({name: admin});
+    Meteor.call("_houston_make_admin", admin._id);
   }
   //Events fixture
   if ( Events.find().count() === 0 ) {

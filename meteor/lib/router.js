@@ -95,7 +95,7 @@ Router.map(function() {
   this.route('/allMembers', function() {
     this.render('allMembers');
   });
-  this.route('adminHomePage', {path: '/admin'});
+  this.route('adminHomePage', {path: '/adminHomePage'});
   this.route('addCommunityEvents', {path: '/addCommunityEvents'});
   this.route('addRewards', {path: '/addRewards'});
   this.route('reviewPhotos', {path: '/reviewPhotos'});
