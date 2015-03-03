@@ -48,3 +48,10 @@ Template.checkPoints.helpers({
     return Meteor.users.totalPointsFor(this._id);
   }
 });
+
+Template.checkPoints.events({
+  'click #backButton': function(e) {
+    e.preventDefault();
+    Router.go('allMembers');
+  }
+});

@@ -24,7 +24,6 @@ var getMembersData = function(sortOn, sortOrder) {
   });
   //HACK: couldn't figure out how to get Search-Source to
   //sort client side reatively in above getData.sort object
-  console.log(membersArray);
   if(sortOrder === 1) { //ascending order
     return _.sortBy(membersArray, sortOn);
   } else { //descending order
@@ -79,5 +78,9 @@ Template.allMembers.events({
     } else {
       Session.set('sortOrder', -1);
     }
+  },
+  'click .memberRow': function(e) {
+    e.preventDefault();
+    Router.go('checkPoints', {_id: this._id});
   }
 });
