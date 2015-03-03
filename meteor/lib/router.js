@@ -36,6 +36,10 @@ Router.map(function() {
     this.render('memberProfile');
   });
 
+  this.route('/eventsCalendar', function() {
+    this.render('eventsCalendar');
+  });
+
   this.route('memberHomePage', {path: '/memberHomePage'});
   this.route('communityNeeds', {path: '/communityNeeds'});
   this.route('/share', function() {
