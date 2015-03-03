@@ -8,6 +8,10 @@ Meteor.publish('kids', function() {
   return Kids.find();
 });
 
+Meteor.publish('numberOfPeople', function() {
+  return NumberOfPeople.find();
+});
+
 Meteor.publish('partnerOrganizations', function() {
   return PartnerOrgs.find();
 });

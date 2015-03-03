@@ -50,6 +50,27 @@ Meteor.startup(function () {
       Kids.insert({number: kid, deleteInd: false});
     });
   }
+  
+  //Seeding Number of People for Reservations
+  if(NumberOfPeople.find().count() === 0) {
+    var people = [
+      '0',
+      '1',
+      '2',
+      '3',
+      '4',
+      '5',
+      '6',
+      '7',
+      '8',
+      '9',
+      '10+'
+    ];
+
+    _.each(people, function(person) {
+      NumberOfPeople.insert({number: person, deleteInd: false});
+    });
+  }
   //Seeding Races
   if(Races.find().count() === 0) {
     var races = [

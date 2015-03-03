@@ -25,7 +25,7 @@ Template.singleEvent.events({
     if(Session.get('eventType') === 'All') {
       Router.go('addCommunityEvents');
     } else {
-      Router.go('currentEvents');
+      Router.go('eventsCalendar');
     }
   }
 });

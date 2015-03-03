@@ -9,3 +9,4 @@ Meteor.subscribe('incomeBrackets');
 Meteor.subscribe('kids');
 Meteor.subscribe('races');
 Meteor.subscribe('ethnicities');
+Meteor.subscribe('numberOfPeople');
