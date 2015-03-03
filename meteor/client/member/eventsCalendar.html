@@ -14,17 +14,34 @@
     </div>
   <br>
   {{#each arrayify getEvents}}
-    <b> {{name}} </b>
+    <h1>{{name}}</h1>
     <br>
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
     {{#each value}}
-      Name: {{{name}}}
-      <br>
-      Description: {{{description}}}
-      <br>
-      Date: {{startDaet}}
-      <br>
-      <hr>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="heading{{_id}}">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#{{_id}}" 
+              aria-expanded="true" aria-controls="{{_id}}">
+              {{{name}}}
+            </a>
+          </h4>
+        </div>
+        <div id="{{_id}}" class="panel-collapse collapse" role="tabpanel" 
+          aria-labelledby="heading{{_id}}">
+          <div class="panel-body">
+            Name: {{{name}}}
+            <br>
+            Description: {{{description}}}
+            <br>
+            Date: {{startDate}}
+            <br>
+          </div>
+        </div>
+      </div>
     {{/each}}
+    </div>
+    <hr>
   {{/each}}
   </div>
 </template>

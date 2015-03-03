@@ -10,7 +10,7 @@ EventsSearch = new SearchSource('eventsSearch', fields, options);
 var getEventsData = function() {
   return EventsSearch.getData({
     transform: function(matchText, regExp) {
-      return matchText.replace(regExp, "<b>$&</b>");
+      return matchText.replace(regExp, "<span style='color:red'>$&</span>");
     },
     sort: {startDate: 1}
   });
