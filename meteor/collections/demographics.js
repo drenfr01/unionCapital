@@ -63,4 +63,15 @@ Ethnicities.attachSchema(new SimpleSchema({
   }
 }));
 
+NumberOfPeople = new Meteor.Collection('numberOfPeople');
 
+NumberOfPeople.attachSchema(new SimpleSchema({
+  number: {
+    type: String,
+    label: 'Number of Reservations'
+  },
+  deleteInd: {
+    type: Boolean,
+    label: 'Logical Deletion'
+  }
+}));

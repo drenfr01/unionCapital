@@ -30,6 +30,6 @@ Template.memberHomePage.events({
   },
   'click #eventsButton': function(e) {
     e.preventDefault();
-    Router.go("currentEvents");
+    Router.go("eventsCalendar");
   }
 });

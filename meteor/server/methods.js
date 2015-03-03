@@ -363,5 +363,15 @@ Meteor.methods({
       }
     });
     return topEarners;
+  },
+  'insertReservations': function(attributes) {
+    check(attributes, {
+      userId : String,
+      eventId : String,
+      dateEntered : Date,
+      numberOfPeople: String
+    });
+
+    Reservations.insert(attributes);
   }
 });

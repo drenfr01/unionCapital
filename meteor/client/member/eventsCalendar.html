@@ -30,12 +30,23 @@
         <div id="{{_id}}" class="panel-collapse collapse" role="tabpanel" 
           aria-labelledby="heading{{_id}}">
           <div class="panel-body">
-            Name: {{{name}}}
+            <a href="{{pathFor 'singleEvent'}}">Name: {{{name}}}</a>
             <br>
             Description: {{{description}}}
             <br>
             Date: {{startDate}}
             <br>
+            <div class="col-xs-2 col-xs-offset-5">
+              <div class="form-group>">
+                <label for="numberOfPeople">Number of People</label>
+                <select class="form-control numberOfPeople">
+                  {{#each people}}
+                    <option>{{number}}</option>
+                  {{/each}}
+                </select>
+              </div>
+                {{{rsvpButton}}}
+            </div>
           </div>
         </div>
       </div>
