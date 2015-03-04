@@ -41,6 +41,7 @@ SearchSource.defineSource('memberSearch', function(searchText, options) {
 
 
       return {
+        memberId: user._id,
         firstName: userFirstName.toLowerCase(),
         lastName: userLastName.toLowerCase(), 
         zip: userZip,

@@ -5,6 +5,17 @@ Router.configure({
   waitOn: function() { return Meteor.subscribe('events'); }
 });
 
+Router.route('/viewMemberProfile/:_id', function () {
+  this.render('viewMemberProfile', {
+    data: function () {
+      return Meteor.users.findOne({_id: this.params._id});
+    }
+  });
+}, {
+  name: 'viewMemberProfile'
+});
+
+
 Router.map(function() {
   //Home Page
   this.route('/', function() {
@@ -53,10 +64,14 @@ Router.map(function() {
     path: '/takePicture/:_id',
     data: function() { return Events.findOne({_id: this.params._id}); }
   });
+
+
   this.route('checkPoints', {
     path: '/checkPoints/:_id',
     data: function() { return Meteor.users.findOne({_id: this.params._id}); }
   });
+
+
   this.route('exploreEvents', {path: '/exploreEvents'});
   this.route('listEvents', {
     path: '/listEvents'

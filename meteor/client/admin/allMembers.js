@@ -81,6 +81,6 @@ Template.allMembers.events({
   },
   'click .memberRow': function(e) {
     e.preventDefault();
-    Router.go('checkPoints', {_id: this._id});
+    Router.go('viewMemberProfile', {_id: this.memberId});
   }
 });
