@@ -5,6 +5,76 @@ Router.configure({
   waitOn: function() { return Meteor.subscribe('events'); }
 });
 
+//Route security
+
+var requireMemberLogin = function() {
+  if (! Roles.userIsInRole(Meteor.userId(), ['user'])) {
+    if(Meteor.loggingIn()) {
+      this.render(this.loadingTemplate);
+    } else {
+      this.render('landing');
+    }
+  } else {
+    this.next();
+  }
+};
+
+var requireSuperAdminLogin = function() {
+  if (! Roles.userIsInRole(Meteor.userId(), ['admin'])) {
+    if(Meteor.loggingIn()) {
+      this.render(this.loadingTemplate);
+    } else {
+      this.redirect('landing');
+    }
+  } else {
+    this.next();
+  }
+};
+
+
+//General Security for non-logged in users. May eventually 
+//want a few screens that "guests" can browse
+Router.onBeforeAction(function() {
+  if(Meteor.loggingIn()) {
+    return; //wait
+  } else if (!Meteor.user()) {
+    this.redirect('login');
+  } else {
+    this.next();
+  }
+},
+  {except: ['login', 'createNewUser', 'collectUserDemographics']} 
+);
+
+//Members
+Router.onBeforeAction(function() {
+  if(Meteor.loggingIn()) {
+    return; //wait
+  } else if (Roles.userIsInRole(Meteor.userId(), ['user'])) {
+    this.next();
+  } else {
+    this.redirect('login');
+  }
+},
+  //NOTE: whitelist routes here, i.e. if you add a new route for members
+  {only: ['memberHomePage', 'eventsCalendar', 'checkPoints', 'contactUs','share']} 
+);
+
+//Super Admins
+Router.onBeforeAction(function() {
+  if(Meteor.loggingIn()) {
+    return; //wait
+  } else if (Roles.userIsInRole(Meteor.userId(), ['admin'])) {
+    this.next();
+  } else {
+    this.redirect('login');
+  }
+},
+  //NOTE: whitelist routes here, i.e. if you add a new route for superAdmins
+  {only: ['adminHomePage', 'allMembers', 'viewMemberProfile', 'addCommunityEvents']} 
+);
+
+
 Router.route('/viewMemberProfile/:_id', function () {
   this.render('viewMemberProfile', {
     data: function () {
@@ -122,47 +192,4 @@ Router.map(function() {
   this.route('listMembers', {path: '/listMembers'});
 
 });
-
-//TODO: route level security
-var requireAdminLogin = function() {
-  if (! Roles.userIsInRole(Meteor.userId(), ['admin'])) {
-    if(Meteor.loggingIn()) {
-      this.render(this.loadingTemplate);
-    } else {
-      this.render('accessDenied');
-    }
-  } else {
-    this.next();
-  }
-};
-
-var requireMemberLogin = function() {
-  if (! Meteor.user()) {
-    if(Meteor.loggingIn()) {
-      this.render(this.loadingTemplate);
-    } else {
-      this.render('accessDenied');
-    }
-  } else {
-    this.next();
-  }
-};
-
-//TODO: basically we need this to include the createNewUser & 
-//forgotPassword routes
-/*
-Router.onBeforeAction(function() {
-  if (! Meteor.userId()) {
-    this.render('landing');
-  } else {
-    this.next();
-  }
-});
-*/
-
-/*
-Router.onBeforeAction(requireMemberLogin,{except: ['landing']} );
-Router.onBeforeAction(requireAdminLogin,
- {only: ['adminHomePage', 'addCommunityEvents', 'addRewards', 'reviewPhotos', 'memberProfiles']} );
-*/
 
