@@ -7,31 +7,6 @@ Router.configure({
 
 //Route security
 
-var requireMemberLogin = function() {
-  if (! Roles.userIsInRole(Meteor.userId(), ['user'])) {
-    if(Meteor.loggingIn()) {
-      this.render(this.loadingTemplate);
-    } else {
-      this.render('landing');
-    }
-  } else {
-    this.next();
-  }
-};
-
-var requireSuperAdminLogin = function() {
-  if (! Roles.userIsInRole(Meteor.userId(), ['admin'])) {
-    if(Meteor.loggingIn()) {
-      this.render(this.loadingTemplate);
-    } else {
-      this.redirect('landing');
-    }
-  } else {
-    this.next();
-  }
-};
-
-
 //General Security for non-logged in users. May eventually 
 //want a few screens that "guests" can browse
 Router.onBeforeAction(function() {
@@ -43,7 +18,7 @@ Router.onBeforeAction(function() {
     this.next();
   }
 },
-  {except: ['login', 'createNewUser', 'collectUserDemographics']} 
+  {except: ['login', 'createNewUser', 'collectUserDemographics', 'forgotPassword']} 
 );
 
 //Members
@@ -61,6 +36,7 @@ Router.onBeforeAction(function() {
 );
 
 //Partner Admins
+/* TODO
 Router.onBeforeAction(function() {
   if(Meteor.loggingIn()) {
     return; //wait
@@ -71,7 +47,9 @@ Router.onBeforeAction(function() {
   }
 }
   //NOTE: whitelist routes here, i.e. if you add a new route for members
+  {only: []}
 );
+*/
 
 //Super Admins
 Router.onBeforeAction(function() {
