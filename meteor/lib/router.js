@@ -207,11 +207,11 @@ Router.map(function() {
   //but ideally the below two routes would be combined
   //into one
   this.route('checkIntoEvent', {
-    path: '/checkIntoEvent/:eventId',
+    path: '/checkIntoEvent/',
     template: 'checkIntoEvent',
-    data: function() {
-      return this.params.eventId;
-    }
+    // data: function() {
+    //   return this.params.eventId;
+    // }
   });
   this.route('showMemberRewards', {path: '/rewards'});
   this.route('quickCheckIn', {path: '/quickCheckIn' });
