@@ -1,0 +1,115 @@
+<template name="manageEvents">
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-xs-12 text-center">
+      <button type="button" class="btn btn-lg btn-primary" id="addEvent">
+        Add Event
+      </button>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-xs-6 col-xs-offset-3">
+      <div class="input-group">
+        <input type='text' class="form-control" placeholder='Search Member Name' 
+        id='search-box'/>
+        <span class="input-group-btn">
+          <!-- TODO: MAKE THIS A CANCEL BUTTON -->
+          <button class="btn btn-default btn-large">
+            &gt;  
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+  <br>
+  <form class="horizontal">
+    <div class="row">
+      <div class="col-xs-2 col-xs-offset-4">
+        <div class="form-group>">
+          <label for="institutions">Institution</label>
+          <select class="form-control" id="institutions">
+            {{#each institutions}}
+              <option>{{name}}</option>
+            {{/each}}
+          </select>
+        </div>
+      </div>
+      <div class="col-xs-2">
+        <div class="form-group>">
+          <label for="category">Category</label>
+          <select class="form-control" id="category">
+            {{#each categories}}
+              <option>{{name}}</option>
+            {{/each}}
+          </select>
+        </div>
+      </div>
+      <div class="col-xs-4">
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions" id="past" value="past">
+            Past
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions" 
+            id="current" value="current">
+            Current
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions" 
+            id="new" value="new">
+            New
+        </label>
+      </div>
+    </div>
+  </form>
+  <div class="row">
+    <div class="col-xs-2 col-xs-offset-5">
+      <button class="button-landing" id="downloadCSV">
+        <span class="glyphicon glyphicon-download"></span>
+        Download CSV
+      </button>
+    </div>
+  </div>
+  <hr>
+  <!-- TODO: this should be partial -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name of Event</th>
+        <th>Date</th>
+        <th>Address</th>
+        <th># RSVPs</th> <!-- will switched based on current/past -->
+        <th>Institution</th>
+        <th>Category</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    {{#each events}}
+    <tr>
+      <td class="eventView"><a href="{{pathFor 'singleEvent'}}">
+          {{name}}</a></td>
+      <td>{{formatDate startDate }}-{{justTime endDate }}</td>
+      <td>{{address}}</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>
+        <button type="button" class="btn btn-default btn-sm editEvent"
+          data-toggle="modal" data-target = "#editModal">
+          Edit
+        </button>
+      </td>
+      <td>
+        <button type="button" class="btn btn-default btn-sm deleteEvent">
+          Delete
+        </button>
+      </td>
+    </tr>
+    {{/each}}
+    </tbody>
+  </table>
+</template>
