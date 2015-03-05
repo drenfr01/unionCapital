@@ -60,6 +60,19 @@ Router.onBeforeAction(function() {
   {only: ['memberHomePage', 'eventsCalendar', 'checkPoints', 'contactUs','share']} 
 );
 
+//Partner Admins
+Router.onBeforeAction(function() {
+  if(Meteor.loggingIn()) {
+    return; //wait
+  } else if (Roles.userIsInRole(Meteor.userId(), ['partnerAdmin'])) {
+    this.next();
+  } else {
+    this.redirect('login');
+  }
+}
+  //NOTE: whitelist routes here, i.e. if you add a new route for members
+);
+
 //Super Admins
 Router.onBeforeAction(function() {
   if(Meteor.loggingIn()) {
