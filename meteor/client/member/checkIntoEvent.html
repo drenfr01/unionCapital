@@ -1,54 +1,53 @@
 <template name="checkIntoEvent">
-<div class="row text-center">
-  <div class="col-md-4 col-md-offset-4">
-    <h1><small>Check into Event</small></h1>
-    {{#if geolocationSuccessful}}
-      <br>
-      {{> timeSelection}}
-      <br>
-      <p>Ready to check in!</p>
-      <button type="button" class="button-landing" id="submit">
-        Submit
-      </button>
-      <button type="button" class="button-landing2" id="cancel">
-        Cancel
-      </button>
-      <br>
-      <br>
-    {{else}}
-      <hr>
-      <p>
-        Below is a list of current events. 
-        Select one and then log in via geolocation 
-        or by submitting a photo
-      </p>
-      <br>
-      <select id="eventSelector">
-        <option selected disabled></option>
-        {{#each currentEvents}}
-        <option value="{{_id}}">{{name}}</option>
-        {{/each}}
-      </select>
-      <br>
-      <br>
-      {{#if eventSelected}}
-        <button type="button" class="button-landing" id="geoLocate">
-          Check In by Location
+  <div class="row text-center">
+    <div class="col-xs-12">
+      <h1><small>Check into Event</small></h1>
+      {{#if geolocationSuccessful}}
+        <br>
+        {{> timeSelection}}
+        <br>
+        <p>Ready to check in!</p>
+        <button type="button" class="button-landing" id="submit">
+          Submit
+        </button>
+        <button type="button" class="button-landing2" id="cancel">
+          Cancel
         </button>
         <br>
-        <button type="button" class="button-landing2" id="checkInByPhoto">
-          Check In by Photo
-        </button>
+        <br>
+      {{else}}
+        <hr>
+        <p>
+          Below is a list of current events. 
+          Select one and then log in via geolocation 
+          or by submitting a photo
+        </p>
+        <br>
+        <select id="eventSelector">
+          <option selected disabled></option>
+          {{#each currentEvents}}
+          <option value="{{_id}}">{{name}}</option>
+          {{/each}}
+        </select>
+        <br>
+        <br>
+        {{#if eventSelected}}
+          <button type="button" class="button-landing" id="geoLocate">
+            Check In by Location
+          </button>
+          <br>
+          <button type="button" class="button-landing2" id="checkInByPhoto">
+            Check In by Photo
+          </button>
+        {{/if}}
+        <span class="strike">----OR----</span>
+        <a href="{{pathFor 'submitNewEvent'}}">
+          <input type="button" value="Upload New Event" 
+          class="button-landing button-landing1" style="margin-top:0;"/>
+        </a>
+        <em>Use this option to submit an event not listed above</em>
       {{/if}}
-      <span class="strike">----OR----</span>
-      <a href="{{pathFor 'submitNewEvent'}}">
-        <input type="button" value="Upload New Event" 
-        class="button-landing button-landing1" style="margin-top:0;"/>
-      </a>
-      <em>Use this option to submit an event not listed above</em>
-    {{/if}}
 
+    </div>
   </div>
-</div>
-
 </template>
