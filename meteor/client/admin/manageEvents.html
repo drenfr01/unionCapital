@@ -12,7 +12,7 @@
   <div class="row">
     <div class="col-xs-6 col-xs-offset-3">
       <div class="input-group">
-        <input type='text' class="form-control" placeholder='Search Member Name' 
+        <input type='text' class="form-control" placeholder='Search Events' 
         id='search-box'/>
         <span class="input-group-btn">
           <!-- TODO: MAKE THIS A CANCEL BUTTON -->
@@ -91,28 +91,55 @@
       </tr>
     </thead>
     <tbody>
-    {{#each events}}
-    <tr>
-      <td class="eventView"><a href="{{pathFor 'singleEvent'}}">
-          {{name}}</a></td>
-      <td>{{formatDate eventDate}}</td>
-      <td>{{address}}</td>
-      <td></td>
-      <td>{{institution}}</td>
-      <td>{{category}}</td>
-      <td>
-        <button type="button" class="btn btn-default btn-sm editEvent"
-          data-toggle="modal" data-target = "#editModal">
-          Edit
-        </button>
-      </td>
-      <td>
-        <button type="button" class="btn btn-default btn-sm deleteEvent">
-          Delete
-        </button>
-      </td>
-    </tr>
-    {{/each}}
+    {{#if eventTypeSelected 'searching'}}
+      {{#each arrayify events}}
+        {{#each value}}
+          <tr>
+            <td class="eventView"><a href="{{pathFor 'singleEvent'}}">
+                {{{name}}}</a></td>
+            <td>{{formatDate eventDate}}</td>
+            <td>{{address}}</td>
+            <td></td>
+            <td>{{institution}}</td>
+            <td>{{category}}</td>
+            <td>
+              <button type="button" class="btn btn-default btn-sm editEvent"
+                data-toggle="modal" data-target = "#editModal">
+                Edit
+              </button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-default btn-sm deleteEvent">
+                Delete
+              </button>
+            </td>
+          </tr>
+        {{/each}}
+      {{/each}}
+    {{else}}
+      {{#each events}}
+      <tr>
+        <td class="eventView"><a href="{{pathFor 'singleEvent'}}">
+            {{name}}</a></td>
+        <td>{{formatDate eventDate}}</td>
+        <td>{{address}}</td>
+        <td></td>
+        <td>{{institution}}</td>
+        <td>{{category}}</td>
+        <td>
+          <button type="button" class="btn btn-default btn-sm editEvent"
+            data-toggle="modal" data-target = "#editModal">
+            Edit
+          </button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-default btn-sm deleteEvent">
+            Delete
+          </button>
+        </td>
+      </tr>
+      {{/each}}
+    {{/if}}
     </tbody>
   </table>
   {{/if}}
