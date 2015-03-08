@@ -23,12 +23,14 @@ Template.memberHomePage.helpers({
     return Meteor.users.totalPointsFor(Meteor.userId());
   }
 });
+
 Template.memberHomePage.events({
-  'click #quickCheckIn': function(e) {
+  'click #lnkTotalPoints': function(e) {
     e.preventDefault();
-    Router.go('quickCheckIn');
+    Router.go('checkPoints');
   },
-  'click #eventsButton': function(e) {
+  
+  'click #lnkEvents': function(e) {
     e.preventDefault();
     Router.go("eventsCalendar");
   }
