@@ -13,6 +13,6 @@ Template.adminHomePage.events({
   },
   'click #manageEvents': function(e) {
     e.preventDefault();
-    Router.go('addCommunityEvents');
+    Router.go('manageEvents');
   }
 });

@@ -1,4 +1,16 @@
 EventCategories = new Meteor.Collection('eventCategories');
+
+EventCategories.attachSchema({
+  name: {
+    type: String,
+    label: 'Category Name'
+  },
+  deleteInd: {
+    type: Boolean,
+    label: 'Logical Deletion'
+  }
+});
+
 EventOrgs = new Meteor.Collection('eventOrgs');
 
 Events = new Meteor.Collection('events');
@@ -27,28 +39,20 @@ Events.attachSchema(new SimpleSchema({
   },
   institution: {
     type: String,
-    label: 'Affiliated Institution',
-    optional: true
+    label: 'Affiliated Institution'
   },
   category: {
     type: String,
-    label: 'Category of Event',
-    optional: true
+    label: 'Category of Event'
   },
   deleteInd: {
-    type: Number,
-    label: 'Is event active?',
-    allowedValues: [0,1],
-    defaultValue: 0,
-    optional: true
+    type: Boolean,
+    label: 'Logical Deletion',
+    defaultValue: false
   },
-  startDate: {
+  eventDate: {
     type: Date,
-    label: 'Start of Event'
-  },
-  endDate: {
-    type: Date,
-    label: 'End of Event'
+    label: 'Date event occurs'
   },
   points: {
     type: Number,
@@ -86,17 +90,24 @@ Events.calculateStartEndDates = function(offset) {
   return [startWeekDate, endWeekDate];
 };
 
-Events.currentEvents = function(startWeekDate, endWeekDate) {
-  return Events.find({startDate: {'$lte': endWeekDate}, 
-                     endDate: {'$gte': startWeekDate}
-                     },
-                     {sort: {startDate: 1}});
+Events.pastEvents = function(institution, category) {
+  var currentDate = new Date();
+  return Events.find({eventDate: {'$lt': currentDate}, 
+                     institution: institution,
+                     category: category,
+                     deleteInd: false},
+                     {sort: {eventDate: 1}});
 };
 
-Events.upcomingEvents = function() {
-  return Events.find({startDate: {'$gt': new Date()}, active: 1},
-                     {sort: {startDate: 1}});
+Events.currentEvents = function(institution, category) {
+  var currentDate = new Date();
+  return Events.find({eventDate: {'$gte': currentDate}, 
+                     institution: institution,
+                     category: category,
+                     deleteInd: false},
+                     {sort: {eventDate: 1}});
 };
+
 
 Events.allEvents = function() {
   return Events.find({endDate: {'$gte': new Date()}, active: 1},

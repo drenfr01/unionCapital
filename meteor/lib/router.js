@@ -76,6 +76,13 @@ Router.route('/viewMemberProfile/:_id', function () {
   name: 'viewMemberProfile'
 });
 
+Router.route('/manageEvents', function() {
+  this.render('manageEvents');
+},
+{
+  name: 'manageEvents'
+});
+
 
 Router.map(function() {
   //Home Page
