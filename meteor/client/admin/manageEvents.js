@@ -1,3 +1,9 @@
+Session.set('eventsType', "current");
+
+Template.manageEvents.rendered = function() {
+  $("#current").prop('checked', true);
+};
+
 Template.manageEvents.helpers({
   institutions: function() {
     return PartnerOrgs.find();
@@ -6,6 +12,16 @@ Template.manageEvents.helpers({
     return EventCategories.find();
   },
   events: function() {
-    return Events.find({deleteInd: false}, {sort: {eventDate: 1}});
+    if(Session.equals('eventsType', "past")) {
+      return Events.pastEvents();
+    } else {
+      return Events.currentEvents();
+    }
+  }
+});
+
+Template.manageEvents.events({
+  'change .radio-inline': function(e) {
+    Session.set('eventsType', e.target.value);
   }
 });

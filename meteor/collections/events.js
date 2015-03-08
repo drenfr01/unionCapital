@@ -92,17 +92,18 @@ Events.calculateStartEndDates = function(offset) {
   return [startWeekDate, endWeekDate];
 };
 
-Events.currentEvents = function(startWeekDate, endWeekDate) {
-  return Events.find({startDate: {'$lte': endWeekDate}, 
-                     endDate: {'$gte': startWeekDate}
-                     },
-                     {sort: {startDate: 1}});
+Events.pastEvents = function() {
+  var currentDate = new Date();
+  return Events.find({eventDate: {'$lte': currentDate}, deleteInd: false},
+                     {sort: {eventDate: 1}});
 };
 
-Events.upcomingEvents = function() {
-  return Events.find({startDate: {'$gt': new Date()}, active: 1},
-                     {sort: {startDate: 1}});
+Events.currentEvents = function() {
+  var currentDate = new Date();
+  return Events.find({eventDate: {'$gte': currentDate}, deleteInd: false},
+                     {sort: {eventDate: 1}});
 };
+
 
 Events.allEvents = function() {
   return Events.find({endDate: {'$gte': new Date()}, active: 1},
