@@ -1,7 +1,9 @@
-Session.set('eventsType', "current");
+Session.set('eventTypeSelected', "current");
 
 Template.manageEvents.rendered = function() {
   $("#current").prop('checked', true);
+  Session.set("category", $("#categories").val());
+  Session.set("institution", $("#institutions").val());
 };
 
 Template.manageEvents.helpers({
@@ -12,16 +14,27 @@ Template.manageEvents.helpers({
     return EventCategories.find();
   },
   events: function() {
-    if(Session.equals('eventsType', "past")) {
-      return Events.pastEvents();
+    if(Session.equals('eventTypeSelected', "past")) {
+      return Events.pastEvents(Session.get("institution"),
+                              Session.get("category"));
     } else {
-      return Events.currentEvents();
+      return Events.currentEvents(Session.get("institution"),
+                                 Session.get("category"));
     }
+  },
+  eventTypeSelected: function(eventType) {
+    return Session.equals("eventTypeSelected", eventType);
   }
 });
 
 Template.manageEvents.events({
   'change .radio-inline': function(e) {
-    Session.set('eventsType', e.target.value);
+    Session.set('eventTypeSelected', e.target.value);
+  },
+  'change #institutions': function(e) {
+    Session.set("institution", $("#institutions").val());
+  },
+  'change #categories': function(e) {
+    Session.set("category", $("#categories").val());
   }
 });

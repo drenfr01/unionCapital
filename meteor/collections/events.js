@@ -39,13 +39,11 @@ Events.attachSchema(new SimpleSchema({
   },
   institution: {
     type: String,
-    label: 'Affiliated Institution',
-    optional: true
+    label: 'Affiliated Institution'
   },
   category: {
     type: String,
-    label: 'Category of Event',
-    optional: true
+    label: 'Category of Event'
   },
   deleteInd: {
     type: Boolean,
@@ -92,15 +90,21 @@ Events.calculateStartEndDates = function(offset) {
   return [startWeekDate, endWeekDate];
 };
 
-Events.pastEvents = function() {
+Events.pastEvents = function(institution, category) {
   var currentDate = new Date();
-  return Events.find({eventDate: {'$lte': currentDate}, deleteInd: false},
+  return Events.find({eventDate: {'$lt': currentDate}, 
+                     institution: institution,
+                     category: category,
+                     deleteInd: false},
                      {sort: {eventDate: 1}});
 };
 
-Events.currentEvents = function() {
+Events.currentEvents = function(institution, category) {
   var currentDate = new Date();
-  return Events.find({eventDate: {'$gte': currentDate}, deleteInd: false},
+  return Events.find({eventDate: {'$gte': currentDate}, 
+                     institution: institution,
+                     category: category,
+                     deleteInd: false},
                      {sort: {eventDate: 1}});
 };
 

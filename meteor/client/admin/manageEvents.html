@@ -38,8 +38,8 @@
       </div>
       <div class="col-xs-2">
         <div class="form-group>">
-          <label for="category">Category</label>
-          <select class="form-control" id="category">
+          <label for="categories">Category</label>
+          <select class="form-control" id="categories">
             {{#each categories}}
               <option>{{name}}</option>
             {{/each}}
@@ -74,6 +74,9 @@
   </div>
   <hr>
   <!-- TODO: this should be partial -->
+  {{#if eventTypeSelected 'new'}}
+    <h1>New Event Form</h1>
+  {{else}}
   <table class="table table-striped">
     <thead>
       <tr>
@@ -95,8 +98,8 @@
       <td>{{formatDate eventDate}}</td>
       <td>{{address}}</td>
       <td></td>
-      <td></td>
-      <td></td>
+      <td>{{institution}}</td>
+      <td>{{category}}</td>
       <td>
         <button type="button" class="btn btn-default btn-sm editEvent"
           data-toggle="modal" data-target = "#editModal">
@@ -112,4 +115,5 @@
     {{/each}}
     </tbody>
   </table>
+  {{/if}}
 </template>

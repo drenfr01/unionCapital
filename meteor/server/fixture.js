@@ -5,7 +5,8 @@ Meteor.startup(function () {
     var partnerOrgs = [
       "KIPP Academy",
       "Thrive in Five",
-      "Rosie's Place"
+      "Rosie's Place",
+      "Other"
     ];
 
     _.each(partnerOrgs, function(org) {
@@ -199,6 +200,8 @@ Meteor.startup(function () {
         description: 'A festival of science for everybody',
         active: 1,
         eventDate: addDays(new Date(), 7),
+        institution: "KIPP Academy",
+        category: "Education (Child/Adult)",
         isPointsPerHour: true,
         pointsPerHour: 100,
         deleteInd: false
@@ -212,6 +215,8 @@ Meteor.startup(function () {
         description: 'A festival of cooking for the masses',
         active: 1,
         eventDate: addDays(new Date(), -7),
+        institution: "Thrive in Five",
+        category: "Health (Physical & Mental)",
         isPointsPerHour: false,
         points: 50,
         deleteInd: false
@@ -225,6 +230,8 @@ Meteor.startup(function () {
         description: 'Music festival; all styles - join us soon!',
         active: 1,
         eventDate: new Date(),
+        institution: "Rosie's Place",
+        category: "Education (Child/Adult)",
         isPointsPerHour: true,
         pointsPerHour: 100,
         deleteInd: false
@@ -238,6 +245,8 @@ Meteor.startup(function () {
         description: 'Watch as many films as you can in just 3 days of mandness!',
         active: 1,
         eventDate: addDays(new Date(), 1),
+        institution: "KIPP Academy",
+        category: "Education (Child/Adult)",
         isPointsPerHour: false,
         points: 150,
         deleteInd: false
@@ -252,6 +261,8 @@ Meteor.startup(function () {
         description: 'Union Capital administrator adding points to your account',
         active: 0,
         eventDate: new Date(),
+        institution: "Other",
+        category: "Other",
         isPointsPerHour: true,
         pointsPerHour: 100,
         deleteInd: false
@@ -268,6 +279,8 @@ Meteor.startup(function () {
         description: event.description,
         active: event.active,
         eventDate: event.eventDate,
+        institution: event.institution,
+        category: event.category,
         isPointsPerHour: event.isPointsPerHour,
         points: event.points,
         pointsPerHour: event.pointsPerHour
