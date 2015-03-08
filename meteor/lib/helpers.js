@@ -28,3 +28,9 @@ totalHours = function(hours, minutes) {
   var hoursFraction = minutes / 60;
   return hours + hoursFraction;
 };
+
+addDays = function(date, days) {
+  var result = new Date(date);
+  result.setDate(date.getDate() + days);
+  return result;
+};

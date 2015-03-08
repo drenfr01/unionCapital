@@ -112,10 +112,11 @@ Meteor.startup(function () {
       ['Education (Child/Adult)',
         'Health (Physical & Mental)',
         'Finances/Employment',
-        'Community & Service'
+        'Community & Service',
+        'Other'
     ];
     _.each(eventCategories, function(category) {
-      EventCategories.insert({category: category});
+      EventCategories.insert({name: category, deleteInd: false});
     });
   }
 
@@ -197,10 +198,10 @@ Meteor.startup(function () {
         url: 'http://example.com/CSF',
         description: 'A festival of science for everybody',
         active: 1,
-        startDate: new Date(2014,9,30,16,30),
-        endDate: new Date(2014,9,30,17,30),
+        eventDate: addDays(new Date(), 7),
         isPointsPerHour: true,
-        pointsPerHour: 100
+        pointsPerHour: 100,
+        deleteInd: false
       },
       {
         name: 'Somerville Cooking Festival',
@@ -210,10 +211,10 @@ Meteor.startup(function () {
         url: 'http://example.com/SCF',
         description: 'A festival of cooking for the masses',
         active: 1,
-        startDate: new Date(),
-        endDate: new Date(),
+        eventDate: addDays(new Date(), -7),
         isPointsPerHour: false,
-        points: 50
+        points: 50,
+        deleteInd: false
       },
       {
         name: 'Boston Music Festival',
@@ -223,10 +224,10 @@ Meteor.startup(function () {
         url: 'http://example.com/BMF',
         description: 'Music festival; all styles - join us soon!',
         active: 1,
-        startDate: new Date(2014,10,6,17,30),
-        endDate: new Date(2014,10,6,19,30),
+        eventDate: new Date(),
         isPointsPerHour: true,
-        pointsPerHour: 100
+        pointsPerHour: 100,
+        deleteInd: false
       },
       {
         name: 'Cambridge Film Festival',
@@ -236,10 +237,10 @@ Meteor.startup(function () {
         url: 'http://example.com/CFF',
         description: 'Watch as many films as you can in just 3 days of mandness!',
         active: 1,
-        startDate: new Date(2014,10,15,13,30),
-        endDate: new Date(2014,10,15,17,30),
+        eventDate: addDays(new Date(), 1),
         isPointsPerHour: false,
-        points: 150
+        points: 150,
+        deleteInd: false
       },
       //This is quite hacky, but the below event only exists to allow admins to add
       //transactions linked to this event. Basically we'll adjust the hours / minutes
@@ -250,10 +251,10 @@ Meteor.startup(function () {
         url: 'unioncapitalboston.com',
         description: 'Union Capital administrator adding points to your account',
         active: 0,
-        startDate: new Date(1900,1,1,1,1),
-        endDate: new Date(1900,1,1,1,1),
+        eventDate: new Date(),
         isPointsPerHour: true,
-        pointsPerHour: 100
+        pointsPerHour: 100,
+        deleteInd: false
       }
     ];
 
@@ -266,8 +267,7 @@ Meteor.startup(function () {
         url: event.url,
         description: event.description,
         active: event.active,
-        startDate: event.startDate,
-        endDate: event.endDate,
+        eventDate: event.eventDate,
         isPointsPerHour: event.isPointsPerHour,
         points: event.points,
         pointsPerHour: event.pointsPerHour

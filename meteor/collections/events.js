@@ -1,4 +1,16 @@
 EventCategories = new Meteor.Collection('eventCategories');
+
+EventCategories.attachSchema({
+  name: {
+    type: String,
+    label: 'Category Name'
+  },
+  deleteInd: {
+    type: Boolean,
+    label: 'Logical Deletion'
+  }
+});
+
 EventOrgs = new Meteor.Collection('eventOrgs');
 
 Events = new Meteor.Collection('events');
@@ -36,19 +48,13 @@ Events.attachSchema(new SimpleSchema({
     optional: true
   },
   deleteInd: {
-    type: Number,
-    label: 'Is event active?',
-    allowedValues: [0,1],
-    defaultValue: 0,
-    optional: true
+    type: Boolean,
+    label: 'Logical Deletion',
+    defaultValue: false
   },
-  startDate: {
+  eventDate: {
     type: Date,
-    label: 'Start of Event'
-  },
-  endDate: {
-    type: Date,
-    label: 'End of Event'
+    label: 'Date event occurs'
   },
   points: {
     type: Number,
