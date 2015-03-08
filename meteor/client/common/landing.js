@@ -10,7 +10,7 @@ Template.landing.helpers({
 });
 
 Template.landing.events({
-  'click #signUp': function(e) {
+  'click #lnkSignUp': function(e) {
     e.preventDefault();
     Router.go('createNewUser');
   },

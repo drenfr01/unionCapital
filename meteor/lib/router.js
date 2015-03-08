@@ -128,8 +128,7 @@ Router.map(function() {
 
 
   this.route('checkPoints', {
-    path: '/checkPoints/:_id',
-    data: function() { return Meteor.users.findOne({_id: this.params._id}); }
+    path: '/checkPoints'
   });
 
 

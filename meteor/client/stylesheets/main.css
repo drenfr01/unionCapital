@@ -380,12 +380,6 @@ button > #addMember {
 
 }
 
-form {
-  margin-right: 10%;
-  margin-left: 10%;
-  margin-bottom: 20px;
-}
-
 .list-group {
   width: 80%;
 margin-left: auto;
@@ -441,4 +435,14 @@ margin-right: auto;
 
 .page-panel-md {
   height: 30px;
+}
+
+.signup-panel {
+  background-color: #B4E874;
+  color: white;
+}
+
+.lost-pw-panel {
+  background-color: #74E8DB;
+  color: white;
 }
