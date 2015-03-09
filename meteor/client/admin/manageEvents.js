@@ -28,10 +28,14 @@ Template.manageEvents.rendered = function() {
 
 Template.manageEvents.helpers({
   institutions: function() {
-    return PartnerOrgs.find();
+    var orgs = PartnerOrgs.find().fetch();
+    orgs.push({name: 'All'});
+    return _.sortBy(orgs, "name");
   },
   categories: function() {
-    return EventCategories.find();
+    var eventCategories = EventCategories.find().fetch();
+    eventCategories.push({name: 'All'});
+    return _.sortBy(eventCategories, "name");
   },
   events: function() {
     if(Session.equals('eventTypeSelected', "past")) {
@@ -74,4 +78,8 @@ Template.manageEvents.events({
       $("#current").prop('checked', true);
     }
   }, 200),
+  'click .editEvent': function(e) {
+    e.preventDefault();
+    Router.go('editEvent', {_id: this._id});
+  }
 });
