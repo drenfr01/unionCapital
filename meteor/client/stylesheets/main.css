@@ -443,18 +443,22 @@ margin-right: auto;
   background-color: #B4E874;
   color: white;
   font-size: 150%;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .lost-pw-panel {
   background-color: #74E8DB;
   color: white;
-  font-size: 150%;
+  padding-top: .5em;
+  padding-bottom: .5em;
 }
 
 .facebook-panel {
   background-color: blue;
   color: white;
-  font-size: 150%;
+  padding-top: 7px;
+  padding-bottom: 7px;
 }
 
 .page-panel-flush {
@@ -466,10 +470,6 @@ margin-right: auto;
 
 .page-panel-spacer {
   margin-top: 30px;
-}
-
-.page-panel-link {
-  cursor: pointer;
 }
 
 /* ------------------------------ */
