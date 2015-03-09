@@ -90,21 +90,45 @@ Events.calculateStartEndDates = function(offset) {
   return [startWeekDate, endWeekDate];
 };
 
+//TODO: refactor below two functions into one
 Events.pastEvents = function(institution, category) {
   var currentDate = new Date();
-  return Events.find({eventDate: {'$lt': currentDate}, 
+  var selector = {eventDate: {'$lt': currentDate}, 
                      institution: institution,
                      category: category,
-                     deleteInd: false},
+                     deleteInd: false
+  };
+
+  if(institution === 'All') {
+    delete selector.institution;
+  }
+
+  if(category === 'All') {
+    delete selector.category;
+  }
+  
+  console.log(selector);
+
+  return Events.find(selector,
                      {sort: {eventDate: 1}});
 };
 
 Events.currentEvents = function(institution, category) {
   var currentDate = new Date();
-  return Events.find({eventDate: {'$gte': currentDate}, 
+  var selector = {eventDate: {'$gte': currentDate}, 
                      institution: institution,
                      category: category,
-                     deleteInd: false},
+                     deleteInd: false
+  };
+
+  if(institution === 'All') {
+    delete selector.institution;
+  }
+
+  if(category === 'All') {
+    delete selector.category;
+  }
+  return Events.find(selector,
                      {sort: {eventDate: 1}});
 };
 

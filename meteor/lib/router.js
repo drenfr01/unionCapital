@@ -93,6 +93,17 @@ Router.route('/viewMemberProfile/:_id', function () {
   name: 'viewMemberProfile'
 });
 
+Router.route('/editEvent/:_id', function () {
+  this.render('editEvent', {
+    data: function () {
+      return Events.findOne({_id: this.params._id});
+    }
+  });
+}, {
+  name: 'editEvent'
+});
+
+
 Router.route('/viewPartnerMemberProfile/:_id', function () {
   this.render('viewPartnerMemberProfile', {
     data: function () {
