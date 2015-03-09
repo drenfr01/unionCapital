@@ -22,13 +22,37 @@ nav{
 
 }
 
+hr.grad {
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: -webkit-linear-gradient(left, #ccc, #333, #ccc);
+    background-image:    -moz-linear-gradient(left, #ccc, #333, #ccc);
+    background-image:     -ms-linear-gradient(left, #ccc, #333, #ccc);
+    background-image:      -o-linear-gradient(left, #ccc, #333, #ccc);
+}
+
+hr.panel-divider {
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    margin-top: 5px;
+}
+
+hr.button-divider {
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
 .container-real{
    background-color: white;
    max-width: 1000px;
    margin:  0px auto;
-
-
-
 }
 
 .event-container{
@@ -74,7 +98,10 @@ h3 small {
   height: 500px; 
 }
 
-
+/* Removes rounded edges from bootstrap button */
+.btn {
+  border-radius: 1px;
+}
 
 .btn-file {
   position: relative;
@@ -506,3 +533,14 @@ margin-right: auto;
   line-height: 80%;
 }
 
+/* login buttons */
+.login-left-button {
+  border-style: none;
+}
+
+.login-right-button {
+  border-right-style: none;
+  border-bottom-style: none;
+  border-top-style: none;
+  line-height: 100%;
+}
