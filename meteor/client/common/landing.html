@@ -1,7 +1,6 @@
 <template name="landing">
 <div class="col-xs-12 col-md-6 col-md-offset-3 text-center">
   <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel">
-    <br>
     <form>
       <div class="form-group">
         <label for="userEmail" class="sr-only">User Email</label>
@@ -12,21 +11,37 @@
         <input type="password" class="form-control" id="userPassword" 
         placeholder="Enter Password">
       </div>
-      <button type="submit" class="btn btn-primary btn-block" id="loginSubmit">Login</button>
-      <button type="button" class="btn btn-info btn-block" id="facebook">Login with Facebook</button>
+      <button type="submit" class="btn btn-default btn-block" id="loginSubmit">Login</button>
+      <!-- <button type="button" class="btn btn-info btn-block" id="facebook">Login with Facebook</button> -->
     </form>
-    <br>
   </div>
-  <br>
-  <a href="#">
-    <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel signup-panel" id="lnkSignUp">
-      <h3>SIGN UP!</h3>
+  <div class="row">
+    <div class="col-xs-12">
+      <a href="#">
+        <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel facebook-panel" id="facebook">
+          Login with Facebook
+        </div>
+      </a>
     </div>
-  </a>
-  <a href="#">
-    <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel lost-pw-panel" id="forgotPassword">
-      <h4>Forgot Password?</h4>
+  </div>
+  <div class="page-panel-spacer"></div>
+  <div class="row">
+    <div class="col-xs-12">
+      <a href="#">
+        <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel signup-panel" id="lnkSignUp">
+          SIGN UP!
+        </div>
+      </a>
     </div>
-  </a>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <a href="#">
+        <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel lost-pw-panel" id="forgotPassword">
+          Forgot Password?
+        </div>
+      </a>
+    </div>
+  </div>
 </div>
 </template>

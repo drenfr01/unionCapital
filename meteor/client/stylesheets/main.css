@@ -425,6 +425,7 @@ margin-right: auto;
 .fb-comments, .fb-comments iframe[style], .fb-like-box, .fb-like-box iframe[style] {width:  100% !important;display:block;z-index:2000;position:relative}
 .fb-comments span, .fb-comments iframe span[style], .fb-like-box span, .fb-like-box iframe  span[style] {width: 100% !important;display:block;z-index:2000;position:relative}
 
+/* --------- Handles styling of all page panels --------------- */
 .page-panel {
   background-color: white;
   margin-bottom: 5px;
@@ -437,14 +438,23 @@ margin-right: auto;
   height: 30px;
 }
 
+/* Custom page panel links */
 .signup-panel {
   background-color: #B4E874;
   color: white;
+  font-size: 150%;
 }
 
 .lost-pw-panel {
   background-color: #74E8DB;
   color: white;
+  font-size: 150%;
+}
+
+.facebook-panel {
+  background-color: blue;
+  color: white;
+  font-size: 150%;
 }
 
 .page-panel-flush {
@@ -454,6 +464,17 @@ margin-right: auto;
   padding: 0;
 }
 
+.page-panel-spacer {
+  margin-top: 30px;
+}
+
+.page-panel-link {
+  cursor: pointer;
+}
+
+/* ------------------------------ */
+
+/* Bottom navigation buttons */
 .nav-left-button {
   border-style: none;
 }
@@ -464,3 +485,4 @@ margin-right: auto;
   border-top-style: none;
   line-height: 80%;
 }
+
