@@ -36,7 +36,6 @@ Router.onBeforeAction(function() {
 );
 
 //Partner Admins
-/* TODO
 Router.onBeforeAction(function() {
   if(Meteor.loggingIn()) {
     return; //wait
@@ -45,11 +44,10 @@ Router.onBeforeAction(function() {
   } else {
     this.redirect('login');
   }
-}
+},
   //NOTE: whitelist routes here, i.e. if you add a new route for members
-  {only: []}
+  {only: ['partnerAdminHomePage']}
 );
-*/
 
 //Super Admins
 Router.onBeforeAction(function() {
@@ -83,6 +81,12 @@ Router.route('/manageEvents', function() {
   name: 'manageEvents'
 });
 
+Router.route('/partnerAdminPage', function() {
+  this.render('partnerAdminHomePage');
+}, 
+{
+  name: 'partnerAdminHomePage'
+});
 
 Router.map(function() {
   //Home Page

@@ -50,8 +50,11 @@ Meteor.publish('images', function() {
 });
 
 Meteor.publish('userData', function() {
+  var user = Meteor.users.findOne({_id: this.userId});
   if (Roles.userIsInRole(this.userId, 'admin')) {
     return Meteor.users.find();
+  } else if(Roles.userIsInRole(this.userId, 'partnerAdmin')) {
+    return Meteor.users.find({"profile.partnerOrg": user.profile.partnerOrg});
   } else if(this.userId) {
     return Meteor.users.find({_id: this.userId}, 
                              {fields: {'services.facebook.first_name': 1,

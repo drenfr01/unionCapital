@@ -151,9 +151,32 @@ Meteor.startup(function () {
         profile: {
           firstName: 'Test',
           lastName: 'User',
-          street: '10 Emerson',
+          street1: '10 Emerson',
+          street2: "24H",
           city: 'Boston',
-          state: 'MA'
+          state: 'MA',
+          zip: '02114',
+          partnerOrg: "KIPP Academy",
+          incomeBracket: "25,000-29,999",
+          numberOfKids: "2",
+          race: "African-American or Black"
+        },
+        roles:['user']
+      },
+      {
+        email: "user2@gmail.com", username: "user2", password: "user", 
+        profile: {
+          firstName: 'Test2',
+          lastName: 'User2',
+          street1: '1 Rogers St',
+          street2: "",
+          city: 'Boston',
+          state: 'MA',
+          zip: '02141',
+          partnerOrg: "Thrive in Five",
+          incomeBracket: "0-9,999",
+          numberOfKids: "1",
+          race: "White"
         },
         roles:['user']
       },
@@ -166,7 +189,8 @@ Meteor.startup(function () {
           street: 'Warren Street',
           city: 'Boston',
           state: 'MA',
-          zip: '02119'
+          zip: '02119',
+          partnerOrg: "KIPP Academy"
         },
         roles: ['partnerAdmin']
       }
