@@ -81,5 +81,9 @@ Template.manageEvents.events({
   'click .editEvent': function(e) {
     e.preventDefault();
     Router.go('editEvent', {_id: this._id});
+  },
+  'click #addEvent': function(e) {
+    e.preventDefault();
+    Router.go('addEvents');
   }
 });
