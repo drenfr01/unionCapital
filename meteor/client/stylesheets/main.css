@@ -468,8 +468,16 @@ margin-right: auto;
   padding: 0;
 }
 
+.last-panel {
+  margin-bottom: 20px;
+}
+
 .page-panel-spacer {
   margin-top: 30px;
+}
+
+.page-panel-form {
+  padding-bottom: 0px;
 }
 
 /* ------------------------------ */
