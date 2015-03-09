@@ -12,7 +12,7 @@ var getEventsData = function() {
     transform: function(matchText, regExp) {
       return matchText.replace(regExp, "<span style='color:red'>$&</span>");
     },
-    sort: {startDate: 1}
+    sort: {eventDate: 1}
   });
 };
 
@@ -24,7 +24,7 @@ Template.eventsCalendar.helpers({
   getEvents: function() {
     var events = getEventsData();
     var eventsByDate = _.groupBy(events, function(event) {
-      return moment(event.startDate).format("YYYY MM DD");
+      return moment(event.eventDate).format("MM/DD/YYYY");
     });
     return eventsByDate;
   },

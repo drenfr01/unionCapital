@@ -46,6 +46,8 @@ Template.landing.events({
       } else {
         if(Roles.userIsInRole(Meteor.userId(), 'admin')) {
           Router.go('adminHomePage');
+        } else if (Roles.userIsInRole(Meteor.userId(), 'partnerAdmin')){
+          Router.go('partnerAdminHomePage');
         } else {
           Router.go('memberHomePage');
         }

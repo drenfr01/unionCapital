@@ -1,8 +1,8 @@
-<template name="superAdminNav">
+<template name="partnerAdminNav">
 <div class="nav-layout-padding">
   <nav role="navigation" class="navbar navbar-default navbar-fixed-top">
     <div class="navbar-header">
-      <a href="{{pathFor 'adminHomePage'}}"> 
+      <a href="{{pathFor 'partnerAdminHomePage'}}"> 
         <img class="UCB-nav-logo" border="0" src="images/UCB-Logo-Acronym.jpg" 
         alt="UCB Logo"  height="40">
       </a>
@@ -10,10 +10,7 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="nav navbar-nav">
         <li><a href="{{pathFor 'allMembers'}}" id="navSAMemberProfiles">
-          All Members
-        </a></li>
-        <li><a href="{{pathFor 'reviewPhotos'}}" id="navSAApprovePoints">
-          Partner Organization Members
+          Your Members
         </a></li>
         <li><a href="{{pathFor 'reviewPhotos'}}" id="navSAApprovePoints">
           Approve Points
