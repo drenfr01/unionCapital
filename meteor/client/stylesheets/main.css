@@ -468,6 +468,14 @@ margin-right: auto;
   padding: 0;
 }
 
+.today-panel {
+  font-size: 130%;
+}
+
+.points-panel {
+  font-size: 200%;
+}
+
 .last-panel {
   margin-bottom: 20px;
 }
@@ -478,6 +486,10 @@ margin-right: auto;
 
 .page-panel-form {
   padding-bottom: 0px;
+}
+
+.panel-link {
+  cursor: pointer;
 }
 
 /* ------------------------------ */
