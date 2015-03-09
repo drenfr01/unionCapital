@@ -29,9 +29,14 @@ Template.memberHomePage.events({
     e.preventDefault();
     Router.go('checkPoints');
   },
-  
+
   'click #lnkEvents': function(e) {
     e.preventDefault();
     Router.go("eventsCalendar");
+  },
+
+  'click #lnkCheckIn': function(e) {
+    e.preventDefault();
+    Router.go('checkin');
   }
 });
