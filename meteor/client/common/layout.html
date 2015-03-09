@@ -3,6 +3,10 @@
   {{> superAdminNav}}
 {{/if}}
 
+{{#if isInRole 'partnerAdmin'}}
+  {{> partnerAdminNav}}
+{{/if}}
+
 
 {{#if isInRole 'user'}}
   {{> memberNav}}

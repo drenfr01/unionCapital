@@ -13,6 +13,7 @@ Router.onBeforeAction(function() {
   if(Meteor.loggingIn()) {
     return; //wait
   } else if (!Meteor.user()) {
+    console.log("redirecting guest user")
     this.redirect('login');
   } else {
     this.next();
@@ -28,6 +29,7 @@ Router.onBeforeAction(function() {
   } else if (Roles.userIsInRole(Meteor.userId(), ['user'])) {
     this.next();
   } else {
+    console.log("redirectly member");
     this.redirect('login');
   }
 },
@@ -35,21 +37,36 @@ Router.onBeforeAction(function() {
   {only: ['memberHomePage', 'eventsCalendar', 'checkPoints', 'contactUs','share']} 
 );
 
+//Both Admins
+Router.onBeforeAction(function() {
+  if(Meteor.loggingIn()) {
+    return; //wait
+  } else if (Roles.userIsInRole(Meteor.userId(), ['partnerAdmin']) ||
+           Roles.userIsInRole(Meteor.userId(), ['admin'])) {
+    this.next();
+  } else {
+    console.log("redirecting joint admin");
+    this.redirect('login');
+  }
+},
+  //NOTE: whitelist routes here, i.e. if you add a new route for members
+  {only: ['allMembers', 'viewMemberProfile','manageEvents']}
+);
+
 //Partner Admins
-/* TODO
 Router.onBeforeAction(function() {
   if(Meteor.loggingIn()) {
     return; //wait
   } else if (Roles.userIsInRole(Meteor.userId(), ['partnerAdmin'])) {
     this.next();
   } else {
+    console.log("redirecting partner admin");
     this.redirect('login');
   }
-}
+},
   //NOTE: whitelist routes here, i.e. if you add a new route for members
-  {only: []}
+  {only: ['partnerAdminHomePage','reviewPhotos']}
 );
-*/
 
 //Super Admins
 Router.onBeforeAction(function() {
@@ -58,13 +75,13 @@ Router.onBeforeAction(function() {
   } else if (Roles.userIsInRole(Meteor.userId(), ['admin'])) {
     this.next();
   } else {
+    console.log("redirecting super admin");
     this.redirect('login');
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for superAdmins
-  {only: ['adminHomePage', 'allMembers', 'viewMemberProfile', 'addCommunityEvents']} 
+  {only: ['adminHomePage', 'addCommunityEvents']} 
 );
-
 
 Router.route('/viewMemberProfile/:_id', function () {
   this.render('viewMemberProfile', {
@@ -76,6 +93,17 @@ Router.route('/viewMemberProfile/:_id', function () {
   name: 'viewMemberProfile'
 });
 
+Router.route('/viewPartnerMemberProfile/:_id', function () {
+  this.render('viewPartnerMemberProfile', {
+    data: function () {
+      return Meteor.users.findOne({_id: this.params._id});
+    }
+  });
+}, {
+  name: 'viewPartnerMemberProfile'
+});
+
+
 Router.route('/manageEvents', function() {
   this.render('manageEvents');
 },
@@ -83,7 +111,19 @@ Router.route('/manageEvents', function() {
   name: 'manageEvents'
 });
 
+Router.route('/partnerAdminPage', function() {
+  this.render('partnerAdminHomePage');
+}, 
+{
+  name: 'partnerAdminHomePage'
+});
 
+Router.route('/partnerMembers', function() {
+  this.render('partnerMembers');
+}, 
+{
+  name: 'partnerMembers'
+});
 Router.map(function() {
   //Home Page
   this.route('/', function() {
