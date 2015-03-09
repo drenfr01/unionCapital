@@ -1,24 +1,14 @@
 <template name="memberHomePage">
-  <div class="col-xs-12 col-md-6 col-md-offset-3">
-    <div class="col-xs-12 page-panel">
-      <div class="row text-center">
-        <div class="col-xs-12 page-panel">
-          <div id="lnkTotalPoints">
-            <h3>{{totalPoints}} POINTS</h3>
-          </div>
-        </div>
-      </div>
+  <div class="col-xs-12 col-md-6 col-md-offset-3 text-center">
+    <div class="col-xs-12 page-panel points-panel" id="lnkTotalPoints">
+      {{totalPoints}} POINTS
     </div>
-    <div class="col-xs-12 page-panel">
-      <div class="row text-center">
-        <a href="#">
-          <img src="images/UCBbutton.png" alt="Check Into Event" id="quickCheckIn" height="200" width="200">
-          <br>
-          <em>Check In</em>
-        </a>
-      </div>
+    <div class="col-xs-12 page-panel panel-link">
+      <img src="images/UCBbutton.png" alt="Check Into Event" id="quickCheckIn" height="200" width="200">
+      <br>
+      <em>Check In</em>
     </div>
-    <div class="col-xs-12 page-panel page-panel-md ">
+    <div class="col-xs-12 page-panel today-panel">
       <div class="row text-center">
         <div class="col-xs-12">
           <div id="lnkEvents">
@@ -27,7 +17,7 @@
         </div>
       </div>
     </div>
-    <div class="col-xs-12 page-panel">
+    <div class="col-xs-12 page-panel last-panel">
       <div class="row text-center">
         <div class="col-xs-12">
           <div id="fb-root"></div>
