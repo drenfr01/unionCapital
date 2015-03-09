@@ -93,6 +93,13 @@ Router.route('/viewMemberProfile/:_id', function () {
   name: 'viewMemberProfile'
 });
 
+Router.route('/addEvents', function() {
+  this.render('addEvents');
+},
+{
+  name: 'addEvents'
+});
+
 Router.route('/editEvent/:_id', function () {
   this.render('editEvent', {
     data: function () {

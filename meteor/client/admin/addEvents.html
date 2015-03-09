@@ -1,0 +1,32 @@
+<template name="addEvents">
+  <br>
+  <br>
+  <div class="col-xs-12">
+    {{#autoForm collection="Events" id="insertEventsForm" type="insert"}}
+    <fieldset>
+      <legend>Add Event</legend>
+      {{> afQuickField name="name"}}
+      {{> afQuickField name="address" id='eventAddress'}}
+      {{> afQuickField name="url"}}
+      {{> afQuickField name="description"}}
+      {{> afQuickField name="institution" options=institutions}}
+      {{> afQuickField name="category" options=categories}}
+      {{> afQuickField name="eventDate" type="datetime-local" offset="-0400"}}
+      {{> afQuickField name="isPointsPerHour" id="pointsCheckbox" value="checked"}}
+      {{#if displayPointsPerHour}}
+      {{> afQuickField name="pointsPerHour" value=100}}
+      {{else}}
+      {{> afQuickField name="points"}}
+      {{/if}}
+    </fieldset>
+    <button type="button" class="btn btn-default" id="geocodeButton">
+      Geocode
+    </button>
+    {{#if geocodeResultsReturned}}
+      <button type="submit" class="btn btn-default" id="submit">
+        Submit
+      </button>
+    {{/if}}
+    {{/autoForm}}
+  </div>
+</template>
