@@ -9,7 +9,8 @@ Template.partnerAdminHomePage.helpers({
 Template.partnerAdminHomePage.events({
   'click #partnerMembers': function(e) {
     e.preventDefault();
-    Router.go('partnerMembers');
+    //member search handles security for this
+    Router.go('allMembers');
   },
   'click #memberProfiles': function(e) {
     e.preventDefault();

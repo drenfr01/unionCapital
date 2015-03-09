@@ -37,6 +37,22 @@ Router.onBeforeAction(function() {
   {only: ['memberHomePage', 'eventsCalendar', 'checkPoints', 'contactUs','share']} 
 );
 
+//Both Admins
+Router.onBeforeAction(function() {
+  if(Meteor.loggingIn()) {
+    return; //wait
+  } else if (Roles.userIsInRole(Meteor.userId(), ['partnerAdmin']) ||
+           Roles.userIsInRole(Meteor.userId(), ['admin'])) {
+    this.next();
+  } else {
+    console.log("redirecting joint admin");
+    this.redirect('login');
+  }
+},
+  //NOTE: whitelist routes here, i.e. if you add a new route for members
+  {only: ['allMembers', 'viewMemberProfile','manageEvents']}
+);
+
 //Partner Admins
 Router.onBeforeAction(function() {
   if(Meteor.loggingIn()) {
@@ -44,12 +60,12 @@ Router.onBeforeAction(function() {
   } else if (Roles.userIsInRole(Meteor.userId(), ['partnerAdmin'])) {
     this.next();
   } else {
-    console.log("redirecting parnter admin");
+    console.log("redirecting partner admin");
     this.redirect('login');
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for members
-  {only: ['partnerAdminHomePage', 'partnerMembers','viewPartnerMemberProfile','reviewPhotos']}
+  {only: ['partnerAdminHomePage','reviewPhotos']}
 );
 
 //Super Admins
@@ -64,7 +80,7 @@ Router.onBeforeAction(function() {
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for superAdmins
-  {only: ['adminHomePage', 'allMembers', 'viewMemberProfile', 'addCommunityEvents']} 
+  {only: ['adminHomePage', 'addCommunityEvents']} 
 );
 
 Router.route('/viewMemberProfile/:_id', function () {
