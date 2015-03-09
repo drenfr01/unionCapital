@@ -175,8 +175,7 @@ Router.map(function() {
 
 
   this.route('checkPoints', {
-    path: '/checkPoints/:_id',
-    data: function() { return Meteor.users.findOne({_id: this.params._id}); }
+    path: '/checkPoints'
   });
 
 
@@ -206,12 +205,12 @@ Router.map(function() {
   //TODO: I don't know how to do polymorphic routes yet,
   //but ideally the below two routes would be combined
   //into one
-  this.route('checkIntoEvent', {
-    path: '/checkIntoEvent/:eventId',
+  this.route('checkin', {
+    path: '/checkin',
     template: 'checkIntoEvent',
-    data: function() {
-      return this.params.eventId;
-    }
+    // data: function() {
+    //   return this.params.eventId;
+    // }
   });
   this.route('showMemberRewards', {path: '/rewards'});
   this.route('quickCheckIn', {path: '/quickCheckIn' });

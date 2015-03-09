@@ -20,7 +20,7 @@ Template.collectUserDemographics.events({
   'click #back': function(e) {
     Router.go('createNewUser');
   },
-  'click #createNewUser': function(e) {
+  'click #submit': function(e) {
     e.preventDefault();
 
     var sessionProfile = Session.get("profile");

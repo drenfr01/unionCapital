@@ -11,9 +11,8 @@
 html { height: 100%; }
 body { height: 100%;
     margin: 0 ; 
-    padding-top: 60px;
+    padding-top: 80px;
     background-color: #e3e3e3;
-    background-image:url('images/background-image2.jpg');
      }
 
 nav{
@@ -23,13 +22,37 @@ nav{
 
 }
 
+hr.grad {
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: -webkit-linear-gradient(left, #ccc, #333, #ccc);
+    background-image:    -moz-linear-gradient(left, #ccc, #333, #ccc);
+    background-image:     -ms-linear-gradient(left, #ccc, #333, #ccc);
+    background-image:      -o-linear-gradient(left, #ccc, #333, #ccc);
+}
+
+hr.panel-divider {
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    margin-top: 5px;
+}
+
+hr.button-divider {
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
 .container-real{
    background-color: white;
    max-width: 1000px;
    margin:  0px auto;
-
-
-
 }
 
 .event-container{
@@ -75,7 +98,10 @@ h3 small {
   height: 500px; 
 }
 
-
+/* Removes rounded edges from bootstrap button */
+.btn {
+  border-radius: 1px;
+}
 
 .btn-file {
   position: relative;
@@ -381,12 +407,6 @@ button > #addMember {
 
 }
 
-form {
-  margin-right: 10%;
-  margin-left: 10%;
-  margin-bottom: 20px;
-}
-
 .list-group {
   width: 80%;
 margin-left: auto;
@@ -432,7 +452,95 @@ margin-right: auto;
 .fb-comments, .fb-comments iframe[style], .fb-like-box, .fb-like-box iframe[style] {width:  100% !important;display:block;z-index:2000;position:relative}
 .fb-comments span, .fb-comments iframe span[style], .fb-like-box span, .fb-like-box iframe  span[style] {width: 100% !important;display:block;z-index:2000;position:relative}
 
-.page-section {
-  margin-top: 2em;
-  margin-bottom: 2em;
+/* --------- Handles styling of all page panels --------------- */
+.page-panel {
+  background-color: white;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.page-panel-md {
+  height: 30px;
+}
+
+/* Custom page panel links */
+.signup-panel {
+  background-color: #B4E874;
+  color: white;
+  font-size: 150%;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.lost-pw-panel {
+  background-color: #74E8DB;
+  color: white;
+  padding-top: .5em;
+  padding-bottom: .5em;
+}
+
+.facebook-panel {
+  background-color: blue;
+  color: white;
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
+.page-panel-flush {
+  background-color: white;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding: 0;
+}
+
+.today-panel {
+  font-size: 130%;
+}
+
+.points-panel {
+  font-size: 200%;
+}
+
+.last-panel {
+  margin-bottom: 20px;
+}
+
+.page-panel-spacer {
+  margin-top: 30px;
+}
+
+.page-panel-form {
+  padding-bottom: 0px;
+}
+
+.panel-link {
+  cursor: pointer;
+}
+
+/* ------------------------------ */
+
+/* Bottom navigation buttons */
+.nav-left-button {
+  border-style: none;
+}
+
+.nav-right-button {
+  border-right-style: none;
+  border-bottom-style: none;
+  border-top-style: none;
+  line-height: 80%;
+}
+
+/* login buttons */
+.login-left-button {
+  border-style: none;
+}
+
+.login-right-button {
+  border-right-style: none;
+  border-bottom-style: none;
+  border-top-style: none;
+  line-height: 100%;
 }
