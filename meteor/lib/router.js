@@ -13,6 +13,7 @@ Router.onBeforeAction(function() {
   if(Meteor.loggingIn()) {
     return; //wait
   } else if (!Meteor.user()) {
+    console.log("redirecting guest user")
     this.redirect('login');
   } else {
     this.next();
@@ -28,6 +29,7 @@ Router.onBeforeAction(function() {
   } else if (Roles.userIsInRole(Meteor.userId(), ['user'])) {
     this.next();
   } else {
+    console.log("redirectly member");
     this.redirect('login');
   }
 },
@@ -42,11 +44,12 @@ Router.onBeforeAction(function() {
   } else if (Roles.userIsInRole(Meteor.userId(), ['partnerAdmin'])) {
     this.next();
   } else {
+    console.log("redirecting parnter admin");
     this.redirect('login');
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for members
-  {only: ['partnerAdminHomePage']}
+  {only: ['partnerAdminHomePage', 'partnerMembers','viewPartnerMemberProfile','reviewPhotos']}
 );
 
 //Super Admins
@@ -56,13 +59,13 @@ Router.onBeforeAction(function() {
   } else if (Roles.userIsInRole(Meteor.userId(), ['admin'])) {
     this.next();
   } else {
+    console.log("redirecting super admin");
     this.redirect('login');
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for superAdmins
   {only: ['adminHomePage', 'allMembers', 'viewMemberProfile', 'addCommunityEvents']} 
 );
-
 
 Router.route('/viewMemberProfile/:_id', function () {
   this.render('viewMemberProfile', {
@@ -73,6 +76,17 @@ Router.route('/viewMemberProfile/:_id', function () {
 }, {
   name: 'viewMemberProfile'
 });
+
+Router.route('/viewPartnerMemberProfile/:_id', function () {
+  this.render('viewPartnerMemberProfile', {
+    data: function () {
+      return Meteor.users.findOne({_id: this.params._id});
+    }
+  });
+}, {
+  name: 'viewPartnerMemberProfile'
+});
+
 
 Router.route('/manageEvents', function() {
   this.render('manageEvents');
@@ -88,6 +102,12 @@ Router.route('/partnerAdminPage', function() {
   name: 'partnerAdminHomePage'
 });
 
+Router.route('/partnerMembers', function() {
+  this.render('partnerMembers');
+}, 
+{
+  name: 'partnerMembers'
+});
 Router.map(function() {
   //Home Page
   this.route('/', function() {

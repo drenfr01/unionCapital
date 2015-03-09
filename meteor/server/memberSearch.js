@@ -8,16 +8,45 @@ SearchSource.defineSource('memberSearch', function(searchText, options) {
       limit: 20
     };
     var users = [];
+    var currentUser = Meteor.user();
+    var selector;
 
+
+    //TODO: the code below isn't very DRY, I think there's
+    //a simpler way and this should be refactored
     if(searchText && searchText.length > 0) {
       var regExp = buildRegExp(searchText);
-      var selector = {$or: [
-        {"profile.firstName": regExp},
-        {"profile.lastName": regExp}
-      ]};
+      //restrict users based on role
+      if (Roles.userIsInRole(this.userId, 'admin')) {
+        selector = {$or: [
+          {"profile.firstName": regExp},
+          {"profile.lastName": regExp}
+        ]};
+      } else if(Roles.userIsInRole(this.userId, 'partnerAdmin')) {
+        selector = {
+          "profile.partnerOrg": currentUser.profile.partnerOrg,
+          $or: [
+          {"profile.firstName": regExp},
+          {"profile.lastName": regExp}
+        ]};
+      }
+      else {
+        //should never reach here, if you aren't a superAdmin or partnerAdmin
+        //you shouldn't have access to this search
+        return;
+      }
       users = Meteor.users.find(selector, options).fetch();
     } else {
-      users = Meteor.users.find({}, options).fetch();
+      if (Roles.userIsInRole(this.userId, 'admin')) {
+        selector = {};
+      } else if(Roles.userIsInRole(this.userId, 'partnerAdmin')) {
+        selector = {"profile.partnerOrg": currentUser.profile.partnerOrg};
+      }
+      else {
+        //should never reach here, if you aren't a superAdmin or partnerAdmin
+        //you shouldn't have access to this search
+      }
+      users = Meteor.users.find(selector, options).fetch();
     }
     
       //TODO: THE BELOW CODE SNIPPET IS AN OFFENSE TO GOD AND MEN
