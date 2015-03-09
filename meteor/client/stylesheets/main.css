@@ -429,8 +429,8 @@ margin-right: auto;
   background-color: white;
   margin-bottom: 5px;
   margin-top: 5px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .page-panel-md {
@@ -445,4 +445,22 @@ margin-right: auto;
 .lost-pw-panel {
   background-color: #74E8DB;
   color: white;
+}
+
+.page-panel-flush {
+  background-color: white;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding: 0;
+}
+
+.nav-left-button {
+  border-style: none;
+}
+
+.nav-right-button {
+  border-right-style: none;
+  border-bottom-style: none;
+  border-top-style: none;
+  line-height: 80%;
 }
