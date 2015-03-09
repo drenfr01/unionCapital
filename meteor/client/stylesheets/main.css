@@ -92,7 +92,7 @@ h3 small {
 
 /*map ? */
 
-#map-canvas { 
+.com-map { 
   width: 100%;
   /* have to either give pixel value or set all container columns to 100% */
   height: 500px; 
