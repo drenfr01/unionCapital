@@ -1,6 +1,8 @@
 <template name="landing">
   <div class="col-xs-12 col-md-6 col-md-offset-3 text-center">
     <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel">
+      <div>Existing Users</div>
+      <hr class="panel-divider">
       <form>
         <div class="form-group">
           <label for="userEmail" class="sr-only">User Email</label>
@@ -11,11 +13,25 @@
           <input type="password" class="form-control" id="userPassword" 
           placeholder="Enter Password">
         </div>
-        <button type="submit" class="btn btn-default btn-block" id="loginSubmit">Login</button>
-        <!-- <button type="button" class="btn btn-info btn-block" id="facebook">Login with Facebook</button> -->
+        <div class="btn-group btn-group-justified" role="group">
+          <div class="btn-group">
+            <button type="submit" class="btn btn-default btn-lg login-left-button" id="facebook">
+              <img src="images/FB-f-Logo__blue_29.png"> 
+            </button>
+          </div>
+          <div class="btn-group">
+            <button type="submit" class="btn btn-default btn-lg login-right-button" id="loginSubmit">
+              Log In <span class="glyphicon glyphicon-chevron-right"></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- <button type="submit" class="btn btn-default btn-block panel-btn-attach" id="loginSubmit">Login</button>
+        <hr class="button-divider">
+        <button type="button" class="btn btn-default btn-block panel-btn-attach" id="facebook">Login with Facebook</button> -->
       </form> 
     </div>
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-xs-12">
         <a href="#">
           <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel facebook-panel" id="facebook">
@@ -23,7 +39,7 @@
           </div>
         </a>
       </div>
-    </div>
+    </div> -->
     <div class="row">
       <div class="col-xs-12">
         <a href="#">
