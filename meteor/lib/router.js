@@ -205,8 +205,8 @@ Router.map(function() {
   //TODO: I don't know how to do polymorphic routes yet,
   //but ideally the below two routes would be combined
   //into one
-  this.route('checkIntoEvent', {
-    path: '/checkIntoEvent/',
+  this.route('checkin', {
+    path: '/checkin',
     template: 'checkIntoEvent',
     // data: function() {
     //   return this.params.eventId;
