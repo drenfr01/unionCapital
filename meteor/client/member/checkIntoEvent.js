@@ -10,9 +10,9 @@ CheckinEventsSearch = new SearchSource('eventsSearch', fields, options);
 
 var getEventsData = function() {
   return CheckinEventsSearch.getData({
-    transform: function(matchText, regExp) {
-      return matchText.replace(regExp, "<span style='color:red'>$&</span>");
-    },
+    // transform: function(matchText, regExp) {
+    //   return matchText.replace(regExp, "<span style='color:red'>$&</span>");
+    // },
     sort: {eventDate: 1}
   });
 };
@@ -23,27 +23,33 @@ Template.checkIntoEvent.created = function () {
 };
 
 Template.checkIntoEvent.rendered = function() {
-  Session.set('longitude', null);
-  Session.set('latitude', null);
+  
+  CheckinEventsSearch.search('');
+
+  // Session.set('longitude', null);
+  // Session.set('latitude', null);
 
   //using pathFor, you can only pass in query strings (i.e. not a true null)
   //this means that we have to convert the null to a real null here
-  if(this.data === "null") {
-    this.data = null;
-  }
+  // if(this.data === "null") {
+  //   this.data = null;
+  // }
 
-  if(this.data) {
-    $('#eventSelector').val(this.data);
-    Session.set('eventId', this.data);
-  } else {
-    Session.set('eventId', null);
-  }
+  // if(this.data) {
+  //   $('#eventSelector').val(this.data);
+  //   Session.set('eventId', this.data);
+  // } else {
+  //   Session.set('eventId', null);
+  // }
 };
 
 Template.checkIntoEvent.helpers({
   'getEvents': function() {
+    console.log(getEventsData());
     return getEventsData();
   },
+
+  
 
   // 'geolocationSuccessful': function() {
   //   return Session.get('longitude') && Session.get('eventId');
@@ -59,6 +65,14 @@ Template.checkIntoEvent.helpers({
 });
 
 Template.checkIntoEvent.events({
+
+  // Automatically populates the search list on keyup
+  'keyup #eventSearchBox': _.throttle(function(e) {
+    CheckinEventsSearch.search($('#eventSearchBox').val().trim());
+  }, 200),
+
+
+  //--------------
   'change #eventSelector': function(e) {
     e.preventDefault();
     Session.set('eventId', $('#eventSelector option:selected').val());
