@@ -1,7 +1,6 @@
 <template name="eventsCalendar">
-  <br>
-  <br>
-  <div class="col-xs-12 text-center">
+<div class="col-xs-12 col-md-6 col-md-offset-3 text-center">
+  <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel">
     <div class="input-group">
       <input type='text' class="form-control" placeholder='Search Events Name' 
       id='search-box'/>
@@ -12,12 +11,16 @@
         </button>
       </span>
     </div>
-  <br>
-  {{#each arrayify getEvents}}
-    <h1>{{name}}</h1>
+  </div>
+</div>
+<br>
+{{#each arrayify getEvents}}
+<div class="col-xs-12 col-md-6 col-md-offset-3">
+  <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel">
+    <h1 class="text-center">{{name}}</h1>
     <br>
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-    {{#each value}}
+      {{#each value}}
       <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="heading{{_id}}">
           <h4 class="panel-title">
@@ -36,23 +39,21 @@
             <br>
             Date: {{startDate}}
             <br>
-            <div class="col-xs-2 col-xs-offset-5">
-              <div class="form-group>">
-                <label for="numberOfPeople">Number of People</label>
-                <select class="form-control numberOfPeople">
-                  {{#each people}}
-                    <option>{{number}}</option>
-                  {{/each}}
-                </select>
-              </div>
-                {{{rsvpButton}}}
+            <div class="form-group>">
+              <label for="numberOfPeople">Number of People</label>
+              <select class="form-control numberOfPeople">
+                {{#each people}}
+                <option>{{number}}</option>
+                {{/each}}
+              </select>
             </div>
+            {{{rsvpButton}}}
           </div>
         </div>
       </div>
-    {{/each}}
+      {{/each}}
     </div>
-    <hr>
-  {{/each}}
   </div>
+</div>
+{{/each}}
 </template>
