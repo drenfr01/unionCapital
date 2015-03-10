@@ -544,3 +544,8 @@ margin-right: auto;
   border-top-style: none;
   line-height: 100%;
 }
+
+.checkin-map {
+  width: 100%;
+  height: 120px;
+}
