@@ -1,22 +1,26 @@
 <template name="memberProfile">
-<h1>Member Profile</h1>
-<div class="col-xs-12">
-  {{#with memberProfile}}
-    Name: {{firstName}} {{lastName}}
-    <br>
-    Address: {{street1}} {{street2}}
-    <br>
-    City: {{city}}
-    <br>
-    State: {{state}}
-    <br>
-    Zip Code: {{zip}}
-    <br>
-    Partner Organization: {{partnerOrg}}
-    <br>
-    Income Bracket: {{incomeBracket}}
-    <br>
-    Number of Kids: {{numberOfKids}}
-  {{/with}}
+<div class="col-xs-12 col-md-6 col-md-offset-3 text-center">
+  <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel">
+    <h1>Member Profile</h1>
+  </div>
+</div>
+<div class="col-xs-12 col-md-6 col-md-offset-3 page-panel">
+{{#with memberProfile}}
+  Name: {{firstName}} {{lastName}}
+  <br>
+  Address: {{street1}} {{street2}}
+  <br>
+  City: {{city}}
+  <br>
+  State: {{state}}
+  <br>
+  Zip Code: {{zip}}
+  <br>
+  Partner Organization: {{partnerOrg}}
+  <br>
+  Income Bracket: {{incomeBracket}}
+  <br>
+  Number of Kids: {{numberOfKids}}
+{{/with}}
 </div>
 </template>
