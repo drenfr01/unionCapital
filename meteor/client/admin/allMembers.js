@@ -18,9 +18,9 @@ var highlightSortedColumn = function(target) {
 var getMembersData = function(sortOn, sortOrder) {
   var membersArray = MemberNameSearch.getData({
     transform: function(matchText, regExp) {
-      return matchText.replace(regExp, "<b>$&</b>");
+      return matchText.replace(regExp, "<span style='color:red'>$&</span>");
     },
-    sort: {sortOn: sortOrder}
+    sort: {"profile.firstName": 1}
   });
   //HACK: couldn't figure out how to get Search-Source to
   //sort client side reatively in above getData.sort object
