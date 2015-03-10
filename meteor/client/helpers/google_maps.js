@@ -17,52 +17,52 @@ gmaps = {
 
   // add a marker given our formatted marker data object
   addMarker: function(marker) {
-      var gLatLng = new google.maps.LatLng(marker.lat, marker.lng);
-      var gMarker = new google.maps.Marker({
-          position: gLatLng,
-          map: gmaps.map,
-          title: marker.title,
-          animation: google.maps.Animation.DROP,
-          icon: marker.icon
-      });
+    var gLatLng = new google.maps.LatLng(marker.lat, marker.lng);
+    var gMarker = new google.maps.Marker({
+      position: gLatLng,
+      map: gmaps.map,
+      title: marker.title,
+      animation: google.maps.Animation.DROP,
+      icon: marker.icon
+    });
 
-      gmaps.latLngs.push(gLatLng);
-      gmaps.markers.push(gMarker);
-      gmaps.markerData.push(marker);
-      return gMarker;
-   },
+    gmaps.latLngs.push(gLatLng);
+    gmaps.markers.push(gMarker);
+    gmaps.markerData.push(marker);
+    return gMarker;
+  },
 
-   // add a self marker
+   // Add or reset the position of the self marker
   addSelfMarker: function(latLng) {
 
-      // Create the marker if it does not exist
-      if (!gmaps.selfMarker)
-        gmaps.selfMarker = new google.maps.Marker({
-            clickable: false,
-            icon: new google.maps.MarkerImage('//maps.gstatic.com/mapfiles/mobile/mobileimgs2.png',
-                                                            new google.maps.Size(22,22),
-                                                            new google.maps.Point(0,18),
-                                                            new google.maps.Point(11,11)),
-            shadow: null,
-            zIndex: 999,
-            map: gmaps.map
-        });
+    // Create the marker if it does not exist
+    if (!gmaps.selfMarker)
+      gmaps.selfMarker = new google.maps.Marker({
+        clickable: false,
+        icon: new google.maps.MarkerImage('//maps.gstatic.com/mapfiles/mobile/mobileimgs2.png',
+                                                        new google.maps.Size(22,22),
+                                                        new google.maps.Point(0,18),
+                                                        new google.maps.Point(11,11)),
+        shadow: null,
+        zIndex: 999,
+        map: gmaps.map
+      });
 
-      // If latLng was passed as an argument, use that
-      // the option to pass an argument was done to avoid two consecutive navigation calls
-      // in the intialize() method
-      if(latLng) {
-        gmaps.selfMarker.setPosition(latLng);
-      } else {
+    // If latLng was passed as an argument, use that
+    // the option to pass an argument was done to avoid two consecutive navigation calls
+    // in the intialize() method
+    if(latLng) {
+      gmaps.selfMarker.setPosition(latLng);
+    } else {
 
-        if (navigator.geolocation) navigator.geolocation.getCurrentPosition(function(pos) {
-            var me = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-            gmaps.selfMarker.setPosition(me);
-        }, function(error) {
-            console.log("Unable to geolocate");
-        });
-      }
-   },
+      if (navigator.geolocation) navigator.geolocation.getCurrentPosition(function(pos) {
+          var me = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+          gmaps.selfMarker.setPosition(me);
+      }, function(error) {
+          console.log("Unable to geolocate");
+      });
+    }
+  },
 
   // calculate and move the bound box based on our markers
   calcBounds: function() {
@@ -75,20 +75,20 @@ gmaps = {
 
   // calculate and move the bound box based on our markers
   calcBounds: function() {
-      var bounds = new google.maps.LatLngBounds();
-      for (var i = 0, latLngLength = gmaps.latLngs.length; i < latLngLength; i++) {
-          bounds.extend(gmaps.latLngs[i]);
-      }
-      this.map.fitBounds(bounds);
+    var bounds = new google.maps.LatLngBounds();
+    for (var i = 0, latLngLength = gmaps.latLngs.length; i < latLngLength; i++) {
+      bounds.extend(gmaps.latLngs[i]);
+    }
+    this.map.fitBounds(bounds);
   },
 
   // check if a marker already exists
   markerExists: function(key, val) {
-      _.each(gmaps.markers, function(storedMarker) {
-          if (storedMarker[key] == val)
-              return true;
-      });
-      return false;
+    _.each(gmaps.markers, function(storedMarker) {
+        if (storedMarker[key] == val)
+            return true;
+    });
+    return false;
   },
 
   // intialize the map

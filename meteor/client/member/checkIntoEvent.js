@@ -1,3 +1,27 @@
+
+// Define and create the reactive search
+var options = {
+  keepHistory: 1000 * 60 * 5,
+  localSearch: false
+};
+var fields = ['name', 'description'];
+
+CheckinEventsSearch = new SearchSource('eventsSearch', fields, options);
+
+var getEventsData = function() {
+  return CheckinEventsSearch.getData({
+    transform: function(matchText, regExp) {
+      return matchText.replace(regExp, "<span style='color:red'>$&</span>");
+    },
+    sort: {eventDate: 1}
+  });
+};
+// -----------------------------------------------------------------
+
+Template.checkIntoEvent.created = function () {
+  gmaps.initialize();
+};
+
 Template.checkIntoEvent.rendered = function() {
   Session.set('longitude', null);
   Session.set('latitude', null);
@@ -17,17 +41,21 @@ Template.checkIntoEvent.rendered = function() {
 };
 
 Template.checkIntoEvent.helpers({
-  'geolocationSuccessful': function() {
-    return Session.get('longitude') && Session.get('eventId');
+  'getEvents': function() {
+    return getEventsData();
   },
-  //TODO: make sure this is actually only active events
-  'currentEvents': function() {
-    return Events.currentEvents();
-  },
-  //TODO: have a graceful "please wait" screen while geolocating
-  'eventSelected': function() {
-    return Session.get('eventId');
-  }
+
+  // 'geolocationSuccessful': function() {
+  //   return Session.get('longitude') && Session.get('eventId');
+  // },
+  // //TODO: make sure this is actually only active events
+  // 'currentEvents': function() {
+  //   return Events.currentEvents();
+  // },
+  // //TODO: have a graceful "please wait" screen while geolocating
+  // 'eventSelected': function() {
+  //   return Session.get('eventId');
+  // }
 });
 
 Template.checkIntoEvent.events({
