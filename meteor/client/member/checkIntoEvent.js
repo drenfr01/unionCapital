@@ -24,6 +24,7 @@ Template.checkIntoEvent.created = function () {
 
 Template.checkIntoEvent.rendered = function() {
   
+  // Populate the list on load
   CheckinEventsSearch.search('');
 
   // Session.set('longitude', null);
@@ -44,10 +45,14 @@ Template.checkIntoEvent.rendered = function() {
 };
 
 Template.checkIntoEvent.helpers({
+  
   'getEvents': function() {
-    console.log(getEventsData());
     return getEventsData();
   },
+
+  'getTime': function() {
+    
+  }
 
   
 
@@ -76,29 +81,6 @@ Template.checkIntoEvent.events({
   'change #eventSelector': function(e) {
     e.preventDefault();
     Session.set('eventId', $('#eventSelector option:selected').val());
-  },
-  'click #geoLocate': function(e) {
-    e.preventDefault();
-    
-    var geoOptions = {
-      enableHighAccuracy: true,
-      timeout: 5000,
-      maximumAge: 0
-    };
-
-    if(navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-
-
-        Session.set('longitude', position.coords.longitude);
-        Session.set('latitude', position.coords.latitude);
-          
-      }, function(error) {
-        addErrorMessage(error.message);
-      }, geoOptions);
-    } else {
-      addErrorMessage('Geolocation not supported');
-    }
   },
   'click #checkInByPhoto': function(e) {
     e.preventDefault();
