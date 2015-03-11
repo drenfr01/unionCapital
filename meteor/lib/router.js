@@ -209,7 +209,7 @@ Router.map(function() {
     path: '/checkin',
     template: 'checkIntoEvent',
     // data: function() {
-    //   return this.params.eventId;
+    //   return this.params.hash;
     // }
   });
   this.route('showMemberRewards', {path: '/rewards'});

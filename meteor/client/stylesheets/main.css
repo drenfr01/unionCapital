@@ -552,7 +552,7 @@ margin-right: auto;
   border-width: 1px;
 }
 
-.flush-input input, span {
+.flush-input input {
   border-radius: 0px;
 }
 
@@ -560,3 +560,16 @@ margin-right: auto;
   background-color: white; /* #255f8a; */
   border-radius: 0px;
 }
+
+/* Button on the end of a selected accordion */
+.accordion-button {
+  margin-top: 10px;
+}
+
+/*
+.collapse.in {
+  background-color: #bddc6f;
+  color: white;
+}
+*/
+
