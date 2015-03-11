@@ -46,7 +46,7 @@ gmaps = {
     } else {
 
       // This error fires when navigator does not exist
-      console.log('Could not geolocate. No navigator.')
+      console.log('Could not geolocate. No navigator.');
     }
   },
 
@@ -84,10 +84,11 @@ gmaps = {
       });
 
     // If latLng was passed as an argument, use that
-    // the option to pass an argument was done to avoid two consecutive navigation calls
-    // in the intialize() method
     if(latLng) {
-      gmaps.selfMarker.setPosition(latLng);
+
+      var googleLoc = new google.maps.LatLng(latLng.lat, latLng.lng);
+      gmaps.selfMarker.setPosition(googleLoc);
+    
     } else {
 
       if (navigator.geolocation) navigator.geolocation.getCurrentPosition(function(pos) {
@@ -126,10 +127,17 @@ gmaps = {
     return false;
   },
 
-  // intialize the map
+  // Intializes the map
   initialize: function() {
-    console.log("[+] Intializing Google Maps...");
 
+    // Need to empty these out incase we reload the map or else the markers
+    // will not be consistent with what is actually on the map
+    gmaps.markers = [];
+    gmaps.markerData = [];
+    gmaps.latLngs = [];
+    gmaps.selfMarker = null;
+
+    console.log("[+] Intializing Google Maps...");
     gmaps.getCurrentLocation(gmaps.createNewMap);
     
   },
@@ -158,6 +166,8 @@ gmaps = {
     gmaps.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
     gmaps.addSelfMarker(latLng);
   },
+
+
 
   // Resize the map appropriately
   // resize: function() {
