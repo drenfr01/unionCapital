@@ -80,7 +80,7 @@ Router.onBeforeAction(function() {
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for superAdmins
-  {only: ['adminHomePage', 'addCommunityEvents', 'partnerAdminView']} 
+  {only: ['adminHomePage', 'addCommunityEvents', 'partnerAdminView','addPartnerAdminUser','addPartnerOrg', 'partnerOrgs']} 
 );
 
 Router.route('/viewMemberProfile/:_id', function () {
@@ -91,6 +91,13 @@ Router.route('/viewMemberProfile/:_id', function () {
   });
 }, {
   name: 'viewMemberProfile'
+});
+
+Router.route('/addPartnerAdminUser', function() {
+  this.render('addPartnerAdminUser');
+},
+{
+  name: 'addPartnerAdminUser'
 });
 
 Router.route('/addPartnerOrg', function() {

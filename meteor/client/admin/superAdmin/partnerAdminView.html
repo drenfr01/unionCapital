@@ -26,22 +26,24 @@
       </thead>
       <tbody>
         {{#each partnerAdmins}}
-        <td>{{profile.firstName}} {{profile.lastName}}</td>
-        {{#each emails}}
-          <td>{{address}}</td>
-        {{/each}}
-        <td>{{profile.partnerOrg}}</td>
-        <td>{{formatDate createdAt}}</td>
-        <td>
-          <button type="button" class="btn btn-default btn-sm editUser">
-            Edit
-          </button>
-        </td>
-        <td>
-          <button type="button" class="btn btn-default btn-sm deleteUser">
-            Delete
-          </button>
-        </td>
+        <tr>
+          <td>{{profile.firstName}} {{profile.lastName}}</td>
+          {{#each emails}}
+            <td>{{address}}</td>
+          {{/each}}
+          <td>{{profile.partnerOrg}}</td>
+          <td>{{formatDate createdAt}}</td>
+          <td>
+            <button type="button" class="btn btn-default btn-sm editUser">
+              Edit
+            </button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-default btn-sm deleteUser">
+              Delete
+            </button>
+          </td>
+        </tr>
         {{/each}}
       </tbody>
     </table>
