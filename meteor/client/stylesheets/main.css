@@ -568,6 +568,10 @@ margin-right: auto;
   height: 200%;
   font-size: 200%;
 }
+
+.check-in-div {
+  display: none;
+}
 /*
 .collapse.in {
   background-color: #bddc6f;
