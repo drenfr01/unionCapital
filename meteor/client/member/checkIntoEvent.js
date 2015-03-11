@@ -40,6 +40,17 @@ var getEventsData = function() {
       });
   }
 };
+
+Tracker.autorun(function() {
+  if (Session.get('selectedEvent')) {
+    $('#searchDiv').hide();
+    $('#checkIntoEventDiv').show();
+  } else {
+    $('#searchDiv').show();
+    $('#checkIntoEventDiv').hide();
+  }
+});
+
 // -----------------------------------------------------------------
 
 Template.checkIntoEvent.created = function () {
@@ -77,10 +88,6 @@ Template.checkIntoEvent.events({
 
 
   //--------------
-  'change #eventSelector': function(e) {
-    e.preventDefault();
-    Session.set('eventId', $('#eventSelector option:selected').val());
-  },
   'click #checkInByPhoto': function(e) {
     e.preventDefault();
 

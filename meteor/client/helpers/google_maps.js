@@ -15,6 +15,8 @@ gmaps = {
   // self marker
   selfMarker: null,
 
+  // User's current location
+
   // add a marker given our formatted marker data object
   addMarker: function(marker) {
     var gLatLng = new google.maps.LatLng(marker.lat, marker.lng);
