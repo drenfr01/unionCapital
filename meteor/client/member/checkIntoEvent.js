@@ -15,6 +15,8 @@ var fields = ['name', 'description'];
 
 CheckinEventsSearch = new SearchSource('eventsSearch', fields, options);
 
+// Gets the data for use in the getEvents helper
+// Returns the selected row or returns the filtered list if none selected
 var getEventsData = function() {
   var events = CheckinEventsSearch.getData({
     // transform: function(matchText, regExp) {
@@ -41,6 +43,7 @@ var getEventsData = function() {
   }
 };
 
+// Handles all configuration based on if an event is selected
 Tracker.autorun(function() {
   if (Session.get('selectedEvent')) {
     $('#searchDiv').hide();
@@ -73,6 +76,13 @@ Template.checkIntoEvent.helpers({
     return getEventsData();
   },
 
+  'eventSelectText': function() {
+    if (Session.get('selectedEvent'))
+      return 'Cancel';
+    else
+      return 'Select';
+  }
+
 });
 
 Template.checkIntoEvent.events({
@@ -83,7 +93,10 @@ Template.checkIntoEvent.events({
   }, 200),
 
   'click .in button': function(e) {
-    Session.set('selectedEvent', $(e.target).attr('id'));
+    if (Session.get('selectedEvent'))
+      Session.set('selectedEvent', null);
+    else
+      Session.set('selectedEvent', $(e.target).attr('id'));
   },
 
 

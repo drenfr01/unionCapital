@@ -41,10 +41,12 @@
                   <td><b>{{formatEventDate startDate endDate}}</b></td>
                 </tr>
               </table>
-              <button type="button" class="btn btn-primary btn-block accordion-button" id="{{_id}}">Select</button>
+              <button type="button" class="btn btn-primary btn-block accordion-button" id="{{_id}}">{{eventSelectText}}</button>
             </div>
           </div>
         </div>
+      {{else}}
+        <p>There are no active events that meet your filter criteria nearby.</p>
       {{/each}}
       </div>
         <a href="{{pathFor 'submitNewEvent'}}">
