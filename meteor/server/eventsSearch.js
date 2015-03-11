@@ -1,6 +1,8 @@
 SearchSource.defineSource('eventsSearch', function(searchText, options) {
-    //I think we overwrite options because there is both a server side and client side def 
-    //of this method, so it either calls the client side or after the timeout
+    //I think we overwrite options because there is both a 
+    //server side and client side def 
+    //of this method, so it either calls the client side or 
+    //after the timeout
     //does the server side 
     var options = {
       sort: {startDate: 1},

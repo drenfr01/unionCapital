@@ -13,7 +13,7 @@ Router.onBeforeAction(function() {
   if(Meteor.loggingIn()) {
     return; //wait
   } else if (!Meteor.user()) {
-    console.log("redirecting guest user")
+    console.log("redirecting guest user");
     this.redirect('login');
   } else {
     this.next();
@@ -80,7 +80,7 @@ Router.onBeforeAction(function() {
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for superAdmins
-  {only: ['adminHomePage', 'addCommunityEvents']} 
+  {only: ['adminHomePage', 'addCommunityEvents', 'partnerAdminView']} 
 );
 
 Router.route('/viewMemberProfile/:_id', function () {
@@ -91,6 +91,27 @@ Router.route('/viewMemberProfile/:_id', function () {
   });
 }, {
   name: 'viewMemberProfile'
+});
+
+Router.route('/addPartnerOrg', function() {
+  this.render('addPartnerOrg');
+},
+{
+  name: 'addPartnerOrg'
+});
+
+Router.route('/partnerOrgs', function() {
+  this.render('partnerOrgs');
+},
+{
+  name: 'partnerOrgs'
+});
+
+Router.route('/partnerAdminView', function() {
+  this.render('partnerAdminView');
+},
+{
+  name: 'partnerAdminView'
 });
 
 Router.route('/addEvents', function() {

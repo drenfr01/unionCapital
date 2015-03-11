@@ -3,9 +3,9 @@ Template.adminHomePage.events({
     e.preventDefault();
     Router.go('allMembers');
   },
-  'click #memberProfiles': function(e) {
+  'click #partnerOrgs': function(e) {
     e.preventDefault();
-    Router.go('memberProfiles');
+    Router.go('partnerOrgs');
   },
   'click #approvePoints': function(e) {
     e.preventDefault();

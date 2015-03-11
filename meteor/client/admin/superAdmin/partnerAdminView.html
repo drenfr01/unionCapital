@@ -1,0 +1,50 @@
+<template name="partnerAdminView">
+<div class="col-xs-12 col-md-10 col-md-offset-1">
+  <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel text-center">
+    <h1>Partner Admin Search</h1>
+    <br>
+    <button class="btn btn-lg btn-default" id="addPartnerAdminUser">
+      Add Partner Admin User
+    </button>
+    <br>
+    <button class="btn btn-lg btn-default" id="viewPartnerOrgs">
+      View Partner Orgs
+    </button>
+    <br>
+  </div>
+  <div class="col-xs-12 col-md-10 col-md-offset-1 page-panel">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Partner Org</th>
+          <th>Create Date</th>
+          <th></th> <!-- edit button -->
+          <th></th> <!-- delete button -->
+        </tr>
+      </thead>
+      <tbody>
+        {{#each partnerAdmins}}
+        <td>{{profile.firstName}} {{profile.lastName}}</td>
+        {{#each emails}}
+          <td>{{address}}</td>
+        {{/each}}
+        <td>{{profile.partnerOrg}}</td>
+        <td>{{formatDate createdAt}}</td>
+        <td>
+          <button type="button" class="btn btn-default btn-sm editUser">
+            Edit
+          </button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-default btn-sm deleteUser">
+            Delete
+          </button>
+        </td>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
+</template>

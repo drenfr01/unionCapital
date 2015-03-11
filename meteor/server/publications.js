@@ -1,3 +1,7 @@
+Meteor.publish('partnerOrgSectors', function() {
+  return PartnerOrgSectors.find();
+});
+
 Meteor.publish('races', function() {
   return Races.find();
 });
