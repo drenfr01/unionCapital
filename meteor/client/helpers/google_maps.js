@@ -15,7 +15,40 @@ gmaps = {
   // self marker
   selfMarker: null,
 
-  // User's current location
+  // gets user's current location and executes a callback
+  getCurrentLocation: function(callback) {
+
+    // Options for HTML5 navigator
+    var positionOptions = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 30000
+    };
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+
+          // Set the current location object
+          var currentLocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+
+          callback(currentLocation);
+        },
+        
+        // This error fires when navigator exists but encounters a problem
+        function(error) { 
+          console.log(error.reason);
+        },
+        positionOptions
+      );
+    } else {
+
+      // This error fires when navigator does not exist
+      console.log('Could not geolocate. No navigator.')
+    }
+  },
 
   // add a marker given our formatted marker data object
   addMarker: function(marker) {
@@ -97,7 +130,14 @@ gmaps = {
   initialize: function() {
     console.log("[+] Intializing Google Maps...");
 
-    // Options for google maps
+    gmaps.getCurrentLocation(gmaps.createNewMap);
+    
+  },
+
+  // Creates a new instance of google maps using the lat and lng passed to it
+  createNewMap: function(latLng) {
+
+    // Settings for google maps
     // Disable all options when not fullscreen
     var mapOptions = {
         zoom: 12,
@@ -113,38 +153,10 @@ gmaps = {
         disableDoubleClickZoom: true
     };
 
-    // Options for HTML5 navigator
-    var positionOptions = {
-        enableHighAccuracy: true,
-        timeout: 5000,
-        maximumAge: 10000
-    };
+    mapOptions.center = new google.maps.LatLng(latLng.lat, latLng.lng);
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-
-          // Use the current location to center map
-          mapOptions.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
-          gmaps.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-          gmaps.addSelfMarker(mapOptions.center);
-        },
-        
-        function(error) { 
-          console.log(error.reason);
-        },
-        positionOptions
-      );
-    } else {
-
-      // Otherwise use the home position
-      gmaps.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-      gmaps.addSelfMarker(mapOptions.center);
-    }
-
-    // global flag saying we intialized already
-    Session.set('map', true);
-    
+    gmaps.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    gmaps.addSelfMarker(latLng);
   },
 
   // Resize the map appropriately
@@ -163,29 +175,13 @@ gmaps = {
   // Centers the map on current location using HTML5 geolocation
   // Doesn't work well
   centerMap: function() {
-    if (navigator.geolocation) {
 
-      var initialLocation;
+    gmaps.getCurrentLocation(function(latLng) {
 
-      navigator.geolocation.getCurrentPosition(
-        function (position) {
-          initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-          gmaps.map.setCenter(initialLocation);
-          console.log('Centering based on current location...')
-        },
-        function() {
-          // initialLocation = new google.maps.LatLng(Meteor.user().profile.latitude, Meteor.user().profile.longitude);
-          // gmaps.map.setCenter(initialLocation);
-          console.log('Failed to center based on current location...')
-        },
-        positionOptions
-      );
-      return true;
-    } else {
+      googleLoc = new google.maps.LatLng(latLng.lat, latLng.lng);
+      gmaps.map.setCenter(googleLoc);
+      console.log('Centering based on current location...');
 
-      console.log('Geolocation error');
-      return false;
-
-    }
+    });
   }
 }
