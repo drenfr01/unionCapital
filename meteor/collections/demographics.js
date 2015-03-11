@@ -1,3 +1,17 @@
+PartnerOrgSectors = new Meteor.Collection('partnerOrgSectors');
+
+PartnerOrgSectors.attachSchema(new SimpleSchema({
+  name: {
+    type: String,
+    label: 'Income Bracket'
+  },
+  deleteInd: {
+    type: Boolean,
+    label: 'Logical Deletion'
+  }
+}));
+
+
 IncomeBrackets = new Meteor.Collection('incomeBrackets');
 
 IncomeBrackets.attachSchema(new SimpleSchema({
@@ -18,11 +32,51 @@ PartnerOrgs.attachSchema(new SimpleSchema({
     type: String,
     label: 'Organization Name'
   },
+  sector: {
+    type: String,
+    label: 'Classification of Org'
+  },
+  membersReported: {
+    type: Number,
+    label: 'Number of members organization has'
+  },
+  ucbMembers: {
+    type: Number,
+    label: 'Number of UCB members attributed to this org',
+    optional: true
+  },
+  totalPoints: {
+    type: Number,
+    label: 'Total points of all members registered to this org',
+    optional: true
+  },
+  lastEventSponsored: {
+    type: Date,
+    label: 'Date of last event by this org',
+    optional: true
+  },
+  nextEventSponsored: {
+    type: Date,
+    label: 'Date of next event by this org',
+    optional: true
+  },
   deleteInd: {
     type: Boolean,
     label: 'Logical Deletion'
   }
 }));
+
+PartnerOrgs.allow({
+  insert: function() {
+    return true;
+  },
+  update: function() {
+    return true;
+  },
+  remove: function() {
+    return true;
+  },
+});
 
 Kids = new Meteor.Collection('kids');
 

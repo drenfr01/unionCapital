@@ -31,6 +31,10 @@ Template.partnerOrgs.events({
     e.preventDefault();
     Router.go('partnerAdminView');
   },
+  'click #addPartnerOrg': function(e) {
+    e.preventDefault();
+    Router.go('addPartnerOrg');
+  },
   "keyup #search-box": _.throttle(function(e) {
     var text = $(e.target).val().trim();
     PartnerOrgSearch.search(text);

@@ -1,16 +1,29 @@
 Meteor.startup(function () {
+  //Seeding Partner Org Sectors
+  if(PartnerOrgSectors.find().count() === 0) {
+    var sectors = [
+      'Children', 
+      'Job Training',
+      'Shelter',
+      'Other'
+    ];
+
+    _.each(sectors, function(sector) {
+      PartnerOrgSectors.insert({name: sector, deleteInd: false});
+    });
+  }
 
   //Seeding Partner Organizations
   if(PartnerOrgs.find().count() === 0) {
     var partnerOrgs = [
-      "KIPP Academy",
-      "Thrive in Five",
-      "Rosie's Place",
-      "Other"
+      {name: "Kipp Academy", sector: "Children", membersReported: 50, deleteInd: false},
+      {name: "Thrive in Five", sector: "Job Training", membersReported: 50, deleteInd: false},
+      {name: "Rosie's Place", sector: "Shelter", membersReported: 50, deleteInd: false},
+      {name: "Other", sector: "Other", membersReported: 50, deleteInd: false}
     ];
 
     _.each(partnerOrgs, function(org) {
-      PartnerOrgs.insert({name: org, deleteInd: false});
+      PartnerOrgs.insert(org);
     });
   }
 

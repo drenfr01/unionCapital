@@ -93,6 +93,13 @@ Router.route('/viewMemberProfile/:_id', function () {
   name: 'viewMemberProfile'
 });
 
+Router.route('/addPartnerOrg', function() {
+  this.render('addPartnerOrg');
+},
+{
+  name: 'addPartnerOrg'
+});
+
 Router.route('/partnerOrgs', function() {
   this.render('partnerOrgs');
 },
