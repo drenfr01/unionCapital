@@ -1,5 +1,5 @@
 var options = {
-  keepHistory: 1000 * 60 * 5,
+  keepHistory: 1,
   localSearch: false
 };
 
