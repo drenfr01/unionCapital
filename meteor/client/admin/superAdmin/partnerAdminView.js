@@ -5,4 +5,7 @@ Template.partnerAdminView.helpers({
 });
 
 Template.partnerAdminView.events({
+  'click #viewPartnerOrgs': function(e) {
+    Router.go('partnerOrgs');
+  }
 });
