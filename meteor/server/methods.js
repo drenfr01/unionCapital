@@ -108,9 +108,10 @@ Meteor.methods({
         state: String,
         zip: String,
         partnerOrg: String,
-        incomeBracket: String,
-        numberOfKids: String,
-        race: String
+        incomeBracket: Match.Optional(String),
+        numberOfKids: Match.Optional(String),
+        race: Match.Optional(String),
+        role: Match.Optional(String)
       }  
     });
     var newUserId = Accounts.createUser({
@@ -134,7 +135,7 @@ Meteor.methods({
                  " has created an account! They can be reached at: " +
                  attributes.email
                );
-    Roles.addUsersToRoles(newUserId, 'user');
+    Roles.addUsersToRoles(newUserId, attributes.profile.role);
   },
   updateUserProfile: function(attributes) {
     check(attributes, {
