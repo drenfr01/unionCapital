@@ -57,7 +57,7 @@ gmaps = {
       position: gLatLng,
       map: gmaps.map,
       title: marker.title,
-      animation: google.maps.Animation.DROP,
+      // animation: google.maps.Animation.DROP,
       icon: marker.icon
     });
 
@@ -113,8 +113,8 @@ gmaps = {
         }
         gmaps.map.fitBounds(bounds);
 
-        // Sets the minum zoom level - should probably take this out soon
-        gmaps.map.getZoom() < 12 && gmaps.map.setZoom(12);
+        // Sets the minimum zoom level - should probably take this out soon
+        //gmaps.map.getZoom() < 12 && gmaps.map.setZoom(12);
       }
   },
 
@@ -132,9 +132,7 @@ gmaps = {
 
     // Need to empty these out in case we reload the map or else the markers
     // will not be consistent with what is actually on the map
-    gmaps.markers = [];
-    gmaps.markerData = [];
-    gmaps.latLngs = [];
+    gmaps.clearMarkers();
     gmaps.selfMarker = null;
 
     console.log("[+] Intializing Google Maps...");
@@ -170,21 +168,20 @@ gmaps = {
   // Takes an array of locations with latitute and longitude as first level elements
   addMarkerCollection: function(locations) {
 
+    gmaps.clearMarkers();
+
     _.forEach(locations, function(location) {
-      if (location.latitude && location.longitude) {
-
-        googleLoc = new google.maps.LatLng(location.latitude, location.longitude);
-
-        if (gmaps.markerExists('title', location.name)) {
-          _.findWhere(gmaps.markers, { title: location.name }).setMap(googleLoc);
-        } else {
-          gmaps.addMarker(location);
-        }
-      }
+      if (location.latitude && location.longitude)
+        gmaps.addMarker(location);
     });
-
   },
 
+  clearMarkers: function() {
+    _.forEach(gmaps.markers, function(marker) { marker.setMap(null); });
+    gmaps.markers = [];
+    gmaps.markerData = [];
+    gmaps.latLngs = [];
+  },
 
 
   // Resize the map appropriately
