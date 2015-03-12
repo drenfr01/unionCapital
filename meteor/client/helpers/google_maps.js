@@ -52,7 +52,7 @@ gmaps = {
 
   // add a marker given our formatted marker data object
   addMarker: function(marker) {
-    var gLatLng = new google.maps.LatLng(marker.lat, marker.lng);
+    var gLatLng = new google.maps.LatLng(marker.latitude, marker.longitude);
     var gMarker = new google.maps.Marker({
       position: gLatLng,
       map: gmaps.map,
@@ -109,15 +109,6 @@ gmaps = {
       gmaps.map.fitBounds(bounds);
   },
 
-  // calculate and move the bound box based on our markers
-  calcBounds: function() {
-    var bounds = new google.maps.LatLngBounds();
-    for (var i = 0, latLngLength = gmaps.latLngs.length; i < latLngLength; i++) {
-      bounds.extend(gmaps.latLngs[i]);
-    }
-    this.map.fitBounds(bounds);
-  },
-
   // check if a marker already exists
   markerExists: function(key, val) {
     _.each(gmaps.markers, function(storedMarker) {
@@ -130,7 +121,7 @@ gmaps = {
   // Intializes the map
   initialize: function() {
 
-    // Need to empty these out incase we reload the map or else the markers
+    // Need to empty these out in case we reload the map or else the markers
     // will not be consistent with what is actually on the map
     gmaps.markers = [];
     gmaps.markerData = [];
@@ -165,6 +156,23 @@ gmaps = {
 
     gmaps.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
     gmaps.addSelfMarker(latLng);
+  },
+
+  addMarkerCollection: function(locations) {
+
+    _.forEach(locations, function(location) {
+      if (location.latitude && location.longitude) {
+
+        googleLoc = new google.maps.LatLng(location.latitude, location.longitude);
+
+        if (gmaps.markerExists('title', location.name)) {
+          _.where(gmaps.markers, { title: location.name })[0].setMap(googleLoc);
+        } else {
+          gmaps.addMarker(location);
+        }
+      }
+    });
+
   },
 
 

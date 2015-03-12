@@ -19,9 +19,6 @@ CheckinEventsSearch = new SearchSource('eventsSearch', fields, options);
 // Returns the selected row or returns the filtered list if none selected
 var getEventsData = function() {
   var events = CheckinEventsSearch.getData({
-    // transform: function(matchText, regExp) {
-    //   return matchText;
-    // },
     sort: {eventDate: 1}
   });
 
@@ -43,11 +40,7 @@ var getEventsData = function() {
   }
 };
 
-var eventButtonToggle = new ReactiveVar({
-  eventSelectText: '',
-  eventSelectClass: ''
-});
-
+var eventButtonToggle = new ReactiveVar({ eventSelectText: '', eventSelectClass: '' });
 
 // Handles all configuration based on if an event is selected
 function setToggleValues() {
@@ -90,12 +83,10 @@ Template.checkIntoEvent.rendered = function() {
   
   // We don't want to start out with an event selected
   Session.set('selectedEvent', null);
-
-  // Populate the event list on load
-  CheckinEventsSearch.search('');
-
-  // Set the initial configuration for selected events
   setToggleValues();
+
+  // Populate the event list on load with no filters
+  CheckinEventsSearch.search('');
 
 };
 
