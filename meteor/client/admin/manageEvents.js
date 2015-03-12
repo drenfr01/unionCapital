@@ -1,6 +1,6 @@
 //TODO: this is duplicate code from eventsCalendar
 var options = {
-  keepHistory: 1000 * 60 * 5,
+  keepHistory: 1, //new events won't appear if this is set too long
   localSearch: false
 };
 

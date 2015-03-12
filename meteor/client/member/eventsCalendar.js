@@ -23,7 +23,15 @@ Template.eventsCalendar.rendered = function() {
 Template.eventsCalendar.helpers({
   getEvents: function() {
     var events = getEventsData();
-    var eventsByDate = _.groupBy(events, function(event) {
+    //Note: we could filter server side, but it seemed more flexible
+    //to push all data to the client then let it handle filtering
+    //We could have a "include past events" flag for the user
+    var currentEvents = _.filter(events, function(event) {
+      var eventDate = event.eventDate.setHours(0,0,0,0);
+      var currentDate = new Date().setHours(0,0,0,0);
+      return eventDate >= currentDate;
+    });
+    var eventsByDate = _.groupBy(currentEvents, function(event) {
       return moment(event.eventDate).format("MM/DD/YYYY");
     });
     return eventsByDate;
