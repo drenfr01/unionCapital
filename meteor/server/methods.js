@@ -268,7 +268,9 @@ Meteor.methods({
     eventId: String
    });
 
+   var reservation = Reservations.findOne({userId: attributes.userId, eventId: attributes.eventId});
    Reservations.remove({userId: attributes.userId, eventId: attributes.eventId});
+   Events.update({_id: attributes.eventId}, {$inc: {numberRSVPs: -reservation.numberOfPeople}});
   },
   'getRsvpList': function(eventId) {
     check(eventId, String);
@@ -374,5 +376,6 @@ Meteor.methods({
     });
 
     Reservations.insert(attributes);
+    Events.update({_id: attributes.eventId}, {$inc: {numberRSVPs: attributes.numberOfPeople}});
   }
 });
