@@ -101,12 +101,21 @@ gmaps = {
   },
 
   // calculate and move the bound box based on our markers
+  // TODO: Add self marker to bounds calc
+  // Leaving it out for now because none of the test events are nearby
   calcBounds: function() {
       var bounds = new google.maps.LatLngBounds();
-      for (var i = 0, latLngLength = gmaps.latLngs.length; i < latLngLength; i++) {
-          bounds.extend(gmaps.latLngs[i]);
+      latLngLength = gmaps.latLngs.length;
+
+      if (latLngLength > 0) {
+        for (var i = 0, latLngLength; i < latLngLength; i++) {
+            bounds.extend(gmaps.latLngs[i]);
+        }
+        gmaps.map.fitBounds(bounds);
+
+        // Sets the minum zoom level - should probably take this out soon
+        gmaps.map.getZoom() < 12 && gmaps.map.setZoom(12);
       }
-      gmaps.map.fitBounds(bounds);
   },
 
   // check if a marker already exists
@@ -158,6 +167,7 @@ gmaps = {
     gmaps.addSelfMarker(latLng);
   },
 
+  // Takes an array of locations with latitute and longitude as first level elements
   addMarkerCollection: function(locations) {
 
     _.forEach(locations, function(location) {
@@ -166,7 +176,7 @@ gmaps = {
         googleLoc = new google.maps.LatLng(location.latitude, location.longitude);
 
         if (gmaps.markerExists('title', location.name)) {
-          _.where(gmaps.markers, { title: location.name })[0].setMap(googleLoc);
+          _.findWhere(gmaps.markers, { title: location.name }).setMap(googleLoc);
         } else {
           gmaps.addMarker(location);
         }

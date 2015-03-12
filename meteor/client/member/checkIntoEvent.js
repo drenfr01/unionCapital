@@ -16,19 +16,16 @@ var fields = ['name', 'description'];
 CheckinEventsSearch = new SearchSource('eventsSearch', fields, options);
 
 // Gets the data for use in the getEvents helper
-// Returns the selected row or returns the filtered list if none selected
 var getEventsData = function() {
   var events = CheckinEventsSearch.getData({
     sort: {eventDate: 1}
   });
 
   if (Session.get('selectedEvent')) {
-    
     // If there is an event selected, it narrows the list to only that event
     return _.where(events, { _id: Session.get('selectedEvent') });
 
   } else {
-
     // Otherwise, check that the end date of the even is before the start date of the check in period
     // AND the start date of the event is before the end of the check in period
     return _.filter(
@@ -73,6 +70,18 @@ function setToggleValues() {
 Tracker.autorun(function() {
   setToggleValues();
 });
+
+// Sets the map markers
+// This is called in the helper function and is throttled for performance
+var setMapMarkers = _.debounce(function(eventsArray) {
+
+  if (eventsArray) {
+    gmaps.addMarkerCollection(eventsArray);
+    gmaps.calcBounds();
+  }
+
+}, 1000);
+
 // -----------------------------------------------------------------
 
 Template.checkIntoEvent.created = function () {
@@ -93,7 +102,11 @@ Template.checkIntoEvent.rendered = function() {
 Template.checkIntoEvent.helpers({
   
   'getEvents': function() {
-    return getEventsData();
+
+    var eventsArray = getEventsData();
+    setMapMarkers(eventsArray);    
+
+    return eventsArray;
   },
 
   'eventSelectText': function() {

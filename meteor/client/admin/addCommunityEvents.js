@@ -46,6 +46,9 @@ Template.addCommunityEvents.events({
     e.preventDefault();
     Session.set('showMap', false);
   },
+
+  // TODO: Need to find some mechanism to try again later in the event of a failure
+  // Events will not show up without a geocoded address
   'click #geocodeButton': function(e) {
     e.preventDefault();
     Meteor.call('geocodeAddress', $('#eventAddress').val(), 
