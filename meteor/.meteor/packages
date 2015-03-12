@@ -30,3 +30,4 @@ ian:accounts-ui-bootstrap-3
 meteorhacks:search-source
 houston:admin
 reactive-var
+dburles:collection-helpers
