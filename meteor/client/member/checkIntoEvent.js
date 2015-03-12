@@ -43,17 +43,43 @@ var getEventsData = function() {
   }
 };
 
-// Handles all configuration based on if an event is selected
-Tracker.autorun(function() {
-  if (Session.get('selectedEvent')) {
-    $('#searchDiv').hide();
-    $('#checkIntoEventDiv').show();
-  } else {
-    $('#searchDiv').show();
-    $('#checkIntoEventDiv').hide();
-  }
+var eventButtonToggle = new ReactiveVar({
+  eventSelectText: '',
+  eventSelectClass: ''
 });
 
+
+// Handles all configuration based on if an event is selected
+function setToggleValues() {
+  if (Session.get('selectedEvent')) {
+    
+    // Event selected
+    $('#searchDiv').hide();
+    $('#checkIntoEventDiv').show();
+    
+    eventButtonToggle.set({
+      eventSelectText: 'Cancel',
+      eventSelectClass: 'btn-default'
+    });
+
+  } else {
+    
+    // No event selected
+    $('#searchDiv').show();
+    $('#checkIntoEventDiv').hide();
+
+    eventButtonToggle.set({
+      eventSelectText: 'Select',
+      eventSelectClass: 'btn-primary'
+    });
+
+  }
+}
+
+// Runs the function every time the session var changes
+Tracker.autorun(function() {
+  setToggleValues();
+});
 // -----------------------------------------------------------------
 
 Template.checkIntoEvent.created = function () {
@@ -68,6 +94,9 @@ Template.checkIntoEvent.rendered = function() {
   // Populate the event list on load
   CheckinEventsSearch.search('');
 
+  // Set the initial configuration for selected events
+  setToggleValues();
+
 };
 
 Template.checkIntoEvent.helpers({
@@ -77,10 +106,11 @@ Template.checkIntoEvent.helpers({
   },
 
   'eventSelectText': function() {
-    if (Session.get('selectedEvent'))
-      return 'Cancel';
-    else
-      return 'Select';
+    return eventButtonToggle.get().eventSelectText;
+  },
+
+  'eventSelectClass': function() {
+    return eventButtonToggle.get().eventSelectClass;
   }
 
 });
@@ -93,6 +123,8 @@ Template.checkIntoEvent.events({
   }, 200),
 
   'click .in button': function(e) {
+    $(e.target).blur();
+
     if (Session.get('selectedEvent'))
       Session.set('selectedEvent', null);
     else
