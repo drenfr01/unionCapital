@@ -1,9 +1,6 @@
 Template.partnerAdminHomePage.helpers({
-  firstName: function() {
-    return Meteor.user().profile.firstName;
-  },
-  lastName: function() {
-    return Meteor.user().profile.lastName;
+  userProfile: function() {
+    return Meteor.user().profile;
   }
 });
 Template.partnerAdminHomePage.events({
