@@ -1,0 +1,3 @@
+Template.eventCheckinDetails.rendered = function() {
+	
+}

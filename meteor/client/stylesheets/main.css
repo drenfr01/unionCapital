@@ -464,6 +464,9 @@ margin-right: auto;
   margin-top: 5px;
   padding-top: 15px;
   padding-bottom: 15px;
+  /*-moz-box-shadow: 1px 1px 1px #777;
+  -webkit-box-shadow: 1px 1px 1px #777;
+  box-shadow: 1px 1px 1px #777;*/
 }
 
 .page-panel-md {
@@ -580,10 +583,23 @@ margin-right: auto;
 .check-in-div {
   display: none;
 }
-/*
-.collapse.in {
-  background-color: #bddc6f;
+
+.description-text p {
+  font-size: 120%;
+}
+
+.icon-btn {
+  margin-left: 10px;
+}
+
+.photo-checkin {
+  font-size: 150%;
+  background-color: blue;
   color: white;
 }
-*/
 
+.no-photo-checkin {
+  font-size: 150%;
+  background-color: green;
+  color: white;
+}

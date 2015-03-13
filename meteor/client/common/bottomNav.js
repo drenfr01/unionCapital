@@ -21,6 +21,13 @@ var types = {
 		text: 'NEXT',
 		icon: 'glyphicon glyphicon-chevron-right',
 		id: 'submit'
+	},
+
+	cancel: {
+		type: '',
+		text: '',
+		icon: '',
+		id: 'iAmNotAnId'
 	}
 }
 
@@ -53,5 +60,9 @@ Template.bottomNav.helpers({
 		else
 			return '';
 	},
+
+	notOnlyLeft: function() {
+		return this.buttonType !== 'cancel';
+	}
 
 });
