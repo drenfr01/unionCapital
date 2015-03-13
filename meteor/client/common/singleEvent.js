@@ -22,10 +22,10 @@ Template.singleEvent.helpers({
 
 Template.singleEvent.events({
   'click .back': function(e) {
-    if(Session.get('eventType') === 'All') {
-      Router.go('addCommunityEvents');
-    } else {
+    if(Roles.userIsInRole(Meteor.userId(), ['user'])) {
       Router.go('eventsCalendar');
+    } else {
+      Router.go('manageEvents');
     }
   }
 });
