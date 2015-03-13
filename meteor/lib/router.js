@@ -173,6 +173,12 @@ Router.map(function() {
     data: function() { return Events.findOne({_id: this.params._id}); }
   });
 
+  this.route('eventCheckinDetails', {
+    path: 'checkin/:id',
+    data: function() {
+      return Events.findOne({_id: this.params._id});
+    }
+  })
 
   this.route('checkPoints', {
     path: '/checkPoints'
