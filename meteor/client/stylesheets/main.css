@@ -8,10 +8,18 @@
   The padding top is to handle the navbar collapsed on mobile
   The navbar is 50px by default
 */
+
+.logged-in {
+  padding-top: 80px;
+}
+
+.logged-out {
+  padding-top: 10px;
+}
+
 html { height: 100%; }
 body { height: 100%;
     margin: 0 ; 
-    padding-top: 80px;
     background-color: #e3e3e3;
 }
 
