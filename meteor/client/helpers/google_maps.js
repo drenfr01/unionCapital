@@ -1,5 +1,11 @@
 gmaps = {
 
+  // Set options
+  options: {
+    maxZoom: 16,
+    minZoom: 10
+  },
+
   // map object
   map: null,
 
@@ -113,8 +119,11 @@ gmaps = {
         }
         gmaps.map.fitBounds(bounds);
 
-        // Sets the minimum zoom level - should probably take this out soon
-        //gmaps.map.getZoom() < 12 && gmaps.map.setZoom(12);
+        // Sets the max zoom - it gets a bit cramped otherwise
+        gmaps.map.getZoom() > gmaps.options.maxZoom && gmaps.map.setZoom(gmaps.options.maxZoom);
+
+        // Sets the minimum zoom level
+        gmaps.map.getZoom() < gmaps.options.minZoom && gmaps.map.setZoom(gmaps.options.minZoom);
       }
   },
 
