@@ -87,4 +87,8 @@ Template.eventsCalendar.events({
       }
     });
   },
+  'click #back': function(e) {
+    e.preventDefault();
+    Router.go('manageEvents');
+  }
 });
