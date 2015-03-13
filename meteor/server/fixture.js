@@ -194,15 +194,16 @@ Meteor.startup(function () {
         roles:['user']
       },
       {
-        email: "partnerAdmin@gmail.com", username: "partnerAdmin",
-        password: "partnerAdmin",
+        email: "laura@gmail.com", username: "laura",
+        password: "admin",
         profile: {
-          firstName: 'KIPP',
-          lastName: 'Academy',
-          street: 'Warren Street',
-          city: 'Boston',
+          firstName: 'Laura',
+          lastName: 'Ballek',
+          street1: '101 Main St',
+          street2: '2B',
+          city: 'Cambridge',
           state: 'MA',
-          zip: '02119',
+          zip: '02142',
           partnerOrg: "KIPP Academy"
         },
         roles: ['partnerAdmin']
