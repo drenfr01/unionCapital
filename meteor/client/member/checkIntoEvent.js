@@ -135,6 +135,13 @@ Template.checkIntoEvent.events({
       Session.set('selectedEvent', $(e.target).attr('id'));
   },
 
+  'click .check-in-button': function(e) {
+    e.preventDefault();
+
+    var id = Session.get('selectedEvent');
+    id && Router.go('eventCheckinDetails', {id: id} );
+  },
+
 
   //--------------
   'click #checkInByPhoto': function(e) {
