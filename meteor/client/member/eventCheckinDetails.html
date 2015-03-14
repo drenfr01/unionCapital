@@ -14,7 +14,7 @@
         <hr class="panel-divider">
       </div>
     </div>
-    <div class="col-xs-12 page-panel text-center">
+    <div class="col-xs-12 page-panel text-center time-attending-panel">
     	<div class="row">
         <div class="col-xs-12">
         	<p>I'll be here for <span class="time-attending">{{timeAttending}}</span> hours!</p>
@@ -27,8 +27,18 @@
       </div>
     </div>
     {{#if hasPhoto}}
-	    <div class="col-xs-12 page-panel page-panel-flush text-center">
-	      <!-- <img src="{{hasPhoto}}"> -->
+	    <div class="col-xs-12 page-panel page-panel-flush photo-panel panel-link" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url({{hasPhoto}});" id="photoPanel">
+	    	<div class="flush-panel-text">
+	      	<span class="glyphicon glyphicon-remove pull-left" id="removePhoto"></span><span class="text">Click To Remove Photo</span>
+	      	<!-- <span class="glyphicon glyphicon-chevron-right pull-right" id="viewPhoto"></span> -->
+	      </div>
+	    </div>
+	    <div class="col-xs-12 page-panel panel-link no-photo-checkin text-center check-in">
+	      <div class="row">
+	      	<div class="col-xs-12">
+	      		Confirm Check-In
+	      	</div>
+	      </div>
 	    </div>
     {{else}}
 	    <div class="col-xs-12 page-panel panel-link photo-checkin text-center" id="addPhoto">
@@ -39,7 +49,7 @@
 	      	</div>
 	      </div>
 	    </div>
-	   	<div class="col-xs-12 page-panel panel-link no-photo-checkin text-center" id="check-in">
+	   	<div class="col-xs-12 page-panel panel-link no-photo-checkin text-center check-in">
 	      <div class="row">
 	      	<div class="col-xs-12">
 	      		Check in Without Photo

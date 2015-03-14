@@ -615,5 +615,42 @@ margin-right: auto;
 .time-attending {
   font-size: 150%;
   color: blue;  
+}
+
+.photo-panel {
+  /*height: 50px;*/
+  background-size: 100%;
+  background-position-y: -300px;
+  font-size: 130%;
+  color: white;
+}
+
+.photo-panel.text {
+  margin-left: 10px;
+}
+
+.flush-panel-text {
+  margin: 15px;
+}
+
+.time-attending-panel {
+  font-size: 130%;  
   font-style: bold;
+}
+
+/* Camera CSS override for mobile */
+
+.camera-popup {
+    left: inherit !important;
+    margin-left: inherit !important;
+}
+
+.camera-popup .center {
+    max-width: 95%;
+    max-height: 90%;
+}
+
+.camera-popup .photo-preview {
+    max-width: 90%;
+
 }
