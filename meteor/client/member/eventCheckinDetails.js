@@ -4,25 +4,30 @@ hours = new ReactiveVar(defaultHours);
 
 var UserPhoto = {
 	
-	// Represents that the last photo attempted to be taken has failed
-	takePhotoFail: new ReactiveVar(false),
+	// True if the last photo attempted to be taken has failed
+	takePhotoFailed: new ReactiveVar(false),
 	
 	// Local URI of a successful photo
 	photoURI: new ReactiveVar(null),
 	
 	// Inserts the photo into the collection
-	insert: function(uri, callback) {
-	  var newFile = new FS.File(file);
-	  var currentDate = new Date();
-	  
-	  newFile.metadata = {
-	    userId: Meteor.userId(),
-	    type: 'userEvent',
-	    submissionTime: currentDate
-	  };
+	insert: function(callback) {
 
-	  var imageId = Images.insert(newFile, callback)._id;
-	  return imageId;
+		if (this.photoURI.get()) {
+		  var newFile = new FS.File(this.photoURI.get());
+		  var currentDate = new Date();
+		  
+		  newFile.metadata = {
+		    userId: Meteor.userId(),
+		    type: 'userEvent',
+		    submissionTime: currentDate
+		  };
+
+		  var imageId = Images.insert(newFile, callback)._id;
+		  return imageId;
+		} else {
+			 callback && callback({ reason: 'There is no file URI' });
+		}
 	}, 
 
 	// Removes a photo from the collection
@@ -30,16 +35,23 @@ var UserPhoto = {
 
 	// Uses mdg:camera to take a photo and store it locally
 	takePhoto: function() {
+
+		var self = this;
 		MeteorCamera.getPicture({
     	quality: 50
     }, function(err, data) {
 
     	if (err) {
-    		UserPhoto.takePhotoFail.set(true);
+
+    		self.takePhotoFailed.set(true);
     		addErrorMessage(err.reason);
+
     	} else {
+
     		addSuccessMessage('Photo taken successfully');
-    		UserPhoto.photoURI.set(data);
+    		self.takePhotoFailed.set(false);
+    		self.photoURI.set(data);
+
     	}
     });
 	}
@@ -47,7 +59,7 @@ var UserPhoto = {
 
 Template.eventCheckinDetails.rendered = function() {
 
-	UserPhoto.takePhotoFail.set(false);
+	UserPhoto.takePhotoFailed.set(false);
 	UserPhoto.photoURI.set(null);
 
 	$('#durationSlider').noUiSlider({
@@ -74,7 +86,7 @@ Template.eventCheckinDetails.helpers({
 		return hours.get();
 	},
 
-	'photoPreview': function() {
+	'hasPhoto': function() {
 		return UserPhoto.photoURI.get();
 	}
 })
@@ -100,6 +112,11 @@ Template.eventCheckinDetails.events({
   'click #addPhoto': function(e) {
     e.preventDefault();
     UserPhoto.takePhoto();
+  },
+
+  'click #check-in': function(e) {
+    e.preventDefault();
+    UserPhoto.insert();
   },
 
 })

@@ -16,7 +16,7 @@
     </div>
     <div class="col-xs-12 page-panel text-center">
     	<div class="row">
-        <div class="col-xs-12 description-text">
+        <div class="col-xs-12">
         	<p>I'll be here for <span class="time-attending">{{timeAttending}}</span> hours!</p>
         </div>
       </div>
@@ -26,29 +26,26 @@
       	</div>
       </div>
     </div>
-    <div class="col-xs-12 page-panel photo-checkin text-center" id="addPhoto">
-      <div class="row">
-      	<div class="col-xs-12">
-      		Add Photo
-      		<span class="glyphicon glyphicon-camera icon-btn"></span>
-      	</div>
-      </div>
-    </div>
-   	<div class="col-xs-12 page-panel no-photo-checkin text-center">
-      <div class="row">
-      	<div class="col-xs-12">
-      		Check in Without Photo
-      	</div>
-      </div>
-    </div>
-    {{#if photoPreview}}
-    <div class="col-xs-12 page-panel photo-checkin text-center" id="addPhoto">
-      <div class="row">
-      	<div class="col-xs-12">
-      		<img src="{{photoPreview}}">
-      	</div>
-      </div>
-    </div>
+    {{#if hasPhoto}}
+	    <div class="col-xs-12 page-panel page-panel-flush text-center">
+	      <!-- <img src="{{hasPhoto}}"> -->
+	    </div>
+    {{else}}
+	    <div class="col-xs-12 page-panel panel-link photo-checkin text-center" id="addPhoto">
+	      <div class="row">
+	      	<div class="col-xs-12">
+	      		Add Photo
+	      		<span class="glyphicon glyphicon-camera icon-btn"></span>
+	      	</div>
+	      </div>
+	    </div>
+	   	<div class="col-xs-12 page-panel panel-link no-photo-checkin text-center" id="check-in">
+	      <div class="row">
+	      	<div class="col-xs-12">
+	      		Check in Without Photo
+	      	</div>
+	      </div>
+	    </div>
     {{/if}}
     {{> bottomNavPanel buttonType="cancel" }}
   </div>

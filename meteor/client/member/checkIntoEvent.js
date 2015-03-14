@@ -115,6 +115,11 @@ Template.checkIntoEvent.helpers({
 
   'eventSelectClass': function() {
     return eventButtonToggle.get().eventSelectClass;
+  },
+
+  // Disables the accordion when there is a selected event
+  'dataToggle': function() {
+    return Session.get('selectedEvent') ? '' : 'collapse';
   }
 
 });
@@ -142,42 +147,8 @@ Template.checkIntoEvent.events({
     id && Router.go('eventCheckinDetails', {id: id} );
   },
 
-
-  //--------------
-  'click #checkInByPhoto': function(e) {
-    e.preventDefault();
-
-    Router.go('takePicture', {_id: Session.get('eventId')});
-  },
-  'click #cancel': function(e) {
-    Session.set('eventId', null);
-    Session.set('longitude', null);
-    Session.set('latitude', null);
-  },
-  'click #submit': function(e) {
-    e.preventDefault();
-
-    var attributes = {
-      userId: Meteor.userId(),
-      eventId: Session.get('eventId'),
-      userLong: Session.get('longitude'),
-      userLat: Session.get('latitude'),
-      hoursSpent: parseInt($('#hours').val(),10),
-      minutesSpent: parseInt($('#minutes').val(),10),
-    };
-
-    Meteor.call('geolocateUser', attributes,
-      function(error, result) {
-        if(error) {
-          addErrorMessage(error.reason);
-          Session.set('longitude', null);
-          Session.set('latitude', null);
-          Session.set('eventId', null);
-        } else {
-          addSuccessMessage(result);
-          Router.go('checkPoints');
-        }
-
-    });
-  }         
+  // 'click #cancel': function(e) {
+  //   Router.go('memberHomePage');
+  // },
+           
 });

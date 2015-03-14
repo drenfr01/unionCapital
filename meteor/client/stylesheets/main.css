@@ -584,8 +584,10 @@ margin-right: auto;
   display: none;
 }
 
+/* checkInDetails */
 .description-text p {
   font-size: 120%;
+  font-style: italic;
 }
 
 .icon-btn {
@@ -593,13 +595,15 @@ margin-right: auto;
 }
 
 .photo-checkin {
-  font-size: 150%;
+  font-size: 180%;
   background-color: blue;
   color: white;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .no-photo-checkin {
-  font-size: 150%;
+  font-size: 120%;
   background-color: green;
   color: white;
 }
