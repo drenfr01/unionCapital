@@ -603,3 +603,13 @@ margin-right: auto;
   background-color: green;
   color: white;
 }
+
+.no-ui-slider {
+  margin-bottom: 35px;
+}
+
+.time-attending {
+  font-size: 150%;
+  color: blue;  
+  font-style: bold;
+}
