@@ -32,7 +32,7 @@ Transactions.attachSchema(new SimpleSchema({
       optional: true
     },
     transactionDate: {
-      type: String,
+      type: Date,
       label: 'Transaction Date',
       optional: true
     },
