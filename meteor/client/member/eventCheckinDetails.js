@@ -115,7 +115,10 @@ Template.eventCheckinDetails.events({
     checkIn(this._id);
   },
 
-  'click #photoPanel': function() {}
+  'click #back': function(e) {
+  	e.preventDefault();
+  	Router.go('checkin');
+  }
 
 });
 
