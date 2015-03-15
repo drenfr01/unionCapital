@@ -4,7 +4,14 @@ Meteor.methods({
   },
   insertTransaction: function(attributes) {
     
+    // Determines whether this transaction requires approval
+    checkInRules.validate(attributes);
 
+    // If the user isn't logging an action from the past,
+    // we use the server's time as the sourc eof truth
+    // We should probably figure out a better way to do this
+    if (!attributes.transactionDate)
+      attributes.transactionDate = new Date();
 
     check(attributes, {
       userId: Match.Optional(String),
@@ -14,7 +21,7 @@ Meteor.methods({
       needsApproval: Match.Optional(Boolean),
       pendingEventName: Match.Optional(String),
       pendingEventDescription: Match.Optional(String),
-      transactionDate: Match.Optional(String)
+      transactionDate: Match.Optional(Date)
     });
 
     var currentUser = Meteor.users.findOne(attributes.userId);
@@ -39,6 +46,7 @@ Meteor.methods({
      throw new Meteor.Error(400, "This may be a duplicate submission");
     } else {
       attributes.deleteInd = false;
+      console.log(' 88888888  ' + attributes.imageId);
       return Transactions.insert(attributes);
     }
   },

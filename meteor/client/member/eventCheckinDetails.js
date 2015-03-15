@@ -2,10 +2,6 @@
 var defaultHours = 3
 hours = new ReactiveVar(defaultHours);
 
-var checkinRules = {
-
-}
-
 var UserPhoto = {
 	
 	// True if the last photo attempted to be taken has failed
@@ -29,6 +25,7 @@ var UserPhoto = {
 		    submissionTime: currentDate
 		  };
 
+		  // photoURI can be several megs, better null it out
 		  var imageId = Images.insert(newFile, function(err, res) {
 		  	!err && self.photoURI.set(null);
 		  	callback(err,res);
@@ -65,44 +62,50 @@ var UserPhoto = {
 	}
 }
 
-var insetCheckin = function() {
+var checkIn = function(eventId) {
 
-}
-
-var checkIn = function(id) {
-
-	// var eventName = Session.get('eventName');
- //  var imageId = Session.get('imageId') || "";
- //  var eventDescription = $('#eventDescription').val();
-
-  if( hours.get() > 0 ) {
-  
-  	UserPhoto.insert(function() {
-
-		    var attributes = {
-		      userId: Meteor.userId(),
-		      imageId: fileObj._id,
-		      eventId: this._id,
-		      hoursSpent: hours.get()
-		      // pendingEventName: eventName,
-		      // pendingEventDescription: eventDescription,
-		    };
-		    
-		    Meteor.call('insertTransaction', attributes, function(error) {
-		      if(error) {
-		        addErrorMessage(error.reason);
-		        Router.go('submitNewEvent'); 
-		      } else {
-		        addSuccessMessage('Transaction successfully submitted');
-		        Router.go('memberHomePage');
-		      }
-		    }); 
+  if( UserPhoto.photoURI.get() ) {
+  	UserPhoto.insert(function(err, fileObj) {
+  		if ( err ) {
+  			addErrorMessage(err.reason);
+  		} else {
+  			console.log(fileObj._id);
+  			insertTransaction(eventId, fileObj._id);
+  		}
   	});
-
   } else {
-    addErrorMessage('Please ensure that you are logging at least a half hour of time');
+    insertTransaction(eventId, null);
   }
 };
+
+var insertTransaction = function(eventId, imageId) {
+	var attributes = {
+    userId: Meteor.userId(),
+    eventId: eventId,
+    hoursSpent: hours.get()
+    // pendingEventName: eventName,
+    // pendingEventDescription: eventDescription,
+  };
+
+  // Instead of just passing a null imageId field, this omits the field
+  // entirely to stay consistent with the check() function called on the server
+  if( imageId )
+  	attributes.imageId = imageId;
+
+  console.log(attributes.imageId);
+
+  console.log(attributes.imageId);
+  
+  Meteor.call('insertTransaction', attributes, function(error) {
+    if(error) {
+      addErrorMessage(error.reason);
+      Router.go('submitNewEvent'); 
+    } else {
+      addSuccessMessage('Transaction successfully submitted');
+      Router.go('memberHomePage');
+    }
+  });
+}
 
 Template.eventCheckinDetails.rendered = function() {
 
@@ -162,6 +165,16 @@ Template.eventCheckinDetails.events({
 
   'click .check-in': function(e) {
     e.preventDefault();
+    
+    var attributes = {
+      userId: Meteor.userId(),
+      imageId: 1,
+      eventId: this._id,
+      hoursSpent: hours.get()
+      // pendingEventName: eventName,
+      // pendingEventDescription: eventDescription,
+    };
+
     checkIn(this._id);
   },
 
