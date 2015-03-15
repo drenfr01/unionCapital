@@ -41,11 +41,6 @@ Transactions.attachSchema(new SimpleSchema({
       label: 'Number of Hour Spent',
       optional: true
     },
-    minutesSpent: {
-      type: Number,
-      label: 'Number of Minutes Spent',
-      optional: true
-    },
     //TODO: remove optional flag once all transactions update
     deleteInd: {
       type: Boolean,

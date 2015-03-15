@@ -3,11 +3,13 @@ Meteor.methods({
     return Images.remove(imageId);
   },
   insertTransaction: function(attributes) {
+    
+
+
     check(attributes, {
       userId: Match.Optional(String),
       eventId: Match.Optional(String),
       hoursSpent: Match.Optional(Number),
-      minutesSpent: Match.Optional(Number),
       imageId: Match.Optional(String),
       needsApproval: Match.Optional(Boolean),
       pendingEventName: Match.Optional(String),
@@ -187,7 +189,6 @@ Meteor.methods({
     check(attributes, {
       eventId: String,
       hoursSpent: Number,
-      minutesSpent: Number,
       userId: String,
       userLong: Number,
       userLat: Number
@@ -206,7 +207,7 @@ Meteor.methods({
       //TODO: consider adding user geolocation info to transaction?
       Transactions.insert({userId: attributes.userId, eventId: event._id, needsApproval: false, 
                           transactionDate: Date(), hoursSpent: attributes.hoursSpent, 
-                          minutesSpent: attributes.minutesSpent, deleteInd: false
+                          deleteInd: false
       }); 
       return "Congrats, you are within: " + distance +  " km of your event. Adding points to your total!";
     } else {
@@ -255,8 +256,7 @@ Meteor.methods({
 
     Transactions.insert({userId: attributes.userId, eventId: event._id, 
                         needsApproval: false, 
-                        transactionDate: Date(), hoursSpent: hours, 
-                        minutesSpent: minutes,
+                        transactionDate: Date(), hoursSpent: hours,
                         deleteInd: false
     });
 

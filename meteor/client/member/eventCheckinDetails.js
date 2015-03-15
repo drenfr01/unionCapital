@@ -65,6 +65,10 @@ var UserPhoto = {
 	}
 }
 
+var insetCheckin = function() {
+
+}
+
 var checkIn = function(id) {
 
 	// var eventName = Session.get('eventName');
@@ -148,7 +152,6 @@ Template.eventCheckinDetails.events({
       eventId: this._id,
       
       // hoursSpent: parseInt($('#hours').val(),10),
-      // minutesSpent: parseInt($('#minutes').val(),10),
     };
   },
 
