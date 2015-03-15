@@ -2,6 +2,10 @@
 var defaultHours = 3
 hours = new ReactiveVar(defaultHours);
 
+var checkinRules = {
+
+}
+
 var UserPhoto = {
 	
 	// True if the last photo attempted to be taken has failed
@@ -61,8 +65,39 @@ var UserPhoto = {
 	}
 }
 
-var checkIn = function() {
+var checkIn = function(id) {
 
+	// var eventName = Session.get('eventName');
+ //  var imageId = Session.get('imageId') || "";
+ //  var eventDescription = $('#eventDescription').val();
+
+  if( hours.get() > 0 ) {
+  
+  	UserPhoto.insert(function() {
+
+		    var attributes = {
+		      userId: Meteor.userId(),
+		      imageId: fileObj._id,
+		      eventId: this._id,
+		      hoursSpent: hours.get()
+		      // pendingEventName: eventName,
+		      // pendingEventDescription: eventDescription,
+		    };
+		    
+		    Meteor.call('insertTransaction', attributes, function(error) {
+		      if(error) {
+		        addErrorMessage(error.reason);
+		        Router.go('submitNewEvent'); 
+		      } else {
+		        addSuccessMessage('Transaction successfully submitted');
+		        Router.go('memberHomePage');
+		      }
+		    }); 
+  	});
+
+  } else {
+    addErrorMessage('Please ensure that you are logging at least a half hour of time');
+  }
 };
 
 Template.eventCheckinDetails.rendered = function() {
@@ -124,7 +159,7 @@ Template.eventCheckinDetails.events({
 
   'click .check-in': function(e) {
     e.preventDefault();
-    checkIn();
+    checkIn(this._id);
   },
 
   'click #photoPanel': function() {}
