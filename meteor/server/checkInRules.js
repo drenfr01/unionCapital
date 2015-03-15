@@ -1,6 +1,6 @@
 
 // Defines the check-in rules for an event
-// Created to run on both server and client for validation
+// Can be moved to /lib if we want to give some kind of feeback to users as well
 checkInRules = {
 
 	isRecognizedEvent: function(attributes) {

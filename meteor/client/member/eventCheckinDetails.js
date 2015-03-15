@@ -2,84 +2,24 @@
 var defaultHours = 3
 hours = new ReactiveVar(defaultHours);
 
-var UserPhoto = {
-	
-	// True if the last photo attempted to be taken has failed
-	takePhotoFailed: new ReactiveVar(false),
-	
-	// Local URI of a successful photo
-	photoURI: new ReactiveVar(null),
-	
-	// Inserts the photo into the collection
-	insert: function(callback) {
-
-		var self = this;
-
-		if (this.photoURI.get()) {
-		  var newFile = new FS.File(this.photoURI.get());
-		  var currentDate = new Date();
-		  
-		  newFile.metadata = {
-		    userId: Meteor.userId(),
-		    type: 'userEvent',
-		    submissionTime: currentDate
-		  };
-
-		  // photoURI can be several megs, better null it out
-		  var imageId = Images.insert(newFile, function(err, res) {
-		  	!err && self.photoURI.set(null);
-		  	callback(err,res);
-		  })._id;
-		  return imageId;
-		} else {
-			 callback && callback({ reason: 'There is no file URI' });
-		}
-	}, 
-
-	// Removes a photo from the collection
-	remove: function() {},
-
-	// Uses mdg:camera to take a photo and store it locally
-	takePhoto: function() {
-
-		var self = this;
-		MeteorCamera.getPicture({
-    	quality: 30
-    }, function(err, data) {
-
-    	if (err) {
-
-    		self.takePhotoFailed.set(true);
-    		addErrorMessage(err.reason);
-
-    	} else {
-
-    		addSuccessMessage('Photo taken successfully');
-    		self.takePhotoFailed.set(false);
-    		self.photoURI.set(data);
-    	}
-    });
-	}
-}
-
 var checkIn = function(eventId) {
 
-  if( UserPhoto.photoURI.get() ) {
-  	UserPhoto.insert(function(err, fileObj) {
-  		if ( err ) {
-  			addErrorMessage(err.reason);
-  		} else {
-  			console.log(fileObj._id);
-  			insertTransaction(eventId, fileObj._id);
-  		}
-  	});
+  if( userPhoto.photoURI.get() ) {
+    userPhoto.insert(function(err, fileObj) {
+      if ( err ) {
+        addErrorMessage(err.reason);
+      } else {
+        console.log(fileObj._id);
+        insertTransaction(eventId, fileObj._id);
+      }
+    });
   } else {
     insertTransaction(eventId, null);
   }
 };
 
 var insertTransaction = function(eventId, imageId) {
-	var attributes = {
+  var attributes = {
     userId: Meteor.userId(),
     eventId: eventId,
     hoursSpent: hours.get()
@@ -90,12 +30,8 @@ var insertTransaction = function(eventId, imageId) {
   // Instead of just passing a null imageId field, this omits the field
   // entirely to stay consistent with the check() function called on the server
   if( imageId )
-  	attributes.imageId = imageId;
+    attributes.imageId = imageId;
 
-  console.log(attributes.imageId);
-
-  console.log(attributes.imageId);
-  
   Meteor.call('insertTransaction', attributes, function(error) {
     if(error) {
       addErrorMessage(error.reason);
@@ -105,12 +41,13 @@ var insertTransaction = function(eventId, imageId) {
       Router.go('memberHomePage');
     }
   });
-}
+};
+
+Template.eventCheckinDetails.created = function() {
+	userPhoto = new UserPhoto();
+};
 
 Template.eventCheckinDetails.rendered = function() {
-
-	UserPhoto.takePhotoFailed.set(false);
-	UserPhoto.photoURI.set(null);
 
 	$('#durationSlider').noUiSlider({
 		start: [defaultHours],
@@ -137,7 +74,7 @@ Template.eventCheckinDetails.helpers({
 	},
 
 	'hasPhoto': function() {
-		return UserPhoto.photoURI.get();
+		return userPhoto.photoURI.get();
 	}
 })
 
@@ -160,7 +97,7 @@ Template.eventCheckinDetails.events({
 
   'click #addPhoto': function(e) {
     e.preventDefault();
-    UserPhoto.takePhoto();
+    userPhoto.takePhoto();
   },
 
   'click .check-in': function(e) {
@@ -180,4 +117,8 @@ Template.eventCheckinDetails.events({
 
   'click #photoPanel': function() {}
 
-})
+});
+
+Template.eventCheckinDetails.destroyed = function () {
+	delete userPhoto;
+};
