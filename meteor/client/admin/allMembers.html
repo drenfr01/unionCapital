@@ -1,19 +1,21 @@
 <template name="allMembers">
 <br>
 <br>
-  <div class="col-xs-6 col-xs-offset-3">
-    <div class="input-group">
-      <input type='text' class="form-control" placeholder='Search Member Name' 
-      id='search-box'/>
-      <span class="input-group-btn">
-        <!-- TODO: MAKE THIS A CANCEL BUTTON -->
-        <button class="btn btn-default btn-large">
-          &gt;  
-        </button>
-      </span>
+  <div class="col-xs-12 col-md-6 col-md-offset-3 text-center">
+    <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel">
+      <div class="input-group">
+        <input type='text' class="form-control" placeholder='Search Member Name' 
+        id='search-box'/>
+        <span class="input-group-btn">
+          <!-- TODO: MAKE THIS A CANCEL BUTTON -->
+          <button class="btn btn-default btn-large">
+            &gt;  
+          </button>
+        </span>
+      </div>
     </div>
   </div>
-  <div class="col-xs-12">
+  <div class="col-xs-12 col-md-10 col-md-offset-1 page-panel">
     <br>
     <div class="text-center">
       <label class="radio-inline">
@@ -39,7 +41,7 @@
       <tbody>
         {{#each getMembers}}
           <tr class="memberRow">
-            <td>{{firstName}} {{lastName}}</td>
+            <td>{{{firstName}}} {{{lastName}}}</td>
             <td>{{zip}}</td>
             <td>{{lastEvent}}</td>
             <td>{{formatDate lastEventDate}}</td>

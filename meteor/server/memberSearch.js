@@ -88,5 +88,5 @@ SearchSource.defineSource('memberSearch', function(searchText, options) {
 
 function buildRegExp(searchText) {
   var name = searchText.trim().split(" ");
-  return new RegExp("(.*" + name.join('.*|.*') + ".*)", 'ig');
+  return new RegExp("(" + name.join('|') + ")", 'ig');
 }

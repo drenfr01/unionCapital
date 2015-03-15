@@ -1,0 +1,18 @@
+<template name="editEvent">
+<div class="col-xs-12 col-md-4 col-md-offset-4 text-center page-panel">
+  {{#autoForm collection="Events" doc=this id="updateEventsForm" type="update"}}
+  <fieldset>
+    <legend>Update Event</legend>
+    {{> afQuickField name="name"}}
+    {{> afQuickField name="address"}}
+    {{> afQuickField name="url"}}
+    {{> afQuickField name="description"}}
+    {{> afQuickField name="institution" options=institutions}}
+    {{> afQuickField name="category" options=categories}}
+    {{> afQuickField name="eventDate" type="datetime-local" offset="-0400"}}
+    {{> afQuickField name="points"}}
+  </fieldset>
+  <button type="submit" class="btn btn-default" id="submit">Submit</button>
+  {{/autoForm}}
+</div>
+</template>
