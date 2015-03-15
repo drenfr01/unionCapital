@@ -147,6 +147,11 @@ Template.checkIntoEvent.events({
     id && Router.go('eventCheckinDetails', {id: id} );
   },
 
+  'click #clearBtn': function() {
+    CheckinEventsSearch.search('');
+    $('#eventSearchBox').val('');
+  }
+
   // 'click #cancel': function(e) {
   //   Router.go('memberHomePage');
   // },
