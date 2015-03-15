@@ -608,6 +608,11 @@ margin-right: auto;
   color: white;
 }
 
+.check-in-confirm {
+  height: 300%;
+  font-size: 250%;
+}
+
 .no-ui-slider {
   margin-bottom: 35px;
 }
@@ -625,8 +630,8 @@ margin-right: auto;
   color: white;
 }
 
-.photo-panel.text {
-  margin-left: 10px;
+.photo-panel .text {
+  padding-left: 10px;
 }
 
 .flush-panel-text {

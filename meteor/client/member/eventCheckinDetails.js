@@ -13,6 +13,8 @@ var UserPhoto = {
 	// Inserts the photo into the collection
 	insert: function(callback) {
 
+		var self = this;
+
 		if (this.photoURI.get()) {
 		  var newFile = new FS.File(this.photoURI.get());
 		  var currentDate = new Date();
@@ -23,7 +25,10 @@ var UserPhoto = {
 		    submissionTime: currentDate
 		  };
 
-		  var imageId = Images.insert(newFile, callback)._id;
+		  var imageId = Images.insert(newFile, function(err, res) {
+		  	!err && self.photoURI.set(null);
+		  	callback(err,res);
+		  })._id;
 		  return imageId;
 		} else {
 			 callback && callback({ reason: 'There is no file URI' });
@@ -38,7 +43,7 @@ var UserPhoto = {
 
 		var self = this;
 		MeteorCamera.getPicture({
-    	quality: 50
+    	quality: 30
     }, function(err, data) {
 
     	if (err) {
@@ -51,11 +56,14 @@ var UserPhoto = {
     		addSuccessMessage('Photo taken successfully');
     		self.takePhotoFailed.set(false);
     		self.photoURI.set(data);
-
     	}
     });
 	}
 }
+
+var checkIn = function() {
+
+};
 
 Template.eventCheckinDetails.rendered = function() {
 
@@ -114,9 +122,11 @@ Template.eventCheckinDetails.events({
     UserPhoto.takePhoto();
   },
 
-  'click #check-in': function(e) {
+  'click .check-in': function(e) {
     e.preventDefault();
-    UserPhoto.insert();
+    checkIn();
   },
+
+  'click #photoPanel': function() {}
 
 })
