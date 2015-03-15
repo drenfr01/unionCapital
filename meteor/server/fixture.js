@@ -1,16 +1,29 @@
 Meteor.startup(function () {
+  //Seeding Partner Org Sectors
+  if(PartnerOrgSectors.find().count() === 0) {
+    var sectors = [
+      'Children', 
+      'Job Training',
+      'Shelter',
+      'Other'
+    ];
+
+    _.each(sectors, function(sector) {
+      PartnerOrgSectors.insert({name: sector, deleteInd: false});
+    });
+  }
 
   //Seeding Partner Organizations
   if(PartnerOrgs.find().count() === 0) {
     var partnerOrgs = [
-      "KIPP Academy",
-      "Thrive in Five",
-      "Rosie's Place",
-      "Other"
+      {name: "Kipp Academy", sector: "Children", membersReported: 50, deleteInd: false},
+      {name: "Thrive in Five", sector: "Job Training", membersReported: 50, deleteInd: false},
+      {name: "Rosie's Place", sector: "Shelter", membersReported: 50, deleteInd: false},
+      {name: "Other", sector: "Other", membersReported: 50, deleteInd: false}
     ];
 
     _.each(partnerOrgs, function(org) {
-      PartnerOrgs.insert({name: org, deleteInd: false});
+      PartnerOrgs.insert(org);
     });
   }
 
@@ -181,15 +194,16 @@ Meteor.startup(function () {
         roles:['user']
       },
       {
-        email: "partnerAdmin@gmail.com", username: "partnerAdmin",
-        password: "partnerAdmin",
+        email: "laura@gmail.com", username: "laura",
+        password: "admin",
         profile: {
-          firstName: 'KIPP',
-          lastName: 'Academy',
-          street: 'Warren Street',
-          city: 'Boston',
+          firstName: 'Laura',
+          lastName: 'Ballek',
+          street1: '101 Main St',
+          street2: '2B',
+          city: 'Cambridge',
           state: 'MA',
-          zip: '02119',
+          zip: '02142',
           partnerOrg: "KIPP Academy"
         },
         roles: ['partnerAdmin']

@@ -39,7 +39,8 @@ Template.collectUserDemographics.events({
         partnerOrg: $('#organizations').val(),
         incomeBracket: $('#incomeBrackets').val(),
         numberOfKids: $('#numberOfKids').val(),
-        race: $("#races").val()
+        race: $("#races").val(),
+        role: 'user'
       }
     };
     //TODO: figure out if this can be done client side only?

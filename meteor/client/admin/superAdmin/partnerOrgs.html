@@ -1,0 +1,62 @@
+<template name="partnerOrgs">
+<div class="col-xs-12 col-md-10 col-md-offset-1">
+  <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel text-center">
+      <div class="input-group">
+        <input type='text' class="form-control" 
+          placeholder='Search Partner Organizations' id='search-box'/>
+        <span class="input-group-btn">
+          <button class="btn btn-default btn-large">
+            &times;
+          </button>
+        </span>
+      </div>
+    <br>
+    <button class="btn btn-lg btn-default" id="addPartnerOrg">
+      Add Partner Org
+    </button>
+    <br>
+    <button class="btn btn-lg btn-default" id="partnerAdminUsers">
+      View Partner Admin Users
+    </button>
+  </div>
+  <div class="col-xs-12 col-md-10 col-md-offset-1 page-panel">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Members Reported</th>
+          <th>UCB Members</th>
+          <th>Total Points</th>
+          <th>Last Event Sponsored</th>
+          <th>Next Event Sponsored</th>
+          <th></th> <!-- edit button -->
+          <th></th> <!-- delete button -->
+        </tr>
+      </thead>
+      <tbody>
+        {{#each partnerOrgs}}
+        <tr>
+          <td>{{{name}}}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>
+            <button type="button" class="btn btn-default btn-sm editOrg">
+              Edit
+            </button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-default btn-sm deleteOrg">
+              Delete
+            </button>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
+</template>
+

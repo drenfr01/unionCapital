@@ -15,9 +15,8 @@
         <input type='text' class="form-control" placeholder='Search Events' 
         id='search-box'/>
         <span class="input-group-btn">
-          <!-- TODO: MAKE THIS A CANCEL BUTTON -->
           <button class="btn btn-default btn-large">
-            &gt;  
+            &times;
           </button>
         </span>
       </div>
@@ -84,7 +83,11 @@
           <th>Name of Event</th>
           <th>Date</th>
           <th>Address</th>
-          <th># RSVPs</th> <!-- will switched based on current/past -->
+          {{#if eventTypeSelected 'current'}}
+            <th># RSVPs</th> 
+          {{else}}
+            <th># Attended</th>
+          {{/if}}
           <th>Institution</th>
           <th>Category</th>
           <th></th>
@@ -100,7 +103,7 @@
                   {{{name}}}</a></td>
               <td>{{formatDate eventDate}}</td>
               <td>{{address}}</td>
-              <td></td>
+              <td>{{numberRSVPs}}</td>
               <td>{{institution}}</td>
               <td>{{category}}</td>
               <td>
@@ -123,7 +126,7 @@
               {{name}}</a></td>
           <td>{{formatDate eventDate}}</td>
           <td>{{address}}</td>
-          <td></td>
+          <td>{{numberRSVPs}}</td>
           <td>{{institution}}</td>
           <td>{{category}}</td>
           <td>

@@ -118,9 +118,10 @@ Meteor.methods({
         state: String,
         zip: String,
         partnerOrg: String,
-        incomeBracket: String,
-        numberOfKids: String,
-        race: String
+        incomeBracket: Match.Optional(String),
+        numberOfKids: Match.Optional(String),
+        race: Match.Optional(String),
+        role: Match.Optional(String)
       }  
     });
     var newUserId = Accounts.createUser({
@@ -144,7 +145,7 @@ Meteor.methods({
                  " has created an account! They can be reached at: " +
                  attributes.email
                );
-    Roles.addUsersToRoles(newUserId, 'user');
+    Roles.addUsersToRoles(newUserId, attributes.profile.role);
   },
   updateUserProfile: function(attributes) {
     check(attributes, {
@@ -275,7 +276,9 @@ Meteor.methods({
     eventId: String
    });
 
+   var reservation = Reservations.findOne({userId: attributes.userId, eventId: attributes.eventId});
    Reservations.remove({userId: attributes.userId, eventId: attributes.eventId});
+   Events.update({_id: attributes.eventId}, {$inc: {numberRSVPs: -reservation.numberOfPeople}});
   },
   'getRsvpList': function(eventId) {
     check(eventId, String);
@@ -381,5 +384,6 @@ Meteor.methods({
     });
 
     Reservations.insert(attributes);
+    Events.update({_id: attributes.eventId}, {$inc: {numberRSVPs: attributes.numberOfPeople}});
   }
 });

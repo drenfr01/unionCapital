@@ -72,6 +72,16 @@ Events.attachSchema(new SimpleSchema({
     type: String,
     label: 'URL to the event',
     optional: true
+  },
+  numberRSVPs: {
+    type: Number,
+    label: 'Number of Reservations',
+    optional: true
+  },
+  numberAttendees: {
+    type: Number,
+    label: 'Number of actual Attendees',
+    optional: true
   }
 }));
 
