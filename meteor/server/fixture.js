@@ -2,7 +2,7 @@ Meteor.startup(function () {
   //Seeding Partner Org Sectors
   if(PartnerOrgSectors.find().count() === 0) {
     var sectors = [
-      'Children', 
+      'Children',
       'Job Training',
       'Shelter',
       'Other'
@@ -14,7 +14,7 @@ Meteor.startup(function () {
   }
 
   //Seeding Partner Organizations
-  if(PartnerOrgs.find().count() === 0) {
+  if(PartnerOrgs.find().count() === 0 && Meteor.settings.env === 'dev') {
     var partnerOrgs = [
       {name: "Kipp Academy", sector: "Children", membersReported: 50, deleteInd: false},
       {name: "Thrive in Five", sector: "Job Training", membersReported: 50, deleteInd: false},
@@ -64,7 +64,7 @@ Meteor.startup(function () {
       Kids.insert({number: kid, deleteInd: false});
     });
   }
-  
+
   //Seeding Number of People for Reservations
   if(NumberOfPeople.find().count() === 0) {
     var people = [
@@ -120,9 +120,9 @@ Meteor.startup(function () {
       Ethnicities.insert({name: ethnicity, deleteInd: false});
     });
   }
-  //Seeding event categories 
+  //Seeding event categories
   if(EventCategories.find().count() === 0) {
-    var eventCategories = 
+    var eventCategories =
       ['Education (Child/Adult)',
         'Health (Physical & Mental)',
         'Finances/Employment',
@@ -135,8 +135,8 @@ Meteor.startup(function () {
   }
 
   //Seeding affiliate organizations
-  if(EventOrgs.find().count() === 0) {
-    var organizations = 
+  if(EventOrgs.find().count() === 0 && Meteor.settings.env === 'dev') {
+    var organizations =
       [ 'Other',
         'BMC Health Net Plan',
         'Codman Academy',
@@ -153,14 +153,14 @@ Meteor.startup(function () {
   }
 
   // Users fixture
-  if ( Meteor.users.find().count() === 0 ) {
+  if ( Meteor.users.find().count() === 0 && Meteor.settings.env === 'dev') {
     var users = [
       {
          email: "admin@gmail.com", username: "admin", password: "admin",
          name: "admin", roles:['admin']
       },
       {
-        email: "user@gmail.com", username: "user", password: "user", 
+        email: "user@gmail.com", username: "user", password: "user",
         profile: {
           firstName: 'Test',
           lastName: 'User',
@@ -177,7 +177,7 @@ Meteor.startup(function () {
         roles:['user']
       },
       {
-        email: "user2@gmail.com", username: "user2", password: "user", 
+        email: "user2@gmail.com", username: "user2", password: "user",
         profile: {
           firstName: 'Test2',
           lastName: 'User2',
@@ -226,7 +226,7 @@ Meteor.startup(function () {
     Meteor.call("_houston_make_admin", admin._id);
   }
   //Events fixture
-  if ( Events.find().count() === 0 ) {
+  if ( Meteor.settings.env === 'dev' ) {
     //NOTE: months are 0 based for dates
     var events = [
       {
