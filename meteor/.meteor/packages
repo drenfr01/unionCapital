@@ -22,7 +22,6 @@ mrt:googlemaps-server
 mdg:camera
 alethes:pages
 sacha:spin
-
 momentjs:moment
 alanning:roles
 twbs:bootstrap
@@ -31,3 +30,4 @@ meteorhacks:search-source
 houston:admin
 reactive-var
 dburles:collection-helpers
+mike:mocha
