@@ -35,7 +35,7 @@ casper.test.begin('Landing Page', 8, function suite(test) {
   });
 
   casper.wait(3000, function() {
-    test.assertExists("#quickCheckIn");
+    test.assertExists("#lnkCheckIn");
   });
 
   casper.then(function() {

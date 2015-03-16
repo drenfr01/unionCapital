@@ -1,14 +1,15 @@
 casper.test.comment("Testing Member Home Page");
 
-casper.test.begin('Landing Page', 7, function suite(test) {
+casper.test.begin('Landing Page', 8, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsUser();
   });
   
   //check home page main panel
-  casper.waitForSelector("#quickCheckIn", function() {
+  casper.waitForSelector("#lnkCheckIn", function() {
     test.assertExists("#login-dropdown-list");
-    test.assertExists("#eventsButton");
+    test.assertExists("#lnkEvents");
+    test.assertExists('#lnkTotalPoints');
   });
 
   //check navbar

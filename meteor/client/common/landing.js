@@ -42,7 +42,6 @@ Template.landing.events({
     Meteor.loginWithPassword(email, password, function(error) {
       if(error) {
         addErrorMessage(error.reason);
-        Router.go('landing');
       } else {
         if(Roles.userIsInRole(Meteor.userId(), 'admin')) {
           Router.go('adminHomePage');
