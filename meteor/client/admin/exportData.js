@@ -1,5 +1,6 @@
-Template.exportPage.events({
-  'click #exportData': function(e) {
+Template.exportData.events({
+  'click #exportMembers': function(e) {
+    e.preventDefault();
     var userId = Meteor.userId();
     Meteor.call('exportData', userId, function(error, response) {
       if(error) {
@@ -24,8 +25,14 @@ Template.exportPage.events({
         blob = base64ToBlob(response);
         console.log(blob);
 
-        saveAs(blob, 'export.zip');
+        saveAs(blob, 'members.zip');
       }
     });
+  },
+  'click #exportPartnerOrgs': function(e) {
+    e.preventDefault();
+  },
+  'click #exportEvents': function(e) {
+    e.preventDefault();
   }
 });
