@@ -2,7 +2,7 @@ Template.exportData.events({
   'click #exportMembers': function(e) {
     e.preventDefault();
     var userId = Meteor.userId();
-    Meteor.call('exportData', userId, function(error, response) {
+    Meteor.call('exportMembers', userId, function(error, response) {
       if(error) {
         console.log(error.reason);
       } else {
@@ -23,7 +23,6 @@ Template.exportData.events({
         };
 
         blob = base64ToBlob(response);
-        console.log(blob);
 
         saveAs(blob, 'members.zip');
       }
