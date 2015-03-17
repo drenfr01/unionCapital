@@ -27,10 +27,10 @@ Meteor.methods({
     var user = Meteor.users.findOne(userId);
     var selector;
     //make sure only superAdmin can export unrestricted data 
-    if (!_.contains(user.roles, 'admin')) {
-      selector = {roles: {$in: ["user"]}, partnerOrg: user.partnerOrg};
-    }  else {
+    if (_.contains(user.roles, 'admin')) {
       selector = {roles: {$in: ["user"]}};
+    } else {
+      selector = {roles: {$in: ["user"]}, "profile.partnerOrg": user.profile.partnerOrg};
     }
     var zip = new jsZip();
 
@@ -41,8 +41,7 @@ Meteor.methods({
     }).fetch();
 
     var memberProfiles = helperFlattenProfile(members);
-
-
+    
     //Note: can also implement export as HTML, JSON, & XML
     var response = Async.runSync(function(done) {
         exportAsCSV(zip, memberProfiles, 'members.csv', done);
@@ -54,12 +53,11 @@ Meteor.methods({
   exportPartnerOrgs: function(userId) {
     check(userId, String);
     var user = Meteor.users.findOne(userId);
+    var zip = new jsZip();
     //make sure only superAdmin can export data 
     if (!_.contains(user.roles, 'admin')) {
-      console.log("User is not a Super Admin");
-      return;
+      return zip.generate({type: "base64"});
     } else {
-      var zip = new jsZip();
 
       var partnerOrgs = PartnerOrgs.find({}, {
         fields: {
@@ -82,7 +80,7 @@ Meteor.methods({
     var selector = {};
     //make sure only superAdmin can export unrestricted data 
     if (!_.contains(user.roles, 'admin')) {
-      selector = {institution: user.partnerOrg};
+      selector = {institution: user.profile.partnerOrg};
     } 
     var zip = new jsZip();
 
