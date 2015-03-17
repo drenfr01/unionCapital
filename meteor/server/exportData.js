@@ -21,15 +21,20 @@ exportAsCSV = function(zip, collection, fileName, done) {
   });
 };
 
-//export data security will be based on userId
-//so we'll look at the userId, determine your role
-//then proceed from there
 Meteor.methods({
   exportMembers: function(userId) {
     check(userId, String);
+    var user = Meteor.users.findOne(userId);
+    var selector;
+    //make sure only superAdmin can export unrestricted data 
+    if (!_.contains(user.roles, 'admin')) {
+      selector = {roles: {$in: ["user"]}, partnerOrg: user.partnerOrg};
+    }  else {
+      selector = {roles: {$in: ["user"]}};
+    }
     var zip = new jsZip();
 
-    var members = Meteor.users.find({roles: {$in: ["user"]}}, {
+    var members = Meteor.users.find(selector, {
       fields: {
         profile: 1
       }
@@ -41,6 +46,55 @@ Meteor.methods({
     //Note: can also implement export as HTML, JSON, & XML
     var response = Async.runSync(function(done) {
         exportAsCSV(zip, memberProfiles, 'members.csv', done);
+    });
+
+    // TODO, throw error if csv is empty so that we can catch if the csv export breaks
+    return zip.generate({type: "base64"});
+  },
+  exportPartnerOrgs: function(userId) {
+    check(userId, String);
+    var user = Meteor.users.findOne(userId);
+    //make sure only superAdmin can export data 
+    if (!_.contains(user.roles, 'admin')) {
+      console.log("User is not a Super Admin");
+      return;
+    } else {
+      var zip = new jsZip();
+
+      var partnerOrgs = PartnerOrgs.find({}, {
+        fields: {
+          _id: 0
+        }
+      }).fetch();
+
+      //Note: can also implement export as HTML, JSON, & XML
+      var response = Async.runSync(function(done) {
+        exportAsCSV(zip, partnerOrgs, 'partnerOrgs.csv', done);
+      });
+
+      // TODO, throw error if csv is empty so that we can catch if the csv export breaks
+      return zip.generate({type: "base64"});
+    }
+  },
+  exportEvents: function(userId) {
+    check(userId, String);
+    var user = Meteor.users.findOne(userId);
+    var selector = {};
+    //make sure only superAdmin can export unrestricted data 
+    if (!_.contains(user.roles, 'admin')) {
+      selector = {institution: user.partnerOrg};
+    } 
+    var zip = new jsZip();
+
+    var events = Events.find(selector, {
+      fields: {
+        _id: 0
+      }
+    }).fetch();
+
+    //Note: can also implement export as HTML, JSON, & XML
+    var response = Async.runSync(function(done) {
+      exportAsCSV(zip, events, 'events.csv', done);
     });
 
     // TODO, throw error if csv is empty so that we can catch if the csv export breaks
