@@ -14,5 +14,9 @@ Template.adminHomePage.events({
   'click #manageEvents': function(e) {
     e.preventDefault();
     Router.go('manageEvents');
+  },
+  'click #exportData': function(e) {
+    e.preventDefault();
+    Router.go('exportData');
   }
 });
