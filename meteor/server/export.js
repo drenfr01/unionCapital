@@ -8,25 +8,21 @@ Meteor.methods({
   exportData: function(userId) {
     check(userId, String);
     var zip = new jsZip();
-    var assetsFolder = zip.folder("assets");
 
     var getMembers = Meteor.users.find({roles: {$in: ["user"]}}, {
-      "profile.firstName": 1,
-      "profile.lastName": 1,
-      "profile.street1": 1,
-      "profile.street2": 1,
-      "profile.city": 1,
-      "profile.state": 1,
-      "profile.zip": 1,
-      "partnerOrg": 1,
-      "incomeBracket": 1,
-      "numberOfKids": 1,
-      "race": 1
+      fields: {
+        profile: 1
+      }
     }).fetch();
 
-    var exportMembersAsCSV = function() {
+    var getMemberProfiles = _.map(getMembers, function(profile) {
+      return profile.profile;
+    });
+
+
+    var exportMembersAsCSV = function(done) {
       var csv = fastCsv;
-      csv.writeToString(getMembers, {
+      csv.writeToString(getMemberProfiles, {
         headers: true
       }, function(error, data) {
         if (error) {
@@ -34,12 +30,15 @@ Meteor.methods({
         } else {
           zip.file('members.csv', data);
         }
+        done(error,null);
       });
     };
  
     //Note: can also implement export as HTML, JSON, & XML
-    exportMembersAsCSV();
-
+    var response = Async.runSync(function(done) {
+      exportMembersAsCSV(done);
+    });
+    
     return zip.generate({type: "base64"});
   }
 });

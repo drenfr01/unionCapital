@@ -33,3 +33,4 @@ mike:mocha
 meteorhacks:npm
 npm-container
 pfafman:filesaver
+meteorhacks:async
