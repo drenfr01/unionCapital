@@ -8,7 +8,7 @@ casper.test.begin('Landing Page', 9, function suite(test) {
     test.assertHttpStatus(200, siteName + " is up");
     //buttons
     test.assertExists('#loginSubmit');
-    test.assertExists('#signUp');
+    test.assertExists('#lnkSignUp');
     test.assertExists('#facebook');
     test.assertExists('#forgotPassword');
     //text input fields
@@ -26,7 +26,7 @@ casper.test.begin('Landing Page', 9, function suite(test) {
 
   //login should take no more than 3 seconds
   casper.wait(3000, function() {
-    test.assertExists("#quickCheckIn");
+    test.assertExists("#lnkCheckIn");
   });
 
   casper.then(function() {
