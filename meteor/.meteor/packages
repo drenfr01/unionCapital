@@ -29,7 +29,6 @@ twbs:bootstrap
 ian:accounts-ui-bootstrap-3
 meteorhacks:search-source
 houston:admin
-mike:mocha
 meteorhacks:npm
 npm-container
 pfafman:filesaver
