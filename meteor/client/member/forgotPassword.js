@@ -18,7 +18,7 @@ Template.forgotPassword.events({
           addErrorMessage(error.reason);
         } else {
           addSuccessMessage("Password successfully reset! Use new password to login.");
-          Session.set("loginStateVar", "loginPage");
+          Router.go('login');
         }
       });
     }
