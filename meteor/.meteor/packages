@@ -31,6 +31,6 @@ houston:admin
 reactive-var
 dburles:collection-helpers
 meteorhacks:npm
-
-
 npm-container
+meteorhacks:async
+pfafman:filesaver
