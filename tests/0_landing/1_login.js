@@ -1,6 +1,6 @@
 casper.test.comment('Logging In');
 
-casper.test.begin('Landing Page', 8, function suite(test) {
+casper.test.begin('Landing Page', 9, function suite(test) {
   casper.start(homeURL, function() {
   });
 
