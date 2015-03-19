@@ -1,11 +1,5 @@
 if (!(typeof MochaWeb === 'undefined')){
   MochaWeb.testOnly(function(){
-<<<<<<< .merge_file_a3x1HF
-    describe("Server initialization", function(){
-      it("should have a Meteor version defined", function(){
-        chai.assert(Meteor.release);
-      });
-=======
     describe("csv export", function(){
       it("should should flatten the doc from mongo", function(){
         query_return = [ { _id: 'v6g8xfHburkqMXkPe',
@@ -62,9 +56,6 @@ if (!(typeof MochaWeb === 'undefined')){
 
         chai.assert.deepEqual(outcome, expected);
       });
-
-
->>>>>>> .merge_file_FB6Fkw
     });
   });
 }

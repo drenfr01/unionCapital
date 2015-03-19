@@ -32,7 +32,11 @@ casper.test.begin('Landing Page', 8, function suite(test) {
   });
 
   //login should take no more than 3 seconds
-  casper.waitForSelector('#login-dropdown-list', function() {
+  casper.wait(3000, function() {
+    test.assertExists("#lnkCheckIn");
+  });
+
+  casper.then(function() {
     casper.logout(test);
   },
   function() {

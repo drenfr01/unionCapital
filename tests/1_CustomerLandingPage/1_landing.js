@@ -7,9 +7,9 @@ casper.test.begin('Landing Page', 8, function suite(test) {
   
   //check home page main panel
   casper.waitForSelector("#lnkCheckIn", function() {
+    test.assertExists('#lnkTotalPoints');
     test.assertExists("#login-dropdown-list");
     test.assertExists("#lnkEvents");
-    test.assertExists('#lnkTotalPoints');
   });
 
   //check navbar

@@ -1,6 +1,6 @@
 casper.test.comment('Signing In');
 
-casper.test.begin('Landing Page', 17, function suite(test) {
+casper.test.begin('Landing Page', 18, function suite(test) {
   casper.start(homeURL, function() {
   });
   
@@ -26,7 +26,7 @@ casper.test.begin('Landing Page', 17, function suite(test) {
     this.click("#next");
   });
 
-  casper.waitForSelector('#street1', function() {
+  casper.waitWhileSelector('#next', function(){
     test.assertExists('#street1');
     test.assertExists('#street2');
     test.assertExists('#city');
@@ -36,19 +36,40 @@ casper.test.begin('Landing Page', 17, function suite(test) {
     test.assertExists('#incomeBrackets');
     test.assertExists('#numberOfKids');
     test.assertExists('#races');
+
+    test.assertExists('#back');
     test.assertExists('#submit');
   });
 
   casper.then(function() {
-    this.sendKeys('#street1', '500 Mass Ave');
-    this.sendKeys('#street2', 'Apt 2');
+    this.sendKeys('#street1', '10 Emerson Place');
+    this.sendKeys('#street2', '24H');
     this.sendKeys('#city', 'Boston');
     this.sendKeys('#state', 'MA');
-    this.sendKeys('#zip', '02118');
+    this.sendKeys('#zip', '02114');
+
+    this.fillSelectors('form#organizationForm', {
+      'select[id="organizations"]': "KIPP Academy"
+    }, false);
+
+    this.fillSelectors('form#incomeBracketForm', {
+      'select[id="incomeBrackets"]': "10,000-19,999"
+    }, false);
+
+    this.fillSelectors('form#numberOfKidsForm', {
+      'select[id="numberOfKids"]': "1"
+    }, false);
+
+    this.fillSelectors('form#raceForm', {
+      'select[id="races"]': "African-American or Black"
+    }, false);
+
+    this.capture('signUpPage.jpg');
+
     this.click('#submit');
   });
 
-  casper.waitForSelector('#lnkCheckIn', function() {
+  casper.wait(3000, function() {
     test.assertExists("#lnkCheckIn");
   });
 
