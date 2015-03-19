@@ -3,7 +3,7 @@ UserPhoto = function() {
 
 	// True if the last photo attempted to be taken has failed
 	self.takePhotoFailed = new ReactiveVar(false);
-	
+
 	// Data URI of a successful photo
 	self.photoURI = new ReactiveVar(null);
 };
@@ -17,7 +17,7 @@ _.extend(UserPhoto.prototype, {
     if (self.photoURI.get()) {
       var newFile = new FS.File(self.photoURI.get());
       var currentDate = new Date();
-      
+
       newFile.metadata = {
         userId: Meteor.userId(),
         type: 'userEvent',
@@ -33,11 +33,14 @@ _.extend(UserPhoto.prototype, {
     } else {
        callback && callback({ reason: 'There is no file URI' });
     }
-  }, 
+  },
 
-  // Removes a photo from the collection
-  // Will add this when we need it
-  remove: function() {},
+  // Deletes photo reference
+  remove: function() {
+    var self = this;
+
+    self.photoURI.set(null);
+  },
 
   // Uses mdg:camera to take a photo and store it locally
   takePhoto: function() {

@@ -35,7 +35,7 @@ var insertTransaction = function(eventId, imageId) {
   Meteor.call('insertTransaction', attributes, function(error) {
     if(error) {
       addErrorMessage(error.reason);
-      Router.go('submitNewEvent'); 
+      Router.go('submitNewEvent');
     } else {
       addSuccessMessage('Transaction successfully submitted');
       Router.go('memberHomePage');
@@ -79,7 +79,7 @@ Template.eventCheckinDetails.helpers({
 })
 
 Template.eventCheckinDetails.events({
-	
+
 	'change #durationSlider': function() {
 		hours.set($('#durationSlider').val());
 	},
@@ -90,7 +90,7 @@ Template.eventCheckinDetails.events({
     var attributes = {
       userId: Meteor.userId(),
       eventId: this._id,
-      
+
       // hoursSpent: parseInt($('#hours').val(),10),
     };
   },
@@ -102,7 +102,7 @@ Template.eventCheckinDetails.events({
 
   'click .check-in': function(e) {
     e.preventDefault();
-    
+
     var attributes = {
       userId: Meteor.userId(),
       imageId: 1,
@@ -118,6 +118,10 @@ Template.eventCheckinDetails.events({
   'click #back': function(e) {
   	e.preventDefault();
   	Router.go('checkin');
+  },
+
+  'click #removePhoto': function() {
+    userPhoto.remove();
   }
 
 });
