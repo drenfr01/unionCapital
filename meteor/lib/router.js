@@ -50,7 +50,7 @@ Router.onBeforeAction(function() {
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for members
-  {only: ['allMembers', 'viewMemberProfile','manageEvents']}
+  {only: ['allMembers', 'viewMemberProfile','manageEvents', 'exportData']}
 );
 
 //Partner Admins
@@ -91,6 +91,13 @@ Router.route('/viewMemberProfile/:_id', function () {
   });
 }, {
   name: 'viewMemberProfile'
+});
+
+Router.route('/exportData', function() {
+  this.render('exportData');
+},
+{
+  name: 'exportData'
 });
 
 Router.route('/addPartnerAdminUser', function() {
