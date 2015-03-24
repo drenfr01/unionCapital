@@ -1,6 +1,6 @@
 casper.test.comment("Testing Super Admin Manage Events");
 
-casper.test.begin('Manage Events', 23, function suite(test) {
+casper.test.begin('Manage Events', 34, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsSuperAdmin();
   });
@@ -40,7 +40,7 @@ casper.test.begin('Manage Events', 23, function suite(test) {
     this.clickLabel('Somerville Cooking Festival','a');
   });
 
-  //check editing events
+  //check click on single event
   casper.waitWhileSelector('#addEvent', function() {
     test.assertExists('.back');
     test.assertTextExists('A festival of cooking for the masses');
@@ -50,56 +50,50 @@ casper.test.begin('Manage Events', 23, function suite(test) {
     this.click('.back');
   });
 
-  casper.waitWhileSelector('#partnerAdminUsers', function() {
-    test.assertExists('#viewPartnerOrgs');
-    test.assertExists('#addPartnerAdminUser');
-
-    test.assertExists('table');
-
-    test.assertTextExists('laura@gmail.com');
-    test.assertExists(".editUser");
-    test.assertExists('.deleteUser');
-
-    this.click('#addPartnerAdminUser');
+  //got to Edit Event Page
+  casper.waitForSelector('#addEvent', function() {
+    this.page.injectJs('../../jquery-1.11.2.min.js');
+    this.evaluate(function() {
+      $("td:contains('Somerville Cooking Festival')").parent().find('.editEvent').click();
+    });
   });
-
-  casper.wait(500, function(){
-    test.assertExists('#firstName');
-    test.assertExists('#lastName');
-    test.assertExists('#userEmail');
-    test.assertExists('#userPassword');
-    test.assertExists('#street1');
-    test.assertExists('#street2');
-    test.assertExists('#city');
-    test.assertExists('#state');
-    test.assertExists('#zip');
-    test.assertExists('#organizations');
-
-    test.assertExists('#back');
+  
+  //Check Page then edit event
+  casper.waitWhileSelector('#addEvent', function() {
+    test.assertExists('#eventName');
+    test.assertExists('#eventAddress');
+    test.assertExists('#eventUrl');
+    test.assertExists('#eventDesc');
+    test.assertExists('#eventOrg');
+    test.assertExists('#eventCategory');
+    test.assertExists('#eventDate');
+    test.assertExists("#eventPoints");
+    test.assertExists("#back");
     test.assertExists('#submit');
 
-    this.sendKeys('#firstName', 'Casper');
-    this.sendKeys('#lastName', 'Admin');
-    this.sendKeys('#userEmail', 'casperAdmin@gmail.com');
-    this.sendKeys('#userPassword', 'casperjs');
-    this.sendKeys('#street1', '20 Prospect St');
-    this.sendKeys('#street2');
-    this.sendKeys('#city', 'Cambridge');
-    this.sendKeys('#state', 'MA');
-    this.sendKeys('#zip', '02139');
-    this.fillSelectors('form#addPartnerAdminUserForm', {
-      'select[id="organizations"]': "Thrive in Five"
-    }, false);
+    this.sendKeys('#eventName', 'Somerville Cooking Jubilee', {reset: true});
     this.click('#submit');
   });
 
-  casper.waitForSelector('table', function() {
-    test.assertTextExists('Partner Admin Search');
-    test.assertTextExists('Casper');
-    test.assertTextExists('casperAdmin@gmail.com');
+  //Check event edited, then delete it
+  casper.wait(500, function(){
+    this.click('#past');
+    test.assertTextExists('Somerville Cooking Jubilee');  
+    test.assertTextExists('Boston Music Festival');
+
+    this.evaluate(function() {
+      $("td:contains('Somerville Cooking Jubilee')").parent().find('.deleteEvent').click();
+    });
+
   });
 
-  //TODO: test out edit and delete buttons for partner org
+  casper.wait(500, function() {
+    test.assertTextDoesntExist('Somerville Cooking Jubilee');
+    test.assertTextExists('Boston Music Festival');
+    
+  });
+
+
   casper.then(function() {
     casper.logout(test);
   });

@@ -82,6 +82,13 @@ Template.manageEvents.events({
     e.preventDefault();
     Router.go('editEvent', {_id: this._id});
   },
+  'click .deleteEvent': function(e) {
+    Meteor.call('deleteEvent', this._id, function(error) {
+      if(error) {
+        addErrorMessage(error.reason);
+      }
+    });
+  },
   'click #addEvent': function(e) {
     e.preventDefault();
     Router.go('addEvents');
