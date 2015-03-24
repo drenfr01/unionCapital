@@ -5,10 +5,12 @@
 				<span class="glyphicon glyphicon-chevron-left"></span><b> BACK</b>
 			</button>
 		</div>
+		{{#if notOnlyLeft}}
 		<div class="btn-group">
 			<button type="{{thisButtonType}}" class="btn btn-default btn-lg nav-right-button" id="{{thisButtonId}}">
 				<b>{{thisButtonText}} </b><span class="{{thisButtonIcon}}"></span>
 			</button>
 		</div>
+		{{/if}}
 	</div>
 </template>

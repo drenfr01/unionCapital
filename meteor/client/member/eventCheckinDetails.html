@@ -1,0 +1,62 @@
+<template name="eventCheckinDetails">
+  <div class="col-xs-12 col-md-6 col-md-offset-3">
+  	<div class="col-xs-12 page-panel">
+      <div class="row text-center">
+        <div class="col-xs-12">
+        	<h3>{{name}}</h3>
+        	<hr class="panel-divider">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 description-text">
+        	<p>{{description}}</p>
+        </div>
+        <hr class="panel-divider">
+      </div>
+    </div>
+    <div class="col-xs-12 page-panel text-center time-attending-panel">
+    	<div class="row">
+        <div class="col-xs-12">
+        	<p>I'll be here for <span class="time-attending">{{timeAttending}}</span> hours!</p>
+        </div>
+      </div>
+      <div class="row">
+      	<div class="col-xs-12">
+      		<div id="durationSlider" class="no-ui-slider"></div>
+      	</div>
+      </div>
+    </div>
+    {{#if hasPhoto}}
+	    <div class="col-xs-12 page-panel page-panel-flush photo-panel panel-link" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url({{hasPhoto}});" id="photoPanel">
+	    	<div class="flush-panel-text">
+	      	<span class="glyphicon glyphicon-remove pull-left" id="removePhoto"></span><span class="text">Click To Remove Photo</span>
+	      	<!-- <span class="glyphicon glyphicon-chevron-right pull-right" id="viewPhoto"></span> -->
+	      </div>
+	    </div>
+	    <div class="col-xs-12 page-panel panel-link text-center check-in check-in-confirm">
+	      <div class="row">
+	      	<div class="col-xs-12">
+	      		Confirm<br>Check-In
+	      	</div>
+	      </div>
+	    </div>
+    {{else}}
+	    <div class="col-xs-12 page-panel panel-link photo-checkin text-center" id="addPhoto">
+	      <div class="row">
+	      	<div class="col-xs-12">
+	      		Add Photo
+	      		<span class="glyphicon glyphicon-camera icon-btn"></span>
+	      	</div>
+	      </div>
+	    </div>
+	   	<div class="col-xs-12 page-panel panel-link no-photo-checkin text-center check-in">
+	      <div class="row">
+	      	<div class="col-xs-12">
+	      		Check in Without Photo
+	      	</div>
+	      </div>
+	    </div>
+    {{/if}}
+    {{> bottomNavPanel buttonType="cancel" }}
+  </div>
+</template>

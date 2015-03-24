@@ -8,18 +8,24 @@
   The padding top is to handle the navbar collapsed on mobile
   The navbar is 50px by default
 */
+
+.logged-in {
+  padding-top: 80px;
+}
+
+.logged-out {
+  padding-top: 10px;
+}
+
 html { height: 100%; }
 body { height: 100%;
-    margin: 0 ;
-    padding-top: 80px;
+    margin: 0 ; 
     background-color: #e3e3e3;
-     }
+}
 
-nav{
+nav {
   background-color: white;
   padding: 20px 15px 10px 15px !important;
-
-
 }
 
 hr.grad {
@@ -92,13 +98,13 @@ h3 small {
 
 /*map ? */
 
-#map-canvas {
+.com-map { 
   width: 100%;
   /* have to either give pixel value or set all container columns to 100% */
   height: 500px;
 }
 
-/* Removes rounded edges from bootstrap button */
+/* Removes rounded edges from bootstrap buttons and inputs */
 .btn {
   border-radius: 1px;
 }
@@ -107,7 +113,6 @@ h3 small {
   position: relative;
   overflow: hidden;
 }
-
 
 /*nav bar*/
 .navbar-default{
@@ -459,6 +464,9 @@ margin-right: auto;
   margin-top: 5px;
   padding-top: 15px;
   padding-bottom: 15px;
+  /*-moz-box-shadow: 1px 1px 1px #777;
+  -webkit-box-shadow: 1px 1px 1px #777;
+  box-shadow: 1px 1px 1px #777;*/
 }
 
 .page-panel-md {
@@ -549,4 +557,111 @@ margin-right: auto;
   border-bottom-style: none;
   border-top-style: none;
   line-height: 100%;
+}
+
+.checkin-map {
+  width: 100%;
+  height: 120px;
+  border-style: solid;
+  border-color: #bddc6f;
+  border-width: 1px;
+}
+
+.flush-input input {
+  border-radius: 0px;
+}
+
+.input-group-addon {
+  background-color: white; /* #255f8a; */
+  border-radius: 0px;
+}
+
+/* Button on the end of a selected accordion */
+.accordion-button {
+  margin-top: 10px;
+}
+
+.check-in-button {
+  height: 200%;
+  font-size: 200%;
+}
+
+.check-in-div {
+  display: none;
+}
+
+/* checkInDetails */
+.description-text p {
+  font-size: 120%;
+  font-style: italic;
+}
+
+.icon-btn {
+  margin-left: 10px;
+}
+
+.photo-checkin {
+  font-size: 180%;
+  background-color: blue;
+  color: white;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.no-photo-checkin {
+  font-size: 120%;
+  background-color: green;
+  color: white;
+}
+
+.check-in-confirm {
+  height: 300%;
+  font-size: 250%;
+}
+
+.no-ui-slider {
+  margin-bottom: 35px;
+}
+
+.time-attending {
+  font-size: 150%;
+  color: blue;  
+}
+
+.photo-panel {
+  /*height: 50px;*/
+  background-size: 100%;
+  background-position-y: -300px;
+  font-size: 130%;
+  color: white;
+}
+
+.photo-panel .text {
+  padding-left: 10px;
+}
+
+.flush-panel-text {
+  margin: 15px;
+}
+
+.time-attending-panel {
+  font-size: 130%;  
+  font-style: bold;
+}
+
+/* Camera CSS override for mobile */
+
+.camera-popup {
+    left: inherit !important;
+    margin-left: inherit !important;
+}
+
+.camera-popup .center {
+    max-width: 95%;
+    max-height: 90%;
+}
+
+.camera-popup .photo-preview {
+    max-width: 90%;
+
 }

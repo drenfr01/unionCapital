@@ -26,7 +26,7 @@ Template.reviewPhotos.helpers({
   'getPoints': function(eventId) {
     var event = Events.findOne(eventId);
     if(event.isPointsPerHour) {
-      return event.pointsPerHour * totalHours(this.hoursSpent, this.minutesSpent);
+      return event.pointsPerHour * this.hoursSpent;
     } else {
       return event.points;
     }

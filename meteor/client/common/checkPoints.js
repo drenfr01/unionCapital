@@ -20,7 +20,7 @@ Template.checkPoints.helpers({
     var event = getEvent(this);
     if(event) {
       if(event.isPointsPerHour) {
-        return Math.round(event.pointsPerHour * totalHours(this.hoursSpent,this.minutesSpent));
+        return Math.round(event.pointsPerHour * this.hoursSpent);
       } else {
         return event.points;
       }
