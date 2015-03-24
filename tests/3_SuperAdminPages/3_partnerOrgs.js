@@ -46,7 +46,7 @@ casper.test.begin('Partner Org Management', 14, function suite(test) {
     this.fillSelectors('form#insertPartnerOrgForm', {
       'select[id="orgSector"]': "Other"
     }, false);
-    this.sendKeys('#membersReported', 500);
+    this.sendKeys('#membersReported', '500');
 
     this.click('#submit');
   });
