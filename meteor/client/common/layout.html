@@ -1,22 +1,22 @@
 <template name="layout">
-{{#if isInRole 'admin'}}
-  {{> superAdminNav}}
-{{/if}}
+  {{#if isInRole 'admin'}}
+    {{> superAdminNav}}
+  {{/if}}
 
-{{#if isInRole 'partnerAdmin'}}
-  {{> partnerAdminNav}}
-{{/if}}
+  {{#if isInRole 'partnerAdmin'}}
+    {{> partnerAdminNav}}
+  {{/if}}
 
+  {{#if isInRole 'user'}}
+    {{> memberNav}}
+  {{/if}}
 
-{{#if isInRole 'user'}}
-  {{> memberNav}}
-{{/if}}
-<div class="row">
-  <div class="col-xs-4 col-xs-offset-8">
-    {{> alerts}}
+  <div class="container-fluid {{ isLoggedIn }}">
+    <div class="row">
+      {{> alerts}}
+    </div>
+    <div class="row">
+      {{> yield}}
+    </div>
   </div>
-</div>
-<div class="container-fluid {{isLoggedIn}}">
-  {{> yield}}
-</div>
 </template>
