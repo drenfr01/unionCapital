@@ -1,12 +1,12 @@
 <template name="memberHomePage">
   <div class="col-xs-12 col-md-6 col-md-offset-3 text-center">
-    <div class="row text-center">
+    <div class="row text-center" id="totalPointsDiv">
       <div class="col-xs-12 page-panel panel-link points-panel">
         <a href="checkPoints">{{totalPoints}} POINTS</a>
       </div>
     </div>
     <div class="row text-center">
-      <div class="col-xs-12 page-panel panel-link">
+      <div class="col-xs-12 page-panel panel-link" id="checkInDiv">
         <a href="checkin">
           <img src="images/UCBbutton.png" alt="Check Into Event" height="200" width="200">
           <br>Check In
@@ -14,12 +14,12 @@
       </div>
     </div>
     <div class="row text-center">
-      <div class="col-xs-12 page-panel today-panel panel-link">
+      <div class="col-xs-12 page-panel today-panel panel-link" id="eventsCalendarDiv">
           <a href="eventsCalendar">Today in Boston</a>
       </div>
     </div>
     <div class="row text-center">
-      <div class="col-xs-12 page-panel last-panel">
+      <div class="col-xs-12 page-panel last-panel" id="fbLikeBoxDiv">
         <div id="fb-root"></div>
         <div class="fb-like-box" data-href="https://www.facebook.com/unioncapitalboston"
           data-colorscheme="light" data-show-faces="true" data-header="false"
