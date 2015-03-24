@@ -100,7 +100,6 @@ Template.takePicture.events({
         eventId: this._id,
         needsApproval: true,
         hoursSpent: parseInt($('#hours').val(),10),
-        minutesSpent: parseInt($('#minutes').val(),10),
         pendingEventName: eventName,
         pendingEventDescription: eventDescription,
         transactionDate: Date()

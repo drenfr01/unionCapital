@@ -226,6 +226,12 @@ Router.map(function() {
     data: function() { return Events.findOne({_id: this.params._id}); }
   });
 
+  this.route('eventCheckinDetails', {
+    path: 'checkin/:id',
+    data: function() {
+      return Events.findOne({_id: this.params.id});
+    }
+  })
 
   this.route('checkPoints', {
     path: '/checkPoints'
@@ -262,7 +268,7 @@ Router.map(function() {
     path: '/checkin',
     template: 'checkIntoEvent',
     // data: function() {
-    //   return this.params.eventId;
+    //   return this.params.hash;
     // }
   });
   this.route('showMemberRewards', {path: '/rewards'});

@@ -56,8 +56,6 @@ if (!(typeof MochaWeb === 'undefined')){
 
         chai.assert.deepEqual(outcome, expected);
       });
-
-
     });
   });
 }

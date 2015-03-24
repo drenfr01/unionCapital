@@ -62,8 +62,7 @@ Template.quickCheckIn.events({
       eventId: Session.get('closestEvent')._id,
       needsApproval: false,
       transactionDate: Date(),
-      hoursSpent: parseInt($('#hours').val(),10) || 0,
-      minutesSpent: parseInt($('#minutes').val(),10) || 0
+      hoursSpent: parseInt($('#hours').val(),10) || 0
     };
     //if you are a points per hour event than the user
     //has to enter points

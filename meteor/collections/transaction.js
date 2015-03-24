@@ -32,18 +32,13 @@ Transactions.attachSchema(new SimpleSchema({
       optional: true
     },
     transactionDate: {
-      type: String,
+      type: Date,
       label: 'Transaction Date',
       optional: true
     },
     hoursSpent: {
       type: Number,
       label: 'Number of Hour Spent',
-      optional: true
-    },
-    minutesSpent: {
-      type: Number,
-      label: 'Number of Minutes Spent',
       optional: true
     },
     //TODO: remove optional flag once all transactions update

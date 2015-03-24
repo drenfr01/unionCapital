@@ -4,6 +4,11 @@ casper.test.begin('Landing Page', 9, function suite(test) {
   casper.start(homeURL, function() {
   });
 
+  casper.then(function() {
+    if (this.exists('#login-buttons-logout'))
+      this.click('#login-buttons-logout');
+  })
+
   casper.waitForSelector("#loginSubmit", function() {
     test.assertHttpStatus(200, siteName + " is up");
     //buttons
@@ -14,7 +19,9 @@ casper.test.begin('Landing Page', 9, function suite(test) {
     //text input fields
     test.assertExists('#userEmail');
     test.assertExists('#userPassword');
-  });
+  }, function() {
+    return this.capture('landing.jpg');
+  }, 5000);
 
   //TODO: this is probably a security flaw, shouldn't have password data
   //of any user in free text...
@@ -31,7 +38,10 @@ casper.test.begin('Landing Page', 9, function suite(test) {
 
   casper.then(function() {
     casper.logout(test);
-  });
+  },
+  function() {
+    this.capture('logout.jpg');
+  }, 3000);
 
   casper.run(function() {
     test.done();

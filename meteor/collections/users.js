@@ -16,7 +16,7 @@ Meteor.users.totalPointsFor = function(userId) {
   .reduce(function(sum, transaction) {
     var event = Transactions.eventFor(transaction);
     if(event.isPointsPerHour) {
-      return Math.round(sum += event.pointsPerHour * totalHours(transaction.hoursSpent, transaction.minutesSpent));
+      return Math.round(sum += event.pointsPerHour * transaction.hoursSpent);
     } else {
       return sum += event.points;
     }

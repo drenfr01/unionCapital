@@ -10,4 +10,8 @@ wget http://nodejs.org/dist/v0.8.23/node-v0.8.23-linux-x86.tar.gz
 sudo tar -xvzf node-v0.8.23-linux-x86.tar.gz --strip=1
 rm -f node-v0.8.23-linux-x86.tar.gz
 curl https://install.meteor.com | sudo sh
-sudo npm install -g meteorite
+sudo apt-get install -y vim
+sudo cp -a /vagrant/. ~/
+sudo mount --bind /home/vagrant/unionCapital/meteor/.meteor/ /vagrant/unionCapital/meteor/.meteor/
+echo "sudo mount --bind /home/vagrant/unionCapital/meteor/.meteor/ /vagrant/unionCapital/meteor/.meteor/" >> ~/.bashrc && source ~/.bashrc
+echo "Symlink created"

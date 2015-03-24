@@ -22,14 +22,15 @@ mrt:googlemaps-server
 mdg:camera
 alethes:pages
 sacha:spin
-
 momentjs:moment
 alanning:roles
 twbs:bootstrap
 ian:accounts-ui-bootstrap-3
 meteorhacks:search-source
 houston:admin
+reactive-var
+dburles:collection-helpers
 meteorhacks:npm
 npm-container
-pfafman:filesaver
 meteorhacks:async
+pfafman:filesaver

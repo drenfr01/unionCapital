@@ -3,16 +3,25 @@ Meteor.methods({
     return Images.remove(imageId);
   },
   insertTransaction: function(attributes) {
+    
+    // Determines whether this transaction requires approval
+    checkInRules.validate(attributes);
+
+    // If the user isn't logging an action from the past,
+    // we use the server's time as the sourc eof truth
+    // We should probably figure out a better way to do this
+    if (!attributes.transactionDate)
+      attributes.transactionDate = new Date();
+
     check(attributes, {
       userId: Match.Optional(String),
       eventId: Match.Optional(String),
       hoursSpent: Match.Optional(Number),
-      minutesSpent: Match.Optional(Number),
       imageId: Match.Optional(String),
       needsApproval: Match.Optional(Boolean),
       pendingEventName: Match.Optional(String),
       pendingEventDescription: Match.Optional(String),
-      transactionDate: Match.Optional(String)
+      transactionDate: Match.Optional(Date)
     });
 
     var currentUser = Meteor.users.findOne(attributes.userId);
@@ -37,6 +46,7 @@ Meteor.methods({
      throw new Meteor.Error(400, "This may be a duplicate submission");
     } else {
       attributes.deleteInd = false;
+      console.log(' 88888888  ' + attributes.imageId);
       return Transactions.insert(attributes);
     }
   },
@@ -188,7 +198,6 @@ Meteor.methods({
     check(attributes, {
       eventId: String,
       hoursSpent: Number,
-      minutesSpent: Number,
       userId: String,
       userLong: Number,
       userLat: Number
@@ -207,7 +216,7 @@ Meteor.methods({
       //TODO: consider adding user geolocation info to transaction?
       Transactions.insert({userId: attributes.userId, eventId: event._id, needsApproval: false, 
                           transactionDate: Date(), hoursSpent: attributes.hoursSpent, 
-                          minutesSpent: attributes.minutesSpent, deleteInd: false
+                          deleteInd: false
       }); 
       return "Congrats, you are within: " + distance +  " km of your event. Adding points to your total!";
     } else {
@@ -256,8 +265,7 @@ Meteor.methods({
 
     Transactions.insert({userId: attributes.userId, eventId: event._id, 
                         needsApproval: false, 
-                        transactionDate: Date(), hoursSpent: hours, 
-                        minutesSpent: minutes,
+                        transactionDate: Date(), hoursSpent: hours,
                         deleteInd: false
     });
 
