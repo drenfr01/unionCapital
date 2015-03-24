@@ -1,6 +1,6 @@
 casper.test.comment("Testing Super Admin Partner Organization Management");
 
-casper.test.begin('Partner Org Management', 14, function suite(test) {
+casper.test.begin('Partner Org Management', 21, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsSuperAdmin();
   });
