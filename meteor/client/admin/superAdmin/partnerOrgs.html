@@ -24,11 +24,12 @@
       <thead>
         <tr>
           <th>Name</th>
+          <th>Sector</th>
           <th>Members Reported</th>
           <th>UCB Members</th>
           <th>Total Points</th>
-          <th>Last Event Sponsored</th>
-          <th>Next Event Sponsored</th>
+          <th>Last Event</th>
+          <th>Next Event</th>
           <th></th> <!-- edit button -->
           <th></th> <!-- delete button -->
         </tr>
@@ -37,7 +38,8 @@
         {{#each partnerOrgs}}
         <tr>
           <td>{{{name}}}</td>
-          <td></td>
+          <td>{{sector}}</td>
+          <td>{{membersReported}}</td>
           <td></td>
           <td></td>
           <td></td>
