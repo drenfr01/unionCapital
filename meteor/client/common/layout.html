@@ -11,12 +11,11 @@
 {{#if isInRole 'user'}}
   {{> memberNav}}
 {{/if}}
-<!--
 <div class="row">
   <div class="col-xs-4 col-xs-offset-8">
     {{> alerts}}
   </div>
-</div> -->
+</div>
 <div class="container-fluid {{isLoggedIn}}">
   {{> yield}}
 </div>

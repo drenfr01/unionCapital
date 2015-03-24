@@ -464,42 +464,33 @@ margin-right: auto;
   margin-top: 5px;
   padding-top: 15px;
   padding-bottom: 15px;
-  /*-moz-box-shadow: 1px 1px 1px #777;
-  -webkit-box-shadow: 1px 1px 1px #777;
-  box-shadow: 1px 1px 1px #777;*/
 }
 
 .page-panel-md {
-  height: 30px;
+  height: 2.6em;
 }
+
 
 /* Custom page panel links */
 .signup-panel {
   background-color: #B4E874;
   color: white;
-  font-size: 150%;
-  padding-top: 30px;
-  padding-bottom: 30px;
 }
 
 .lost-pw-panel {
   background-color: #74E8DB;
   color: white;
-  padding-top: .5em;
-  padding-bottom: .5em;
 }
 
 .facebook-panel {
   background-color: blue;
   color: white;
-  padding-top: 7px;
-  padding-bottom: 7px;
 }
 
 .page-panel-flush {
   background-color: white;
-  margin-bottom: 5px;
-  margin-top: 5px;
+  margin-bottom: .5em;
+  margin-top: .5em;
   padding: 0;
 }
 
@@ -663,5 +654,8 @@ margin-right: auto;
 
 .camera-popup .photo-preview {
     max-width: 90%;
+}
 
+.no-border {
+  border-style: none;
 }
