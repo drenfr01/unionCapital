@@ -3,7 +3,7 @@ casper.test.comment('Signing In');
 casper.test.begin('Landing Page', 18, function suite(test) {
   casper.start(homeURL, function() {
   });
-  
+
   casper.waitForSelector("#lnkSignUp", function() {
     this.click("#lnkSignUp");
   });
@@ -70,7 +70,7 @@ casper.test.begin('Landing Page', 18, function suite(test) {
   });
 
   casper.wait(3000, function() {
-    test.assertExists("#lnkCheckIn");
+    test.assertExists("#checkInDiv");
   });
 
   casper.then(function() {

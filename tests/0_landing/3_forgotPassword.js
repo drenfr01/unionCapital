@@ -3,7 +3,7 @@ casper.test.comment('Signing In');
 casper.test.begin('Landing Page', 8, function suite(test) {
   casper.start(homeURL, function() {
   });
-  
+
   casper.waitForSelector("#forgotPassword", function() {
     this.click("#forgotPassword");
   });
@@ -31,12 +31,12 @@ casper.test.begin('Landing Page', 8, function suite(test) {
 
     this.sendKeys("#userEmail", user);
     this.sendKeys("#userPassword", newPassword);
-    
+
     this.click("#loginSubmit");
   });
 
   casper.wait(1000, function() {
-    test.assertExists("#lnkCheckIn");
+    test.assertExists("#checkInDiv");
   });
 
   casper.then(function() {

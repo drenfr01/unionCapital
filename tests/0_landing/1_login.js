@@ -33,7 +33,7 @@ casper.test.begin('Landing Page', 9, function suite(test) {
 
   //login should take no more than 3 seconds
   casper.wait(3000, function() {
-    test.assertExists("#lnkCheckIn");
+    test.assertExists("#checkInDiv");
   });
 
   casper.then(function() {

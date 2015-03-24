@@ -4,12 +4,12 @@ casper.test.begin('Landing Page', 8, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsUser();
   });
-  
+
   //check home page main panel
-  casper.waitForSelector("#lnkCheckIn", function() {
-    test.assertExists('#lnkTotalPoints');
+  casper.waitForSelector("#totalPointsDiv", function() {
+    test.assertExists('#checkInDiv');
     test.assertExists("#login-dropdown-list");
-    test.assertExists("#lnkEvents");
+    test.assertExists("#eventsCalendarDiv");
   });
 
   //check navbar
