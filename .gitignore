@@ -5,3 +5,5 @@ uploads/
 private/
 tests/.reports/
 tests/a1-package-stubs.js
+*.jpg
+*.png
