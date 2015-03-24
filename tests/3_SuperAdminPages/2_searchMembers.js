@@ -1,6 +1,6 @@
 casper.test.comment("Testing Super Admin Member Search");
 
-casper.test.begin('All Members', 14, function suite(test) {
+casper.test.begin('All Members', 20, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsSuperAdmin();
   });
