@@ -40,9 +40,20 @@ Meteor.publish("reservations", function() {
   return Reservations.find();
 });
 
+//TODO: this probably deserves a conversation around
+//denormalization. Also, you don't need to pass userId
 Meteor.publish('transactions', function(userId) {
+  var partnerAdmin = Meteor.users.findOne({_id: this.userId});
   if (Roles.userIsInRole(this.userId, 'admin')) {
     return Transactions.find();
+  } else if(Roles.userIsInRole(this.userId, 'partnerAdmin')) {
+    //TODO: This will perform horribly at scale. Please refactor....
+    var users = Meteor.users.find({"profile.partnerOrg": partnerAdmin.profile.partnerOrg}, {fields: {_id: 1}}).fetch();
+    var usersArray = _.map(users, function(user) {
+      return user._id;
+    });
+    console.log(usersArray);
+    return Transactions.find({userId: {$in: usersArray}});
   } else {
     return Transactions.find({userId: userId});
   }

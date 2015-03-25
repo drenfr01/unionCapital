@@ -255,17 +255,19 @@ Meteor.methods({
       points: Number,
       description: String
     });
+    console.log('Adding points to user');
 
     //calculate appropriate hours and minutes based on Administer AdHoc events
     var hours = Math.floor(attributes.points / 100);
-    var minutes = Math.ceil((attributes.points % 100) / 100 * 60);
 
     //insert Transaction
     var event = Events.findOne({name: 'Admin Add Points'});
 
-    Transactions.insert({userId: attributes.userId, eventId: event._id, 
+    Transactions.insert({userId: attributes.userId, 
+                        eventId: event._id, 
                         needsApproval: false, 
-                        transactionDate: Date(), hoursSpent: hours,
+                        transactionDate: Date(), 
+                        hoursSpent: hours,
                         deleteInd: false
     });
 
