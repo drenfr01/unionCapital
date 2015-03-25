@@ -52,7 +52,6 @@ Meteor.publish('transactions', function(userId) {
     var usersArray = _.map(users, function(user) {
       return user._id;
     });
-    console.log(usersArray);
     return Transactions.find({userId: {$in: usersArray}});
   } else {
     return Transactions.find({userId: userId});

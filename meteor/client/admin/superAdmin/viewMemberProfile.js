@@ -17,6 +17,7 @@ Template.viewMemberProfile.events({
 
     Meteor.call('addPointsToUser', attributes, function(error) {
       if(error) {
+        console.log(error.reason);
         addErrorMessage(error.reason);
       } else {
         addSuccessMessage("Added " + points + " points to user!");
