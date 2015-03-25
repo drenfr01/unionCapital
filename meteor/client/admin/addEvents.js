@@ -60,7 +60,7 @@ Template.addEvents.events({
   'click #pointsCheckbox': function(e) {
     Session.set('displayPointsPerHour', $('#pointsCheckbox').prop('checked'));
   },
-  'click #submit': function(e) {
+  'click #back': function(e) {
     Router.go('manageEvents');
   }
 });

@@ -22,3 +22,12 @@ Template.editEvent.helpers({
     });
   }
 });
+
+Template.editEvent.events({
+  'click #back': function(e) {
+    Router.go('manageEvents');
+  },
+  'click #submit': function(e) {
+    Router.go('manageEvents');
+  }
+});
