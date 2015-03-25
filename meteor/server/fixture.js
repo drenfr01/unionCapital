@@ -177,6 +177,23 @@ Meteor.startup(function () {
         roles:['user']
       },
       {
+        email: "KIPPUser@gmail.com", username: "KIPPUser", password: "user", 
+        profile: {
+          firstName: 'kipp',
+          lastName: 'User',
+          street1: '101 Main St',
+          street2: "",
+          city: 'Cambridge',
+          state: 'MA',
+          zip: '02142',
+          partnerOrg: "KIPP Academy",
+          incomeBracket: "20,000-24,999",
+          numberOfKids: "4",
+          race: "White"
+        },
+        roles:['user']
+      },
+      {
         email: "user2@gmail.com", username: "user2", password: "user", 
         profile: {
           firstName: 'Test2',
