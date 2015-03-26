@@ -37,7 +37,11 @@ Meteor.publish("events", function() {
 });
 
 Meteor.publish("reservations", function() {
-  return Reservations.find();
+  if(Roles.userIsInRole(this.userId, 'admin')) {
+    return Reservations.find();
+  } else {
+    this.ready();
+  }
 });
 
 //TODO: this probably deserves a conversation around
