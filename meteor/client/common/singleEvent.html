@@ -19,14 +19,14 @@
     </span>
     <span class="col-md-5">
       <h4>{{name}}</h4>
-      <p> <b>Date:</b> {{formatDate startDate}}-{{formatDate endDate}}</p>
+      <p> <b>Date:</b> {{formatDate eventDate}}</p>
       <p> <b>Address:</b> {{address}}</p>
       <p> <b>Event website:</b> <a href={{url}} > {{url}} </a></p>
       <p> <b>Description:</b> {{description}}</p>
       <p> <b>Affiliated Institution:</b> {{institution}}</p>
       <p> <b>Category:</b> {{category}}</p>
-      <p> <b>Points:</b> {{points}}</p>
-      <p> <b>Number of Union Capitalists Attending: </b> {{totalReservations}}</p>
+      <p> <b>Points:</b> {{pointsPerHour}}</p>
+      <p> <b>Number of Union Capitalists Attending: </b> {{numberRSVPs}}</p>
       <table class="table table-striped">
         <thead>
           <th>Name</th>
@@ -38,6 +38,8 @@
             <td>{{firstName}} {{lastName}}</td>
             <td> {{numberOfPeople}}</td>
           </tr>
+        {{else}}
+          Data restricted
         {{/each}}
         </tbody>
       </table>

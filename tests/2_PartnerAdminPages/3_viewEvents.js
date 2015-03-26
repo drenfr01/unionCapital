@@ -27,7 +27,7 @@ casper.test.begin('Manage Partner Events', 34, function suite(test) {
 
     //default is current events
     test.assertTextExists('Cambridge Science Festival'); //KIPP
-    test.assertTextDoesntExist('Cambridge Film Festival'); //Thrive in Five
+    test.assertTextExists('Cambridge Film Festival'); //Thrive in Five
 
     this.click('#past');
   });
@@ -35,14 +35,13 @@ casper.test.begin('Manage Partner Events', 34, function suite(test) {
   //check past events
   casper.wait(500, function() {
     test.assertTextExists('Boston Music Festival'); //KIPP
-    test.assertTextDoesntExist('Somerville Cooking Festival'); //Thrive in Five
-    test.assertTextDoesntExist('Admin Add Points'); //Other
+    test.assertTextExists('Somerville Cooking Festival'); //Thrive in Five
+    test.assertTextExists('Admin Add Points'); //Other
 
     this.clickLabel('Somerville Cooking Festival','a');
   });
 
   //check click on single event
-  /*
   casper.waitWhileSelector('#addEvent', function() {
     test.assertExists('.back');
     test.assertTextExists('A festival of cooking for the masses');
@@ -94,8 +93,6 @@ casper.test.begin('Manage Partner Events', 34, function suite(test) {
     test.assertTextExists('Boston Music Festival');
     
   });
-
- */
 
   casper.then(function() {
     casper.logout(test);

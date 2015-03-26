@@ -1,22 +1,16 @@
 Session.setDefault('rsvpList', null);
 
-Template.singleEvent.rendered = function() {
-  Meteor.call('getRsvpList', this.data._id, function(error, data) {
-    if(error) {
-      addErrorMessage(error.reason);
-    } else {
-      Session.set('rsvpList',data);
-    }
-  });
-};
 Template.singleEvent.helpers({
   'rsvpList': function() {
-    return Session.get('rsvpList');
-  },
-  'totalReservations': function() {
-    return _.reduce(Session.get('rsvpList'), function(sum, reservation) { 
-      return sum + reservation.numberOfPeople; 
-    }, 0);
+    var reservations = Reservations.getReservationsForEvent(this._id).fetch();
+    //WARNING: this may not scale well, running repeated calls against db
+    //I don't know if Meteor is smart enough to cache mongo cursor
+    return _.map(reservations, function(reservation) {
+      var user = Meteor.users.findOne({_id: reservation.userId});
+      return {firstName: user.profile.firstName, 
+        lastName: user.profile.lastName.substring(0,1), 
+        numberOfPeople: reservation.numberOfPeople};
+    });
   }
 });
 
