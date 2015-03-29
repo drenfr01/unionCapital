@@ -10,53 +10,32 @@
         </div>
         <div class="form-group">
           <label for="userPassword" class="sr-only">Password</label>
-          <input type="password" class="form-control" id="userPassword" 
+          <input type="password" class="form-control" id="userPassword"
           placeholder="Enter Password">
         </div>
-        <div class="btn-group btn-group-justified" role="group">
-          <div class="btn-group">
-            <button type="submit" class="btn btn-default btn-lg login-left-button" id="facebook">
-              <img src="images/FB-f-Logo__blue_29.png"> 
-            </button>
-          </div>
-          <div class="btn-group">
-            <button type="submit" class="btn btn-default btn-lg login-right-button" id="loginSubmit">
-              Log In <span class="glyphicon glyphicon-chevron-right"></span>
-            </button>
-          </div>
+        <div class="btn-group" role="group">
+          <button type="submit" class="btn btn-default btn-lg no-border" id="loginSubmit">
+            Log In <span class="glyphicon glyphicon-chevron-right"></span>
+          </button>
         </div>
-
-        <!-- <button type="submit" class="btn btn-default btn-block panel-btn-attach" id="loginSubmit">Login</button>
-        <hr class="button-divider">
-        <button type="button" class="btn btn-default btn-block panel-btn-attach" id="facebook">Login with Facebook</button> -->
-      </form> 
+      </form>
     </div>
-    <!-- <div class="row">
-      <div class="col-xs-12">
-        <a href="#">
-          <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel facebook-panel" id="facebook">
-            Login with Facebook
-          </div>
-        </a>
-      </div>
-    </div> -->
-    <div class="row">
-      <div class="col-xs-12">
-        <a href="#">
-          <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel signup-panel" id="lnkSignUp">
-            SIGN UP!
-          </div>
-        </a>
+    <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel">
+      <div class="btn-group">
+        <button class="btn btn-default btn-lg no-border" id="facebook">
+          <img src="images/FB-f-Logo__blue_29.png">
+        </button>
       </div>
     </div>
-    <div class="row">
-      <div class="col-xs-12">
-        <a href="#">
-          <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel lost-pw-panel" id="forgotPassword">
-            Forgot Password?
-          </div>
-        </a>
+    <a href="#">
+      <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel signup-panel" id="lnkSignUp">
+        SIGN UP!
       </div>
-    </div>
+    </a>
+    <a href="#">
+      <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel lost-pw-panel" id="forgotPassword">
+        Forgot Password?
+      </div>
+    </a>
   </div>
 </template>
