@@ -19,7 +19,7 @@ Router.onBeforeAction(function() {
     this.next();
   }
 },
-  {except: ['login', 'signup', 'collectUserDemographics', 'forgotPassword']}
+  {except: ['login', 'signup', 'collectUserDemographics', 'forgot']}
 );
 
 //Members
@@ -199,7 +199,7 @@ Router.map(function() {
     this.render('collectUserDemographics');
   });
 
-  this.route('/forgotPassword', function() {
+  this.route('/forgot', function() {
     this.render('forgotPassword');
   });
   //Member Routes

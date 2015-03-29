@@ -10,14 +10,6 @@ Template.landing.helpers({
 });
 
 Template.landing.events({
-  'click #lnkSignUp': function(e) {
-    e.preventDefault();
-    Router.go('signup');
-  },
-  'click #forgotPassword': function(e) {
-    e.preventDefault();
-    Router.go('forgotPassword');
-  },
   'click #facebook': function(e) {
     e.preventDefault();
     Meteor.loginWithFacebook(function(error) {
