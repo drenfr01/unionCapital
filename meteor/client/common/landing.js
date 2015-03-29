@@ -3,7 +3,7 @@ Template.landing.rendered = function() {
   //to the member home page...
   if (Meteor.userId()) {
     Router.go('memberHomePage');
-  } 
+  }
 };
 
 Template.landing.helpers({
@@ -12,7 +12,7 @@ Template.landing.helpers({
 Template.landing.events({
   'click #lnkSignUp': function(e) {
     e.preventDefault();
-    Router.go('createNewUser');
+    Router.go('signup');
   },
   'click #forgotPassword': function(e) {
     e.preventDefault();

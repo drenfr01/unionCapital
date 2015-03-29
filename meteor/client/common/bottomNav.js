@@ -1,6 +1,6 @@
 // Define the html elements and classes based on the paramter passed here
 var types = {
-	
+
 	submit: {
 		type: 'submit',
 		text: 'SUBMIT',
@@ -32,7 +32,7 @@ var types = {
 }
 
 Template.bottomNav.helpers({
-	
+
 	thisButtonType: function () {
 		if(types[this.buttonType] !== null && types[this.buttonType] !== undefined)
 			return types[this.buttonType].type;

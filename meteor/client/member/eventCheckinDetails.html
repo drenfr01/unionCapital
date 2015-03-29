@@ -41,11 +41,7 @@
       </div>
       <div class="row">
   	    <div class="col-xs-12 page-panel panel-link text-center check-in check-in-confirm">
-  	      <div class="row">
-  	      	<div class="col-xs-12">
-  	      		Confirm<br>Check-In
-  	      	</div>
-  	      </div>
+          <a href="#">Confirm<br>Check-In</a>
   	    </div>
       </div>
     {{else}}
@@ -61,16 +57,12 @@
       </div>
       <div class="row">
   	   	<div class="col-xs-12 page-panel panel-link no-photo-checkin text-center check-in">
-  	      <div class="row">
-  	      	<div class="col-xs-12">
-  	      		Check in Without Photo
-  	      	</div>
-  	      </div>
+  	      <a href="#">Check in Without Photo</a>
   	    </div>
       </div>
     {{/if}}
     <div class="row">
-      {{> bottomNavPanel buttonType="cancel" }}
+      {{> bottomNavLinksPanel buttonType="cancel" }}
     </div>
   </div>
 </template>
