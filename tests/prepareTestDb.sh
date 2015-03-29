@@ -1,0 +1,1 @@
+mongo localhost:3001/meteor --eval "db.users.remove({ 'profile.firstName': 'CasperJS' });"
