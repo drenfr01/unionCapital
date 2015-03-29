@@ -3,7 +3,7 @@ Meteor.methods({
     return Images.remove(imageId);
   },
   insertTransaction: function(attributes) {
-    
+
     // Determines whether this transaction requires approval
     checkInRules.validate(attributes);
 
@@ -27,14 +27,14 @@ Meteor.methods({
     var currentUser = Meteor.users.findOne(attributes.userId);
 
     var duplicateTransaction = Transactions.findOne({userId: attributes.userId, imageId: attributes.imageId,
-                                                    pendingEventName: attributes.pendingEventName, 
+                                                    pendingEventName: attributes.pendingEventName,
                                                     pendingEventDescription: attributes.pendingEventDescription
     });
 
     //TODO: setup MAIL URL for union capital website
     if(attributes.needsApproval) {
       console.log('A Union Capitalist has submitted a photo for approval',
-                  currentUser.profile.firstName + ' ' + currentUser.profile.lastName + 
+                  currentUser.profile.firstName + ' ' + currentUser.profile.lastName +
                     ' requests that you log onto the admin website and approve or reject their event.' +
                     ' If there is any questions they can be reached at: ' + currentUser.emails[0].address
                  );
@@ -84,8 +84,8 @@ Meteor.methods({
     });
 
     //this creates a new event if the transaction isn't tied to an existing one
-    //Currently the only way to tell DIY events is the active flag, which 
-    //isn't ideal because a regular event could be de-activated 
+    //Currently the only way to tell DIY events is the active flag, which
+    //isn't ideal because a regular event could be de-activated
     if(attributes.eventId) {
       eventId = attributes.eventId;
     } else {
@@ -93,8 +93,8 @@ Meteor.methods({
       attributes.isPointsPerHour = false;
       eventId = insertEvent(attributes);
     }
-    Transactions.update(attributes.transactionId, 
-                        {$set: { needsApproval: false, eventId: eventId} }); 
+    Transactions.update(attributes.transactionId,
+                        {$set: { needsApproval: false, eventId: eventId} });
 
     var user = Meteor.users.findOne(attributes.userId);
 
@@ -122,7 +122,7 @@ Meteor.methods({
         numberOfKids: Match.Optional(String),
         race: Match.Optional(String),
         role: Match.Optional(String)
-      }  
+      }
     });
     var newUserId = Accounts.createUser({
       email: attributes.email,
@@ -141,7 +141,7 @@ Meteor.methods({
     emailHelper(adminEmail,
                 adminEmail,
                 'New User Registered',
-                attributes.profile.firstName + " " + attributes.profile.lastName + 
+                attributes.profile.firstName + " " + attributes.profile.lastName +
                  " has created an account! They can be reached at: " +
                  attributes.email
                );
@@ -155,7 +155,7 @@ Meteor.methods({
         firstName: String,
         lastName: String,
         zip: String
-      }  
+      }
     });
     Meteor.users.update(attributes.userId,
                         {$set: { profile: attributes.profile
@@ -175,18 +175,18 @@ Meteor.methods({
     emailHelper(adminEmail,
                 adminEmail,
                 'New User Registered through Facebook',
-                attributes.profile.firstName + " " + attributes.profile.lastName + 
+                attributes.profile.firstName + " " + attributes.profile.lastName +
                  " has created an account! They can be reached at: " +
                  attributes.email
                );
   },
   geocodeAddress: function(address) {
-    var myFuture = new Future(); 
+    var myFuture = new Future();
     googlemaps.geocode(
-      address, 
+      address,
       function(err, data) {
         if(err) {
-          myFuture.throw(error);
+          myFuture.throw(err);
         } else {
           myFuture.return(data.results[0].geometry);
         }
@@ -214,10 +214,10 @@ Meteor.methods({
 
     if(distance < maxDistance) {
       //TODO: consider adding user geolocation info to transaction?
-      Transactions.insert({userId: attributes.userId, eventId: event._id, needsApproval: false, 
-                          transactionDate: Date(), hoursSpent: attributes.hoursSpent, 
+      Transactions.insert({userId: attributes.userId, eventId: event._id, needsApproval: false,
+                          transactionDate: Date(), hoursSpent: attributes.hoursSpent,
                           deleteInd: false
-      }); 
+      });
       return "Congrats, you are within: " + distance +  " km of your event. Adding points to your total!";
     } else {
       throw new Meteor.Error(400, "You are too far away from the event" +
@@ -233,10 +233,10 @@ Meteor.methods({
 
     var currentUser = Meteor.users.findOne(attributes.userId);
 
-    emailHelper(adminEmail, 
-                adminEmail, 
+    emailHelper(adminEmail,
+                adminEmail,
                 'A Union Capitalist has sent you a comment',
-                currentUser.profile.firstName + ' ' + currentUser.profile.lastName + 
+                currentUser.profile.firstName + ' ' + currentUser.profile.lastName +
                   ' says: ' + attributes.comment
                );
   },
@@ -263,8 +263,8 @@ Meteor.methods({
     //insert Transaction
     var event = Events.findOne({name: 'Admin Add Points'});
 
-    Transactions.insert({userId: attributes.userId, eventId: event._id, 
-                        needsApproval: false, 
+    Transactions.insert({userId: attributes.userId, eventId: event._id,
+                        needsApproval: false,
                         transactionDate: Date(), hoursSpent: hours,
                         deleteInd: false
     });
@@ -313,15 +313,15 @@ Meteor.methods({
     var users =  Meteor.users.find().fetch();
 
     var tableRows = _.map(users, function(user) {
-      
+
       //WARNING: unclear if below is a big performance hit (2 cursor calls)
       var transactionCount = Transactions.find({userId: user._id}).count();
       var totalPoints = Meteor.users.totalPointsFor(user._id);
-      var mostRecentTransaction = Transactions.find({userId: user._id}, 
+      var mostRecentTransaction = Transactions.find({userId: user._id},
                             {sort: {transactionDate: -1}, limit: 1}).fetch()[0] ||
                               { eventId: "", transactionDate: ""};
       var mostRecentEvent = Events.findOne(mostRecentTransaction.eventId) || {name: ""};
-      
+
       //if user is admin
       var userProfile = user.profile || {firstName: 'admin', lastName: '', zip: ''};
       //if user is logging in with facebook
@@ -332,11 +332,11 @@ Meteor.methods({
 
 
       return {firstName: userFirstName.toLowerCase(),
-        lastName: userLastName.toLowerCase(), 
+        lastName: userLastName.toLowerCase(),
         zip: userZip,
         lastEvent: mostRecentEvent.name,
         lastEventDate: mostRecentTransaction.transactionDate,
-        numberOfTransactions: transactionCount, 
+        numberOfTransactions: transactionCount,
         totalPoints: totalPoints};
     });
     var results = _.sortBy(tableRows, attributes.sortOn);
@@ -365,7 +365,7 @@ Meteor.methods({
 
     //note: not sure why > or < didn't work in below comparator but "-" did...
     var results =  allEarners.sort(function(m1, m2) { return parseInt(m2.totalPoints,10) - parseInt(m1.totalPoints,10); }).slice(0,limit);
-    
+
     var topEarners = [];
     results.forEach(function(earner) {
       var user = Meteor.users.findOne(earner.userId);

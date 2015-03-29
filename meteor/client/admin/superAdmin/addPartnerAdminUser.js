@@ -5,6 +5,9 @@ Template.addPartnerAdminUser.helpers({
 });
 
 Template.addPartnerAdminUser.events({
+  'click #back': function(e) {
+    Router.go('partnerAdminView');
+  },
   'click #submit': function(e) {
     e.preventDefault();
 
@@ -30,6 +33,7 @@ Template.addPartnerAdminUser.events({
         addErrorMessage(error.reason);
       } else {
         addSuccessMessage("Successfully Created User");
+        Router.go('partnerAdminView');
       }
     });
   }

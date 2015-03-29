@@ -10,7 +10,7 @@
 */
 
 .logged-in {
-  padding-top: 80px;
+  padding-top: 75px;
 }
 
 .logged-out {
@@ -439,18 +439,11 @@ margin-right: auto;
 @keyframes fadeOut { 0% {opacity: 0;} 10% {opacity: 1;} 90% {opacity: 1;} 100% {opacity: 0;}
 }
 
-.alerts{
-  position: fixed;
-  z-index: 10000;
-  padding: 10px;
-  pointer-events: none;
-}
 .alert {
-  animation: fadeOut 2700ms ease-in 0s 1 forwards;
-  -webkit-animation: fadeOut 2700ms ease-in 0s 1 forwards; -moz-animation: fadeOut 2700ms ease-in 0s 1 forwards;
-  width: 250px;
-  float: right;
-  clear: both; margin-bottom: 5px; pointer-events: auto;
+  clear: both;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  pointer-events: auto;
 }
 
 /* Fixes the width of FB plugin */
@@ -464,42 +457,33 @@ margin-right: auto;
   margin-top: 5px;
   padding-top: 15px;
   padding-bottom: 15px;
-  /*-moz-box-shadow: 1px 1px 1px #777;
-  -webkit-box-shadow: 1px 1px 1px #777;
-  box-shadow: 1px 1px 1px #777;*/
 }
 
 .page-panel-md {
-  height: 30px;
+  height: 2.6em;
 }
+
 
 /* Custom page panel links */
 .signup-panel {
   background-color: #B4E874;
   color: white;
-  font-size: 150%;
-  padding-top: 30px;
-  padding-bottom: 30px;
 }
 
 .lost-pw-panel {
   background-color: #74E8DB;
   color: white;
-  padding-top: .5em;
-  padding-bottom: .5em;
 }
 
 .facebook-panel {
   background-color: blue;
   color: white;
-  padding-top: 7px;
-  padding-bottom: 7px;
 }
 
 .page-panel-flush {
   background-color: white;
-  margin-bottom: 5px;
-  margin-top: 5px;
+  margin-bottom: .5em;
+  margin-top: .5em;
   padding: 0;
 }
 
@@ -532,6 +516,11 @@ margin-right: auto;
   color: inherit;
   display: block;
   padding: .5em 1em;
+}
+
+.top-level-row {
+  padding-right: 7px;
+  padding-left: 7px;
 }
 
 /* ------------------------------ */
@@ -664,5 +653,8 @@ margin-right: auto;
 
 .camera-popup .photo-preview {
     max-width: 90%;
+}
 
+.no-border {
+  border-style: none;
 }

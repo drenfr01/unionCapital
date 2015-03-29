@@ -20,5 +20,8 @@ Template.addPartnerOrg.helpers({
 Template.addPartnerOrg.events({
   'click #back': function(e) {
     Router.go('partnerOrgs');
+  },
+  'click #submit': function(e) {
+    Router.go('partnerOrgs');
   }
 });
