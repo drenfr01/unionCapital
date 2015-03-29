@@ -1,5 +1,11 @@
 casper.test.comment("Testing Partner Admin Manage Events");
 
+/*
+ * View All Events: can view RSVP list of own event, can't see it on another
+ * Edit event: can edit one event, can't edit another
+ * Delete event: can delete own event, can't delete another
+ */
+
 casper.test.begin('Manage Partner Events', 34, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsPartnerAdmin();
@@ -35,17 +41,17 @@ casper.test.begin('Manage Partner Events', 34, function suite(test) {
   //check past events
   casper.wait(500, function() {
     test.assertTextExists('Boston Music Festival'); //KIPP
-    test.assertTextExists('Somerville Cooking Festival'); //Thrive in Five
+    test.assertTextExists('Cambridge Film Festival'); //Thrive in Five
     test.assertTextExists('Admin Add Points'); //Other
 
-    this.clickLabel('Somerville Cooking Festival','a');
+    this.clickLabel('Cambridge Film Festival','a');
   });
 
   //check click on single event
   casper.waitWhileSelector('#addEvent', function() {
     test.assertExists('.back');
     test.assertTextExists('A festival of cooking for the masses');
-    test.assertTextExists('50');
+    test.assertTextExists('Thrive in Five');
     test.assertExists('iframe'); //TODO: this is a bad test for the google map
 
     this.click('.back');
@@ -55,7 +61,7 @@ casper.test.begin('Manage Partner Events', 34, function suite(test) {
   casper.waitForSelector('#addEvent', function() {
     this.page.injectJs('../../jquery-1.11.2.min.js');
     this.evaluate(function() {
-      $("td:contains('Somerville Cooking Festival')").parent().find('.editEvent').click();
+      $("td:contains('Cambridge Film Festival')").parent().find('.editEvent').click();
     });
   });
   
@@ -72,7 +78,7 @@ casper.test.begin('Manage Partner Events', 34, function suite(test) {
     test.assertExists("#back");
     test.assertExists('#submit');
 
-    this.sendKeys('#eventName', 'Somerville Cooking Jubilee', {reset: true});
+    this.sendKeys('#eventName', 'Cambridge Film Jubilee', {reset: true});
     this.click('#submit');
   });
 
