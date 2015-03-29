@@ -27,7 +27,7 @@ Template.landing.events({
   },
   'click #loginSubmit': function(e) {
     e.preventDefault();
-
+    console.log('click #loginSubmit clicked')
     var email =  $('#userEmail').val();
     var password = $('#userPassword').val();
 

@@ -3,16 +3,19 @@
   <br>
   <div class="row">
     <div class="col-xs-12 text-center">
-      <button type="button" class="btn btn-lg btn-primary" id="addEvent">
-        Add Event
-      </button>
+      <a href="addEvents" type="button" class="btn btn-lg btn-primary">
+        <span class="glyphicon glyphicon-plus"></span> Add Event
+      </a>
+      <a href="uploadEvents" type="button" class="btn btn-lg btn-info">
+        <span class="glyphicon glyphicon-upload"></span> Upload Event CSV
+      </a>
     </div>
   </div>
   <br>
   <div class="row">
     <div class="col-xs-6 col-xs-offset-3">
       <div class="input-group">
-        <input type='text' class="form-control" placeholder='Search Events' 
+        <input type='text' class="form-control" placeholder='Search Events'
         id='search-box'/>
         <span class="input-group-btn">
           <button class="btn btn-default btn-large">
@@ -51,7 +54,7 @@
             Past
         </label>
         <label class="radio-inline">
-          <input type="radio" name="inlineRadioOptions" 
+          <input type="radio" name="inlineRadioOptions"
             id="current" value="current">
             Current
         </label>
@@ -79,7 +82,7 @@
           <th>Date</th>
           <th>Address</th>
           {{#if eventTypeSelected 'current'}}
-            <th># RSVPs</th> 
+            <th># RSVPs</th>
           {{else}}
             <th># Attended</th>
           {{/if}}

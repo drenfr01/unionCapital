@@ -97,7 +97,6 @@ Template.manageEvents.events({
         }
       });
     } else {
-      console.log('Permission Denied: You do not own this event');
       addErrorMessage('Permission Denied: You do not own this event');
     }
   },
