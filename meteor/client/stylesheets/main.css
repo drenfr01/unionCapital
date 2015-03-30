@@ -466,6 +466,7 @@ margin-right: auto;
 
 /* Custom page panel links */
 .signup-panel {
+  font-size: 200%;
   background-color: #B4E874;
   color: white;
 }
