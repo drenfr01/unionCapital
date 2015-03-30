@@ -1,8 +1,15 @@
 //This file has utility methods for the CasperJS tests in the test/ directory
 
+errorCount = 0;
+
 siteName = 'Union Capital';
 homeURL = "http://localhost:3000/login";
 casper.options.logLevel = "debug";
+casper.test.on('fail', function() {
+  if (errorCount ===0)
+    casper.capture('screenshots/fail.png');
+  errorCount++;
+});
 
 user = "casperjs@gmail.com";
 newPassword = "duncan";
@@ -45,7 +52,7 @@ casper.logout = function logout(test) {
   casper.then(function() {
     this.click("#login-dropdown-list");
   });
-  
+
   casper.waitForSelector("#login-buttons-logout", function() {
     this.click("#login-buttons-logout");
   });

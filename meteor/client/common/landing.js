@@ -3,21 +3,13 @@ Template.landing.rendered = function() {
   //to the member home page...
   if (Meteor.userId()) {
     Router.go('memberHomePage');
-  } 
+  }
 };
 
 Template.landing.helpers({
 });
 
 Template.landing.events({
-  'click #lnkSignUp': function(e) {
-    e.preventDefault();
-    Router.go('createNewUser');
-  },
-  'click #forgotPassword': function(e) {
-    e.preventDefault();
-    Router.go('forgotPassword');
-  },
   'click #facebook': function(e) {
     e.preventDefault();
     Meteor.loginWithFacebook(function(error) {

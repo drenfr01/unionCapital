@@ -7,7 +7,7 @@ Router.configure({
 
 //Route security
 
-//General Security for non-logged in users. May eventually 
+//General Security for non-logged in users. May eventually
 //want a few screens that "guests" can browse
 Router.onBeforeAction(function() {
   if(Meteor.loggingIn()) {
@@ -19,7 +19,7 @@ Router.onBeforeAction(function() {
     this.next();
   }
 },
-  {except: ['login', 'createNewUser', 'collectUserDemographics', 'forgotPassword']} 
+  {except: ['login', 'signup', 'collectUserDemographics', 'forgot']}
 );
 
 //Members
@@ -34,7 +34,7 @@ Router.onBeforeAction(function() {
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for members
-  {only: ['memberHomePage', 'eventsCalendar', 'checkPoints', 'contactUs','share']} 
+  {only: ['memberHomePage', 'eventsCalendar', 'checkPoints', 'contactUs','share']}
 );
 
 //Both Admins
@@ -80,7 +80,7 @@ Router.onBeforeAction(function() {
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for superAdmins
-  {only: ['adminHomePage', 'addCommunityEvents', 'partnerAdminView','addPartnerAdminUser','addPartnerOrg', 'partnerOrgs']} 
+  {only: ['adminHomePage', 'addCommunityEvents', 'partnerAdminView','addPartnerAdminUser','addPartnerOrg', 'partnerOrgs']}
 );
 
 Router.route('/viewMemberProfile/:_id', function () {
@@ -166,14 +166,14 @@ Router.route('/manageEvents', function() {
 
 Router.route('/partnerAdminPage', function() {
   this.render('partnerAdminHomePage');
-}, 
+},
 {
   name: 'partnerAdminHomePage'
 });
 
 Router.route('/partnerMembers', function() {
   this.render('partnerMembers');
-}, 
+},
 {
   name: 'partnerMembers'
 });
@@ -191,7 +191,7 @@ Router.map(function() {
     this.render('landing');
   });
 
-  this.route('/createNewUser', function() {
+  this.route('/signup', function() {
     this.render('createNewUser');
   });
 
@@ -199,7 +199,7 @@ Router.map(function() {
     this.render('collectUserDemographics');
   });
 
-  this.route('/forgotPassword', function() {
+  this.route('/forgot', function() {
     this.render('forgotPassword');
   });
   //Member Routes
@@ -260,7 +260,7 @@ Router.map(function() {
     path: '/singleEvents/:_id',
     data: function() { return Events.findOne({_id: this.params._id }); }
   });
-  
+
   //TODO: I don't know how to do polymorphic routes yet,
   //but ideally the below two routes would be combined
   //into one

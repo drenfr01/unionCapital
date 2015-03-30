@@ -18,7 +18,7 @@ Template.collectUserDemographics.helpers({
 
 Template.collectUserDemographics.events({
   'click #back': function(e) {
-    Router.go('createNewUser');
+    Router.go('signup');
   },
   'click #submit': function(e) {
     e.preventDefault();
@@ -52,7 +52,7 @@ Template.collectUserDemographics.events({
         Meteor.loginWithPassword(attributes.email, attributes.password,
                                  function(error) {
                                    if(error) {
-                                     addErrorMessage(error.reason); 
+                                     addErrorMessage(error.reason);
                                      Router.go('landing');
                                    } else {
                                      Router.go('memberHomePage');
