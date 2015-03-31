@@ -1,16 +1,21 @@
 <template name="bottomNav">
-	<div class="btn-group btn-group-justified" role="group">
-		<div class="btn-group">
-			<button type="button" class="btn btn-default btn-lg nav-left-button" id="back">
-				<span class="glyphicon glyphicon-chevron-left"></span><b> BACK</b>
-			</button>
+	<div class="row">
+		<div class="col-xs-12 page-panel page-panel-flush">
+			<div class="btn-group btn-group-justified" role="group">
+				<div class="btn-group">
+					<button type="button" class="btn btn-default btn-lg nav-left-button" id="back">
+						<span class="glyphicon glyphicon-chevron-left"></span><b> BACK</b>
+					</button>
+				</div>
+				{{#if notOnlyLeft}}
+					<div class="btn-group">
+						<button type="{{thisButtonType}}" class="btn btn-default btn-lg nav-right-button" id="{{thisButtonId}}">
+							<b>{{thisButtonText}} </b><span class="{{thisButtonIcon}}"></span>
+						</button>
+					</div>
+				{{/if}}
+			</div>
 		</div>
-		{{#if notOnlyLeft}}
-		<div class="btn-group">
-			<button type="{{thisButtonType}}" class="btn btn-default btn-lg nav-right-button" id="{{thisButtonId}}">
-				<b>{{thisButtonText}} </b><span class="{{thisButtonIcon}}"></span>
-			</button>
-		</div>
-		{{/if}}
+		<!-- <button type="submit" style="display: none;"></button> -->
 	</div>
 </template>

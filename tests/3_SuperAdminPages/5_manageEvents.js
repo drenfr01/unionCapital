@@ -4,7 +4,7 @@ casper.test.begin('Manage Events', 34, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsSuperAdmin();
   });
-  
+
   //check home page main panel
   casper.waitForSelector("#login-dropdown-list", function() {
     test.assertExists('#manageEvents');
@@ -35,7 +35,7 @@ casper.test.begin('Manage Events', 34, function suite(test) {
   //check past events
   casper.wait(500, function() {
     test.assertTextExists('Somerville Cooking Festival');
-    test.assertTextExists('Boston Music Festival'); 
+    test.assertTextExists('Boston Music Festival');
 
     this.clickLabel('Somerville Cooking Festival','a');
   });
@@ -57,7 +57,7 @@ casper.test.begin('Manage Events', 34, function suite(test) {
       $("td:contains('Somerville Cooking Festival')").parent().find('.editEvent').click();
     });
   });
-  
+
   //Check Page then edit event
   casper.waitWhileSelector('#addEvent', function() {
     test.assertExists('#eventName');
@@ -78,19 +78,19 @@ casper.test.begin('Manage Events', 34, function suite(test) {
   //Check event edited, then delete it
   casper.wait(500, function(){
     this.click('#past');
-    test.assertTextExists('Somerville Cooking Jubilee');  
+    test.assertTextExists('Somerville Cooking Jubilee');
     test.assertTextExists('Boston Music Festival');
 
     this.evaluate(function() {
-      $("td:contains('Somerville Cooking Jubilee')").parent().find('.deleteEvent').click();
+      $("td:contains('Boston Music Festival')").parent().find('.deleteEvent').click();
     });
 
   });
 
   casper.wait(500, function() {
-    test.assertTextDoesntExist('Somerville Cooking Jubilee');
-    test.assertTextExists('Boston Music Festival');
-    
+    test.assertTextExists('Somerville Cooking Jubilee');
+    test.assertTextDoesntExist('Boston Music Festival');
+
   });
 
 

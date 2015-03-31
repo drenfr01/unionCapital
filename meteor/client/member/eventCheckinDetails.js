@@ -35,7 +35,6 @@ var insertTransaction = function(eventId, imageId) {
   Meteor.call('insertTransaction', attributes, function(error) {
     if(error) {
       addErrorMessage(error.reason);
-      Router.go('submitNewEvent');
     } else {
       addSuccessMessage('Transaction successfully submitted');
       Router.go('memberHomePage');
@@ -120,7 +119,7 @@ Template.eventCheckinDetails.events({
   	Router.go('checkin');
   },
 
-  'click #removePhoto': function() {
+  'click #photoPanel': function() {
     userPhoto.remove();
   }
 

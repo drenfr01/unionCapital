@@ -63,6 +63,13 @@ Template.bottomNav.helpers({
 
 	notOnlyLeft: function() {
 		return this.buttonType !== 'cancel';
+	},
+
+	leftClass: function() {
+		if (this.buttonType === 'cancel')
+			return 'only-left-nav';
+		else
+			return '';
 	}
 
 });

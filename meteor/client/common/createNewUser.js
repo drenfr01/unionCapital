@@ -3,7 +3,7 @@ Template.createNewUser.events({
     e.preventDefault();
     Router.go('login');
   },
-  'click #next': function(e) {
+  'click #submit': function(e) {
     e.preventDefault();
     Session.set("profile", {
         firstName: $('#firstName').val(),

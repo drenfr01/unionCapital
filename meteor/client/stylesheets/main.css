@@ -407,6 +407,10 @@ button > #addMember {
 
 }
 
+.memberRow {
+  cursor: pointer;
+}
+
 .bottom-layout{
   background-color: black;
 
@@ -510,6 +514,7 @@ margin-right: auto;
 
 .panel-link {
   padding: 0px;
+  cursor: pointer;
 }
 
 .panel-link a {
