@@ -407,6 +407,10 @@ button > #addMember {
 
 }
 
+.memberRow {
+  cursor: pointer;
+}
+
 .bottom-layout{
   background-color: black;
 

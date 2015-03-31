@@ -4,7 +4,7 @@ casper.test.begin('All Members', 20, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsSuperAdmin();
   });
-  
+
   //check home page main panel
   casper.waitForSelector("#login-dropdown-list", function() {
     test.assertExists('#allMembers');
@@ -30,7 +30,7 @@ casper.test.begin('All Members', 20, function suite(test) {
     this.click('.memberRow');
   });
 
-  casper.waitWhileSelector('table', function() {
+  casper.waitForSelector('#deleteMember', function() {
     test.assertTextExists('CasperJS');
     test.assertTextExists('User Profile');
     test.assertExists('#deleteMember');
@@ -39,7 +39,7 @@ casper.test.begin('All Members', 20, function suite(test) {
     test.assertExists('#addPoints');
 
     test.assertTextExists('No pending transactions!');
-    test.assertTextExists('No points accrued yet!');
+    test.assertTextExists('Somerville Cooking');
   });
 
   //test adding points

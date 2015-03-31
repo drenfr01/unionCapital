@@ -1,6 +1,6 @@
 casper.test.comment("Testing Member Check-In");
 
-casper.test.begin('Check-In', 18, function suite(test) {
+casper.test.begin('Check-In', 17, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsUser();
   });
