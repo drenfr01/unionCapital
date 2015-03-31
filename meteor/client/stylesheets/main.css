@@ -510,6 +510,7 @@ margin-right: auto;
 
 .panel-link {
   padding: 0px;
+  cursor: pointer;
 }
 
 .panel-link a {
