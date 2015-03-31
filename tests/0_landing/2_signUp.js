@@ -14,7 +14,7 @@ casper.test.begin('Landing Page', 18, function suite(test) {
     test.assertExists("#lastName");
     test.assertExists("#userEmail");
     test.assertExists("#userPassword");
-    test.assertExists("#next");
+    test.assertExists("#submit");
   });
 
   casper.then(function() {
@@ -23,10 +23,10 @@ casper.test.begin('Landing Page', 18, function suite(test) {
     this.sendKeys("#userEmail", "casperjs@gmail.com");
     this.sendKeys("#userPassword", "casperrules");
 
-    this.click("#next");
+    this.click("#submit");
   });
 
-  casper.waitWhileSelector('#next', function(){
+  casper.waitWhileSelector('#userPassword', function(){
     test.assertExists('#street1');
     test.assertExists('#street2');
     test.assertExists('#city');

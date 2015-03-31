@@ -18,8 +18,10 @@ Template.collectUserDemographics.helpers({
 
 Template.collectUserDemographics.events({
   'click #back': function(e) {
+    e.preventDefault();
     Router.go('signup');
   },
+
   'click #submit': function(e) {
     e.preventDefault();
 
