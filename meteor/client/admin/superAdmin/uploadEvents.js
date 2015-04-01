@@ -6,11 +6,18 @@ Template.uploadEvents.created = function () {
 
 Template.uploadEvents.helpers({
   buttonDisabled: function() {
-    return Template.instance().fileNotUploaded.get()
+    return Template.instance().fileNotUploaded.get();
   },
   columnHeaders: function() {
-    cols = Template.instance().csvUpload.columnHeaders
+    cols = Template.instance().csvUpload.columnHeaders;
     return cols.join(', ')
+  },
+  eventsToBeCreated: function() {
+    console.log('eventsToBeCreated')
+    console.log(Template.instance().csvUpload)
+    console.log(Template.instance().csvUpload.events)//This is coming back as [undefined, undefined]
+    console.log(Template.instance().csvUpload.events.get())
+    return Template.instance().csvUpload.events.get();
   }
 })
 

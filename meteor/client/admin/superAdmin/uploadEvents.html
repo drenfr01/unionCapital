@@ -15,4 +15,14 @@
       Submit File <span class="glyphicon glyphicon-send"></span></button>
     </form>
   </div>
+  <div class="col-md-6 col-md-offset-3 text-center page-panel">
+    <p class="lead">Events to be created</p>
+    {{#each eventsToBeCreated }}
+      {{> newEvent}}
+    {{/each }}
+  </div>
+</template>
+
+<template name="newEvent">
+<p class="{{ this.statusClass }}">{{ this.eventData }}</p>
 </template>
