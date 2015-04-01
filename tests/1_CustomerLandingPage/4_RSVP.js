@@ -22,7 +22,17 @@ casper.test.begin('Reservations Page', 8, function suite(test) {
       'select': "2"
     }, false);
     this.click('.insertReservation');
+  });
 
+  //Ensure user can remove reservation
+  casper.wait(250, function() {
+    test.assertExists('.removeReservation');
+
+    this.click('.removeReservation');
+  });
+
+  casper.wait(250, function() {
+    test.assertExists('.insertReservation');
     this.sendKeys('#search-box','Cambridge Science Festival', {reset: true});
   });
 
@@ -32,6 +42,10 @@ casper.test.begin('Reservations Page', 8, function suite(test) {
       'select': "3"
     }, false);
     this.click('.insertReservation');
+  });
+
+  casper.wait(250, function() {
+    test.assertExists('.removeReservation');
   });
 
   casper.then(function() {
