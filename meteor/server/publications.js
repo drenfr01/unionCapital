@@ -40,7 +40,7 @@ Meteor.publish("reservations", function() {
   if(Roles.userIsInRole(this.userId, 'admin')) {
     return Reservations.find();
   } else {
-    this.ready();
+    return Reservations.find({userId: this.userId});
   }
 });
 
