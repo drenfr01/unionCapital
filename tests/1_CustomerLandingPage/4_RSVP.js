@@ -1,6 +1,6 @@
 casper.test.comment("Testing Member Reservations");
 
-casper.test.begin('Reservations Page', 8, function suite(test) {
+casper.test.begin('Reservations Page', 4, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsUser();
   });
