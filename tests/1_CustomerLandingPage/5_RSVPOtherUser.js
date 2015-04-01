@@ -1,11 +1,14 @@
-casper.test.comment("Testing Member Reservations");
+casper.test.comment("Testing Non-KIPP Member Reservations");
 
 casper.test.begin('Reservations Page', 4, function suite(test) {
   casper.start(homeURL, function() {
-    casper.loginAsUser();
+    this.waitForSelector("#loginSubmit", function() {
+      this.sendKeys("#userEmail", "user2@gmail.com");
+      this.sendKeys("#userPassword", "user");
+      this.click("#loginSubmit");
+    });
   });
 
-  //check home page main panel
   casper.waitForSelector("#login-dropdown-list", function() {
     this.clickLabel('Today in Boston', 'a');
   });
@@ -15,11 +18,13 @@ casper.test.begin('Reservations Page', 4, function suite(test) {
   });
 
   //Ensure user can RSVP for events of both their partnerOrg and others
-  //Other Partner Org
+  //Other Partner Org (in this case Thrive in Five)
+  //Also ensure that 1 user RSVP-ing doesn't affect other
+  //users
   casper.wait(250, function() {
 
     this.fillSelectors('form#reservationForm', {
-      'select': "2"
+      'select': "4"
     }, false);
     this.click('.insertReservation');
   });
@@ -47,7 +52,7 @@ casper.test.begin('Reservations Page', 4, function suite(test) {
   //Their Partner Org: KIPP
   casper.wait(250, function() {
     this.fillSelectors('form#reservationForm', {
-      'select': "3"
+      'select': "5"
     }, false);
     this.click('.insertReservation');
   });
