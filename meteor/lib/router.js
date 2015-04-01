@@ -231,7 +231,7 @@ Router.map(function() {
     data: function() {
       return Events.findOne({_id: this.params.id});
     }
-  })
+  });
 
   this.route('checkPoints', {
     path: '/checkPoints'
@@ -257,7 +257,7 @@ Router.map(function() {
     }
   });
   this.route('singleEvent', {
-    path: '/singleEvents/:_id',
+    path: '/singleEvent/:_id',
     data: function() { return Events.findOne({_id: this.params._id }); }
   });
   

@@ -13,6 +13,10 @@ partnerAdminPassword = 'admin';
 superAdmin = "admin@gmail.com";
 superAdminPassword = "admin";
 
+newPartnerEvent = 'Health Clinic';
+newPartnerEventDesc = 'A clinic on preventative care for KIPP Academy members';
+newPartnerAddress = '75 Northern Ave, Boston, MA 02210';
+
 casper.loginAsUser = function loginAsUser() {
   casper.capture("start.png");
   this.waitForSelector("#loginSubmit", function() {
