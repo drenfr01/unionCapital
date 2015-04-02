@@ -38,23 +38,35 @@ _.extend(CSVUpload.prototype, {
   },
   _parseRows: function(data) {
     _.each(data, function(rowArr, rowNum, list) {
-      eventData = _.object(this.columnHeaders, rowArr)
-      thisRowEvent = new newEvent(eventData)
+      eventData = _.object(this.columnHeaders, rowArr);
+      thisRowEvent = new newEvent();
       if(rowArr.length !== this.columnHeaders.length){
-        addErrorMessage('Event "' + rowArr[0] + '" has the wrong columns.')
-        thisRowEvent.statusClass = "bg-danger"
+        addErrorMessage('Event ' + (rowNum + 1) + ' has the wrong columns.')
+        thisRowEvent.statusClass = "bg-danger";
+        thisRowEvent.eventData = {description: "Bad event data"};
+      } else if {
+        Events.allEvents().forEach(function(event) {
+          if(this.eventData.name === event.name &&
+             this.eventData.address === event.address &&
+             this.eventData.institution === event.institution &&
+             this.eventData.eventDate === event.eventDate
+            ) {
+            this.statusClass = "bg-danger"
+            addErrorMessage('Event ' + event.name ' on ' + event.eventDate + ' is a duplicate')
+          }
+        }, thisRowEvent)
       } else {
-        thisRowEvent.statusClass = "bg-success"
+        thisRowEvent.statusClass = "bg-success";
+        thisRowEvent.eventData = eventData;
       }
       curr = this.events.get();
       curr.push(thisRowEvent)
-      console.log(curr)
       this.events.set(curr);
-    }, this)//The 'this' pulls the context into the map function, very necessary...
+    }, this)//The 'this' pulls the class context into the map function, very necessary...
   }
 })
 
-newEvent = function(eventData) {
+newEvent = function() {
   var self = this;
   self.eventData = {};
   self.statusClass = ''

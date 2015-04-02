@@ -25,10 +25,6 @@ Template.uploadEvents.events({
   'change #uploadEvents': function(e, template) {
     // This defaults the submit button to disabled until a file is uploaded
     template.fileNotUploaded.set(false);
-  },
-  'click #checkEvents': function(e, template) {
-    e.preventDefault();
-    console.log('submitting events')
     $('#uploadEvents').parse({
       config: {
         // This is semi confusing, the complete function in the config of
@@ -46,5 +42,5 @@ Template.uploadEvents.events({
         console.log('parsing complete')
       }
     })
-  }
+  },
 })

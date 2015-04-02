@@ -8,21 +8,30 @@
   <div class="col-md-6 col-md-offset-3 text-center page-panel">
     <form id="uploadEventsForm">
       <span class="btn btn-primary btn-file">
-      <span class="glyphicon glyphicon-upload"></span> Upload File<input type="file" id="uploadEvents"></span>
-      <button id="checkEvents" class="btn btn-info" disabled={{ buttonDisabled }}>
-        <span class="glyphicon glyphicon-ok-sign"></span> Verify Upload</button>
+      <span class="glyphicon glyphicon-upload"></span> Upload<input type="file" id="uploadEvents"></span>
       <button id="submitEvents" type="submit" class="btn btn-success" disabled={{ buttonDisabled }}>
-      Submit File <span class="glyphicon glyphicon-send"></span></button>
+      Submit <span class="glyphicon glyphicon-send"></span></button>
     </form>
   </div>
   <div class="col-md-6 col-md-offset-3 text-center page-panel">
-    <p class="lead">Events to be created</p>
-    {{#each eventsToBeCreated }}
-      {{> newEvent}}
-    {{/each }}
+    <p class="lead">Events to be uploaded</p>
+    <table class="table">
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Date</th>
+      </tr>
+      {{#each eventsToBeCreated }}
+        {{> newEvent}}
+      {{/each }}
+    </table>
   </div>
 </template>
 
 <template name="newEvent">
-<p class="{{ this.statusClass }}">{{ this.eventData }}</p>
+  <tr class="{{ this.statusClass }}">
+    <td class="text-left">{{ this.eventData.name }}</td>
+    <td class="text-left">{{ this.eventData.description }}</td>
+    <td class="text-left">{{ this.eventData.date }}</td>
+  </tr>
 </template>
