@@ -43,21 +43,21 @@ _.extend(CSVUpload.prototype, {
       if(rowArr.length !== this.columnHeaders.length){
         addErrorMessage('Event ' + (rowNum + 1) + ' has the wrong columns.')
         thisRowEvent.statusClass = "bg-danger";
-        thisRowEvent.eventData = {description: "Bad event data"};
-      } else if {
-        Events.allEvents().forEach(function(event) {
-          if(this.eventData.name === event.name &&
-             this.eventData.address === event.address &&
-             this.eventData.institution === event.institution &&
-             this.eventData.eventDate === event.eventDate
-            ) {
-            this.statusClass = "bg-danger"
-            addErrorMessage('Event ' + event.name ' on ' + event.eventDate + ' is a duplicate')
-          }
-        }, thisRowEvent)
+        thisRowEvent.statusMsg = "Bad data";
+        thisRowEvent.eventData = eventData;
       } else {
         thisRowEvent.statusClass = "bg-success";
         thisRowEvent.eventData = eventData;
+
+        Events.find().forEach(function(event) {
+          if(
+            this.eventData.name === event.name &&
+             this.eventData.institution === event.institution
+          ) {
+            this.statusClass = "bg-warning";
+            this.statusMsg = "Duplicate";
+          }
+        }, thisRowEvent);
       }
       curr = this.events.get();
       curr.push(thisRowEvent)
@@ -70,4 +70,5 @@ newEvent = function() {
   var self = this;
   self.eventData = {};
   self.statusClass = ''
+  self.statusMsg = ''
 }

@@ -1,2 +1,3 @@
 "name","address","url","description","institution","category","eventDate","isPointsPerHour","pointsPerHour","points"
 "tyler","27 high rock rd","example.com","tyler's awesome description","Brown","health","2015-03-30","true","200","0"
+"Cambridge Film Festival","18 Davis Sq, Somerville, MA","http://example.com/CFF","Watch as many films as you can in just 3 days of mandness!","KIPP Academy","Education (Child/Adult)","2015-03-30","false","150","1"

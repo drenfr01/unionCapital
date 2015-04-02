@@ -3,7 +3,7 @@
     <p class='lead'>Instructions for uploading events</p>
     <p>The first row in the csv will be column headers, here are the current event attributes: </p>
     <p><mark> {{ columnHeaders }} </mark></p>
-    <p>Subsequent rows will each be turn into an event.  Click the Verify Upload to see the events this upload will create (always a good idea before submitting).</p>
+    <p>Subsequent rows will each be turn into an event.  Click the Verify Upload to see the events this upload will create (always a good idea before submitting). Events must be have a unique Name + Institution.</p>
   </div>
   <div class="col-md-6 col-md-offset-3 text-center page-panel">
     <form id="uploadEventsForm">
@@ -17,6 +17,7 @@
     <p class="lead">Events to be uploaded</p>
     <table class="table">
       <tr>
+        <th>Status</th>
         <th>Name</th>
         <th>Description</th>
         <th>Date</th>
@@ -30,8 +31,9 @@
 
 <template name="newEvent">
   <tr class="{{ this.statusClass }}">
+    <td class="text-left">{{ this.statusMsg }}</td>
     <td class="text-left">{{ this.eventData.name }}</td>
     <td class="text-left">{{ this.eventData.description }}</td>
-    <td class="text-left">{{ this.eventData.date }}</td>
+    <td class="text-left">{{ this.eventData.eventDate }}</td>
   </tr>
 </template>

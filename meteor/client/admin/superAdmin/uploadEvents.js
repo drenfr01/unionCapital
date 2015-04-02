@@ -13,10 +13,6 @@ Template.uploadEvents.helpers({
     return cols.join(', ')
   },
   eventsToBeCreated: function() {
-    console.log('eventsToBeCreated')
-    console.log(Template.instance().csvUpload)
-    console.log(Template.instance().csvUpload.events)//This is coming back as [undefined, undefined]
-    console.log(Template.instance().csvUpload.events.get())
     return Template.instance().csvUpload.events.get();
   }
 })
@@ -32,7 +28,6 @@ Template.uploadEvents.events({
         // is called with no results passed to it.
         complete: function(results) {
           template.csvUpload.addData(results.data)
-          console.log(results);
         }
       },
       error: function(err, file, inputElem, reason) {
