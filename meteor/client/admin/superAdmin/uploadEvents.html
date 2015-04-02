@@ -21,6 +21,7 @@
         <th>Name</th>
         <th>Description</th>
         <th>Date</th>
+        <th>Location</th>
       </tr>
       {{#each eventsToBeCreated }}
         {{> newEvent}}
@@ -35,5 +36,12 @@
     <td class="text-left">{{ this.eventData.name }}</td>
     <td class="text-left">{{ this.eventData.description }}</td>
     <td class="text-left">{{ this.eventData.eventDate }}</td>
+    <td>
+      {{#if this.locationFound }}
+      <span class="glyphicon glyphicon-ok-sign success"></span>
+      {{ else }}
+      <span class="glyphicon glyphicon-remove-sign success"></span>
+      {{/if}}
+    </td>
   </tr>
 </template>

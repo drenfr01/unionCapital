@@ -66,6 +66,7 @@ NewEvent = function() {
   self.eventData = {};
   self.statusClass = ''
   self.statusMsg = ''
+  self.locationFound = new ReactiveVar(false);
 }
 
 _.extend(NewEvent.prototype, {
@@ -87,9 +88,13 @@ _.extend(NewEvent.prototype, {
                   } else {
                     this.eventData.latitude = result.location.lat;
                     this.eventData.longitude = result.location.lng;
-                    addSuccessMessage('lat long success' + result.location.lat + ':' + result.location.lng)
+                    this.locationFound.set(true);
+                    addSuccessMessage('lat long success' + result.location.lat + ':' + result.location.lng);
                   }
                 })
+  },
+  sendToServer: function(){
+    console.log(this.eventData.latitude)
   },
   _addWarning: function(msg){
     this.statusClass = "bg-warning";
