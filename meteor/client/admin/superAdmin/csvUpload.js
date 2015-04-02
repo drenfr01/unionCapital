@@ -39,25 +39,20 @@ _.extend(CSVUpload.prototype, {
   _parseRows: function(data) {
     _.each(data, function(rowArr, rowNum, list) {
       eventData = _.object(this.columnHeaders, rowArr);
-      thisRowEvent = new newEvent();
+      thisRowEvent = new NewEvent();
+      thisRowEvent.eventData = eventData;
       if(rowArr.length !== this.columnHeaders.length){
         addErrorMessage('Event ' + (rowNum + 1) + ' has the wrong columns.')
         thisRowEvent.statusClass = "bg-danger";
         thisRowEvent.statusMsg = "Bad data";
-        thisRowEvent.eventData = eventData;
       } else {
         thisRowEvent.statusClass = "bg-success";
-        thisRowEvent.eventData = eventData;
 
         Events.find().forEach(function(event) {
-          if(
-            this.eventData.name === event.name &&
-             this.eventData.institution === event.institution
-          ) {
-            this.statusClass = "bg-warning";
-            this.statusMsg = "Duplicate";
-          }
+          this.checkEventOverlap(event);
         }, thisRowEvent);
+
+        thisRowEvent.addLocationData();
       }
       curr = this.events.get();
       curr.push(thisRowEvent)
@@ -66,9 +61,38 @@ _.extend(CSVUpload.prototype, {
   }
 })
 
-newEvent = function() {
+NewEvent = function() {
   var self = this;
   self.eventData = {};
   self.statusClass = ''
   self.statusMsg = ''
 }
+
+_.extend(NewEvent.prototype, {
+  checkEventOverlap: function(otherEvent){
+    if(
+      this.eventData.name === otherEvent.name &&
+      this.eventData.institution === otherEvent.institution
+      // Need a date check here
+    ) {
+      this._addWarning("Duplicate");
+    }
+  },
+  addLocationData: function(){
+    Meteor.call('geocodeAddress', this.eventData.address,
+                function(error, result) {
+                  if(error) {
+                    this._addWarning("Bad Location");
+                    console.log(error.reason)
+                  } else {
+                    this.eventData.latitude = result.location.lat;
+                    this.eventData.longitude = result.location.lng;
+                    addSuccessMessage('lat long success' + result.location.lat + ':' + result.location.lng)
+                  }
+                })
+  },
+  _addWarning: function(msg){
+    this.statusClass = "bg-warning";
+    this.statusMsg = msg;
+  }
+})
