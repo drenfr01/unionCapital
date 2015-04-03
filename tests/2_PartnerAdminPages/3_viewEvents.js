@@ -39,7 +39,7 @@ casper.test.begin('Manage Partner Events', 34, function suite(test) {
     test.assertTextExists('Somerville Cooking Festival'); //Thrive in Five
     test.assertTextExists('Admin Add Points'); //Other
 
-    this.click('current');
+    this.click('#current');
   });
 
   //ensure present events exists
@@ -50,16 +50,19 @@ casper.test.begin('Manage Partner Events', 34, function suite(test) {
     this.clickLabel('Cambridge Film Festival', 'a');
   });
 
-  //ensure list of attendees only displayed for events the
-  //partner admin controls
+  //Thrive in Five Event
   casper.waitWhileSelector('#addEvent', function() {
     test.assertExists('.back');
     test.assertTextExists('Watch as many films as you can in just 3 days of mandness!');
     test.assertTextExists('Thrive in Five');
     test.assertExists('iframe'); //TODO: this is a bad test for the google map
 
-    //TODO: put in number of reservations and name of person
-    test.assertTextExists('Data Restricted');
+    test.assertTextExists('4'); //Total RSVPS
+    //KIPP Member
+    test.assertTextExists('CasperJS');
+    test.assertTextExists('2'); 
+    //Thrive in Five Member
+    test.assertTextDoesntExist('Test2');
 
     this.click('.back');
   });
@@ -68,13 +71,18 @@ casper.test.begin('Manage Partner Events', 34, function suite(test) {
     this.clickLabel('Cambridge Science Festival', 'a');
   });
 
+  //KIPP Event
   casper.waitWhileSelector('#addEvent', function() {
     test.assertTextExists('A festival of science for everybody');
     test.assertTextExists('KIPP Academy');
-    test.assertTextExists('Data Restricted');
 
-    //TODO: put in number of reservations and name of person
-    test.assertExists('tr'); //ensure table row exists
+    test.assertTextExists('8'); //Total RSVPS
+    //KIPP Member
+    test.assertTextExists('CasperJS');
+    test.assertTextExists('3'); 
+    //Thrive in Five Member
+    test.assertTextExists('Test2');
+    test.assertTextExists('5');
   });
 
   casper.then(function() {

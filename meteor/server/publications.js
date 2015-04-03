@@ -51,8 +51,6 @@ Meteor.publish("reservations", function() {
       return event._id;
     });
 
-    console.log(users);
-    console.log(events);
     return Reservations.find({$or: [
      {userId: {$in: usersArray}},
      {eventId: {$in: eventsArray}}
