@@ -41,11 +41,22 @@ Meteor.publish("reservations", function() {
   if(Roles.userIsInRole(this.userId, 'admin')) {
     return Reservations.find();
   } else if(Roles.userIsInRole(this.userId, 'partnerAdmin')) {
+    //TODO: This will perform horribly at scale. Please refactor....
+    var users = Meteor.users.find({"profile.partnerOrg": partnerAdmin.profile.partnerOrg}, {fields: {_id: 1}}).fetch();
+    var usersArray = _.map(users, function(user) {
+      return user._id;
+    });
     var events = Events.find({institution: partnerAdmin.profile.partnerOrg}, {fields: {_id: 1}}).fetch();
     var eventsArray = _.map(events, function(event) {
       return event._id;
     });
-    return Reservations.find({eventId: {$in: eventsArray}});
+
+    console.log(users);
+    console.log(events);
+    return Reservations.find({$or: [
+     {userId: {$in: usersArray}},
+     {eventId: {$in: eventsArray}}
+    ]});
   } else {
     return Reservations.find({userId: this.userId});
   }

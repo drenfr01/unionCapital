@@ -2,7 +2,7 @@ Session.setDefault('rsvpList', null);
 
 Template.singleEvent.helpers({
   'rsvpList': function() {
-    return Reservations.find();
+    return Reservations.find({eventId: this._id});
   }
 });
 
