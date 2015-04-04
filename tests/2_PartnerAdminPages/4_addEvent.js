@@ -72,11 +72,7 @@ casper.test.begin('Add Partner Events', 34, function suite(test) {
   });
 
   casper.waitWhileSelector('#geocodeButton', function(){
-    this.click('#current');
-  });
-
-  casper.wait(500, function() {
-    test.assertTextExists('Casper Future Event');
+    test.assertTextExists(newPartnerEvent);
   });
 
   casper.then(function() {
