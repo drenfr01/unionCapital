@@ -46,16 +46,11 @@ casper.test.begin('Add Partner Events', 34, function suite(test) {
       'select[name="category"]': "Health (Physical & Mental)"
     }, false);
 
-    var eventDate = new Date();
-    var numberOfDays = 1;
-    var result = new Date(eventDate);
-    result.setDate(eventDate.getDate() + numberOfDays);
-
     this.page.injectJs('../../moment.js');
 
     var formattedTime = this.evaluate(function() {
       var eventDate = new Date();
-      var numberOfDays = -1;
+      var numberOfDays = 3;
       var result = new Date(eventDate);
       result.setDate(eventDate.getDate() + numberOfDays);
       return moment(result).format('MM/DD/YYYY hh:mm a');
@@ -63,7 +58,7 @@ casper.test.begin('Add Partner Events', 34, function suite(test) {
 
     this.sendKeys('input[name=eventDate]', formattedTime);
     this.click("input[name=isPointsPerHour]");
-    this.sendKeys("input[name=points]", '250');
+    this.sendKeys("input[name=points]", '150');
 
     this.click('#geocodeButton');
   });

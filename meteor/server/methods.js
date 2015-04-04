@@ -182,17 +182,15 @@ Meteor.methods({
   },
   geocodeAddress: function(address) {
     var myFuture = new Future(); 
-    googlemaps.geocode(
-      address, 
-      function(err, data) {
-        if(err) {
-          myFuture.throw(error);
-        } else {
-          myFuture.return(data.results[0].geometry);
-        }
-      });
-
-      return myFuture.wait();
+    googlemaps.geocode(address, function(err, data) {
+      if(err) {
+        myFuture.throw(err);
+      } else {
+        console.log(data);
+        myFuture.return(data.results[0].geometry);
+      }
+    });
+    return myFuture.wait();
   },
   geolocateUser: function(attributes) {
     check(attributes, {

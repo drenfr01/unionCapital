@@ -23,3 +23,8 @@ Meteor.users.totalPointsFor = function(userId) {
   }, 0);
 };
 
+Meteor.users.deny({
+  update: function() {
+    return true;
+  }
+});
