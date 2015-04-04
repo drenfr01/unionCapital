@@ -66,3 +66,23 @@ casper.logout = function logout(test) {
   });
 
 };
+
+/*
+addFakeGeolocation = function(self, latitude, longitude) {
+    self.evaluate(function() {
+        window.navigator.geolocation = function() {
+            var pub = {};
+            var current_pos = {
+                coords: {
+                    latitude: window.__casper_params__.latitude,
+                    longitude: window.__casper_params__.longitude
+                }
+            };
+            pub.getCurrentPosition = function(locationCallback,errorCallback) {
+                locationCallback(current_pos);
+            };
+            return pub;
+        }();
+    }, { latitude: latitude, longitude: longitude });
+};
+*/

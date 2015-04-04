@@ -1,10 +1,6 @@
 casper.test.comment("Testing Partner Admin Edit Event");
 
-/*
- * View All Events: can view RSVP list of own event, can't see it on another
- * Somerville Cooking Jubilee Edit event: can edit one event, can't edit another
- * Delete event: can delete own event, can't delete another
- */
+//TODO: implement security on edit / delete events
 
 casper.test.begin('Partner Edit Event', 34, function suite(test) {
   casper.start(homeURL, function() {
@@ -17,27 +13,6 @@ casper.test.begin('Partner Edit Event', 34, function suite(test) {
     this.click('#manageEvents');
   });
 
-  casper.waitWhileSelector('#manageEvents',function() {
-  });
-  
-  //check past events
-  casper.wait(500, function() {
-    test.assertTextExists('Boston Music Festival'); //KIPP
-    test.assertTextExists('Cambridge Film Festival'); //Thrive in Five
-    test.assertTextExists('Admin Add Points'); //Other
-
-    this.clickLabel('Cambridge Film Festival','a');
-  });
-
-  //check click on single event
-  casper.waitWhileSelector('#addEvent', function() {
-    test.assertExists('.back');
-    test.assertTextExists('A festival of cooking for the masses');
-    test.assertTextExists('Thrive in Five');
-    test.assertExists('iframe'); //TODO: this is a bad test for the google map
-
-    this.click('.back');
-  });
 
   //got to Edit Event Page
   casper.waitForSelector('#addEvent', function() {
