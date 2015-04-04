@@ -24,7 +24,6 @@ alethes:pages
 sacha:spin
 momentjs:moment
 alanning:roles
-twbs:bootstrap
 ian:accounts-ui-bootstrap-3
 meteorhacks:search-source
 houston:admin
@@ -34,3 +33,5 @@ meteorhacks:npm
 npm-container
 meteorhacks:async
 pfafman:filesaver
+less
+nemo64:bootstrap
