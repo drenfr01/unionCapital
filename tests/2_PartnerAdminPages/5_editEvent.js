@@ -2,7 +2,7 @@ casper.test.comment("Testing Partner Admin Edit Event");
 
 //TODO: implement security on edit / delete events
 
-casper.test.begin('Partner Edit Event', 15, function suite(test) {
+casper.test.begin('Partner Edit Event', 16, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsPartnerAdmin();
   });
@@ -27,7 +27,7 @@ casper.test.begin('Partner Edit Event', 15, function suite(test) {
   casper.waitForSelector('#addEvent', function() {
     this.page.injectJs('../../jquery-1.11.2.min.js');
     this.evaluate(function() {
-      $("td:contains('Cambridge Science Festival')").parent().find('.editEvent').click();
+      $("td:contains('Health Clinic')").parent().find('.editEvent').click();
     });
   });
   
@@ -44,14 +44,15 @@ casper.test.begin('Partner Edit Event', 15, function suite(test) {
     test.assertExists("#back");
     test.assertExists('#submit');
 
-    this.sendKeys('#eventName', 'Cambridge Science Jubilee', {reset: true});
+    this.sendKeys('#eventName', 'Edited Health Clinic', {reset: true});
     this.click('#submit');
   });
 
   //Check that event was updated and only that event was updated
   casper.wait(500, function(){
-    test.assertTextExists('Cambridge Science Jubilee');  
+    test.assertTextExists('Cambridge Science Festival');  
     test.assertTextExists('Cambridge Film Festival');
+    test.assertTextExists('Edited Health Clinic');
 
   });
 

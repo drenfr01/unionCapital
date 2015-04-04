@@ -18,16 +18,16 @@ casper.test.begin('Partner Org Management', 21, function suite(test) {
 
     test.assertExists('table');
 
-    test.assertTextExists('Kipp Academy');
+    test.assertTextExists('KIPP Academy');
     test.assertTextExists('Thrive in Five');
     test.assertExists(".editOrg");
     test.assertExists('.deleteOrg');
 
-    this.sendKeys('#search-box', 'Kipp');
+    this.sendKeys('#search-box', 'KIPP');
   });
 
   casper.wait(500, function(){
-    test.assertTextExists('Kipp Academy');
+    test.assertTextExists('KIPP Academy');
     test.assertTextDoesntExist('Thrive in Five');
 
     this.click('#addPartnerOrg');

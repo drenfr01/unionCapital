@@ -1,6 +1,6 @@
 casper.test.comment("Testing Partner Admin Add Events");
 
-casper.test.begin('Add Partner Events', 34, function suite(test) {
+casper.test.begin('Add Partner Events', 16, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsPartnerAdmin();
   });
@@ -34,9 +34,9 @@ casper.test.begin('Add Partner Events', 34, function suite(test) {
   //create event
   casper.then(function() {
     this.sendKeys("input[name=name]", newPartnerEvent);
-    this.sendKeys("input[name=address]", newPartnerEventDesc);
+    this.sendKeys("input[name=description]", newPartnerEventDesc);
     this.sendKeys("input[name=url]", 'www.districthall.com');
-    this.sendKeys("input[name=description]", newPartnerAddress);
+    this.sendKeys("input[name=address]", newPartnerAddress);
 
     this.fillSelectors('form#insertEventsForm', {
       'select[name="institution"]': "KIPP Academy"

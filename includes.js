@@ -25,7 +25,6 @@ newPartnerEventDesc = 'A clinic on preventative care for KIPP Academy members';
 newPartnerAddress = '75 Northern Ave, Boston, MA 02210';
 
 casper.loginAsUser = function loginAsUser() {
-  casper.capture("start.png");
   this.waitForSelector("#loginSubmit", function() {
     this.sendKeys("#userEmail", user);
     this.sendKeys("#userPassword", newPassword);
@@ -34,7 +33,6 @@ casper.loginAsUser = function loginAsUser() {
 };
 
 casper.loginAsPartnerAdmin = function loginAsPartnerAdmin() {
-  casper.capture("start.png");
   this.waitForSelector("#loginSubmit", function() {
     this.sendKeys("#userEmail", parterAdmin);
     this.sendKeys("#userPassword", partnerAdminPassword);

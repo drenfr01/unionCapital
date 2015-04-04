@@ -1,6 +1,6 @@
 casper.test.comment("Testing Partner Admin Delete Events");
 
-casper.test.begin('Manage Events', 8, function suite(test) {
+casper.test.begin('Manage Events', 9, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsPartnerAdmin();
   });
@@ -17,7 +17,7 @@ casper.test.begin('Manage Events', 8, function suite(test) {
     //default is current events
     test.assertTextExists('Cambridge Film Festival');
     test.assertTextExists('Cambridge Science Festival');
-    test.assertTextExists(newPartnerEvent);
+    test.assertTextExists('Edited Health Clinic');
   });
 
 
@@ -25,7 +25,7 @@ casper.test.begin('Manage Events', 8, function suite(test) {
   casper.waitForSelector('#addEvent', function() {
     this.page.injectJs('../../jquery-1.11.2.min.js');
     this.evaluate(function() {
-      $("td:contains('" + newPartnerEvent + "')").parent().find('.deleteEvent').click();
+      $("td:contains('Edited Health Clinic')").parent().find('.deleteEvent').click();
     });
   });
 
@@ -41,7 +41,7 @@ casper.test.begin('Manage Events', 8, function suite(test) {
   casper.wait(500, function(){
     test.assertTextExists('Cambridge Film Festival');
     test.assertTextExists('Cambridge Science Festival');
-    test.assertTextDoesntExist(newPartnerEvent);
+    test.assertTextDoesntExist('Edited Health Clinic');
   });
 
   casper.then(function() {
