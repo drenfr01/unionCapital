@@ -52,6 +52,8 @@ Template.addEvents.events({
                     addErrorMessage(error.reason);
                     Router.go('addEvents');
                   } else {
+                    addSuccessMessage("Latitude: " + result.location.lat);
+                    addSuccessMessage("Longitude: " + result.location.lng);
                     Session.set('latitude', result.location.lat);
                     Session.set('longitude', result.location.lng);
                   }
