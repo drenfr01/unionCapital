@@ -16,7 +16,7 @@ Meteor.startup(function () {
   //Seeding Partner Organizations
   if(PartnerOrgs.find().count() === 0 && Meteor.settings.env === 'dev') {
     var partnerOrgs = [
-      {name: "Kipp Academy", sector: "Children", membersReported: 50, deleteInd: false},
+      {name: "KIPP Academy", sector: "Children", membersReported: 50, deleteInd: false},
       {name: "Thrive in Five", sector: "Job Training", membersReported: 50, deleteInd: false},
       {name: "Rosie's Place", sector: "Shelter", membersReported: 50, deleteInd: false},
       {name: "Other", sector: "Other", membersReported: 50, deleteInd: false}
@@ -142,7 +142,7 @@ Meteor.startup(function () {
         'Codman Academy',
         'Codman Health Center',
         'FII',
-        'Kipp Boston',
+        'KIPP Boston',
         'Nurtury',
         'Thrive in 5'
     ];
@@ -177,7 +177,24 @@ Meteor.startup(function () {
         roles:['user']
       },
       {
-        email: "user2@gmail.com", username: "user2", password: "user",
+        email: "KIPPUser@gmail.com", username: "KIPPUser", password: "user", 
+        profile: {
+          firstName: 'kipp',
+          lastName: 'User',
+          street1: '101 Main St',
+          street2: "",
+          city: 'Cambridge',
+          state: 'MA',
+          zip: '02142',
+          partnerOrg: "KIPP Academy",
+          incomeBracket: "20,000-24,999",
+          numberOfKids: "4",
+          race: "White"
+        },
+        roles:['user']
+      },
+      {
+        email: "user2@gmail.com", username: "user2", password: "user", 
         profile: {
           firstName: 'Test2',
           lastName: 'User2',
@@ -268,7 +285,7 @@ Meteor.startup(function () {
         description: 'Music festival; all styles - join us soon!',
         active: 1,
         eventDate: new Date(),
-        institution: "Rosie's Place",
+        institution: "KIPP Academy",
         category: "Education (Child/Adult)",
         isPointsPerHour: true,
         pointsPerHour: 100,
@@ -283,7 +300,7 @@ Meteor.startup(function () {
         description: 'Watch as many films as you can in just 3 days of mandness!',
         active: 1,
         eventDate: addDays(new Date(), 1),
-        institution: "KIPP Academy",
+        institution: "Thrive in Five",
         category: "Education (Child/Adult)",
         isPointsPerHour: false,
         points: 150,

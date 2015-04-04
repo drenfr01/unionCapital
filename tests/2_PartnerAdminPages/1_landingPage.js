@@ -1,6 +1,6 @@
 casper.test.comment("Testing Partner Admin Home Page");
 
-casper.test.begin('Landing Page', 8, function suite(test) {
+casper.test.begin('Landing Page', 9, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsPartnerAdmin();
   });
@@ -11,6 +11,7 @@ casper.test.begin('Landing Page', 8, function suite(test) {
     test.assertExists("#approvePoints");
     test.assertExists("#manageEvents");
     test.assertExists("#exportData");
+    test.assertDoesntExist("#partnerOrgs");
   });
 
   //check navbar

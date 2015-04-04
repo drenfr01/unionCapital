@@ -1,5 +1,5 @@
 var options = {
-  keepHistory: 1000 * 60 * 5,
+  keepHistory: 1,
   localSearch: false
 };
 
@@ -36,17 +36,9 @@ Template.eventsCalendar.helpers({
     });
     return eventsByDate;
   },
-  'rsvpButton': function() {
-    var rsvpForEvent = Reservations.findOne({ userId: Meteor.userId(),
-                                            eventId: this._id
-    });
-    if(rsvpForEvent) {
-      return "<button type='button' class='btn btn-danger btn-sm removeReservation'>" + 
-        "Remove RSVP</button>";
-    } else {
-      return "<button type='button' class='btn btn-default btn-sm insertReservation' " + 
-        "data-toggle='modal' data-target = '#rsvpModal'>RSVP</button>";
-    }
+  hasReservation: function() {
+    return Reservations.findOne({ userId: Meteor.userId(),
+                                            eventId: this._id});
   },
   people: function() {
     return NumberOfPeople.find();

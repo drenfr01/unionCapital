@@ -80,14 +80,26 @@ Template.manageEvents.events({
   }, 200),
   'click .editEvent': function(e) {
     e.preventDefault();
-    Router.go('editEvent', {_id: this._id});
+    if(Roles.userIsInRole(Meteor.userId(), ['admin']) || 
+       Meteor.user().profile.partnerOrg === this.institution) {
+      Router.go('editEvent', {_id: this._id});
+    } else {
+      console.log('Permission Denied: You do not own this event');
+      addErrorMessage('Permission Denied: You do not own this event');
+    }
   },
   'click .deleteEvent': function(e) {
-    Meteor.call('deleteEvent', this._id, function(error) {
-      if(error) {
-        addErrorMessage(error.reason);
-      }
-    });
+    if(Roles.userIsInRole(Meteor.userId(), ['admin']) || 
+       Meteor.user().profile.partnerOrg === this.institution) {
+      Meteor.call('deleteEvent', this._id, function(error) {
+        if(error) {
+          addErrorMessage(error.reason);
+        }
+      });
+    } else {
+      console.log('Permission Denied: You do not own this event');
+      addErrorMessage('Permission Denied: You do not own this event');
+    }
   },
   'click #addEvent': function(e) {
     e.preventDefault();

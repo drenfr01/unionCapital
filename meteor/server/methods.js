@@ -181,18 +181,16 @@ Meteor.methods({
                );
   },
   geocodeAddress: function(address) {
-    var myFuture = new Future();
-    googlemaps.geocode(
-      address,
-      function(err, data) {
-        if(err) {
-          myFuture.throw(err);
-        } else {
-          myFuture.return(data.results[0].geometry);
-        }
-      });
-
-      return myFuture.wait();
+    var myFuture = new Future(); 
+    googlemaps.geocode(address, function(err, data) {
+      if(err) {
+        myFuture.throw(err);
+      } else {
+        console.log(data);
+        myFuture.return(data.results[0].geometry);
+      }
+    });
+    return myFuture.wait();
   },
   geolocateUser: function(attributes) {
     check(attributes, {
@@ -256,16 +254,17 @@ Meteor.methods({
       description: String
     });
 
-    //calculate appropriate hours and minutes based on Administer AdHoc events
+    //calculate appropriate hours based on Administer AdHoc events
     var hours = Math.floor(attributes.points / 100);
-    var minutes = Math.ceil((attributes.points % 100) / 100 * 60);
 
     //insert Transaction
     var event = Events.findOne({name: 'Admin Add Points'});
 
-    Transactions.insert({userId: attributes.userId, eventId: event._id,
-                        needsApproval: false,
-                        transactionDate: Date(), hoursSpent: hours,
+    Transactions.insert({userId: attributes.userId, 
+                        eventId: event._id, 
+                        needsApproval: false, 
+                        transactionDate: Date(), 
+                        hoursSpent: hours,
                         deleteInd: false
     });
 
@@ -382,6 +381,11 @@ Meteor.methods({
       dateEntered : Date,
       numberOfPeople: String
     });
+
+    var user = Meteor.users.findOne(attributes.userId);
+
+    attributes.firstName = user.profile.firstName;
+    attributes.lastName = user.profile.lastName;
 
     Reservations.insert(attributes);
     Events.update({_id: attributes.eventId}, {$inc: {numberRSVPs: attributes.numberOfPeople}});

@@ -50,9 +50,8 @@ casper.test.begin('Manage Events', 34, function suite(test) {
     this.click('.back');
   });
 
-  //got to Edit Event Page
+  //goto to Edit Event Page
   casper.waitForSelector('#addEvent', function() {
-    this.page.injectJs('../../jquery-1.11.2.min.js');
     this.evaluate(function() {
       $("td:contains('Somerville Cooking Festival')").parent().find('.editEvent').click();
     });
