@@ -2,7 +2,7 @@ casper.test.comment("Testing Partner Admin Edit Event");
 
 //TODO: implement security on edit / delete events
 
-casper.test.begin('Partner Edit Event', 34, function suite(test) {
+casper.test.begin('Partner Edit Event', 15, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsPartnerAdmin();
   });
@@ -14,11 +14,20 @@ casper.test.begin('Partner Edit Event', 34, function suite(test) {
   });
 
 
-  //got to Edit Event Page
+  //ensure partner admin cannot edit event that isn't theirs
   casper.waitForSelector('#addEvent', function() {
     this.page.injectJs('../../jquery-1.11.2.min.js');
     this.evaluate(function() {
       $("td:contains('Cambridge Film Festival')").parent().find('.editEvent').click();
+    });
+    test.assertExists("#addEvent"); //still on same page
+  });
+
+  //ensure partner admin can edit their own event
+  casper.waitForSelector('#addEvent', function() {
+    this.page.injectJs('../../jquery-1.11.2.min.js');
+    this.evaluate(function() {
+      $("td:contains('Cambridge Science Festival')").parent().find('.editEvent').click();
     });
   });
   
@@ -35,26 +44,15 @@ casper.test.begin('Partner Edit Event', 34, function suite(test) {
     test.assertExists("#back");
     test.assertExists('#submit');
 
-    this.sendKeys('#eventName', 'Cambridge Film Jubilee', {reset: true});
+    this.sendKeys('#eventName', 'Cambridge Science Jubilee', {reset: true});
     this.click('#submit');
   });
 
-  //Check event edited, then delete it
+  //Check that event was updated and only that event was updated
   casper.wait(500, function(){
-    this.click('#past');
-    test.assertTextExists('Somerville Cooking Jubilee');  
-    test.assertTextExists('Boston Music Festival');
+    test.assertTextExists('Cambridge Science Jubilee');  
+    test.assertTextExists('Cambridge Film Festival');
 
-    this.evaluate(function() {
-      $("td:contains('Somerville Cooking Jubilee')").parent().find('.deleteEvent').click();
-    });
-
-  });
-
-  casper.wait(500, function() {
-    test.assertTextDoesntExist('Somerville Cooking Jubilee');
-    test.assertTextExists('Boston Music Festival');
-    
   });
 
   casper.then(function() {
