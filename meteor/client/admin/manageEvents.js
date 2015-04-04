@@ -80,7 +80,8 @@ Template.manageEvents.events({
   }, 200),
   'click .editEvent': function(e) {
     e.preventDefault();
-    if(Meteor.user().profile.partnerOrg === this.institution) {
+    if(Roles.userIsInRole(Meteor.userId(), ['admin']) || 
+       Meteor.user().profile.partnerOrg === this.institution) {
       Router.go('editEvent', {_id: this._id});
     } else {
       console.log('Permission Denied: You do not own this event');
@@ -88,7 +89,8 @@ Template.manageEvents.events({
     }
   },
   'click .deleteEvent': function(e) {
-    if(Meteor.user().profile.partnerOrg === this.institution) {
+    if(Roles.userIsInRole(Meteor.userId(), ['admin']) || 
+       Meteor.user().profile.partnerOrg === this.institution) {
       Meteor.call('deleteEvent', this._id, function(error) {
         if(error) {
           addErrorMessage(error.reason);
