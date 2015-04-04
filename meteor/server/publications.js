@@ -36,6 +36,11 @@ Meteor.publish("events", function() {
   return Events.find();
 });
 
+//The idea here is to publish all reservations
+//that a partner admin has access to
+//This is any member that belongs to that partner
+//OR any member attending an event hosted by 
+//that partner.
 Meteor.publish("reservations", function() {
   var partnerAdmin = Meteor.users.findOne({_id: this.userId});
   if(Roles.userIsInRole(this.userId, 'admin')) {
@@ -60,8 +65,8 @@ Meteor.publish("reservations", function() {
   }
 });
 
-//TODO: this probably deserves a conversation around
-//denormalization. Also, you don't need to pass userId
+//A partner should get access to all transactions for 
+//their members only
 Meteor.publish('transactions', function(userId) {
   var partnerAdmin = Meteor.users.findOne({_id: this.userId});
   if (Roles.userIsInRole(this.userId, 'admin')) {
