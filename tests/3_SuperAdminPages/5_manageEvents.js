@@ -55,7 +55,6 @@ casper.test.begin('Manage Events', 34, function suite(test) {
     this.evaluate(function() {
       $("td:contains('Somerville Cooking Festival')").parent().find('.editEvent').click();
     });
-    this.capture('manageEvents.png');
   });
 
   //Check Page then edit event
