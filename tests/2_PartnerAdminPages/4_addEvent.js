@@ -39,7 +39,7 @@ casper.test.begin('Add Partner Events', 34, function suite(test) {
     this.sendKeys("input[name=description]", newPartnerAddress);
 
     this.fillSelectors('form#insertEventsForm', {
-      'select[name="institution"]': "Kipp Academy"
+      'select[name="institution"]': "KIPP Academy"
     }, false);
 
     this.fillSelectors('form#insertEventsForm', {
