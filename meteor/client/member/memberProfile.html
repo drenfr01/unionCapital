@@ -5,7 +5,7 @@
   </div>
 </div>
 <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel">
-{{#with memberProfile}}
+  {{#with memberProfile}}
   Name: {{firstName}} {{lastName}}
   <br>
   Address: {{street1}} {{street2}}
@@ -21,6 +21,10 @@
   Income Bracket: {{incomeBracket}}
   <br>
   Number of Kids: {{numberOfKids}}
-{{/with}}
+  {{/with}}
+  <hr/>
+  <button type="button" class="btn btn-block" id="edit">
+    Edit
+  </button>
 </div>
 </template>

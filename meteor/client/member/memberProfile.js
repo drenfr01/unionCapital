@@ -3,3 +3,9 @@ Template.memberProfile.helpers({
     return Meteor.user().profile;
   }
 });
+
+Template.memberProfile.events({
+  'click #edit': function() {
+    Router.go('editMemberProfile');
+  }
+});
