@@ -1,7 +1,7 @@
 //Note: partner admin is Laura at KIPP Academy
 casper.test.comment("Testing Partner Admin Member Search");
 
-casper.test.begin('All Members', 26, function suite(test) {
+casper.test.begin('All Members', 25, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsPartnerAdmin();
   });
@@ -35,7 +35,6 @@ casper.test.begin('All Members', 26, function suite(test) {
   });
 
   casper.waitWhileSelector('table', function() {
-    test.assertTextExists('User Profile');
     test.assertTextExists('kipp');
     test.assertExists('#deleteMember');
     test.assertExists('#backButton');

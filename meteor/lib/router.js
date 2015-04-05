@@ -34,7 +34,7 @@ Router.onBeforeAction(function() {
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for members
-  {only: ['memberHomePage', 'eventsCalendar', 'checkPoints', 'contactUs','share']}
+  {only: ['memberHomePage','memberProfile', 'editMemberProfile','eventsCalendar', 'checkPoints', 'contactUs','share']}
 );
 
 //Both Admins
@@ -91,6 +91,12 @@ Router.route('/viewMemberProfile/:_id', function () {
   });
 }, {
   name: 'viewMemberProfile'
+});
+
+Router.route('/editmemberprofile', function() {
+  this.render('editMemberProfile');
+}, {
+  name: 'editMemberProfile'
 });
 
 Router.route('/exportData', function() {

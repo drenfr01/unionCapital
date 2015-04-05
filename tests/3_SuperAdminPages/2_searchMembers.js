@@ -1,6 +1,6 @@
 casper.test.comment("Testing Super Admin Member Search");
 
-casper.test.begin('All Members', 20, function suite(test) {
+casper.test.begin('All Members', 19, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsSuperAdmin();
   });
@@ -32,7 +32,6 @@ casper.test.begin('All Members', 20, function suite(test) {
 
   casper.waitForSelector('#deleteMember', function() {
     test.assertTextExists('CasperJS');
-    test.assertTextExists('User Profile');
     test.assertExists('#deleteMember');
     test.assertExists('#backButton');
     test.assertExists('#pointsInput');
