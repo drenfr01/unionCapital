@@ -35,5 +35,9 @@ Template.viewMemberProfile.events({
         }
       });
     }
+  },
+  'click #backButton': function(e) {
+    e.preventDefault();
+    Router.go('allMembers');
   }
 });

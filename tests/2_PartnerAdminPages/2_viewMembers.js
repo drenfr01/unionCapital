@@ -35,7 +35,6 @@ casper.test.begin('All Members', 26, function suite(test) {
   });
 
   casper.waitWhileSelector('table', function() {
-    test.assertTextExists('User Profile');
     test.assertTextExists('kipp');
     test.assertExists('#deleteMember');
     test.assertExists('#backButton');

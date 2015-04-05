@@ -4,6 +4,9 @@
   <div class="col-xs-12 page-panel">
     {{#with profile}}
       <h1 class="text-center">{{firstName}} {{lastName}}</h1>
+      <button type="button" class="btn btn-lg btn-primary" id="backButton">
+        Back
+      </button>
       <div>Partner Organization: {{partnerOrg}}</div>
       <div>Address: {{street1}} {{street2}} {{city}} {{state}}</div>
       <div>Zip: {{zip}}</div>
@@ -15,7 +18,7 @@
   <div class="col-xs-12 page-panel">
     <button type="button" class="btn btn-block btn-danger"
       id="deleteMember">
-      Delete User
+      Delete Member
     </button>
   </div>
   <div class="col-xs-12 page-panel">

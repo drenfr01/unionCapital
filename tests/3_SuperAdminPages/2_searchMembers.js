@@ -32,7 +32,6 @@ casper.test.begin('All Members', 20, function suite(test) {
 
   casper.waitForSelector('#deleteMember', function() {
     test.assertTextExists('CasperJS');
-    test.assertTextExists('User Profile');
     test.assertExists('#deleteMember');
     test.assertExists('#backButton');
     test.assertExists('#pointsInput');
