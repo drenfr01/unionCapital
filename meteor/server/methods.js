@@ -160,10 +160,10 @@ Meteor.methods({
     Meteor.users.update(attributes.userId,
                         {$set: { profile: attributes.profile
                         }});
-                        Meteor.users.update(attributes.userId,
-                                            {$push: {emails: {address: attributes.email
-                                            }}});
-                                            Roles.addUsersToRoles(attributes.userId, 'user');
+    Meteor.users.update(attributes.userId,
+                        {$push: {emails: {address: attributes.email
+                        }}});
+    Roles.addUsersToRoles(attributes.userId, 'user');
     //TODO: make this dry with new user helper below
     emailHelper(attributes.email,
                 adminEmail,
@@ -179,6 +179,34 @@ Meteor.methods({
                  " has created an account! They can be reached at: " +
                  attributes.email
                );
+  },
+  updateUser: function(attributes) {
+    check(attributes, {
+      email: String,
+      profile: {
+        firstName: String,
+        lastName: String,
+        street1: String,
+        street2: String,
+        city: String,
+        state: String,
+        zip: String,
+        partnerOrg: String,
+        incomeBracket: String,
+        numberOfKids: String,
+        race: String,
+      }
+    });
+    Meteor.users.update(this.userId,
+                        {$set: { profile: attributes.profile
+                        }});
+    //Note: this assumes only 1 email address
+    Meteor.users.update(this.userId,
+                        {$pop: {emails: {address: attributes.email
+                        }}});
+    Meteor.users.update(this.userId,
+                        {$push: {emails: {address: attributes.email
+                        }}});
   },
   geocodeAddress: function(address) {
     var myFuture = new Future(); 
