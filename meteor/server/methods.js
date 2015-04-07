@@ -214,7 +214,6 @@ Meteor.methods({
       if(err) {
         myFuture.throw(err);
       } else {
-        console.log(data);
         myFuture.return(data.results[0].geometry);
       }
     });
