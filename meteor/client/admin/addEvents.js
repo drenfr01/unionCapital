@@ -47,18 +47,22 @@ Template.addEvents.helpers({
 Template.addEvents.events({
   'click #geocodeButton': function(e) {
     e.preventDefault();
-    Meteor.call('geocodeAddress', $('#eventAddress').val(),
-                function(error, result) {
-                  if(error) {
-                    addErrorMessage(error.reason);
-                    Router.go('addEvents');
-                  } else {
-                    addSuccessMessage("Latitude: " + result.location.lat);
-                    addSuccessMessage("Longitude: " + result.location.lng);
-                    Session.set('latitude', result.location.lat);
-                    Session.set('longitude', result.location.lng);
-                  }
-                });
+    eventAddress = $('#eventAddress').val();
+    if (eventAddress === '') {
+      addErrorMessage('Please specify an Event Address')
+    } else {
+      Meteor.call('geocodeAddress', eventAddress,
+                  function(error, result) {
+                    if(error) {
+                      addErrorMessage(error.reason);
+                      Router.go('addEvents');
+                    } else {
+                      addSuccessMessage("Geocoding complete: Lat = " + result.location.lat + ", Long = " + result.location.lng)
+                      Session.set('latitude', result.location.lat);
+                      Session.set('longitude', result.location.lng);
+                    }
+                  })
+    };
   },
   'click #pointsCheckbox': function(e) {
     Session.set('displayPointsPerHour', $('#pointsCheckbox').prop('checked'));
