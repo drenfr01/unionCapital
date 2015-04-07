@@ -19,7 +19,7 @@ Router.onBeforeAction(function() {
     this.next();
   }
 },
-  {except: ['login', 'createNewUser', 'collectUserDemographics', 'forgotPassword']}
+  {except: ['login', 'signup', 'collectUserDemographics', 'forgot']}
 );
 
 //Members
