@@ -35,7 +35,6 @@ Template.eventsCalendar.helpers({
     var eventsByDate = _.groupBy(currentEvents, function(event) {
       return moment(event.eventDate).format("MM/DD/YYYY");
     });
-    console.log(eventsByDate);
     return eventsByDate;
   },
   hasReservation: function() {
