@@ -156,7 +156,7 @@ Meteor.startup(function () {
 
   // Users fixture
   if (Meteor.settings.env === 'dev') {
-    Users.remove({});
+    Meteor.users.remove({});
     var users = [
       {
          email: "admin@gmail.com", username: "admin", password: "admin",
@@ -180,7 +180,7 @@ Meteor.startup(function () {
         roles:['user']
       },
       {
-        email: "KIPPUser@gmail.com", username: "KIPPUser", password: "user", 
+        email: "KIPPUser@gmail.com", username: "KIPPUser", password: "user",
         profile: {
           firstName: 'kipp',
           lastName: 'User',
@@ -197,7 +197,7 @@ Meteor.startup(function () {
         roles:['user']
       },
       {
-        email: "user2@gmail.com", username: "user2", password: "user", 
+        email: "user2@gmail.com", username: "user2", password: "user",
         profile: {
           firstName: 'Test2',
           lastName: 'User2',
