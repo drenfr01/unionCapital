@@ -25,6 +25,14 @@ _.extend(CSVUpload.prototype, {
     this.data = this._clean(incomingData);
     this._parseRows(this.data)
   },
+  submit: function() {
+    _.each(this.events.get(), function(newEvent, num, list) {
+      if(newEvent.statusClass === 'bg-success') {
+        newEvent.insertEvent();
+      }
+    }, this);
+    //route here
+  },
   _clean: function(data) {
     if(data.length === 1) {
       addErrorMessage('CSV with no events in it');
@@ -90,12 +98,27 @@ _.extend(NewEvent.prototype, {
                     self.eventData.latitude = result.location.lat;
                     self.eventData.longitude = result.location.lng;
                     self.locationFound.set(true);
-                    addSuccessMessage('lat long success' + result.location.lat + ':' + result.location.lng);
+                    // good for debugging
+                    // addSuccessMessage('lat long success' + result.location.lat + ':' + result.location.lng);
                   }
                 })
   },
-  sendToServer: function(){
-    console.log(this.eventData.latitude)
+  insertEvent: function(){
+    Events.insert({
+      name: this.eventData.name,
+      address: this.eventData.address,
+      latitude: this.eventData.latitude,
+      longitude: this.eventData.longitude,
+      url: this.eventData.url,
+      description: this.eventData.description,
+      active: true,
+      eventDate: this.eventData.eventDate,
+      institution: this.eventData.institution,
+      category: this.eventData.category,
+      isPointsPerHour: Boolean(this.eventData.isPointsPerHour),
+      points: this.eventData.points,
+      pointsPerHour: this.eventData.pointsPerHour
+    })
   },
   _addWarning: function(msg){
     this.statusClass = "bg-warning";

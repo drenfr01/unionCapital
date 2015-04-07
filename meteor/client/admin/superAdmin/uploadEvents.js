@@ -39,13 +39,15 @@ Template.uploadEvents.events({
       }
     })
   },
+  'click #submitEvents': function(e, template) {
+    e.preventDefault();
+
+    template.csvUpload.submit();
+  }
 })
 
 Template.newEvent.helpers({
   locationFound: function() {
-    console.log(Template.instance())
-    console.log(Template.instance().data.eventData)
-
     return Template.instance().data.locationFound.get();
   }
 
