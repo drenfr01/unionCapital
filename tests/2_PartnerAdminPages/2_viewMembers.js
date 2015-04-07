@@ -20,7 +20,6 @@ casper.test.begin('All Members', 25, function suite(test) {
     test.assertExists('table');
 
     test.assertTextExists('test'); //KIPP Academy User
-    this.capture('partnerMembers.png');
     test.assertTextExists('kipp'); //KIPP Academy User
     test.assertTextDoesntExist('test2'); //Thrive in Five User
 

@@ -27,9 +27,10 @@ Template.eventsCalendar.helpers({
     //to push all data to the client then let it handle filtering
     //We could have a "include past events" flag for the user
     var currentEvents = _.filter(events, function(event) {
-      var eventDate = event.eventDate.setHours(0,0,0,0);
+      var newEventDate = new Date(event.eventDate);
+      newEventDate.setHours(0,0,0,0);
       var currentDate = new Date().setHours(0,0,0,0);
-      return eventDate >= currentDate;
+      return newEventDate >= currentDate;
     });
     var eventsByDate = _.groupBy(currentEvents, function(event) {
       return moment(event.eventDate).format("MM/DD/YYYY");

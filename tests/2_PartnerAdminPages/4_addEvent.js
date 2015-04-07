@@ -1,6 +1,6 @@
 casper.test.comment("Testing Partner Admin Add Events");
 
-casper.test.begin('Add Partner Events', 16, function suite(test) {
+casper.test.begin('Add Partner Events', 17, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsPartnerAdmin();
   });
@@ -24,6 +24,7 @@ casper.test.begin('Add Partner Events', 16, function suite(test) {
     test.assertExists("select[name=institution]");
     test.assertExists("select[name=category]");
     test.assertExists("input[name=eventDate]");
+    test.assertExists("input[name=duration]");
     test.assertExists("input[name=isPointsPerHour]");
     test.assertExists("input[name=points]");
 
@@ -57,6 +58,7 @@ casper.test.begin('Add Partner Events', 16, function suite(test) {
     });
 
     this.sendKeys('input[name=eventDate]', formattedTime);
+    this.sendKeys('input[name=duration]', "3");
     this.click("input[name=isPointsPerHour]");
     this.sendKeys("input[name=points]", '150');
 

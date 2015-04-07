@@ -1,6 +1,6 @@
 casper.test.comment("Testing Super Admin Add Event");
 
-casper.test.begin('Add Event', 17, function suite(test) {
+casper.test.begin('Add Event', 18, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsSuperAdmin();
   });
@@ -25,6 +25,7 @@ casper.test.begin('Add Event', 17, function suite(test) {
     test.assertExists("select[name=institution]");
     test.assertExists("select[name=category]");
     test.assertExists("input[name=eventDate]");
+    test.assertExists("input[name=duration]");
     test.assertExists("input[name=isPointsPerHour]");
     test.assertExists("input[name=points]");
 
@@ -63,6 +64,7 @@ casper.test.begin('Add Event', 17, function suite(test) {
     });
 
     this.sendKeys('input[name=eventDate]', formattedTime);
+    this.sendKeys('input[name=duration]', "4");
     this.click("input[name=isPointsPerHour]");
     this.sendKeys("input[name=points]", '250');
 
@@ -120,6 +122,7 @@ casper.test.begin('Add Event', 17, function suite(test) {
     });
 
     this.sendKeys('input[name=eventDate]', formattedTime);
+    this.sendKeys('input[name=duration]', "5");
     this.click("input[name=isPointsPerHour]");
     this.sendKeys("input[name=points]", '250');
 

@@ -64,8 +64,6 @@ casper.test.begin('Landing Page', 18, function suite(test) {
       'select[id="races"]': "African-American or Black"
     }, false);
 
-    this.capture('signUpPage.jpg');
-
     this.click('#submit');
   });
 

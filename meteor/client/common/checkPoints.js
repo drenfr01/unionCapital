@@ -28,22 +28,6 @@ Template.checkPoints.helpers({
       return "";
     }
   },
-  eventStart: function(){
-    var event = getEvent(this);
-    if(event) {
-      return event.startDate;
-    } else {
-      return "";
-    }
-  },
-  eventEnd: function(){
-    var event = getEvent(this);
-    if(event) {
-      return event.endDate;
-    } else {
-      return "";
-    }
-  },
   totalPoints: function() {
     return Meteor.users.totalPointsFor(this._id);
   }
