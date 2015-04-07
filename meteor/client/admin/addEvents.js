@@ -40,6 +40,9 @@ Template.addEvents.helpers({
     return EventCategories.find().map(function(category) {
       return {label: category.name, value: category.name};
     });
+  },
+  isPointsPerHour: function() {
+    return Session.equals("displayPointsPerHour", "true");
   }
 });
 
@@ -59,8 +62,9 @@ Template.addEvents.events({
                   }
                 });
   },
-  'click #pointsCheckbox': function(e) {
-    Session.set('displayPointsPerHour', $('#pointsCheckbox').prop('checked'));
+  'click #pointsType': function(e) {
+    Session.set('displayPointsPerHour', 
+                $("input[type='radio'][name='isPointsPerHour']:checked").val());
   },
   'click #back': function(e) {
     Router.go('manageEvents');

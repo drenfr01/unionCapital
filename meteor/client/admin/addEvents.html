@@ -11,11 +11,12 @@
       {{> afQuickField name="institution" options=institutions}}
       {{> afQuickField name="category" options=categories}}
       {{> afQuickField name="eventDate" type="datetime-local" offset="-0400"}}
-      {{> afQuickField name="isPointsPerHour" id="pointsCheckbox" value="checked"}}
-      {{#if displayPointsPerHour}}
-      {{> afQuickField name="pointsPerHour" value=100}}
+      {{> afQuickField name="isPointsPerHour" id="pointsType" value="checked" 
+          type="boolean-radios"}}
+      {{#if isPointsPerHour}}
+        {{> afQuickField name="pointsPerHour" value=100}}
       {{else}}
-      {{> afQuickField name="points"}}
+        {{> afQuickField name="points"}}
       {{/if}}
     </fieldset>
     <button type="button" class="btn btn-default" id="geocodeButton">
