@@ -1,13 +1,13 @@
 UI.registerHelper('formatDate', function(unformattedDate) {
     if(moment(unformattedDate).isValid()) {
-      return moment(unformattedDate).format('MMMM DD hh:mm A');
+      return moment(unformattedDate).format('MMMM DD h:mm A');
     } else {
       return "";
     }
 });
 
 UI.registerHelper('justTime', function(unformattedDate) {
-    return moment(unformattedDate).format('hh:mm A');
+    return moment(unformattedDate).format('h:mm A');
 });
 
 UI.registerHelper("eventOptions", function() {
