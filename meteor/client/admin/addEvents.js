@@ -63,7 +63,7 @@ Template.addEvents.events({
                   }
                 });
   },
-  'click #pointsType': function(e) {
+  'change #pointsType': function(e) {
     Session.set('displayPointsPerHour', 
                 $("input[type='radio'][name='isPointsPerHour']:checked").val());
   },
