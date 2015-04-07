@@ -27,99 +27,115 @@ checkInRules = {
 		return true;
 	},
 
-	// Changes the attributes.needsApproval to false if it meets the criteris laid out below
-	validate_old: function(attributes) {
-		if (checkInRules.isRecognizedEvent(attributes))
-			attributes.needsApproval = false;
-		else if (checkInRules.isRecognizedLocation(attributes) && checkInRules.hasPhoto(attributes))
-			attributes.needsApproval = false;
-		else
-			attributes.needsApproval = true;
-	},
-
-	// TODO: Determine whether we are going to return a value or alter the attributes
-	validate: function(attributes) {
-		try
-		{
-			var currentNode = checkInRules.decisionTree;
-			return followTree();
-		}
-		catch
-		{
-			addErrorMessage('Check-In Failed');
-		}
-	},
-
-	followTree = function() {
-		var result = currentNode.func();
-
-		if (result === true) {
-
-			currentNode = currentNode.isTrue;
-			followTree();
-
-		} else if (result === false) {
-
-			currentNode = currentNode.isFalse;
-			followTree();
-
-		} else if (_.indexOf(checkInRules.options.allowedExitValues, result) !== -1) {
-
-			return result;
-
-		} else {
-
-			Throw New Error('UNEXPECTED_OUTPUT');
-
-		}
+	inRange: function() {
+		return false;
 	}
+};
 
-	decisionTree: {
-		func: checkInRules.isRecognizedEvent,
-		isTrue: {
-			func: checkInRules.geolocSuccess,
-			isTrue: {
-				func: inRange,
-				isTrue: {
-					func: checkInRules.hasPhoto,
-					isTrue: 'auto',
-					isFalse: 'auto'
-				},
-				isFalse: {
-					func: checkInRules.hasPhoto,
-					isTrue: 'auto',
-					isFalse: 'auto'
-				}
-			},
-			isFalse: {
-				func: checkInRules.hasPhoto,
-				isTrue: 'partner_admin',
-				isFalse: 'partner_admin'
-			}
-		},
-		isFalse: {
-			func: checkInRules.geolocSuccess,
-			isTrue: {
-				func: checkInRules.isRecognizedLocation,
-				isTrue: {
-					func:  checkInRules.hasPhoto,
-					isTrue: 'partner_admin',
-					isFalse: 'partner_admin'
-				},
-				isFalse: {
-					func: checkInRules.hasPhoto,
-					isTrue: 'super_admin',
-					isFalse: 'not_allowed'
-				}
-			},
-			isFalse: {
-				func: checkInRules.hasPhoto,
-				isTrue: 'super_admin',
-				isFalse: 'not_allowed'
-			}
-		}
-	}
+// TODO: Determine whether we are going to return a value or alter the attributes
+checkInRules.validate = function(attributes) {
+  try {
+    var currentNode = checkInRules.rules;
+    return checkInRules.followTree(checkInRules.rules)
+  } catch (e) {
+    addErrorMessage('Check-In Failed');
+  }
+};
+
+checkInRules.followTree = function(currentNode) {
+
+  // If there is a function to call, we are not yet at and endpoint node
+  if (currentNode.func) {
+    var result = currentNode.func();
+
+    // Follow the true node of the tree
+    if (result === true) {
+      currentNode = currentNode.isTrue;
+      return checkInRules.followTree(currentNode);
+
+    // Follow the 'false' node of the tree
+    } else if (result === false) {
+      currentNode = currentNode.isFalse;
+      return checkInRules.followTree(currentNode);
+    }
+
+  // Check if the current node is an allowed exit value
+  } else if (_.indexOf(checkInRules.options.allowedExitValues, currentNode) !== -1) {
+    return currentNode;
+
+  // If it isn't a node or an exit value, something is wrong
+  } else {
+    throw new Exception('UNEXPECTED_OUTPUT');
+  }
+};
+
+checkInRules.rules = {
+  // Recognized event
+  func: checkInRules.isRecognizedEvent,
+  isTrue: {
+    // Geolocation works
+    func: checkInRules.geolocSuccess,
+    isTrue: {
+      // Is in range of the event
+      func: checkInRules.inRange,
+      isTrue: {
+        // Has a photo
+        func: checkInRules.hasPhoto,
+        isTrue: 'auto',
+        isFalse: 'auto'
+      },
+      isFalse: {
+        // Has a photo
+        func: checkInRules.hasPhoto,
+        isTrue: 'auto',
+        isFalse: 'auto'
+      }
+    },
+    isFalse: {
+      // Has a photo
+      func: checkInRules.hasPhoto,
+      isTrue: 'partner_admin',
+      isFalse: 'partner_admin'
+    }
+  },
+  isFalse: {
+    // Geolocation works
+    func: checkInRules.geolocSuccess,
+    isTrue: {
+      // Is a recognized location
+      func: checkInRules.isRecognizedLocation,
+      isTrue: {
+        // Has a photo
+        func:  checkInRules.hasPhoto,
+        isTrue: 'partner_admin',
+        isFalse: 'partner_admin'
+      },
+      isFalse: {
+        // Has a photo
+        func: checkInRules.hasPhoto,
+        isTrue: 'super_admin',
+        isFalse: 'not_allowed'
+      }
+    },
+    isFalse: {
+      // Has a photo
+      func: checkInRules.hasPhoto,
+      isTrue: 'super_admin',
+      isFalse: 'not_allowed'
+    }
+  }
 }
+
+// Changes the attributes.needsApproval to false if it meets the criteris laid out below
+  // validate_old: function(attributes) {
+  //   if (checkInRules.isRecognizedEvent(attributes))
+  //     attributes.needsApproval = false;
+  //   else if (checkInRules.isRecognizedLocation(attributes) && checkInRules.hasPhoto(attributes))
+  //     attributes.needsApproval = false;
+  //   else
+  //     attributes.needsApproval = true;
+  // }
+
 
 
 // Next move: finish putting this into an object
