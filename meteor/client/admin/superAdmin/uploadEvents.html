@@ -3,7 +3,7 @@
     <p class='lead'>Instructions for uploading events</p>
     <p>The first row in the csv will be column headers, here are the current event attributes: </p>
     <p><mark> {{ columnHeaders }} </mark></p>
-    <p>Subsequent rows will each be turn into an event.  Click the Verify Upload to see the events this upload will create (always a good idea before submitting). Events must be have a unique Name + Institution.</p>
+    <p>Subsequent rows will each be turn into an event.  Click the Verify Upload to see the events this upload will create (always a good idea before submitting). Events must be have a unique Name + Institution. Only events highlighted in green will be inserted.</p>
   </div>
   <div class="col-md-6 col-md-offset-3 text-center page-panel">
     <form id="uploadEventsForm">
@@ -37,7 +37,7 @@
     <td class="text-left">{{ this.eventData.description }}</td>
     <td class="text-left">{{ this.eventData.eventDate }}</td>
     <td>
-      {{#if this.locationFound }}
+      {{#if locationFound }}
       <span class="glyphicon glyphicon-ok-sign success"></span>
       {{ else }}
       <span class="glyphicon glyphicon-remove-sign success"></span>

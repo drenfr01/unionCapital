@@ -80,15 +80,16 @@ _.extend(NewEvent.prototype, {
     }
   },
   addLocationData: function(){
-    Meteor.call('geocodeAddress', this.eventData.address,
+    var self = this
+    Meteor.call('geocodeAddress', self.eventData.address,
                 function(error, result) {
                   if(error) {
-                    this._addWarning("Bad Location");
+                    self._addWarning("Bad Location");
                     console.log(error.reason)
                   } else {
-                    this.eventData.latitude = result.location.lat;
-                    this.eventData.longitude = result.location.lng;
-                    this.locationFound.set(true);
+                    self.eventData.latitude = result.location.lat;
+                    self.eventData.longitude = result.location.lng;
+                    self.locationFound.set(true);
                     addSuccessMessage('lat long success' + result.location.lat + ':' + result.location.lng);
                   }
                 })
