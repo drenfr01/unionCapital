@@ -67,7 +67,7 @@ Events.attachSchema(new SimpleSchema({
   },
   points: {
     type: Number,
-    label: 'Amount of Points',
+    label: 'Total Points Awarded',
     optional: true
   },
   isPointsPerHour: {

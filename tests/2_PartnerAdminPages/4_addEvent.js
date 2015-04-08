@@ -59,8 +59,11 @@ casper.test.begin('Add Partner Events', 17, function suite(test) {
 
     this.sendKeys('input[name=eventDate]', formattedTime);
     this.sendKeys('input[name=duration]', "3");
-    this.click("input[name=isPointsPerHour]");
-    this.sendKeys("input[name=points]", '150');
+    this.clickLabel("True");
+  });
+
+  casper.wait(250, function() {
+    this.sendKeys("input[name=pointsPerHour]", '150');
 
     this.click('#geocodeButton');
   });
