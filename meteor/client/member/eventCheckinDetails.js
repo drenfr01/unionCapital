@@ -85,13 +85,6 @@ Template.eventCheckinDetails.events({
 
 	'click #submit': function(e) {
     e.preventDefault();
-
-    var attributes = {
-      userId: Meteor.userId(),
-      eventId: this._id,
-
-      // hoursSpent: parseInt($('#hours').val(),10),
-    };
   },
 
   'click #addPhoto': function(e) {
@@ -103,7 +96,6 @@ Template.eventCheckinDetails.events({
     e.preventDefault();
 
     var attributes = {
-      userId: Meteor.userId(),
       imageId: 1,
       eventId: this._id,
       hoursSpent: hours.get()
