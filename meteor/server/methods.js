@@ -17,7 +17,7 @@ Meteor.methods({
 
     check(attributes, {
       userId: Match(String),
-      eventId: Match(String),
+      eventId: Match.Optional(String),
       hoursSpent: Match(Number),
       imageId: Match.Optional(String),
       needsApproval: Match(Boolean),
@@ -208,7 +208,7 @@ Meteor.methods({
       eventId: String,
       hoursSpent: Number,
       userId: String,
-      userLong: Number,
+      userLng: Number,
       userLat: Number
     });
 
@@ -218,7 +218,7 @@ Meteor.methods({
     if(Transactions.findOne({userId: attributes.userId, eventId: event._id})) {
       throw new Meteor.Error(400, "You have already checked into this event");
     }
-    var distance = haversineFormula(event, attributes.userLong, attributes.userLat);
+    var distance = helperFunctions.haversineFormula(event, attributes.userLng, attributes.userLat);
     console.log("Distance: " + distance);
 
     if(distance < maxDistance) {

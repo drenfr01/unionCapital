@@ -13,32 +13,51 @@ CheckInRules = function(attributes) {
 
 _.extend(CheckInRules.prototype, {
 
-	isRecognizedEvent: function(attributes) {
-		return Events.findOne({ _id: attributes.eventId });
+	isRecognizedEvent: function() {
+		return Events.findOne({ _id: this.attributes.eventId });
 	},
 
-	isRecognizedLocation: function(attributes) {
+	isRecognizedLocation: function() {
 		// TODO: Add logic here once the collection has been created
 
-		Events.findOne({ })
+		Events.findOne({  })
 
 		return true;
 	},
 
-	hasPhoto: function(attributes) {
-		return Images.findOne({ _id: attributes.imageId });
+	hasPhoto: function() {
+		return Images.findOne({ _id: this.attributes.imageId });
 	},
 
 	geolocSuccess: function() {
-		return true;
+		if (this.attributes.userLat && this.attributes.userLng)
+			return true;
+		else
+			return false;
 	},
 
 	inRange: function() {
-		return false;
+
+		// Verify that the user has not already checked in
+		var event = Events.findOne(this.attributes.eventId);
+    if(Transactions.findOne({userId: this.attributes.userId, eventId: event._id})) {
+      throw new Meteor.Error(400, "You have already checked into this event");
+    }
+
+    // Calculate the distance between the user and the event
+    var distance = helperFunctions.haversineFormula(event, this.attributes.userLng, this.attributes.userLat);
+
+    // Check to see if it is in range
+    //TODO: consider adding user geolocation info to transaction?
+    if(distance <= this.options.maxEventDistance) {
+      return true;
+    } else {
+      return false;
+    }
 	},
 
 	// TODO: Determine whether we are going to return a value or alter the attributes
-	validate: function(attributes) {
+	validate: function() {
 
 		var self = this;
 
