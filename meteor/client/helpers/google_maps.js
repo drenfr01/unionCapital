@@ -21,8 +21,16 @@ gmaps = {
   // self marker
   selfMarker: null,
 
+  // User's most recent latitude nad longitude
+  currentLocation: {
+    lat: null,
+    lng: null
+  },
+
   // gets user's current location and executes a callback
   getCurrentLocation: function(callback) {
+
+    var self = this;
 
     // Options for HTML5 navigator
     var positionOptions = {
@@ -35,22 +43,20 @@ gmaps = {
       navigator.geolocation.getCurrentPosition(function(position) {
 
           // Set the current location object
-          var currentLocation = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
+          self.currentLocation.lat = position.coords.latitude;
+          self.currentLocation.lng = position.coords.longitude;
 
-          callback(currentLocation);
+          if (callback)
+            callback(self.currentLocation);
         },
-        
+
         // This error fires when navigator exists but encounters a problem
-        function(error) { 
+        function(error) {
           console.log(error.reason);
         },
         positionOptions
       );
     } else {
-
       // This error fires when navigator does not exist
       console.log('Could not geolocate. No navigator.');
     }
@@ -94,7 +100,7 @@ gmaps = {
 
       var googleLoc = new google.maps.LatLng(latLng.lat, latLng.lng);
       gmaps.selfMarker.setPosition(googleLoc);
-    
+
     } else {
 
       if (navigator.geolocation) navigator.geolocation.getCurrentPosition(function(pos) {
@@ -146,7 +152,7 @@ gmaps = {
 
     console.log("[+] Intializing Google Maps...");
     gmaps.getCurrentLocation(gmaps.createNewMap);
-    
+
   },
 
   // Creates a new instance of google maps using the lat and lng passed to it

@@ -14,8 +14,10 @@ checkInRules = {
 	},
 
 	isRecognizedLocation: function(attributes) {
-
 		// TODO: Add logic here once the collection has been created
+
+		Events.findOne({ })
+
 		return true;
 	},
 
@@ -36,9 +38,10 @@ checkInRules = {
 checkInRules.validate = function(attributes) {
   try {
     var currentNode = checkInRules.rules;
-    return checkInRules.followTree(checkInRules.rules)
+    return checkInRules.followTree(checkInRules.rules);
   } catch (e) {
     addErrorMessage('Check-In Failed');
+    return 'failed';
   }
 };
 

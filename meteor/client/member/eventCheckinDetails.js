@@ -18,11 +18,11 @@ var checkIn = function(eventId) {
   }
 };
 
-var insertTransaction = function(eventId, imageId) {
+function insertTransaction(eventId, imageId) {
   var attributes = {
     userId: Meteor.userId(),
     eventId: eventId,
-    hoursSpent: hours.get()
+    hoursSpent: hours.get(),
     // pendingEventName: eventName,
     // pendingEventDescription: eventDescription,
   };
@@ -32,6 +32,22 @@ var insertTransaction = function(eventId, imageId) {
   if( imageId )
     attributes.imageId = imageId;
 
+  // If lat or lng is null, then try to get it one more time
+  // Useful if the user accessed this page from a link or bookmark
+  if (gmaps.currentLocation.lat && gmaps.currentLocation.lng) {
+    attributes.userLat = gmaps.currentLocation.lat;
+    attributes.userLng = gmaps.currentLocation.lng;
+    finalInsert(attributes);
+  } else {
+    gmaps.getCurrentLocation(function(currentLocation) {
+      attributes.userLat = currentLocation.lat;
+      attributes.userLng = currentLocation.lng;
+      finalInsert(attributes);
+    });
+  }
+};
+
+function finalInsert(attributes) {
   Meteor.call('insertTransaction', attributes, function(error) {
     if(error) {
       addErrorMessage(error.reason);
@@ -75,17 +91,13 @@ Template.eventCheckinDetails.helpers({
 	'hasPhoto': function() {
 		return userPhoto.photoURI.get();
 	}
-})
+});
 
 Template.eventCheckinDetails.events({
 
 	'change #durationSlider': function() {
 		hours.set($('#durationSlider').val());
 	},
-
-	'click #submit': function(e) {
-    e.preventDefault();
-  },
 
   'click #addPhoto': function(e) {
     e.preventDefault();
