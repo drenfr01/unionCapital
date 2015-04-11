@@ -242,6 +242,7 @@ Meteor.startup(function () {
         category: "Education (Child/Adult)",
         isPointsPerHour: true,
         pointsPerHour: 100,
+        adHoc: false,
         deleteInd: false
       },
       {
@@ -257,6 +258,7 @@ Meteor.startup(function () {
         category: "Health (Physical & Mental)",
         isPointsPerHour: false,
         points: 50,
+        adHoc: false,
         deleteInd: false
       },
       {
@@ -272,6 +274,7 @@ Meteor.startup(function () {
         category: "Education (Child/Adult)",
         isPointsPerHour: true,
         pointsPerHour: 100,
+        adHoc: false,
         deleteInd: false
       },
       {
@@ -287,6 +290,7 @@ Meteor.startup(function () {
         category: "Education (Child/Adult)",
         isPointsPerHour: false,
         points: 150,
+        adHoc: false,
         deleteInd: false
       },
       //This is quite hacky, but the below event only exists to allow admins to add
@@ -303,6 +307,7 @@ Meteor.startup(function () {
         category: "Other",
         isPointsPerHour: true,
         pointsPerHour: 100,
+        adHoc: false,
         deleteInd: false
       }
     ];
@@ -321,6 +326,7 @@ Meteor.startup(function () {
         category: event.category,
         isPointsPerHour: event.isPointsPerHour,
         points: event.points,
+        adHoc: event.adHoc,
         pointsPerHour: event.pointsPerHour
       });
     });

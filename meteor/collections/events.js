@@ -82,6 +82,11 @@ Events.attachSchema(new SimpleSchema({
     type: Number,
     label: 'Number of actual Attendees',
     optional: true
+  },
+  adHoc: {
+    type: Boolean,
+    label: 'Is an Ad Hoc Event',
+    optional: true
   }
 }));
 
@@ -103,7 +108,7 @@ Events.calculateStartEndDates = function(offset) {
 //TODO: refactor below two functions into one
 Events.pastEvents = function(institution, category) {
   var currentDate = new Date();
-  var selector = {eventDate: {'$lt': currentDate}, 
+  var selector = {eventDate: {'$lt': currentDate},
                      institution: institution,
                      category: category,
                      deleteInd: false
@@ -116,7 +121,7 @@ Events.pastEvents = function(institution, category) {
   if(category === 'All') {
     delete selector.category;
   }
-  
+
   console.log(selector);
 
   return Events.find(selector,
@@ -125,7 +130,7 @@ Events.pastEvents = function(institution, category) {
 
 Events.currentEvents = function(institution, category) {
   var currentDate = new Date();
-  var selector = {eventDate: {'$gte': currentDate}, 
+  var selector = {eventDate: {'$gte': currentDate},
                      institution: institution,
                      category: category,
                      deleteInd: false
