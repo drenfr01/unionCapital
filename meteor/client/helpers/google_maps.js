@@ -47,18 +47,21 @@ gmaps = {
           self.currentLocation.lng = position.coords.longitude;
 
           if (callback)
-            callback(self.currentLocation);
+            callback(null, self.currentLocation);
         },
 
         // This error fires when navigator exists but encounters a problem
         function(error) {
           console.log(error.reason);
+          callback(error, null);
         },
         positionOptions
       );
     } else {
       // This error fires when navigator does not exist
-      console.log('Could not geolocate. No navigator.');
+      var error = 'Could not geolocate. No navigator.';
+      console.log(error);
+      callback(error, null);
     }
   },
 
@@ -123,7 +126,9 @@ gmaps = {
         for (var i = 0, latLngLength; i < latLngLength; i++) {
             bounds.extend(gmaps.latLngs[i]);
         }
-        gmaps.map.fitBounds(bounds);
+
+        // Fits the bounds to the map if it exists
+        bounds && gmaps.map.fitBounds(bounds);
 
         // Sets the max zoom - it gets a bit cramped otherwise
         gmaps.map.getZoom() > gmaps.options.maxZoom && gmaps.map.setZoom(gmaps.options.maxZoom);
@@ -151,7 +156,10 @@ gmaps = {
     gmaps.selfMarker = null;
 
     console.log("[+] Intializing Google Maps...");
-    gmaps.getCurrentLocation(gmaps.createNewMap);
+    gmaps.getCurrentLocation(function(error, latLng) {
+      if (!error)
+        gmaps.createNewMap(latLng);
+    });
 
   },
 
@@ -216,12 +224,12 @@ gmaps = {
   // Doesn't work well
   centerMap: function() {
 
-    gmaps.getCurrentLocation(function(latLng) {
-
-      googleLoc = new google.maps.LatLng(latLng.lat, latLng.lng);
-      gmaps.map.setCenter(googleLoc);
-      console.log('Centering based on current location...');
-
+    gmaps.getCurrentLocation(function(error, latLng) {
+      if (!error) {
+        googleLoc = new google.maps.LatLng(latLng.lat, latLng.lng);
+        gmaps.map.setCenter(googleLoc);
+        console.log('Centering based on current location...');
+      }
     });
   }
 }

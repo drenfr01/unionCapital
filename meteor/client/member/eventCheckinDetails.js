@@ -18,6 +18,7 @@ var checkIn = function(eventId) {
   }
 };
 
+// Sets the attributes prior to calling the insert function
 function insertTransaction(eventId, imageId) {
   var attributes = {
     userId: Meteor.userId(),
@@ -37,17 +38,22 @@ function insertTransaction(eventId, imageId) {
   if (gmaps.currentLocation.lat && gmaps.currentLocation.lng) {
     attributes.userLat = gmaps.currentLocation.lat;
     attributes.userLng = gmaps.currentLocation.lng;
-    finalInsert(attributes);
+    callInsert(attributes);
   } else {
-    gmaps.getCurrentLocation(function(currentLocation) {
-      attributes.userLat = currentLocation.lat;
-      attributes.userLng = currentLocation.lng;
-      finalInsert(attributes);
+    gmaps.getCurrentLocation(function(error, currentLocation) {
+
+      if (!error) {
+        attributes.userLat = currentLocation.lat;
+        attributes.userLng = currentLocation.lng;
+      }
+
+      callInsert(attributes);
     });
   }
 };
 
-function finalInsert(attributes) {
+// Calls insertTransaction and routes the user
+function callInsert(attributes) {
   Meteor.call('insertTransaction', attributes, function(error) {
     if(error) {
       addErrorMessage(error.reason);
