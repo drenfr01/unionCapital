@@ -15,11 +15,12 @@ Meteor.startup(function () {
 
   //Seeding Partner Organizations
   if(Meteor.settings.env === 'dev') {
-    PartnerOrgs.remove({})
+    PartnerOrgs.remove({});
     var partnerOrgs = [
       {name: "KIPP Academy", sector: "Children", membersReported: 50, deleteInd: false},
       {name: "Thrive in Five", sector: "Job Training", membersReported: 50, deleteInd: false},
       {name: "Rosie's Place", sector: "Shelter", membersReported: 50, deleteInd: false},
+      {name: "Union Capital Boston", sector: "Other", membersReported: 500, deleteInd: false},
       {name: "Other", sector: "Other", membersReported: 50, deleteInd: false}
     ];
 
@@ -137,7 +138,7 @@ Meteor.startup(function () {
 
   //Seeding affiliate organizations
   if(Meteor.settings.env === 'dev') {
-    EventOrgs.remove({})
+    EventOrgs.remove({});
     var organizations =
       [ 'Other',
         'BMC Health Net Plan',
@@ -247,7 +248,7 @@ Meteor.startup(function () {
   }
   //Events fixture
   if ( Meteor.settings.env === 'dev' ) {
-    Events.remove({})
+    Events.remove({});
     //NOTE: months are 0 based for dates
     var events = [
       {
