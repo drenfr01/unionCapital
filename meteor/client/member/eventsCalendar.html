@@ -43,19 +43,29 @@
                 Remove RSVP
               </button>
             {{else}}
-              <form id="reservationForm">
+              <hr>
+              <h3 class="text-center"><small>RSVP</small></h3>
+              <form class="form-horizontal" id="reservationForm">
                 <div class="form-group>">
-                  <label for="numberOfPeople">Number of People</label>
-                  <select class="form-control numberOfPeople">
-                    {{#each people}}
-                    <option>{{number}}</option>
-                    {{/each}}
-                  </select>
+                  <label for="numberOfPeople" class="col-xs-6 control-label">
+                    Number of People
+                  </label>
+                  <div class="col-xs-6">
+                    <select class="form-control numberOfPeople">
+                      {{#each people}}
+                        <option>{{number}}</option>
+                      {{/each}}
+                    </select>
+                  </div>
                 </div>
-                <button type='button' class='btn btn-default btn-sm insertReservation' 
-                  data-toggle='modal' data-target = '#rsvpModal'>
-                  RSVP
-                </button>
+                <br>
+                <div class="row">
+                  <div class="col-xs-6 col-xs-offset-3">
+                  <button type='button' class='btn btn-default insertReservation' >
+                    RSVP
+                  </button>
+                </div>
+                </div>
               </form>
             {{/if}}
           </div>
