@@ -62,7 +62,9 @@ Template.eventsCalendar.events({
 
     Meteor.call('insertReservations', attributes, function(error) {
       if(error) {
-        console.log(error.reason);
+        addErrorMessage(error.reason);
+      } else {
+        addSuccessMessage("Congratulations, you've successfully RSVP'd!");
       }
     });
   },
@@ -72,6 +74,7 @@ Template.eventsCalendar.events({
       userId: Meteor.userId(),
       eventId: this._id
     };
+
     Meteor.call('removeReservation', attributes, function(error) {
       if(error) {
         addErrorMessage(error.reason);

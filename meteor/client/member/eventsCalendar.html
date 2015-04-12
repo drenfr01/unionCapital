@@ -37,14 +37,13 @@
             Description: {{{description}}}
             <br>
             Date: {{formatDate eventDate}}-{{justTime endTime}}
-            <br>
+            <hr>
+            <h3 class="text-center"><small>RSVP</small></h3>
             {{#if hasReservation}}
-              <button type='button' class='btn btn-danger btn-sm removeReservation'>
+              <button type='button' class='center-block btn btn-danger btn-sm removeReservation'>
                 Remove RSVP
               </button>
             {{else}}
-              <hr>
-              <h3 class="text-center"><small>RSVP</small></h3>
               <form class="form-horizontal" id="reservationForm">
                 <div class="form-group>">
                   <label for="numberOfPeople" class="col-xs-6 control-label">
@@ -56,15 +55,12 @@
                         <option>{{number}}</option>
                       {{/each}}
                     </select>
+                    <br>
+                    <button type='button' class='btn btn-default insertReservation 
+                      center-block'>
+                      RSVP
+                    </button>
                   </div>
-                </div>
-                <br>
-                <div class="row">
-                  <div class="col-xs-6 col-xs-offset-3">
-                  <button type='button' class='btn btn-default insertReservation' >
-                    RSVP
-                  </button>
-                </div>
                 </div>
               </form>
             {{/if}}
