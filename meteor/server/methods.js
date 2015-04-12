@@ -6,8 +6,7 @@ Meteor.methods({
 
   insertTransaction: function(attributes) {
     // Determines whether this transaction requires approval
-    var checkInRules = new CheckInRules(attributes);
-    attributes.needsApproval = checkInRules.validate();
+    attributes.needsApproval = CheckInRules.validate(attributes);
 
     // If the user isn't logging an action from the past,
     // we use the server's time as the source of truth
@@ -16,14 +15,16 @@ Meteor.methods({
       attributes.transactionDate = new Date();
 
     check(attributes, {
-      userId: Match(String),
+      userId: String,
+      hoursSpent: Number,
+      needsApproval: String,
       eventId: Match.Optional(String),
-      hoursSpent: Match(Number),
       imageId: Match.Optional(String),
-      needsApproval: Match(Boolean),
       pendingEventName: Match.Optional(String),
       pendingEventDescription: Match.Optional(String),
-      transactionDate: Match.Optional(Date)
+      transactionDate: Match.Optional(Date),
+      userLat: Match.Optional(Number),
+      userLng: Match.Optional(Number)
     });
 
     var currentUser = Meteor.user();
@@ -203,37 +204,37 @@ Meteor.methods({
       return myFuture.wait();
   },
 
-  geolocateUser: function(attributes) {
-    check(attributes, {
-      eventId: String,
-      hoursSpent: Number,
-      userId: String,
-      userLng: Number,
-      userLat: Number
-    });
+  // geolocateUser: function(attributes) {
+  //   check(attributes, {
+  //     eventId: String,
+  //     hoursSpent: Number,
+  //     userId: String,
+  //     userLng: Number,
+  //     userLat: Number
+  //   });
 
-    //TODO: make this an admin configurable option
-    var maxDistance = 0.1; //maximum distance in kilometers to check in
-    var event = Events.findOne(attributes.eventId);
-    if(Transactions.findOne({userId: attributes.userId, eventId: event._id})) {
-      throw new Meteor.Error(400, "You have already checked into this event");
-    }
-    var distance = helperFunctions.haversineFormula(event, attributes.userLng, attributes.userLat);
-    console.log("Distance: " + distance);
+  //   //TODO: make this an admin configurable option
+  //   var maxDistance = 0.1; //maximum distance in kilometers to check in
+  //   var event = Events.findOne(attributes.eventId);
+  //   if(Transactions.findOne({userId: attributes.userId, eventId: event._id})) {
+  //     throw new Meteor.Error(400, "You have already checked into this event");
+  //   }
+  //   var distance = helperFunctions.haversineFormula(event, attributes.userLng, attributes.userLat);
+  //   console.log("Distance: " + distance);
 
-    if(distance < maxDistance) {
-      //TODO: consider adding user geolocation info to transaction?
-      Transactions.insert({userId: attributes.userId, eventId: event._id, needsApproval: false,
-                          transactionDate: Date(), hoursSpent: attributes.hoursSpent,
-                          deleteInd: false
-      });
-      return "Congrats, you are within: " + distance +  " km of your event. Adding points to your total!";
-    } else {
-      throw new Meteor.Error(400, "You are too far away from the event" +
-                             "(" + distance + " km ), please move closer and try again OR take a photo " +
-                             "and submit it for manually approval");
-    }
-  },
+  //   if(distance < maxDistance) {
+  //     //TODO: consider adding user geolocation info to transaction?
+  //     Transactions.insert({userId: attributes.userId, eventId: event._id, needsApproval: false,
+  //                         transactionDate: Date(), hoursSpent: attributes.hoursSpent,
+  //                         deleteInd: false
+  //     });
+  //     return "Congrats, you are within: " + distance +  " km of your event. Adding points to your total!";
+  //   } else {
+  //     throw new Meteor.Error(400, "You are too far away from the event" +
+  //                            "(" + distance + " km ), please move closer and try again OR take a photo " +
+  //                            "and submit it for manually approval");
+  //   }
+  // },
 
   sendEmail: function(attributes) {
     check(attributes, {

@@ -2,14 +2,13 @@
 var defaultHours = 3
 hours = new ReactiveVar(defaultHours);
 
-var checkIn = function(eventId) {
+function checkIn(eventId) {
 
   if( userPhoto.photoURI.get() ) {
     userPhoto.insert(function(err, fileObj) {
       if ( err ) {
         addErrorMessage(err.reason);
       } else {
-        console.log(fileObj._id);
         insertTransaction(eventId, fileObj._id);
       }
     });
@@ -23,7 +22,7 @@ function insertTransaction(eventId, imageId) {
   var attributes = {
     userId: Meteor.userId(),
     eventId: eventId,
-    hoursSpent: hours.get(),
+    hoursSpent: parseInt(hours.get())
     // pendingEventName: eventName,
     // pendingEventDescription: eventDescription,
   };
@@ -58,7 +57,6 @@ function callInsert(attributes) {
     if(error) {
       addErrorMessage(error.reason);
     } else {
-      addSuccessMessage('Transaction successfully submitted');
       Router.go('memberHomePage');
     }
   });
@@ -116,7 +114,7 @@ Template.eventCheckinDetails.events({
     var attributes = {
       imageId: 1,
       eventId: this._id,
-      hoursSpent: hours.get()
+      hoursSpent: parseInt(hours.get())
       // pendingEventName: eventName,
       // pendingEventDescription: eventDescription,
     };

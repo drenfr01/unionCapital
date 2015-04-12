@@ -18,7 +18,7 @@ Transactions.attachSchema(new SimpleSchema({
     },
     //Manually set this to false for QR code submissions
     needsApproval: {
-      type: Boolean,
+      type: String,
       label: 'Needs Approval'
     },
     pendingEventName: {
