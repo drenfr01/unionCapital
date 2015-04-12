@@ -46,12 +46,35 @@
           <div class="form-group">
             <label for="organizations">Partner Affiliation</label>
             <select class="form-control" id="organizations">
+              <option value="" selected="selected">Select Option Below</option>
               {{#each organizations}}
                 <option>{{name}}</option>
               {{/each}}
             </select>
           </div>
         </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 page-panel page-panel-form">
+        <form role="form" id="followingOrgForm">
+          <div class="form-group">
+            <label for="followingOrgs">
+              Partners You'd Like to Follow (not required)
+            </label>
+            <select class="form-control" id="followingOrgs">
+              <option value="" selected="selected">Select Option Below</option>
+              {{#each organizations}}
+                <option value="{{description}}">{{name}}</option>
+              {{/each}}
+            </select>
+          </div>
+        </form>
+        {{#each followingOrgs}}
+        <b>{{name}}:</b> {{description}} 
+          <span class="glyphicon glyphicon-remove removeOrg" area-hidden="true"></span>
+          <br>
+        {{/each}}
       </div>
     </div>
     <div class="row">

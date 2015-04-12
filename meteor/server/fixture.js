@@ -17,10 +17,14 @@ Meteor.startup(function () {
   if(Meteor.settings.env === 'dev') {
     PartnerOrgs.remove({});
     var partnerOrgs = [
-      {name: "KIPP Academy", sector: "Children", membersReported: 50, deleteInd: false},
-      {name: "Thrive in Five", sector: "Job Training", membersReported: 50, deleteInd: false},
-      {name: "Rosie's Place", sector: "Shelter", membersReported: 50, deleteInd: false},
-      {name: "Union Capital Boston", sector: "Other", membersReported: 500, deleteInd: false},
+      {name: "KIPP Academy", description: "College Prep Public Schools", 
+        sector: "Children", membersReported: 50, deleteInd: false},
+      {name: "Thrive in Five", description: "Family Engagement through parent leadership", 
+        sector: "Job Training", membersReported: 50, deleteInd: false},
+      {name: "Rosie's Place", description: "A sanctuary for poor and homeless women", 
+        sector: "Shelter", membersReported: 50, deleteInd: false},
+      {name: "Union Capital Boston", description: "Overcoming the Poverty Trap", 
+        sector: "Other", membersReported: 500, deleteInd: false},
       {name: "Other", sector: "Other", membersReported: 50, deleteInd: false}
     ];
 

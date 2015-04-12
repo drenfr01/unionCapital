@@ -32,6 +32,11 @@ PartnerOrgs.attachSchema(new SimpleSchema({
     type: String,
     label: 'Organization Name'
   },
+  description: {
+    type: String,
+    label: 'Organization Description',
+    optional: true
+  },
   sector: {
     type: String,
     label: 'Classification of Org'
