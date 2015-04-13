@@ -135,12 +135,7 @@ Meteor.startup(function () {
   }
 
   //Seeding affiliate organizations
-<<<<<<< HEAD
   if( Meteor.settings.env === 'dev' && EventOrgs.find().count() === 0 ) {
-=======
-  if(Meteor.settings.env === 'dev') {
-    EventOrgs.remove({})
->>>>>>> 12b880f9d3396cdc180fb5f9731ba2b577593817
     var organizations =
       [ 'Other',
         'BMC Health Net Plan',
@@ -158,12 +153,7 @@ Meteor.startup(function () {
   }
 
   // Users fixture
-<<<<<<< HEAD
   if ( Meteor.settings.env === 'dev' && Meteor.users.find().count() === 0 ) {
-=======
-  if (Meteor.settings.env === 'dev') {
-    Meteor.users.remove({});
->>>>>>> 12b880f9d3396cdc180fb5f9731ba2b577593817
     var users = [
       {
          email: "admin@gmail.com", username: "admin", password: "admin",
@@ -253,12 +243,7 @@ Meteor.startup(function () {
     Meteor.call("_houston_make_admin", admin._id);
   }
   //Events fixture
-<<<<<<< HEAD
   if ( Events.find().count() === 0 && Meteor.settings.env === 'dev' ) {
-=======
-  if ( Meteor.settings.env === 'dev' ) {
-    Events.remove({})
->>>>>>> 12b880f9d3396cdc180fb5f9731ba2b577593817
     //NOTE: months are 0 based for dates
     var events = [
       {
@@ -269,11 +254,7 @@ Meteor.startup(function () {
         url: 'http://example.com/CSF',
         description: 'A festival of science for everybody',
         active: 1,
-<<<<<<< HEAD
         eventDate: helperFunctions.addDays(new Date(), 7),
-=======
-        eventDate: addDays(new Date(), 7),
->>>>>>> 12b880f9d3396cdc180fb5f9731ba2b577593817
         duration: 3,
         institution: "KIPP Academy",
         category: "Education (Child/Adult)",
@@ -290,11 +271,7 @@ Meteor.startup(function () {
         url: 'http://example.com/SCF',
         description: 'A festival of cooking for the masses',
         active: 1,
-<<<<<<< HEAD
         eventDate: helperFunctions.addDays(new Date(), -7),
-=======
-        eventDate: addDays(new Date(), -7),
->>>>>>> 12b880f9d3396cdc180fb5f9731ba2b577593817
         duration: 5,
         institution: "Thrive in Five",
         category: "Health (Physical & Mental)",
@@ -328,11 +305,7 @@ Meteor.startup(function () {
         url: 'http://example.com/CFF',
         description: 'Watch as many films as you can in just 3 days of mandness!',
         active: 1,
-<<<<<<< HEAD
         eventDate: helperFunctions.addDays(new Date(), 1),
-=======
-        eventDate: addDays(new Date(), 1),
->>>>>>> 12b880f9d3396cdc180fb5f9731ba2b577593817
         duration: 1,
         institution: "Thrive in Five",
         category: "Education (Child/Adult)",
