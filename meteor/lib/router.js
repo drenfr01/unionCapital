@@ -227,7 +227,7 @@ Router.map(function() {
     this.render('memberProfile');
   });
 
-  this.route('/eventsCalendar', function() {
+  this.route('/calendar', function() {
     this.render('eventsCalendar');
   });
 
@@ -253,7 +253,7 @@ Router.map(function() {
   });
 
   this.route('checkPoints', {
-    path: '/checkPoints'
+    path: '/points'
   });
 
 
