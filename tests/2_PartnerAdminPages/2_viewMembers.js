@@ -5,7 +5,7 @@ casper.test.begin('All Members', 25, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsPartnerAdmin();
   });
-
+  
   //check home page main panel
   casper.waitForSelector("#login-dropdown-list", function() {
     test.assertExists('#partnerMembers');
@@ -50,7 +50,7 @@ casper.test.begin('All Members', 25, function suite(test) {
     this.click('#addPoints');
   });
 
-  casper.wait(100, function() {
+  casper.wait(500, function() {
     //this could technically match two instances, Total Points:
     //and the actual row
     test.assertTextExists('100');

@@ -68,6 +68,7 @@ Meteor.publish("reservations", function() {
 //A partner should get access to all transactions for 
 //their members only
 Meteor.publish('transactions', function(userId) {
+  var partnerAdmin = Meteor.users.findOne({_id: this.userId});
   if (Roles.userIsInRole(this.userId, 'admin')) {
 
     return Transactions.find();

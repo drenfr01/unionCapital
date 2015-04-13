@@ -71,9 +71,6 @@ CheckInRules = {
 
 	// TODO: Determine whether we are going to return a value or alter the attributes
 	validate: function(attributes) {
-
-
-
     var currentNode = CheckInRules.rules;
     var path = 'start';
     return CheckInRules.followTree(currentNode, attributes, path);

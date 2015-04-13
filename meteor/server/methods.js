@@ -245,6 +245,45 @@ Meteor.methods({
                         {$push: {emails: {address: attributes.email
                         }}});
   },
+  geocodeAddress: function(address) {
+    var myFuture = new Future(); 
+    googlemaps.geocode(address, function(err, data) {
+      if(err) {
+        myFuture.throw(err);
+      } else {
+        myFuture.return(data.results[0].geometry);
+      }
+    });
+    return myFuture.wait();
+  },
+  geolocateUser: function(attributes) {
+    check(attributes, {
+      email: String,
+      profile: {
+        firstName: String,
+        lastName: String,
+        street1: String,
+        street2: String,
+        city: String,
+        state: String,
+        zip: String,
+        partnerOrg: String,
+        incomeBracket: String,
+        numberOfKids: String,
+        race: String,
+      }
+    });
+    Meteor.users.update(this.userId,
+                        {$set: { profile: attributes.profile
+                        }});
+    //Note: this assumes only 1 email address
+    Meteor.users.update(this.userId,
+                        {$pop: {emails: {address: attributes.email
+                        }}});
+    Meteor.users.update(this.userId,
+                        {$push: {emails: {address: attributes.email
+                        }}});
+  },
 
   geocodeAddress: function(address) {
     var myFuture = new Future(); 
@@ -344,7 +383,7 @@ Meteor.methods({
       approved: true,
       transactionDate: Date(), 
       partnerOrg: partnerOrg,
-			hoursSpent: hours,
+      hoursSpent: hours,
       deleteInd: false
     });
 
