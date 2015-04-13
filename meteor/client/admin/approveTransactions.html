@@ -1,4 +1,4 @@
-<template name="reviewPhotos">
+<template name="approveTransactions">
   {{#with modalData}}
     <div class="modal fade" id="showImageModal">
       <div class="modal-dialog">
@@ -29,18 +29,18 @@
           </div>
           <div class="modal-body text-center">
             {{#if eventId}}
-            <p>This event has a fixed number of points. Change it on the 
+            <p>This event has a fixed number of points. Change it on the
             edit events page</p>
-            <input type="number" class="form-control" 
+            <input type="number" class="form-control"
             id="pointsInput" value="{{getPoints eventId}}" readonly>
             {{else}}
             <p>This is a DIY event. You can award any amount of points</p>
-              <input type="number" class="form-control" 
+              <input type="number" class="form-control"
                 id="pointsInput" placeholder="Enter Points">
             {{/if}}
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" 
+            <button type="button" class="btn btn-default"
               id="sendApproval" data-dismiss="modal">Approve</button>
           </div>
         </div><!-- /.modal-content -->
@@ -49,10 +49,10 @@
   {{/with}}
 
 
-  {{#if pendingTransaction.count}} 
+  {{#if pendingTransaction.count}}
     <div class='tablesize'>
       <h1 class="text-center">
-        <small>{{ pendingTransaction.count }} 
+        <small>{{ pendingTransaction.count }}
           Pending Transaction(s)
         </small>
       </h1>

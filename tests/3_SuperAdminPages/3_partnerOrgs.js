@@ -4,7 +4,7 @@ casper.test.begin('Partner Org Management', 21, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsSuperAdmin();
   });
-  
+
   //check home page main panel
   casper.waitForSelector("#login-dropdown-list", function() {
     test.assertExists('#partnerOrgs');
@@ -18,7 +18,7 @@ casper.test.begin('Partner Org Management', 21, function suite(test) {
 
     test.assertExists('table');
 
-    test.assertTextExists('Kipp Academy');
+    test.assertTextExists('KIPP Academy');
     test.assertTextExists('Thrive in Five');
     test.assertExists(".editOrg");
     test.assertExists('.deleteOrg');
@@ -27,7 +27,7 @@ casper.test.begin('Partner Org Management', 21, function suite(test) {
   });
 
   casper.wait(500, function(){
-    test.assertTextExists('Kipp Academy');
+    test.assertTextExists('KIPP Academy');
     test.assertTextDoesntExist('Thrive in Five');
 
     this.click('#addPartnerOrg');

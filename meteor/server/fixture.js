@@ -16,7 +16,7 @@ Meteor.startup(function () {
   //Seeding Partner Organizations
   if(PartnerOrgs.find().count() === 0 && Meteor.settings.env === 'dev') {
     var partnerOrgs = [
-      {name: "Kipp Academy", sector: "Children", membersReported: 50, deleteInd: false},
+      {name: "KIPP Academy", sector: "Children", membersReported: 50, deleteInd: false},
       {name: "Thrive in Five", sector: "Job Training", membersReported: 50, deleteInd: false},
       {name: "Rosie's Place", sector: "Shelter", membersReported: 50, deleteInd: false},
       {name: "Other", sector: "Other", membersReported: 50, deleteInd: false}

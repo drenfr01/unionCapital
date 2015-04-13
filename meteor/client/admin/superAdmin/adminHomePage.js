@@ -9,7 +9,7 @@ Template.adminHomePage.events({
   },
   'click #approvePoints': function(e) {
     e.preventDefault();
-    Router.go('reviewPhotos');
+    Router.go('approveTransactions');
   },
   'click #manageEvents': function(e) {
     e.preventDefault();

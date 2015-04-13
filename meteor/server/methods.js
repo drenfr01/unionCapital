@@ -25,8 +25,11 @@ Meteor.methods({
 
     // Uses the event's partner org if the transaction is associated with an event
     // Otherwise uses the user's partner org
-    if (attributes.eventId) {
-      attributes.partnerOrg = Events.findOne({ _id: attributes.eventId }).institution;
+    if (attributes.eventId && Events.findOne({ _id: attributes.eventId })) {
+      var thisEvent = Events.findOne({ _id: attributes.eventId });
+      attributes.partnerOrg = thisEvent.institution;
+      attributes.pendingEventName = thisEvent.name;
+      attributes.pendingEventDescription = thisEvent.description;
     } else {
       attributes.partnerOrg = currentUser.profile.partnerOrg;
     }
@@ -302,7 +305,8 @@ Meteor.methods({
     var event = Events.findOne({name: 'Admin Add Points'});
 
     Transactions.insert({userId: attributes.userId, eventId: event._id,
-                        approvalType: false,
+                        approvalType: 'auto',
+                        approved: true,
                         transactionDate: Date(), hoursSpent: hours,
                         deleteInd: false
     });

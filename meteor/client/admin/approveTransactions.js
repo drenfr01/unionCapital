@@ -1,17 +1,18 @@
-Template.reviewPhotos.rendered = function() {
+Template.approveTransactions.rendered = function() {
 };
 
-Template.reviewPhotos.helpers({
+Template.approveTransactions.helpers({
 
+  // Returns only the points approvals that are assigned to this role
   'pendingTransaction': function() {
 
     var role = '';
     if (Roles.userIsInRole(Meteor.userId(), 'admin'))
-      role = 'superadmin';
+      role = 'super_admin';
     else if (Roles.userIsInRole(Meteor.userId(), 'partnerAdmin'))
       role = 'partner_admin';
 
-    return Transactions.find( { approvalType: role});
+    return Transactions.find({ approvalType: role, approved: false });
   },
 
   'modalData': function() {
@@ -46,7 +47,7 @@ Template.reviewPhotos.helpers({
   }
 });
 
-Template.reviewPhotos.events({
+Template.approveTransactions.events({
 
   'click .showImage': function(e) {
     Session.set('modalDataContext', this);
@@ -64,7 +65,7 @@ Template.reviewPhotos.events({
       if(error) {
         addErrorMessage(error.reason);
       }
-      Router.go('reviewPhotos');
+      Router.go('approveTransactions');
     });
   },
 

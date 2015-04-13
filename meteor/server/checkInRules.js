@@ -8,8 +8,11 @@
 // Should probably find a way to log the path variable on error
 CheckInRules = {
 	options: {
-		maxAdHocDistance: 100,
-		maxEventDistance: 100,
+    // Max distance for ad hoc event in km
+		maxAdHocDistance: 0.1,
+    // Max distance for recognized event in km
+		maxEventDistance: 0.1,
+    // Values that should be allowed from decision tree endpoints
 		allowedExitValues: ['auto','partner_admin','super_admin','not_allowed']
 	},
 
@@ -57,7 +60,6 @@ CheckInRules = {
 
     // Calculate the distance between the user and the event
     var distance = helperFunctions.haversineFormula(event, attributes.userLng, attributes.userLat);
-
     // Check to see if it is in range
     //TODO: consider adding user geolocation info to transaction?
     if(distance <= CheckInRules.options.maxEventDistance) {
@@ -100,7 +102,7 @@ CheckInRules = {
 
 	  // Check if the current node is an allowed exit value
 	  } else if (_.indexOf(CheckInRules.options.allowedExitValues, currentNode) > -1) {
-      console.log('success ' + attributes.userId + ' ' + path);
+      console.log('success ' + attributes.userId + ' ' + path + ' result:' + currentNode);
 	    return currentNode;
 
 	  // If it isn't a node or an exit value, something is wrong
