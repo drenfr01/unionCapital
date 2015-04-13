@@ -5,8 +5,11 @@ Meteor.methods({
   },
 
   insertTransaction: function(attributes) {
+
+    var currentUser = Meteor.user();
+
     // Determines whether this transaction requires approval
-    attributes.needsApproval = CheckInRules.validate(attributes);
+    attributes.approvalType = CheckInRules.validate(attributes);
 
     // If the user isn't logging an action from the past,
     // we use the server's time as the source of truth
@@ -14,28 +17,36 @@ Meteor.methods({
     if (!attributes.transactionDate)
       attributes.transactionDate = new Date();
 
+    // Uses the event's partner org if the transaction is associated with an event
+    // Otherwise uses the user's partner org
+    if (attributes.eventId) {
+      attributes.partnerOrg = Events.findOne({ _id: attributes.eventId }).institution;
+    } else {
+      attributes.partnerOrg = currentUser.profile.partnerOrg;
+    }
+
     check(attributes, {
       userId: String,
       hoursSpent: Number,
-      needsApproval: String,
+      approvalType: String,
       eventId: Match.Optional(String),
       imageId: Match.Optional(String),
       pendingEventName: Match.Optional(String),
       pendingEventDescription: Match.Optional(String),
       transactionDate: Match.Optional(Date),
+      partnerOrg: Match.Optional(String),
       userLat: Match.Optional(Number),
       userLng: Match.Optional(Number)
     });
-
-    var currentUser = Meteor.user();
 
     var duplicateTransaction = Transactions.findOne({userId: currentUser._id, imageId: attributes.imageId,
                                                     pendingEventName: attributes.pendingEventName,
                                                     pendingEventDescription: attributes.pendingEventDescription
     });
 
+    // DPROUD: Make this make sense
     //TODO: setup MAIL URL for union capital website
-    if(attributes.needsApproval) {
+    if(attributes.approvalType) {
       console.log('A Union Capitalist has submitted a photo for approval',
                   currentUser.profile.firstName + ' ' + currentUser.profile.lastName +
                     ' requests that you log onto the admin website and approve or reject their event.' +
@@ -100,7 +111,7 @@ Meteor.methods({
       eventId = insertEvent(attributes);
     }
     Transactions.update(attributes.transactionId,
-                        {$set: { needsApproval: false, eventId: eventId} });
+                        {$set: { approvalType: false, eventId: eventId} });
 
     var user = Meteor.users.findOne(attributes.userId);
 
@@ -224,7 +235,7 @@ Meteor.methods({
 
   //   if(distance < maxDistance) {
   //     //TODO: consider adding user geolocation info to transaction?
-  //     Transactions.insert({userId: attributes.userId, eventId: event._id, needsApproval: false,
+  //     Transactions.insert({userId: attributes.userId, eventId: event._id, approvalType: false,
   //                         transactionDate: Date(), hoursSpent: attributes.hoursSpent,
   //                         deleteInd: false
   //     });
@@ -277,7 +288,7 @@ Meteor.methods({
     var event = Events.findOne({name: 'Admin Add Points'});
 
     Transactions.insert({userId: attributes.userId, eventId: event._id,
-                        needsApproval: false,
+                        approvalType: false,
                         transactionDate: Date(), hoursSpent: hours,
                         deleteInd: false
     });

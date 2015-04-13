@@ -1,6 +1,6 @@
 removeTransaction = function(transactionId) {
   check(transactionId, String);
-  Transactions.update(transactionId, {$set: {needsApproval: false, deleteInd: true}});
+  Transactions.update(transactionId, {$set: {deleteInd: true}});
 };
 insertEvent = function(attributes) {
  return Events.insert(
@@ -13,5 +13,5 @@ insertEvent = function(attributes) {
      points: attributes.points,
      isPointsPerHour: attributes.isPointsPerHour
    }
- );  
+ );
 };

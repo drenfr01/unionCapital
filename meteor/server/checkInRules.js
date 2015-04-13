@@ -1,6 +1,11 @@
 
 // Defines the check-in rules for an event
 // Can be moved to /lib if we want to give some kind of feeback to users as well
+// How it works:
+// It follows the decision tree defined in CheckInRules.rules upon passing upon the invokation
+// of validate()
+// When debugging, log the path variable to see where the function is
+// Should probably find a way to log the path variable on error
 CheckInRules = {
 	options: {
 		maxAdHocDistance: 100,
@@ -28,10 +33,9 @@ CheckInRules = {
 
 	// Returns true if the user has a photo
 	hasPhoto: function(attributes) {
-		if (Images.findOne({ _id: attributes.imageId }))
-			return true;
-		else
-			return false;
+		var img = Images.findOne({ _id: attributes.imageId });
+
+		return !!img;
 	},
 
 	// Returns true if the user's geolocation is functioning
@@ -65,9 +69,12 @@ CheckInRules = {
 
 	// TODO: Determine whether we are going to return a value or alter the attributes
 	validate: function(attributes) {
-	    var currentNode = CheckInRules.rules;
-	    var path = 'start';
-	    return CheckInRules.followTree(currentNode, attributes, path);
+
+
+
+    var currentNode = CheckInRules.rules;
+    var path = 'start';
+    return CheckInRules.followTree(currentNode, attributes, path);
 	},
 
 	followTree: function(currentNode, attributes, path) {
@@ -93,7 +100,6 @@ CheckInRules = {
 
 	  // Check if the current node is an allowed exit value
 	  } else if (_.indexOf(CheckInRules.options.allowedExitValues, currentNode) > -1) {
-	  	console.log(path);
 	    return currentNode;
 
 	  // If it isn't a node or an exit value, something is wrong
@@ -170,19 +176,3 @@ CheckInRules.rules = {
     }
   }
 };
-
-// Changes the attributes.needsApproval to false if it meets the criteris laid out below
-  // validate_old: function(attributes) {
-  //   if (checkInRules.isRecognizedEvent(attributes))
-  //     attributes.needsApproval = false;
-  //   else if (checkInRules.isRecognizedLocation(attributes) && checkInRules.hasPhoto(attributes))
-  //     attributes.needsApproval = false;
-  //   else
-  //     attributes.needsApproval = true;
-  // }
-
-
-
-// Next move: finish putting this into an object
-// Add isRecognizedLocation logic
-// Add geoloc success object

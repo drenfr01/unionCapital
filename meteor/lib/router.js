@@ -29,7 +29,7 @@ Router.onBeforeAction(function() {
   } else if (Roles.userIsInRole(Meteor.userId(), ['user'])) {
     this.next();
   } else {
-    console.log("redirectly member");
+    console.log("redirect member");
     this.redirect('login');
   }
 },
