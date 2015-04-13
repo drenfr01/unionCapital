@@ -54,9 +54,20 @@ Events.attachSchema(new SimpleSchema({
     type: Date,
     label: 'Date event occurs'
   },
+  endTime: {
+    type: Date,
+    label: 'End Time of Event',
+    //can be left blank for all day events
+    //also difficult to do in fixture data
+    optional: true
+  },
+  duration: {
+    type: Number,
+    label: 'Duration of Event in Hours'
+  },
   points: {
     type: Number,
-    label: 'Amount of Points',
+    label: 'Total Points Awarded',
     optional: true
   },
   isPointsPerHour: {

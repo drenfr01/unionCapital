@@ -26,7 +26,6 @@ casper.test.begin('Landing Page', 8, function suite(test) {
   });
 
   casper.wait(1000, function() {
-    this.capture('signUpPage.jpg');
     test.assertExists("#loginSubmit");
 
     this.sendKeys("#userEmail", user);

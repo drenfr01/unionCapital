@@ -11,11 +11,16 @@ Meteor.users.totalPointsFor = function(userId) {
   .fetch()
   .reduce(function(sum, transaction) {
     var event = Transactions.eventFor(transaction);
-    if(event.isPointsPerHour) {
+    if(event && event.isPointsPerHour) {
       return Math.round(sum += event.pointsPerHour * transaction.hoursSpent);
-    } else {
+    } else if(event) {
       return sum += event.points;
     }
   }, 0);
 };
 
+Meteor.users.deny({
+  update: function() {
+    return true;
+  }
+});

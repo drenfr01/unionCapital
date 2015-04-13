@@ -34,7 +34,7 @@ Router.onBeforeAction(function() {
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for members
-  {only: ['memberHomePage', 'eventsCalendar', 'checkPoints', 'contactUs','share']}
+  {only: ['memberHomePage','memberProfile', 'editMemberProfile','eventsCalendar', 'checkPoints', 'contactUs','share']}
 );
 
 //Both Admins
@@ -80,7 +80,13 @@ Router.onBeforeAction(function() {
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for superAdmins
-  {only: ['adminHomePage', 'addCommunityEvents', 'partnerAdminView','addPartnerAdminUser','addPartnerOrg', 'partnerOrgs']}
+  {only: ['adminHomePage',
+   'addCommunityEvents',
+   'partnerAdminView',
+   'addPartnerAdminUser',
+   'addPartnerOrg',
+   'partnerOrgs',
+   'uploadEvents']}
 );
 
 Router.route('/viewMemberProfile/:_id', function () {
@@ -91,6 +97,12 @@ Router.route('/viewMemberProfile/:_id', function () {
   });
 }, {
   name: 'viewMemberProfile'
+});
+
+Router.route('/editmemberprofile', function() {
+  this.render('editMemberProfile');
+}, {
+  name: 'editMemberProfile'
 });
 
 Router.route('/exportData', function() {
@@ -133,6 +145,13 @@ Router.route('/addEvents', function() {
 },
 {
   name: 'addEvents'
+});
+
+Router.route('/uploadEvents', function() {
+  this.render('uploadEvents');
+},
+{
+  name: 'uploadEvents'
 });
 
 Router.route('/editEvent/:_id', function () {
@@ -231,7 +250,7 @@ Router.map(function() {
     data: function() {
       return Events.findOne({_id: this.params.id});
     }
-  })
+  });
 
   this.route('checkPoints', {
     path: '/checkPoints'
@@ -257,7 +276,7 @@ Router.map(function() {
     }
   });
   this.route('singleEvent', {
-    path: '/singleEvents/:_id',
+    path: '/singleEvent/:_id',
     data: function() { return Events.findOne({_id: this.params._id }); }
   });
 

@@ -1,22 +1,11 @@
 Session.setDefault('rsvpList', null);
 
-Template.singleEvent.rendered = function() {
-  Meteor.call('getRsvpList', this.data._id, function(error, data) {
-    if(error) {
-      addErrorMessage(error.reason);
-    } else {
-      Session.set('rsvpList',data);
-    }
-  });
-};
 Template.singleEvent.helpers({
   'rsvpList': function() {
-    return Session.get('rsvpList');
+    return Reservations.find({eventId: this._id});
   },
-  'totalReservations': function() {
-    return _.reduce(Session.get('rsvpList'), function(sum, reservation) { 
-      return sum + reservation.numberOfPeople; 
-    }, 0);
+  isPointsPerHour: function() {
+    return this.isPointsPerHour;
   }
 });
 

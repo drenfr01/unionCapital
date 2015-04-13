@@ -13,7 +13,7 @@ var getEventsData = function() {
     transform: function(matchText, regExp) {
       return matchText.replace(regExp, "<span style='color:red'>$&</span>");
     },
-    sort: {startDate: 1}
+    sort: {eventDate: 1}
   });
 };
 
@@ -47,7 +47,7 @@ Template.manageEvents.helpers({
     } else { //user is using search bar
       var events = getEventsData();
       var eventsByDate = _.groupBy(events, function(event) {
-        return moment(event.startDate).format("YYYY MM DD");
+        return moment(event.eventDate).format("YYYY MM DD");
       });
       return eventsByDate;
     }
@@ -80,14 +80,25 @@ Template.manageEvents.events({
   }, 200),
   'click .editEvent': function(e) {
     e.preventDefault();
-    Router.go('editEvent', {_id: this._id});
+    if(Roles.userIsInRole(Meteor.userId(), ['admin']) || 
+       Meteor.user().profile.partnerOrg === this.institution) {
+      Router.go('editEvent', {_id: this._id});
+    } else {
+      console.log('Permission Denied: You do not own this event');
+      addErrorMessage('Permission Denied: You do not own this event');
+    }
   },
   'click .deleteEvent': function(e) {
-    Meteor.call('deleteEvent', this._id, function(error) {
-      if(error) {
-        addErrorMessage(error.reason);
-      }
-    });
+    if(Roles.userIsInRole(Meteor.userId(), ['admin']) || 
+       Meteor.user().profile.partnerOrg === this.institution) {
+      Meteor.call('deleteEvent', this._id, function(error) {
+        if(error) {
+          addErrorMessage(error.reason);
+        }
+      });
+    } else {
+      addErrorMessage('Permission Denied: You do not own this event');
+    }
   },
   'click #addEvent': function(e) {
     e.preventDefault();

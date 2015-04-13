@@ -23,7 +23,7 @@ casper.test.begin('Partner Org Management', 21, function suite(test) {
     test.assertExists(".editOrg");
     test.assertExists('.deleteOrg');
 
-    this.sendKeys('#search-box', 'Kipp');
+    this.sendKeys('#search-box', 'KIPP');
   });
 
   casper.wait(500, function(){

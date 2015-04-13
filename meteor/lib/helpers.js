@@ -29,3 +29,9 @@ helperFunctions = {
     return result;
   }
 };
+
+addHours = function(date, hours) {
+  var result = new Date(date);
+  result.setUTCHours(result.getUTCHours() + hours);
+  return result;
+};

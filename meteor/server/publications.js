@@ -36,12 +36,38 @@ Meteor.publish("events", function() {
   return Events.find();
 });
 
+//The idea here is to publish all reservations
+//that a partner admin has access to
+//This is any member that belongs to that partner
+//OR any member attending an event hosted by 
+//that partner.
 Meteor.publish("reservations", function() {
-  return Reservations.find();
+  var partnerAdmin = Meteor.users.findOne({_id: this.userId});
+  if(Roles.userIsInRole(this.userId, 'admin')) {
+    return Reservations.find();
+  } else if(Roles.userIsInRole(this.userId, 'partnerAdmin')) {
+    //TODO: This will perform horribly at scale. Please refactor....
+    var users = Meteor.users.find({"profile.partnerOrg": partnerAdmin.profile.partnerOrg}, {fields: {_id: 1}}).fetch();
+    var usersArray = _.map(users, function(user) {
+      return user._id;
+    });
+    var events = Events.find({institution: partnerAdmin.profile.partnerOrg}, {fields: {_id: 1}}).fetch();
+    var eventsArray = _.map(events, function(event) {
+      return event._id;
+    });
+
+    return Reservations.find({$or: [
+     {userId: {$in: usersArray}},
+     {eventId: {$in: eventsArray}}
+    ]});
+  } else {
+    return Reservations.find({userId: this.userId});
+  }
 });
 
+//A partner should get access to all transactions for 
+//their members only
 Meteor.publish('transactions', function(userId) {
-
   if (Roles.userIsInRole(this.userId, 'admin')) {
 
     return Transactions.find();

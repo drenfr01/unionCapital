@@ -196,10 +196,10 @@ Meteor.methods({
     Meteor.users.update(attributes.userId,
                         {$set: { profile: attributes.profile
                         }});
-                        Meteor.users.update(attributes.userId,
-                                            {$push: {emails: {address: attributes.email
-                                            }}});
-                                            Roles.addUsersToRoles(attributes.userId, 'user');
+    Meteor.users.update(attributes.userId,
+                        {$push: {emails: {address: attributes.email
+                        }}});
+    Roles.addUsersToRoles(attributes.userId, 'user');
     //TODO: make this dry with new user helper below
     emailHelper(attributes.email,
                 adminEmail,
@@ -216,20 +216,46 @@ Meteor.methods({
                  attributes.email
                );
   },
+  
+  updateUser: function(attributes) {
+    check(attributes, {
+      email: String,
+      profile: {
+        firstName: String,
+        lastName: String,
+        street1: String,
+        street2: String,
+        city: String,
+        state: String,
+        zip: String,
+        partnerOrg: String,
+        incomeBracket: String,
+        numberOfKids: String,
+        race: String,
+      }
+    });
+    Meteor.users.update(this.userId,
+                        {$set: { profile: attributes.profile
+                        }});
+    //Note: this assumes only 1 email address
+    Meteor.users.update(this.userId,
+                        {$pop: {emails: {address: attributes.email
+                        }}});
+    Meteor.users.update(this.userId,
+                        {$push: {emails: {address: attributes.email
+                        }}});
+  },
 
   geocodeAddress: function(address) {
-    var myFuture = new Future();
-    googlemaps.geocode(
-      address,
-      function(err, data) {
-        if(err) {
-          myFuture.throw(err);
-        } else {
-          myFuture.return(data.results[0].geometry);
-        }
-      });
-
-      return myFuture.wait();
+    var myFuture = new Future(); 
+    googlemaps.geocode(address, function(err, data) {
+      if(err) {
+        myFuture.throw(err);
+      } else {
+        myFuture.return(data.results[0].geometry);
+      }
+    });
+    return myFuture.wait();
   },
 
   // geolocateUser: function(attributes) {
@@ -297,9 +323,8 @@ Meteor.methods({
       description: String
     });
 
-    //calculate appropriate hours and minutes based on Administer AdHoc events
+    //calculate appropriate hours based on Administer AdHoc events
     var hours = Math.floor(attributes.points / 100);
-    var minutes = Math.ceil((attributes.points % 100) / 100 * 60);
 
     //insert Transaction
     var event = Events.findOne({name: 'Admin Add Points'});
@@ -307,7 +332,8 @@ Meteor.methods({
     Transactions.insert({userId: attributes.userId, eventId: event._id,
                         approvalType: 'auto',
                         approved: true,
-                        transactionDate: Date(), hoursSpent: hours,
+                        transactionDate: Date(), 
+			hoursSpent: hours,
                         deleteInd: false
     });
 
@@ -431,6 +457,11 @@ Meteor.methods({
       dateEntered : Date,
       numberOfPeople: String
     });
+
+    var user = Meteor.users.findOne(attributes.userId);
+
+    attributes.firstName = user.profile.firstName;
+    attributes.lastName = user.profile.lastName;
 
     Reservations.insert(attributes);
     Events.update({_id: attributes.eventId}, {$inc: {numberRSVPs: attributes.numberOfPeople}});

@@ -36,17 +36,28 @@
             <br>
             Description: {{{description}}}
             <br>
-            Date: {{startDate}}
+            Date: {{formatDate eventDate}}-{{justTime endTime}}
             <br>
-            <div class="form-group>">
-              <label for="numberOfPeople">Number of People</label>
-              <select class="form-control numberOfPeople">
-                {{#each people}}
-                <option>{{number}}</option>
-                {{/each}}
-              </select>
-            </div>
-            {{{rsvpButton}}}
+            {{#if hasReservation}}
+              <button type='button' class='btn btn-danger btn-sm removeReservation'>
+                Remove RSVP
+              </button>
+            {{else}}
+              <form id="reservationForm">
+                <div class="form-group>">
+                  <label for="numberOfPeople">Number of People</label>
+                  <select class="form-control numberOfPeople">
+                    {{#each people}}
+                    <option>{{number}}</option>
+                    {{/each}}
+                  </select>
+                </div>
+                <button type='button' class='btn btn-default btn-sm insertReservation' 
+                  data-toggle='modal' data-target = '#rsvpModal'>
+                  RSVP
+                </button>
+              </form>
+            {{/if}}
           </div>
         </div>
       </div>

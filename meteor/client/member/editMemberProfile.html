@@ -1,0 +1,116 @@
+<template name="editMemberProfile">
+{{#with member}}
+<div class="col-xs-12 col-md-6 col-md-offset-3">
+  <div class="row">
+    <div class="col-xs-12 page-panel page-panel-form">
+      <label>Contact Info</label>
+      <form role="form">
+        <div class="form-group">
+          <label for="firsName" class="sr-only">First Name</label>
+          <input type="text" class="form-control" id="firstName" value="{{profile.firstName}}" >
+        </div>
+        <div class="form-group">
+          <label for="lastName" class="sr-only">Last Name</label>
+          <input type="text" class="form-control" id="lastName" value="{{profile.lastName}}">
+        </div>
+        <div class="form-group">
+          <label for="userEmail" class="sr-only">Email Address</label>
+          <input type="email" class="form-control" id="userEmail" value="{{memberEmail}}">
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 page-panel page-panel-form">
+      <!-- Address, income bracket, kids, race, ethnicity, occupation Status, fb, twitter -->
+      <label>Address</label>
+      <form role="form">
+        <div class="form-group">
+          <label for="street1" class="sr-only">Street</label>
+          <input type="text" class="form-control" id="street1"
+          value="{{profile.street1}}">
+        </div>
+        <div class="form-group">
+          <label for="street2" class="sr-only">Apartment Number</label>
+          <input type="text" class="form-control" id="street2"
+          value="{{profile.street2}}">
+        </div>
+        <div class="form-group">
+          <label for="city" class="sr-only">City</label>
+          <input type="text" class="form-control" id="city"
+          value="{{profile.city}}">
+        </div>
+        <div class="form-group">
+          <label for="state" class="sr-only">State</label>
+          <input type="text" class="form-control" id="state"
+          value="{{profile.state}}">
+        </div>
+        <div class="form-group">
+          <label for="zip" class="sr-only">Zip</label>
+          <input type="text" class="form-control" id="zip"
+          value="{{profile.zip}}">
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 page-panel page-panel-form">
+      <form role="form" id="organizationForm">
+        <div class="form-group">
+          <label for="organizations">Partner Affiliation</label>
+          <select class="form-control" id="organizations">
+            {{#each organizations}}
+            <option>{{name}}</option>
+            {{/each}}
+          </select>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 page-panel page-panel-form">
+      <form role="form" id="incomeBracketForm">
+        <div class="form-group">
+          <label for="incomeBrackets">Income Bracket</label>
+          <select class="form-control" id="incomeBrackets"
+            value="{{profile.incomeBracket}}">
+            {{#each incomeBrackets}}
+            <option>{{bracket}}</option>
+            {{/each}}
+          </select>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 page-panel page-panel-form">
+      <form role="form" id="numberOfKidsForm">
+        <div class="form-group">
+          <label for="numberOfKids">Number of Kids</label>
+          <select class="form-control" id="numberOfKids">
+            {{#each kids}}
+            <option>{{number}}</option>
+            {{/each}}
+          </select>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 page-panel page-panel-form">
+      <form role="form" id="raceForm">
+        <div class="form-group">
+          <label for="races">Race</label>
+          <select class="form-control" id="races">
+            {{#each races}}
+            <option>{{name}}</option>
+            {{/each}}
+          </select>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+    {{>bottomNav buttonType="submit"}}
+{{/with}}
+</template>

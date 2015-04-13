@@ -1,0 +1,47 @@
+<template name="uploadEvents">
+  <div class="col-md-6 col-md-offset-3 text-center page-panel">
+    <p class='lead'>Instructions for uploading events</p>
+    <p>The first row in the csv will be column headers, here are the current event attributes: </p>
+    <p><mark> {{ columnHeaders }} </mark></p>
+    <p>Subsequent rows will each be turn into an event.  Click the Verify Upload to see the events this upload will create (always a good idea before submitting). Events must be have a unique Name + Institution. Only events highlighted in green will be inserted.</p>
+  </div>
+  <div class="col-md-6 col-md-offset-3 text-center page-panel">
+    <form id="uploadEventsForm">
+      <span class="btn btn-primary btn-file">
+      <span class="glyphicon glyphicon-upload"></span> Upload<input type="file" id="uploadEvents"></span>
+      <button id="submitEvents" type="submit" class="btn btn-success" disabled={{ buttonDisabled }}>
+      Submit <span class="glyphicon glyphicon-send"></span></button>
+    </form>
+  </div>
+  <div class="col-md-6 col-md-offset-3 text-center page-panel">
+    <p class="lead">Events to be uploaded</p>
+    <table class="table">
+      <tr>
+        <th>Status</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Date</th>
+        <th>Location</th>
+      </tr>
+      {{#each eventsToBeCreated }}
+        {{> newEvent}}
+      {{/each }}
+    </table>
+  </div>
+</template>
+
+<template name="newEvent">
+  <tr class="{{ this.statusClass }}">
+    <td class="text-left">{{ this.statusMsg }}</td>
+    <td class="text-left">{{ this.eventData.name }}</td>
+    <td class="text-left">{{ this.eventData.description }}</td>
+    <td class="text-left">{{ this.eventData.eventDate }}</td>
+    <td>
+      {{#if locationFound }}
+      <span class="glyphicon glyphicon-ok-sign success"></span>
+      {{ else }}
+      <span class="glyphicon glyphicon-remove-sign success"></span>
+      {{/if}}
+    </td>
+  </tr>
+</template>

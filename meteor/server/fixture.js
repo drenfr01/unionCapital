@@ -14,7 +14,8 @@ Meteor.startup(function () {
   }
 
   //Seeding Partner Organizations
-  if(PartnerOrgs.find().count() === 0 && Meteor.settings.env === 'dev') {
+  if(Meteor.settings.env === 'dev') {
+    PartnerOrgs.remove({})
     var partnerOrgs = [
       {name: "KIPP Academy", sector: "Children", membersReported: 50, deleteInd: false},
       {name: "Thrive in Five", sector: "Job Training", membersReported: 50, deleteInd: false},
@@ -135,14 +136,15 @@ Meteor.startup(function () {
   }
 
   //Seeding affiliate organizations
-  if(EventOrgs.find().count() === 0 && Meteor.settings.env === 'dev') {
+  if(Meteor.settings.env === 'dev') {
+    EventOrgs.remove({})
     var organizations =
       [ 'Other',
         'BMC Health Net Plan',
         'Codman Academy',
         'Codman Health Center',
         'FII',
-        'Kipp Boston',
+        'KIPP Boston',
         'Nurtury',
         'Thrive in 5'
     ];
@@ -153,7 +155,8 @@ Meteor.startup(function () {
   }
 
   // Users fixture
-  if ( Meteor.users.find().count() === 0 && Meteor.settings.env === 'dev') {
+  if (Meteor.settings.env === 'dev') {
+    Meteor.users.remove({});
     var users = [
       {
          email: "admin@gmail.com", username: "admin", password: "admin",
@@ -173,6 +176,23 @@ Meteor.startup(function () {
           incomeBracket: "25,000-29,999",
           numberOfKids: "2",
           race: "African-American or Black"
+        },
+        roles:['user']
+      },
+      {
+        email: "KIPPUser@gmail.com", username: "KIPPUser", password: "user",
+        profile: {
+          firstName: 'kipp',
+          lastName: 'User',
+          street1: '101 Main St',
+          street2: "",
+          city: 'Cambridge',
+          state: 'MA',
+          zip: '02142',
+          partnerOrg: "KIPP Academy",
+          incomeBracket: "20,000-24,999",
+          numberOfKids: "4",
+          race: "White"
         },
         roles:['user']
       },
@@ -238,6 +258,7 @@ Meteor.startup(function () {
         description: 'A festival of science for everybody',
         active: 1,
         eventDate: helperFunctions.addDays(new Date(), 7),
+        duration: 3,
         institution: "KIPP Academy",
         category: "Education (Child/Adult)",
         isPointsPerHour: true,
@@ -254,6 +275,7 @@ Meteor.startup(function () {
         description: 'A festival of cooking for the masses',
         active: 1,
         eventDate: helperFunctions.addDays(new Date(), -7),
+        duration: 5,
         institution: "Thrive in Five",
         category: "Health (Physical & Mental)",
         isPointsPerHour: false,
@@ -270,7 +292,8 @@ Meteor.startup(function () {
         description: 'Music festival; all styles - join us soon!',
         active: 1,
         eventDate: new Date(),
-        institution: "Rosie's Place",
+        duration: 3,
+        institution: "KIPP Academy",
         category: "Education (Child/Adult)",
         isPointsPerHour: true,
         pointsPerHour: 100,
@@ -286,7 +309,8 @@ Meteor.startup(function () {
         description: 'Watch as many films as you can in just 3 days of mandness!',
         active: 1,
         eventDate: helperFunctions.addDays(new Date(), 1),
-        institution: "KIPP Academy",
+        duration: 1,
+        institution: "Thrive in Five",
         category: "Education (Child/Adult)",
         isPointsPerHour: false,
         points: 150,
@@ -303,6 +327,7 @@ Meteor.startup(function () {
         description: 'Union Capital administrator adding points to your account',
         active: 0,
         eventDate: new Date(),
+        duration: 0,
         institution: "Other",
         category: "Other",
         isPointsPerHour: true,
@@ -322,6 +347,8 @@ Meteor.startup(function () {
         description: event.description,
         active: event.active,
         eventDate: event.eventDate,
+        endTime: event.endTime,
+        duration: event.duration,
         institution: event.institution,
         category: event.category,
         isPointsPerHour: event.isPointsPerHour,

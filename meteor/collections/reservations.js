@@ -16,6 +16,14 @@ Reservations.attachSchema(new SimpleSchema({
     type: Number,
     label: 'Size of Party',
     defaultValue: 1,
+  },
+  firstName: {
+    type: String,
+    label: 'First Name'
+  },
+  lastName: {
+    type: String,
+    label: 'Last Name'
   }
 }));
 

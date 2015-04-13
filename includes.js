@@ -20,8 +20,11 @@ partnerAdminPassword = 'admin';
 superAdmin = "admin@gmail.com";
 superAdminPassword = "admin";
 
+newPartnerEvent = 'Health Clinic';
+newPartnerEventDesc = 'A clinic on preventative care for KIPP Academy members';
+newPartnerAddress = '75 Northern Ave, Boston, MA 02210';
+
 casper.loginAsUser = function loginAsUser() {
-  casper.capture("start.png");
   this.waitForSelector("#loginSubmit", function() {
     this.sendKeys("#userEmail", user);
     this.sendKeys("#userPassword", newPassword);
@@ -30,7 +33,6 @@ casper.loginAsUser = function loginAsUser() {
 };
 
 casper.loginAsPartnerAdmin = function loginAsPartnerAdmin() {
-  casper.capture("start.png");
   this.waitForSelector("#loginSubmit", function() {
     this.sendKeys("#userEmail", parterAdmin);
     this.sendKeys("#userPassword", partnerAdminPassword);
@@ -62,3 +64,23 @@ casper.logout = function logout(test) {
   });
 
 };
+
+/*
+addFakeGeolocation = function(self, latitude, longitude) {
+    self.evaluate(function() {
+        window.navigator.geolocation = function() {
+            var pub = {};
+            var current_pos = {
+                coords: {
+                    latitude: window.__casper_params__.latitude,
+                    longitude: window.__casper_params__.longitude
+                }
+            };
+            pub.getCurrentPosition = function(locationCallback,errorCallback) {
+                locationCallback(current_pos);
+            };
+            return pub;
+        }();
+    }, { latitude: latitude, longitude: longitude });
+};
+*/
