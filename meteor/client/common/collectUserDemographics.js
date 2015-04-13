@@ -50,7 +50,6 @@ Template.collectUserDemographics.events({
       if(error) {
         addErrorMessage(error.reason);
       } else {
-        addSuccessMessage("Successfully Created User");
         Meteor.loginWithPassword(attributes.email, attributes.password,
                                  function(error) {
                                    if(error) {

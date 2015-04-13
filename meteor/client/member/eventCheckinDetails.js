@@ -60,6 +60,8 @@ function callInsert(attributes) {
       Router.go('memberHomePage');
     }
   });
+
+  Session.set('checkingIn', false);
 };
 
 Template.eventCheckinDetails.created = function() {
@@ -67,6 +69,8 @@ Template.eventCheckinDetails.created = function() {
 };
 
 Template.eventCheckinDetails.rendered = function() {
+
+  Session.set('checkingIn', false);
 
 	$('#durationSlider').noUiSlider({
 		start: [defaultHours],
@@ -94,7 +98,11 @@ Template.eventCheckinDetails.helpers({
 
 	'hasPhoto': function() {
 		return userPhoto.photoURI.get();
-	}
+	},
+
+  checkingIn: function() {
+    return Session.get('checkingIn');
+  }
 });
 
 Template.eventCheckinDetails.events({
@@ -119,6 +127,7 @@ Template.eventCheckinDetails.events({
       // pendingEventDescription: eventDescription,
     };
 
+    Session.set('checkingIn', true);
     checkIn(this._id);
   },
 

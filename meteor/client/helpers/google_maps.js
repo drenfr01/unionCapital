@@ -67,19 +67,21 @@ gmaps = {
 
   // add a marker given our formatted marker data object
   addMarker: function(marker) {
-    var gLatLng = new google.maps.LatLng(marker.latitude, marker.longitude);
-    var gMarker = new google.maps.Marker({
-      position: gLatLng,
-      map: gmaps.map,
-      title: marker.title,
-      // animation: google.maps.Animation.DROP,
-      icon: marker.icon
-    });
+    if (google) {
+      var gLatLng = new google.maps.LatLng(marker.latitude, marker.longitude);
+      var gMarker = new google.maps.Marker({
+        position: gLatLng,
+        map: gmaps.map,
+        title: marker.title,
+        // animation: google.maps.Animation.DROP,
+        icon: marker.icon
+      });
 
-    gmaps.latLngs.push(gLatLng);
-    gmaps.markers.push(gMarker);
-    gmaps.markerData.push(marker);
-    return gMarker;
+      gmaps.latLngs.push(gLatLng);
+      gmaps.markers.push(gMarker);
+      gmaps.markerData.push(marker);
+      return gMarker;
+    }
   },
 
    // Add or reset the position of the self marker
@@ -128,7 +130,7 @@ gmaps = {
         }
 
         // Fits the bounds to the map if it exists
-        bounds && gmaps.map.fitBounds(bounds);
+        bounds && gmaps.map && gmaps.map.fitBounds(bounds);
 
         // Sets the max zoom - it gets a bit cramped otherwise
         gmaps.map.getZoom() > gmaps.options.maxZoom && gmaps.map.setZoom(gmaps.options.maxZoom);

@@ -100,10 +100,12 @@ CheckInRules = {
 
 	  // Check if the current node is an allowed exit value
 	  } else if (_.indexOf(CheckInRules.options.allowedExitValues, currentNode) > -1) {
+      console.log('success ' + attributes.userId + ' ' + path);
 	    return currentNode;
 
 	  // If it isn't a node or an exit value, something is wrong
 	  } else {
+      console.log('failure' + attributes.userId + ' ' + path);
 	    throw new Meteor.Error('UNEXPECTED_OUTPUT', path);
 	  }
 	}
@@ -132,8 +134,8 @@ CheckInRules.rules = {
         // Has a photo
         name: 'hasPhoto',
         func: CheckInRules.hasPhoto,
-        isTrue: 'auto',
-        isFalse: 'auto'
+        isTrue: 'partner_admin',
+        isFalse: 'partner_admin'
       }
     },
     isFalse: {

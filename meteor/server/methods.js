@@ -11,6 +11,12 @@ Meteor.methods({
     // Determines whether this transaction requires approval
     attributes.approvalType = CheckInRules.validate(attributes);
 
+    // Only set it to approved if it is auto
+    if (attributes.approvalType === 'auto')
+      attributes.approved = true;
+    else
+      attributes.approved = false;
+
     // If the user isn't logging an action from the past,
     // we use the server's time as the source of truth
     // We should probably figure out a better way to do this
@@ -31,6 +37,7 @@ Meteor.methods({
       approvalType: String,
       eventId: Match.Optional(String),
       imageId: Match.Optional(String),
+      approved: Boolean,
       pendingEventName: Match.Optional(String),
       pendingEventDescription: Match.Optional(String),
       transactionDate: Match.Optional(Date),
@@ -41,12 +48,15 @@ Meteor.methods({
 
     var duplicateTransaction = Transactions.findOne({userId: currentUser._id, imageId: attributes.imageId,
                                                     pendingEventName: attributes.pendingEventName,
-                                                    pendingEventDescription: attributes.pendingEventDescription
+                                                    pendingEventDescription: attributes.pendingEventDescription,
+                                                    eventId: attributes.eventId
     });
+
+    console.log(duplicateTransaction);
 
     // DPROUD: Make this make sense
     //TODO: setup MAIL URL for union capital website
-    if(attributes.approvalType) {
+    if(attributes.approvalType === 'super_admin' || attributes.approvalType === 'partner_admin') {
       console.log('A Union Capitalist has submitted a photo for approval',
                   currentUser.profile.firstName + ' ' + currentUser.profile.lastName +
                     ' requests that you log onto the admin website and approve or reject their event.' +
@@ -54,13 +64,16 @@ Meteor.methods({
                  );
     }
 
+    // Check for duplicate submissions
     if(attributes.eventId && Transactions.findOne({userId: currentUser._id, eventId: attributes.eventId})) {
       throw new Meteor.Error(400, "You have already checked into this event");
     } else if (duplicateTransaction){
      throw new Meteor.Error(400, "This may be a duplicate submission");
     } else {
+      // Good to go, let's check in
       attributes.deleteInd = false;
       console.log(' 88888888  ' + attributes.imageId);
+
       return Transactions.insert(attributes);
     }
   },
@@ -100,9 +113,8 @@ Meteor.methods({
       pointsPerHour: Match.Optional(Number)
     });
 
-    //this creates a new event if the transaction isn't tied to an existing one
-    //Currently the only way to tell DIY events is the active flag, which
-    //isn't ideal because a regular event could be de-activated
+    // This creates a new event if the transaction isn't tied to an existing one
+    // Events created in this manner are marked with the adHoc flag set to true
     if(attributes.eventId) {
       eventId = attributes.eventId;
     } else {
@@ -110,11 +122,13 @@ Meteor.methods({
       attributes.isPointsPerHour = false;
       eventId = insertEvent(attributes);
     }
+
+    // Update the transaction to show approved
     Transactions.update(attributes.transactionId,
-                        {$set: { approvalType: false, eventId: eventId} });
+                        {$set: { approved: true, eventId: eventId} });
 
+    // Send an email to let the user know
     var user = Meteor.users.findOne(attributes.userId);
-
     emailHelper(user.emails[0].address,
                 adminEmail,
                 'Your Event has been approved',
