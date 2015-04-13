@@ -226,7 +226,7 @@ Meteor.startup(function () {
     Meteor.call("_houston_make_admin", admin._id);
   }
   //Events fixture
-  if ( Meteor.settings.env === 'dev' ) {
+  if ( Events.find().count() === 0 && Meteor.settings.env === 'dev' ) {
     //NOTE: months are 0 based for dates
     var events = [
       {
