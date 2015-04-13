@@ -50,7 +50,7 @@ casper.test.begin('All Members', 25, function suite(test) {
     this.click('#addPoints');
   });
 
-  casper.wait(1000, function() {
+  casper.wait(100, function() {
     //this could technically match two instances, Total Points:
     //and the actual row
     test.assertTextExists('100');

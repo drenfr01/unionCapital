@@ -82,8 +82,8 @@ momentjs:moment@2.9.0
 mongo@1.0.11
 mongo-livedata@1.0.7
 mrt:googlemaps-server@1.0.0
-nemo64:bootstrap@3.3.4_1
-nemo64:bootstrap-data@3.3.4_1
+nemo64:bootstrap@3.3.1_1
+nemo64:bootstrap-data@3.3.1_1
 npm-bcrypt@0.7.7
 npm-container@1.0.0
 oauth@1.1.3

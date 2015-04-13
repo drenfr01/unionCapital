@@ -14,8 +14,7 @@ Meteor.startup(function () {
   }
 
   //Seeding Partner Organizations
-  if(Meteor.settings.env === 'dev') {
-    PartnerOrgs.remove({})
+  if( Meteor.settings.env === 'dev' && PartnerOrgs.find().count() === 0 ) {
     var partnerOrgs = [
       {name: "KIPP Academy", sector: "Children", membersReported: 50, deleteInd: false},
       {name: "Thrive in Five", sector: "Job Training", membersReported: 50, deleteInd: false},
@@ -122,7 +121,7 @@ Meteor.startup(function () {
     });
   }
   //Seeding event categories
-  if(EventCategories.find().count() === 0) {
+  if( EventCategories.find().count() === 0 ) {
     var eventCategories =
       ['Education (Child/Adult)',
         'Health (Physical & Mental)',
@@ -136,8 +135,7 @@ Meteor.startup(function () {
   }
 
   //Seeding affiliate organizations
-  if(Meteor.settings.env === 'dev') {
-    EventOrgs.remove({})
+  if( Meteor.settings.env === 'dev' && EventOrgs.find().count() === 0 ) {
     var organizations =
       [ 'Other',
         'BMC Health Net Plan',
@@ -155,8 +153,7 @@ Meteor.startup(function () {
   }
 
   // Users fixture
-  if (Meteor.settings.env === 'dev') {
-    Meteor.users.remove({});
+  if ( Meteor.settings.env === 'dev' && Meteor.users.find().count() === 0 ) {
     var users = [
       {
          email: "admin@gmail.com", username: "admin", password: "admin",

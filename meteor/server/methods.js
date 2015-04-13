@@ -326,15 +326,26 @@ Meteor.methods({
     //calculate appropriate hours based on Administer AdHoc events
     var hours = Math.floor(attributes.points / 100);
 
+    // Find the partner organization
+    var partnerOrg = '';
+    if (Roles.userIsInRole(Meteor.userId(), 'admin')) {
+      partnerOrg = 'super_admin';
+    } else {
+      partnerOrg = Meteor.user().profile.partnerOrg;
+    }
+
     //insert Transaction
     var event = Events.findOne({name: 'Admin Add Points'});
 
-    Transactions.insert({userId: attributes.userId, eventId: event._id,
-                        approvalType: 'auto',
-                        approved: true,
-                        transactionDate: Date(), 
+    Transactions.insert({
+      userId: attributes.userId,
+      eventId: event._id,
+      approvalType: 'auto',
+      approved: true,
+      transactionDate: Date(), 
+      partnerOrg: partnerOrg,
 			hoursSpent: hours,
-                        deleteInd: false
+      deleteInd: false
     });
 
   },
