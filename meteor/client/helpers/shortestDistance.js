@@ -23,7 +23,7 @@ closestLocation = function(userLocation, events) {
     return (prevDistance < currentDistance) ? prev : current;
   });
 
-  var distance = helperFunctions.haversineFormula(shortestDistanceEvent, userLocation.longitude, userLocation.latitude);
+  var distance = HelperFunctions.haversineFormula(shortestDistanceEvent, userLocation.longitude, userLocation.latitude);
 
   return {
     event: shortestDistanceEvent,

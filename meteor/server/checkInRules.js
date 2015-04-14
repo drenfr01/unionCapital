@@ -24,11 +24,10 @@ CheckInRules = {
 
 	// Returns 'true' if there is an event within maxAdHocDistance
 	isRecognizedLocation: function(attributes) {
-		// TODO: Add logic here once the collection has been created
 		var events = Events.find({ adHoc: false }).fetch();
 
 		var closeEvent = _.find(events, function() {
-			return helperFunctions.haversineFormula(event, attributes.userLng, attributes.userLat) < maxAdHocDistance;
+			return HelperFunctions.haversineFormula(event, attributes.userLng, attributes.userLat) < maxAdHocDistance;
 		});
 
 		return !!closeEvent;
@@ -59,9 +58,9 @@ CheckInRules = {
     }
 
     // Calculate the distance between the user and the event
-    var distance = helperFunctions.haversineFormula(event, attributes.userLng, attributes.userLat);
+    var distance = HelperFunctions.haversineFormula(event, attributes.userLng, attributes.userLat);
+
     // Check to see if it is in range
-    //TODO: consider adding user geolocation info to transaction?
     if(distance <= CheckInRules.options.maxEventDistance) {
       return true;
     } else {

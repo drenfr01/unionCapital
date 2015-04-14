@@ -2,7 +2,7 @@ function toRadians(x) {
      return x * (Math.PI / 180);
 }
 
-helperFunctions = {
+HelperFunctions = {
   haversineFormula: function(event, userLng, userLat) {
       var eventLat = event.latitude;
       var eventLong = event.longitude;

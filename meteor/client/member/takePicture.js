@@ -41,7 +41,7 @@ function removeImages(type) {
   });
 }
 
-Template.takePicture.rendered = function() {
+Template.newAdHoc.rendered = function() {
   Session.set('imageLoaded', false);
   Session.set('imageId', null);
   Session.set('eventName', null);
@@ -57,7 +57,7 @@ Template.takePicture.rendered = function() {
 };
 
 //TODO: this code needs to be DRY
-Template.takePicture.events({
+Template.newAdHoc.events({
   'keyup #eventName': function(e) {
     e.preventDefault();
     Session.set('eventName', $('#eventName').val());
@@ -106,7 +106,7 @@ Template.takePicture.events({
       Meteor.call('insertTransaction', attributes, function(error) {
         if(error) {
           addErrorMessage(error.reason);
-          Router.go('submitNewEvent');
+          Router.go('submitnew');
         } else {
           addSuccessMessage('Transaction successfully submitted');
           Router.go('memberHomePage');
@@ -119,7 +119,7 @@ Template.takePicture.events({
   },
 });
 
-Template.takePicture.helpers({
+Template.newAdHoc.helpers({
   images: function(type) {
     return Images.find({"metadata.type": type,
       "metadata.userId": Meteor.userId()},

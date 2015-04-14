@@ -236,12 +236,12 @@ Router.map(function() {
   this.route('/share', function() {
     this.render('share');
   });
-  this.route('submitNewEvent', {
-    path: '/submitNewEvent',
-    template: 'takePicture'
+  this.route('submitnew', {
+    path: '/submitnew',
+    template: 'newAdHoc'
   });
-  this.route('takePicture', {
-    path: '/takePicture/:_id',
+  this.route('newAdHoc', {
+    path: '/newAdHoc/:_id',
     data: function() { return Events.findOne({_id: this.params._id}); }
   });
 

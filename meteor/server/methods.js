@@ -309,7 +309,7 @@ Meteor.methods({
   //   if(Transactions.findOne({userId: attributes.userId, eventId: event._id})) {
   //     throw new Meteor.Error(400, "You have already checked into this event");
   //   }
-  //   var distance = helperFunctions.haversineFormula(event, attributes.userLng, attributes.userLat);
+  //   var distance = HelperFunctions.haversineFormula(event, attributes.userLng, attributes.userLat);
   //   console.log("Distance: " + distance);
 
   //   if(distance < maxDistance) {

@@ -1,4 +1,4 @@
-<template name='takePicture'>
+<template name='newAdHoc'>
   <div class="row">
   <div class="col-md-6 col-md-offset-3">
     <h1 class="text-center"><small>Please submit an event picture</small></h1>
@@ -6,7 +6,7 @@
   <form role="form">
     <div class="form-group>">
       <input type="text" class="form-control" id="eventName" placeholder="Event Name">
-      <input type="text" class="form-control" id="eventDescription" 
+      <input type="text" class="form-control" id="eventDescription"
       placeholder="Event Description">
       <br>
         {{> timeSelection}}
@@ -21,7 +21,7 @@
         <span class="input-group-btn">
           <span class="btn btn-block btn-default btn-file">
             Take Photo
-            <input  id="userInput" 
+            <input  id="userInput"
             type="file" accept="image/*" capture="camera">
           </span>
         </span>
