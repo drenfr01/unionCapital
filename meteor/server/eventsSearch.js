@@ -19,7 +19,7 @@ SearchSource.defineSource('eventsSearch', function(searchText, options) {
     };
     return Events.find(selector, options).fetch();
   } else {
-    return Events.find({ eventDate: { $gte: startDate, $lte: endDate }}).fetch();
+    return Events.find().fetch();
   }
 });
 
