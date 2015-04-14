@@ -55,9 +55,6 @@ Meteor.methods({
                                                     eventId: attributes.eventId
     });
 
-    console.log(duplicateTransaction);
-
-    // DPROUD: Make this make sense
     //TODO: setup MAIL URL for union capital website
     if(attributes.approvalType === 'super_admin' || attributes.approvalType === 'partner_admin') {
       console.log('A Union Capitalist has submitted a photo for approval',
@@ -94,7 +91,7 @@ Meteor.methods({
       imageId: String,
       transactionId: String
     });
-    removeTransaction(attributes.transactionId);
+    DB.removeTransaction(attributes.transactionId);
     //TODO: mark images as logically deleted
   },
 
@@ -123,7 +120,7 @@ Meteor.methods({
     } else {
       attributes.active = 0;
       attributes.isPointsPerHour = false;
-      eventId = insertEvent(attributes);
+      eventId = DB.insertEvent(attributes);
     }
 
     // Update the transaction to show approved
@@ -216,7 +213,7 @@ Meteor.methods({
                  attributes.email
                );
   },
-  
+
   updateUser: function(attributes) {
     check(attributes, {
       email: String,
@@ -246,7 +243,7 @@ Meteor.methods({
                         }}});
   },
   geocodeAddress: function(address) {
-    var myFuture = new Future(); 
+    var myFuture = new Future();
     googlemaps.geocode(address, function(err, data) {
       if(err) {
         myFuture.throw(err);
@@ -286,7 +283,7 @@ Meteor.methods({
   },
 
   geocodeAddress: function(address) {
-    var myFuture = new Future(); 
+    var myFuture = new Future();
     googlemaps.geocode(address, function(err, data) {
       if(err) {
         myFuture.throw(err);
@@ -381,7 +378,7 @@ Meteor.methods({
       eventId: event._id,
       approvalType: 'auto',
       approved: true,
-      transactionDate: Date(), 
+      transactionDate: Date(),
       partnerOrg: partnerOrg,
       hoursSpent: hours,
       deleteInd: false
