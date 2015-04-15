@@ -2,14 +2,13 @@
 var defaultHours = 3
 hours = new ReactiveVar(defaultHours);
 
-var checkIn = function(eventId) {
+function checkIn(eventId) {
 
   if( userPhoto.photoURI.get() ) {
     userPhoto.insert(function(err, fileObj) {
       if ( err ) {
         addErrorMessage(err.reason);
       } else {
-        console.log(fileObj._id);
         insertTransaction(eventId, fileObj._id);
       }
     });
@@ -18,11 +17,12 @@ var checkIn = function(eventId) {
   }
 };
 
-var insertTransaction = function(eventId, imageId) {
+// Sets the attributes prior to calling the insert function
+function insertTransaction(eventId, imageId) {
   var attributes = {
     userId: Meteor.userId(),
     eventId: eventId,
-    hoursSpent: hours.get()
+    hoursSpent: parseInt(hours.get())
     // pendingEventName: eventName,
     // pendingEventDescription: eventDescription,
   };
@@ -32,14 +32,36 @@ var insertTransaction = function(eventId, imageId) {
   if( imageId )
     attributes.imageId = imageId;
 
+  // If lat or lng is null, then try to get it one more time
+  // Useful if the user accessed this page from a link or bookmark
+  if (gmaps.currentLocation.lat && gmaps.currentLocation.lng) {
+    attributes.userLat = gmaps.currentLocation.lat;
+    attributes.userLng = gmaps.currentLocation.lng;
+    callInsert(attributes);
+  } else {
+    gmaps.getCurrentLocation(function(error, currentLocation) {
+
+      if (!error) {
+        attributes.userLat = currentLocation.lat;
+        attributes.userLng = currentLocation.lng;
+      }
+
+      callInsert(attributes);
+    });
+  }
+};
+
+// Calls insertTransaction and routes the user
+function callInsert(attributes) {
   Meteor.call('insertTransaction', attributes, function(error) {
     if(error) {
       addErrorMessage(error.reason);
     } else {
-      addSuccessMessage('Transaction successfully submitted');
       Router.go('memberHomePage');
     }
   });
+
+  Session.set('checkingIn', false);
 };
 
 Template.eventCheckinDetails.created = function() {
@@ -47,6 +69,8 @@ Template.eventCheckinDetails.created = function() {
 };
 
 Template.eventCheckinDetails.rendered = function() {
+
+  Session.set('checkingIn', false);
 
 	$('#durationSlider').noUiSlider({
 		start: [defaultHours],
@@ -74,25 +98,18 @@ Template.eventCheckinDetails.helpers({
 
 	'hasPhoto': function() {
 		return userPhoto.photoURI.get();
-	}
-})
+	},
+
+  checkingIn: function() {
+    return Session.get('checkingIn');
+  }
+});
 
 Template.eventCheckinDetails.events({
 
 	'change #durationSlider': function() {
 		hours.set($('#durationSlider').val());
 	},
-
-	'click #submit': function(e) {
-    e.preventDefault();
-
-    var attributes = {
-      userId: Meteor.userId(),
-      eventId: this._id,
-
-      // hoursSpent: parseInt($('#hours').val(),10),
-    };
-  },
 
   'click #addPhoto': function(e) {
     e.preventDefault();
@@ -103,14 +120,14 @@ Template.eventCheckinDetails.events({
     e.preventDefault();
 
     var attributes = {
-      userId: Meteor.userId(),
       imageId: 1,
       eventId: this._id,
-      hoursSpent: hours.get()
+      hoursSpent: parseInt(hours.get())
       // pendingEventName: eventName,
       // pendingEventDescription: eventDescription,
     };
 
+    Session.set('checkingIn', true);
     checkIn(this._id);
   },
 

@@ -4,7 +4,7 @@ casper.test.begin('Partner Org Management', 21, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsSuperAdmin();
   });
-  
+
   //check home page main panel
   casper.waitForSelector("#login-dropdown-list", function() {
     test.assertExists('#partnerOrgs');

@@ -4,7 +4,7 @@ Template.memberProfiles.rendered = function() {
   Session.set('selectedMemberId', false);
 };
 
-Template.memberProfiles.helpers({  
+Template.memberProfiles.helpers({
   'currentMemberName': function() {
     memberId =  Session.get('currentMember');
 
@@ -15,9 +15,6 @@ Template.memberProfiles.helpers({
   },
   'member': function() {
     return Meteor.users.findOne(Session.get('selectedMemberId'));
-  },
-  'transactions': function() {
-    return Meteor.users.transactionsFor(Session.get('selectedMemberId'), true);
   },
   'imageOf': function(imageId) {
     return Images.findOne(imageId).url();
@@ -38,7 +35,7 @@ Template.memberProfiles.events({
     var attributes = {
       userId: this._id,
       points: points,
-      description: '' 
+      description: ''
     };
 
     Meteor.call('addPointsToUser', attributes, function(error) {

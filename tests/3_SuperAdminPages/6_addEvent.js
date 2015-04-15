@@ -4,7 +4,7 @@ casper.test.begin('Add Event', 18, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsSuperAdmin();
   });
-  
+
   //check home page main panel
   casper.waitForSelector("#login-dropdown-list", function() {
     test.assertExists('#manageEvents');
@@ -17,7 +17,7 @@ casper.test.begin('Add Event', 18, function suite(test) {
   });
 
   casper.waitWhileSelector('#addEvent', function() {
-    test.assertTextExists('Add Event'); 
+    test.assertTextExists('Add Event');
     test.assertExists("input[name=name]");
     test.assertExists("input[name=address]");
     test.assertExists("input[name=url]");
@@ -85,12 +85,12 @@ casper.test.begin('Add Event', 18, function suite(test) {
 
   casper.wait(500, function(){
     test.assertTextExists('Casper Event');
-    //TODO: this is bug where the manage events 
+    //TODO: this is bug where the manage events
     //screen doesn't reload on the current screen
     //by default
     this.click('#current');
   });
-  
+
   casper.wait(500, function() {
     this.click('#addEvent');
   });

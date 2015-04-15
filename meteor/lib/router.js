@@ -29,7 +29,7 @@ Router.onBeforeAction(function() {
   } else if (Roles.userIsInRole(Meteor.userId(), ['user'])) {
     this.next();
   } else {
-    console.log("redirectly member");
+    console.log("redirect member");
     this.redirect('login');
   }
 },
@@ -50,7 +50,7 @@ Router.onBeforeAction(function() {
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for members
-  {only: ['allMembers', 'viewMemberProfile','manageEvents', 'exportData']}
+  {only: ['allMembers', 'viewMemberProfile','manageEvents', 'exportData', 'approveTransactions']}
 );
 
 //Partner Admins
@@ -65,7 +65,7 @@ Router.onBeforeAction(function() {
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for members
-  {only: ['partnerAdminHomePage','reviewPhotos']}
+  {only: ['partnerAdminHomePage']}
 );
 
 //Super Admins
@@ -291,7 +291,6 @@ Router.map(function() {
     // }
   });
   this.route('showMemberRewards', {path: '/rewards'});
-  this.route('quickCheckIn', {path: '/quickCheckIn' });
   this.route('contactUs', {path: '/contactUs'});
   this.route('topPointsList', {path: 'topPointsList'});
 
@@ -302,7 +301,7 @@ Router.map(function() {
   this.route('adminHomePage', {path: '/adminHomePage'});
   this.route('addCommunityEvents', {path: '/addCommunityEvents'});
   this.route('addRewards', {path: '/addRewards'});
-  this.route('reviewPhotos', {path: '/reviewPhotos'});
+  this.route('approveTransactions', {path: '/approve'});
   this.route('memberProfiles', {path: '/memberProfiles'});
   this.route('listMembers', {path: '/listMembers'});
 

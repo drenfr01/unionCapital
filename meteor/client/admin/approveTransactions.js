@@ -1,21 +1,34 @@
-Template.reviewPhotos.rendered = function() {
+Template.approveTransactions.rendered = function() {
 };
 
-Template.reviewPhotos.helpers({  
+Template.approveTransactions.helpers({
+
+  // Returns only the points approvals that are assigned to this role
   'pendingTransaction': function() {
-  return Transactions.find( { needsApproval: true});
+
+    var role = '';
+    if (Roles.userIsInRole(Meteor.userId(), 'admin'))
+      role = 'super_admin';
+    else if (Roles.userIsInRole(Meteor.userId(), 'partnerAdmin'))
+      role = 'partner_admin';
+
+    return Transactions.find({ approvalType: role, approved: false });
   },
+
   'modalData': function() {
     return Session.get('modalDataContext');
   },
+
   'approvalModalData': function() {
     return Session.get('approvalModalDataContext');
   },
+
   'imageUrl': function(imageId) {
     if(Images.findOne(imageId)) {
       return Images.findOne(imageId).url();
     }
   },
+
   'userName': function(userId) {
     var user = Meteor.users.findOne(userId);
     //Handling delay in loading collections
@@ -23,6 +36,7 @@ Template.reviewPhotos.helpers({
       return user.profile.firstName + " " + user.profile.lastName;
     }
   },
+
   'getPoints': function(eventId) {
     var event = Events.findOne(eventId);
     if(event.isPointsPerHour) {
@@ -33,28 +47,32 @@ Template.reviewPhotos.helpers({
   }
 });
 
-Template.reviewPhotos.events({
+Template.approveTransactions.events({
+
   'click .showImage': function(e) {
     Session.set('modalDataContext', this);
   },
+
   'click .rejectEvent': function(e) {
     e.preventDefault();
 
     var attributes = {
       imageId: this.imageId,
-      transactionId: this._id 
+      transactionId: this._id
     };
 
     Meteor.call('rejectTransaction', attributes, function(error) {
       if(error) {
         addErrorMessage(error.reason);
       }
-      Router.go('reviewPhotos');
+      Router.go('approveTransactions');
     });
   },
+
   'click .approveEvent': function(e) {
     Session.set('approvalModalDataContext', this);
   },
+
   'click #sendApproval': function(e) {
 
     var attributes = {
@@ -77,6 +95,5 @@ Template.reviewPhotos.events({
       }
     });
   }
-
 });
 

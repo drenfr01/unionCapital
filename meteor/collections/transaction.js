@@ -16,10 +16,18 @@ Transactions.attachSchema(new SimpleSchema({
       label: 'Image Id',
       optional: true
     },
-    //Manually set this to false for QR code submissions
-    needsApproval: {
-      type: Boolean,
+    approvalType: {
+      type: String,
       label: 'Needs Approval'
+    },
+    approved: {
+      type: Boolean,
+      label: 'Approved'
+    },
+    partnerOrg: {
+      type: String,
+      label: 'Partner Organization',
+      optional: true
     },
     pendingEventName: {
       type: String,

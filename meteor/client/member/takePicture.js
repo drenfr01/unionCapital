@@ -21,10 +21,10 @@ function insertFiles(files, e, type) {
 }
 
 function removeImages(type) {
-  //TODO: note that Minimongo doesn't yet support findAndModify, so 
+  //TODO: note that Minimongo doesn't yet support findAndModify, so
   //we have to do this clunky approach
-  var image = Images.findOne({"metadata.type": type, 
-    "metadata.userId": Meteor.userId()}, 
+  var image = Images.findOne({"metadata.type": type,
+    "metadata.userId": Meteor.userId()},
     {sort: {updatedAt: -1}, limit: 1});
 
     Images.remove(image._id);
@@ -67,11 +67,11 @@ Template.takePicture.events({
     Session.set('timeEntered', true);
   },
   'change #userInput': function(e) {
-    e.preventDefault(); 
+    e.preventDefault();
 
-    files = e.target.files; 
+    files = e.target.files;
     //TODO: get Jquery preview working
-    //$('#eventImage').attr('src', e.target.value).width(400).height(400); 
+    //$('#eventImage').attr('src', e.target.value).width(400).height(400);
 
     $('#fileName').attr("placeholder", e.target.files[0].name);
     Session.set('imageLoaded', true);
@@ -81,11 +81,11 @@ Template.takePicture.events({
   'click #removeUserInput': function(e) {
     e.preventDefault();
     $('#fileName').attr("placeholder", "");
-    removeImages(photoType);    
+    removeImages(photoType);
   },
   'click #submitEvent': function(e) {
     e.preventDefault();
-    
+
     //TODO: this is probably a security risk to only check on
     //the client side. Should implement server side checks
     var eventName = Session.get('eventName');
@@ -93,27 +93,25 @@ Template.takePicture.events({
     var eventDescription = $('#eventDescription').val();
 
     if(eventName && Session.get('timeEntered') ) {
-    
+
       var attributes = {
         userId: Meteor.userId(),
         imageId: imageId,
         eventId: this._id,
-        needsApproval: true,
         hoursSpent: parseInt($('#hours').val(),10),
         pendingEventName: eventName,
-        pendingEventDescription: eventDescription,
-        transactionDate: Date()
+        pendingEventDescription: eventDescription
       };
-      
+
       Meteor.call('insertTransaction', attributes, function(error) {
         if(error) {
           addErrorMessage(error.reason);
-          Router.go('submitNewEvent'); 
+          Router.go('submitNewEvent');
         } else {
           addSuccessMessage('Transaction successfully submitted');
           Router.go('memberHomePage');
         }
-      }); 
+      });
     } else {
       addErrorMessage('Please ensure you have filled in a name, time spent, ' +
                       ' and taken a photo');
@@ -123,8 +121,8 @@ Template.takePicture.events({
 
 Template.takePicture.helpers({
   images: function(type) {
-    return Images.find({"metadata.type": type, 
-      "metadata.userId": Meteor.userId()}, 
+    return Images.find({"metadata.type": type,
+      "metadata.userId": Meteor.userId()},
       {sort: {updatedAt: -1}, limit: 1});
   },
   imageLoaded: function() {

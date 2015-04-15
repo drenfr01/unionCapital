@@ -1,44 +1,52 @@
 <template name="eventCheckinDetails">
   <div class="col-xs-12 col-md-6 col-md-offset-3">
-    <div class="row">
-    	<div class="col-xs-12 page-panel">
-      	<h3>{{name}}</h3>
-      	<hr class="panel-divider">
-      	<p>{{description}}</p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-12 page-panel text-center time-attending-panel">
-      	<p>I'll be here for <span class="time-attending">{{timeAttending}}</span> hours!</p>
-    		<div id="durationSlider" class="no-ui-slider"></div>
-      </div>
-    </div>
-    {{#if hasPhoto}}
-      <div class="row">
-  	    <div class="col-xs-12 page-panel page-panel-flush photo-panel panel-link" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url({{hasPhoto}});" id="photoPanel">
-  	    	<div class="flush-panel-text">
-  	      	<span class="glyphicon glyphicon-remove pull-left" id="removePhoto"></span><span class="text">Click To Remove Photo</span>
-  	      	<!-- <span class="glyphicon glyphicon-chevron-right pull-right" id="viewPhoto"></span> -->
-  	      </div>
-  	    </div>
-      </div>
-      <div class="row">
-  	    <div class="col-xs-12 page-panel panel-link text-center check-in check-in-confirm">
-          <a href="#">Confirm<br>Check-In</a>
-  	    </div>
-      </div>
+    {{#if checkingIn}}
+      <h1>Checking in...</h1>
+      <br>
+      <br>
+      <br>
+      {{>loading}}
     {{else}}
       <div class="row">
-  	    <div class="col-xs-12 page-panel panel-link photo-checkin text-center" id="addPhoto">
-      		<a href="#">Add Photo <span class="glyphicon glyphicon-camera icon-btn"></span></a>
-  	    </div>
+      	<div class="col-xs-12 page-panel">
+        	<h3>{{name}}</h3>
+        	<hr class="panel-divider">
+        	<p>{{description}}</p>
+        </div>
       </div>
       <div class="row">
-  	   	<div class="col-xs-12 page-panel panel-link no-photo-checkin text-center check-in">
-  	      <a href="#">Check in Without Photo</a>
-  	    </div>
+        <div class="col-xs-12 page-panel text-center time-attending-panel">
+        	<p>I'll be here for <span class="time-attending">{{timeAttending}}</span> hours!</p>
+      		<div id="durationSlider" class="no-ui-slider"></div>
+        </div>
       </div>
+      {{#if hasPhoto}}
+        <div class="row">
+    	    <div class="col-xs-12 page-panel page-panel-flush photo-panel panel-link" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url({{hasPhoto}});" id="photoPanel">
+    	    	<div class="flush-panel-text">
+    	      	<span class="glyphicon glyphicon-remove pull-left" id="removePhoto"></span><span class="text">Click To Remove Photo</span>
+    	      	<!-- <span class="glyphicon glyphicon-chevron-right pull-right" id="viewPhoto"></span> -->
+    	      </div>
+    	    </div>
+        </div>
+        <div class="row">
+    	    <div class="col-xs-12 page-panel panel-link text-center check-in check-in-confirm">
+            <a href="#">Confirm<br>Check-In</a>
+    	    </div>
+        </div>
+      {{else}}
+        <div class="row">
+    	    <div class="col-xs-12 page-panel panel-link photo-checkin text-center" id="addPhoto">
+        		<a href="#">Add Photo <span class="glyphicon glyphicon-camera icon-btn"></span></a>
+    	    </div>
+        </div>
+        <div class="row">
+    	   	<div class="col-xs-12 page-panel panel-link no-photo-checkin text-center check-in">
+    	      <a href="#">Check in Without Photo</a>
+    	    </div>
+        </div>
+      {{/if}}
+      {{> bottomNav buttonType="cancel" }}
     {{/if}}
-    {{> bottomNav buttonType="cancel" }}
   </div>
 </template>
