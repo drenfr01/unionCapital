@@ -13,7 +13,7 @@ var options = {
 };
 var fields = ['name', 'description'];
 
-CheckinEventsSearch = new SearchSource('eventsSearch', fields, options);
+CheckinEventsSearch = new SearchSource('checkinEventsSearch', fields, options);
 
 // Gets the data for use in the getEvents helper
 var getEventsData = function() {
@@ -29,7 +29,7 @@ var getEventsData = function() {
     // Otherwise, check that the end date of the even is before the start date of the check in period
     // AND the start date of the event is before the end of the check in period
     return _.filter(
-      events, 
+      events,
       function(event) {
         return moment(event.endDate).isAfter(checkinPeriod.startDate)
           && moment(checkinPeriod.endDate).isAfter(event.startDate);
@@ -42,18 +42,18 @@ var eventButtonToggle = new ReactiveVar({ eventSelectText: '', eventSelectClass:
 // Handles all configuration based on if an event is selected
 function setToggleValues() {
   if (Session.get('selectedEvent')) {
-    
+
     // Event selected
     $('#searchDiv').hide();
     $('#checkIntoEventDiv').show();
-    
+
     eventButtonToggle.set({
       eventSelectText: 'Cancel',
       eventSelectClass: 'btn-default'
     });
 
   } else {
-    
+
     // No event selected
     $('#searchDiv').show();
     $('#checkIntoEventDiv').hide();
@@ -89,7 +89,7 @@ Template.checkIntoEvent.created = function () {
 };
 
 Template.checkIntoEvent.rendered = function() {
-  
+
   // We don't want to start out with an event selected
   Session.set('selectedEvent', null);
   setToggleValues();
@@ -100,11 +100,11 @@ Template.checkIntoEvent.rendered = function() {
 };
 
 Template.checkIntoEvent.helpers({
-  
+
   'getEvents': function() {
 
     var eventsArray = getEventsData();
-    setMapMarkers(eventsArray);    
+    setMapMarkers(eventsArray);
 
     return eventsArray;
   },
@@ -155,5 +155,5 @@ Template.checkIntoEvent.events({
   // 'click #cancel': function(e) {
   //   Router.go('memberHomePage');
   // },
-           
+
 });

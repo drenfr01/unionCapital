@@ -81,15 +81,13 @@ casper.test.begin('Manage Events', 34, function suite(test) {
     test.assertTextExists('Boston Music Festival');
 
     this.evaluate(function() {
-      $("td:contains('Boston Music Festival')").parent().find('.deleteEvent').click();
+      $("td:contains('Somerville Cooking Jubilee')").parent().find('.deleteEvent').click();
     });
-
   });
 
   casper.wait(500, function() {
-    test.assertTextExists('Somerville Cooking Jubilee');
-    test.assertTextDoesntExist('Boston Music Festival');
-
+    test.assertTextDoesntExist('Somerville Cooking Jubilee');
+    test.assertTextExists('Boston Music Festival');
   });
 
 
