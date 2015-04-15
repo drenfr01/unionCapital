@@ -242,45 +242,6 @@ Meteor.methods({
                         {$push: {emails: {address: attributes.email
                         }}});
   },
-  geocodeAddress: function(address) {
-    var myFuture = new Future();
-    googlemaps.geocode(address, function(err, data) {
-      if(err) {
-        myFuture.throw(err);
-      } else {
-        myFuture.return(data.results[0].geometry);
-      }
-    });
-    return myFuture.wait();
-  },
-  geolocateUser: function(attributes) {
-    check(attributes, {
-      email: String,
-      profile: {
-        firstName: String,
-        lastName: String,
-        street1: String,
-        street2: String,
-        city: String,
-        state: String,
-        zip: String,
-        partnerOrg: String,
-        incomeBracket: String,
-        numberOfKids: String,
-        race: String,
-      }
-    });
-    Meteor.users.update(this.userId,
-                        {$set: { profile: attributes.profile
-                        }});
-    //Note: this assumes only 1 email address
-    Meteor.users.update(this.userId,
-                        {$pop: {emails: {address: attributes.email
-                        }}});
-    Meteor.users.update(this.userId,
-                        {$push: {emails: {address: attributes.email
-                        }}});
-  },
 
   geocodeAddress: function(address) {
     var myFuture = new Future();
@@ -294,37 +255,17 @@ Meteor.methods({
     return myFuture.wait();
   },
 
-  // geolocateUser: function(attributes) {
-  //   check(attributes, {
-  //     eventId: String,
-  //     hoursSpent: Number,
-  //     userId: String,
-  //     userLng: Number,
-  //     userLat: Number
-  //   });
-
-  //   //TODO: make this an admin configurable option
-  //   var maxDistance = 0.1; //maximum distance in kilometers to check in
-  //   var event = Events.findOne(attributes.eventId);
-  //   if(Transactions.findOne({userId: attributes.userId, eventId: event._id})) {
-  //     throw new Meteor.Error(400, "You have already checked into this event");
-  //   }
-  //   var distance = HelperFunctions.haversineFormula(event, attributes.userLng, attributes.userLat);
-  //   console.log("Distance: " + distance);
-
-  //   if(distance < maxDistance) {
-  //     //TODO: consider adding user geolocation info to transaction?
-  //     Transactions.insert({userId: attributes.userId, eventId: event._id, approvalType: false,
-  //                         transactionDate: Date(), hoursSpent: attributes.hoursSpent,
-  //                         deleteInd: false
-  //     });
-  //     return "Congrats, you are within: " + distance +  " km of your event. Adding points to your total!";
-  //   } else {
-  //     throw new Meteor.Error(400, "You are too far away from the event" +
-  //                            "(" + distance + " km ), please move closer and try again OR take a photo " +
-  //                            "and submit it for manually approval");
-  //   }
-  // },
+  geocodeAddress: function(address) {
+    var myFuture = new Future();
+    googlemaps.geocode(address, function(err, data) {
+      if(err) {
+        myFuture.throw(err);
+      } else {
+        myFuture.return(data.results[0].geometry);
+      }
+    });
+    return myFuture.wait();
+  },
 
   sendEmail: function(attributes) {
     check(attributes, {
