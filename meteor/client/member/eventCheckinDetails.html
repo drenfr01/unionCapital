@@ -7,19 +7,36 @@
       <br>
       {{>loading}}
     {{else}}
-      <div class="row">
-      	<div class="col-xs-12 page-panel">
-        	<h3>{{name}}</h3>
-        	<hr class="panel-divider">
-        	<p>{{description}}</p>
+      {{#if adHoc}}
+        <div class="row">
+          <div class="col-xs-12 page-panel">
+            <h4>Event Details</h4>
+            <form role="form">
+              <div class="form-group">
+                <input type="text" class="form-control" id="eventName" placeholder="Event Name">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" id="eventDescription"
+                placeholder="Event Description">
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12 page-panel text-center time-attending-panel">
-        	<p>I'll be here for <span class="time-attending">{{timeAttending}}</span> hours!</p>
-      		<div id="durationSlider" class="no-ui-slider"></div>
+      {{else}}
+        <div class="row">
+        	<div class="col-xs-12 page-panel">
+          	<h3>{{name}}</h3>
+          	<hr class="panel-divider">
+          	<p>{{description}}</p>
+          </div>
         </div>
-      </div>
+        <div class="row">
+          <div class="col-xs-12 page-panel text-center time-attending-panel">
+          	<p>I'll be here for <span class="time-attending">{{timeAttending}}</span> hours!</p>
+        		<div id="durationSlider" class="no-ui-slider"></div>
+          </div>
+        </div>
+      {{/if}}
       {{#if hasPhoto}}
         <div class="row">
     	    <div class="col-xs-12 page-panel page-panel-flush photo-panel panel-link" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url({{hasPhoto}});" id="photoPanel">

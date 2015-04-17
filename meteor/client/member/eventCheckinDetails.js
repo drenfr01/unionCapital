@@ -1,68 +1,6 @@
 var defaultHours = 3;
 var checkIn = {};
 
-// function checkIn(eventId) {
-
-//   if( userPhoto.photoURI.get() ) {
-//     userPhoto.insert(function(err, fileObj) {
-//       if ( err ) {
-//         addErrorMessage(err.reason);
-//       } else {
-//         insertTransaction(eventId, fileObj._id);
-//       }
-//     });
-//   } else {
-//     insertTransaction(eventId, null);
-//   }
-// };
-
-// // Sets the attributes prior to calling the insert function
-// function insertTransaction(eventId, imageId) {
-//   var attributes = {
-//     userId: Meteor.userId(),
-//     eventId: eventId,
-//     hoursSpent: parseInt(hours.get())
-//     // pendingEventName: eventName,
-//     // pendingEventDescription: eventDescription,
-//   };
-
-//   // Instead of just passing a null imageId field, this omits the field
-//   // entirely to stay consistent with the check() function called on the server
-//   if( imageId )
-//     attributes.imageId = imageId;
-
-//   // If lat or lng is null, then try to get it one more time
-//   // Useful if the user accessed this page from a link or bookmark
-//   if (gmaps.currentLocation.lat && gmaps.currentLocation.lng) {
-//     attributes.userLat = gmaps.currentLocation.lat;
-//     attributes.userLng = gmaps.currentLocation.lng;
-//     callInsert(attributes);
-//   } else {
-//     gmaps.getCurrentLocation(function(error, currentLocation) {
-
-//       if (!error) {
-//         attributes.userLat = currentLocation.lat;
-//         attributes.userLng = currentLocation.lng;
-//       }
-
-//       callInsert(attributes);
-//     });
-//   }
-// };
-
-// // Calls insertTransaction and routes the user
-// function callInsert(attributes) {
-//   Meteor.call('insertTransaction', attributes, function(error) {
-//     if(error) {
-//       addErrorMessage(error.reason);
-//     } else {
-//       Router.go('memberHomePage');
-//     }
-//   });
-
-//   Session.set('checkingIn', false);
-// };
-
 Template.eventCheckinDetails.created = function() {
 	checkIn = new CheckIn(defaultHours);
 };
@@ -99,6 +37,10 @@ Template.eventCheckinDetails.helpers({
 
   checkingIn: function() {
     return checkIn ? checkIn.checkingIn.get() : false;
+  },
+
+  adHoc: function() {
+  	return this._id === 'new';
   }
 });
 

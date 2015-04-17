@@ -1,11 +1,4 @@
 
-// Define configuration values. This is probably not a good place to do it
-// we'll want to move this to the server
-var checkinPeriod = {
-  startDate: moment().subtract(3, 'years'),
-  endDate: moment().add(3, 'years')
-};
-
 // Event search setup
 var options = {
   keepHistory: 1000 * 60 * 5,
@@ -16,8 +9,8 @@ var fields = ['name', 'description'];
 CheckinEventsSearch = new SearchSource('checkinEventsSearch', fields, options);
 
 // Gets the data for use in the getEvents helper
-var getEventsData = function() {
-  var events = CheckinEventsSearch.getData({
+function getEventsData() {
+var events = CheckinEventsSearch.getData({
     sort: {eventDate: 1}
   });
 
@@ -28,14 +21,9 @@ var getEventsData = function() {
   } else {
     // Otherwise, check that the end date of the even is before the start date of the check in period
     // AND the start date of the event is before the end of the check in period
-    return _.filter(
-      events,
-      function(event) {
-        return moment(event.endDate).isAfter(checkinPeriod.startDate)
-          && moment(checkinPeriod.endDate).isAfter(event.startDate);
-      });
+    return events;
   }
-};
+}
 
 var eventButtonToggle = new ReactiveVar({ eventSelectText: '', eventSelectClass: '' });
 
