@@ -1,76 +1,73 @@
+var defaultHours = 3;
+var checkIn = {};
 
-var defaultHours = 3
-hours = new ReactiveVar(defaultHours);
+// function checkIn(eventId) {
 
-function checkIn(eventId) {
+//   if( userPhoto.photoURI.get() ) {
+//     userPhoto.insert(function(err, fileObj) {
+//       if ( err ) {
+//         addErrorMessage(err.reason);
+//       } else {
+//         insertTransaction(eventId, fileObj._id);
+//       }
+//     });
+//   } else {
+//     insertTransaction(eventId, null);
+//   }
+// };
 
-  if( userPhoto.photoURI.get() ) {
-    userPhoto.insert(function(err, fileObj) {
-      if ( err ) {
-        addErrorMessage(err.reason);
-      } else {
-        insertTransaction(eventId, fileObj._id);
-      }
-    });
-  } else {
-    insertTransaction(eventId, null);
-  }
-};
+// // Sets the attributes prior to calling the insert function
+// function insertTransaction(eventId, imageId) {
+//   var attributes = {
+//     userId: Meteor.userId(),
+//     eventId: eventId,
+//     hoursSpent: parseInt(hours.get())
+//     // pendingEventName: eventName,
+//     // pendingEventDescription: eventDescription,
+//   };
 
-// Sets the attributes prior to calling the insert function
-function insertTransaction(eventId, imageId) {
-  var attributes = {
-    userId: Meteor.userId(),
-    eventId: eventId,
-    hoursSpent: parseInt(hours.get())
-    // pendingEventName: eventName,
-    // pendingEventDescription: eventDescription,
-  };
+//   // Instead of just passing a null imageId field, this omits the field
+//   // entirely to stay consistent with the check() function called on the server
+//   if( imageId )
+//     attributes.imageId = imageId;
 
-  // Instead of just passing a null imageId field, this omits the field
-  // entirely to stay consistent with the check() function called on the server
-  if( imageId )
-    attributes.imageId = imageId;
+//   // If lat or lng is null, then try to get it one more time
+//   // Useful if the user accessed this page from a link or bookmark
+//   if (gmaps.currentLocation.lat && gmaps.currentLocation.lng) {
+//     attributes.userLat = gmaps.currentLocation.lat;
+//     attributes.userLng = gmaps.currentLocation.lng;
+//     callInsert(attributes);
+//   } else {
+//     gmaps.getCurrentLocation(function(error, currentLocation) {
 
-  // If lat or lng is null, then try to get it one more time
-  // Useful if the user accessed this page from a link or bookmark
-  if (gmaps.currentLocation.lat && gmaps.currentLocation.lng) {
-    attributes.userLat = gmaps.currentLocation.lat;
-    attributes.userLng = gmaps.currentLocation.lng;
-    callInsert(attributes);
-  } else {
-    gmaps.getCurrentLocation(function(error, currentLocation) {
+//       if (!error) {
+//         attributes.userLat = currentLocation.lat;
+//         attributes.userLng = currentLocation.lng;
+//       }
 
-      if (!error) {
-        attributes.userLat = currentLocation.lat;
-        attributes.userLng = currentLocation.lng;
-      }
+//       callInsert(attributes);
+//     });
+//   }
+// };
 
-      callInsert(attributes);
-    });
-  }
-};
+// // Calls insertTransaction and routes the user
+// function callInsert(attributes) {
+//   Meteor.call('insertTransaction', attributes, function(error) {
+//     if(error) {
+//       addErrorMessage(error.reason);
+//     } else {
+//       Router.go('memberHomePage');
+//     }
+//   });
 
-// Calls insertTransaction and routes the user
-function callInsert(attributes) {
-  Meteor.call('insertTransaction', attributes, function(error) {
-    if(error) {
-      addErrorMessage(error.reason);
-    } else {
-      Router.go('memberHomePage');
-    }
-  });
-
-  Session.set('checkingIn', false);
-};
+//   Session.set('checkingIn', false);
+// };
 
 Template.eventCheckinDetails.created = function() {
-	userPhoto = new UserPhoto();
+	checkIn = new CheckIn(defaultHours);
 };
 
 Template.eventCheckinDetails.rendered = function() {
-
-  Session.set('checkingIn', false);
 
 	$('#durationSlider').noUiSlider({
 		start: [defaultHours],
@@ -93,42 +90,40 @@ Template.eventCheckinDetails.rendered = function() {
 Template.eventCheckinDetails.helpers({
 
 	'timeAttending': function() {
-		return hours.get();
+		return checkIn ? checkIn.hours.get() : defaultHours;
 	},
 
 	'hasPhoto': function() {
-		return userPhoto.photoURI.get();
+		return checkIn ? checkIn.getPhoto() : false;
 	},
 
   checkingIn: function() {
-    return Session.get('checkingIn');
+    return checkIn ? checkIn.checkingIn.get() : false;
   }
 });
 
 Template.eventCheckinDetails.events({
 
 	'change #durationSlider': function() {
-		hours.set($('#durationSlider').val());
+		checkIn.hours.set($('#durationSlider').val());
 	},
 
   'click #addPhoto': function(e) {
     e.preventDefault();
-    userPhoto.takePhoto();
+    checkIn.takePhoto();
   },
 
+  // Async, pass the checkin
   'click .check-in': function(e) {
     e.preventDefault();
-
-    var attributes = {
-      imageId: 1,
-      eventId: this._id,
-      hoursSpent: parseInt(hours.get())
-      // pendingEventName: eventName,
-      // pendingEventDescription: eventDescription,
-    };
-
-    Session.set('checkingIn', true);
-    checkIn(this._id);
+    console.log(this);
+    checkIn.submitCheckIn(this._id, function(error) {
+      if(error) {
+        addErrorMessage(error.reason);
+      } else {
+        Router.go('memberHomePage');
+      }
+    });
   },
 
   'click #back': function(e) {
@@ -137,11 +132,10 @@ Template.eventCheckinDetails.events({
   },
 
   'click #photoPanel': function() {
-    userPhoto.remove();
+    checkIn.removePhoto();
   }
-
 });
 
 Template.eventCheckinDetails.destroyed = function () {
-	delete userPhoto;
+	delete checkIn;
 };
