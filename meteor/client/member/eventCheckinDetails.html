@@ -9,15 +9,14 @@
     {{else}}
       {{#if adHoc}}
         <div class="row">
-          <div class="col-xs-12 page-panel">
-            <h4>Event Details</h4>
+          <div class="col-xs-12 page-panel text-center">
+            <h4>Ah Hoc Event Details</h4>
             <form role="form">
               <div class="form-group">
-                <input type="text" class="form-control" id="eventName" placeholder="Event Name">
+                <input type="text" class="form-control" id="pendingEventName" placeholder="Event Name">
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" id="eventDescription"
-                placeholder="Event Description">
+                <textarea rows="2" class="form-control" id="pendingEventDescription" placeholder="Event Description"></textarea>
               </div>
             </form>
           </div>

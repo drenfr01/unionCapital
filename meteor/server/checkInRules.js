@@ -26,8 +26,8 @@ CheckInRules = {
 	isRecognizedLocation: function(attributes) {
 		var events = Events.find({ adHoc: false }).fetch();
 
-		var closeEvent = _.find(events, function() {
-			return HelperFunctions.haversineFormula(event, attributes.userLng, attributes.userLat) < maxAdHocDistance;
+		var closeEvent = _.find(events, function(oneEvent) {
+			return HelperFunctions.haversineFormula(oneEvent, attributes.userLng, attributes.userLat) < CheckInRules.options.maxAdHocDistance;
 		});
 
 		return !!closeEvent;

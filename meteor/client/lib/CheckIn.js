@@ -23,11 +23,21 @@ CheckIn = function(defaultHours) {
 
     self.attributes = {
       userId: Meteor.userId(),
-      eventId: eventId,
-      hoursSpent: parsedHours ? parsedHours : 0,
-      pendingEventName: self.pendingEventName,
-      pendingEventDescription: self.pendingEventDescription
+      hoursSpent: parsedHours ? parsedHours : 0
     };
+
+    // If new, then don't set the eventId to avoid check() errors
+    if (eventId === 'new' && self.attributes.pendingEventName && self.attributes.endingEventDescription) {
+      self.attributes.pendingEventName = self.pendingEventName;
+      self.attributes.endingEventDescription = self.pendingEventDescription;
+    } else if (eventId) {
+      // Else set the event ID
+      self.attributes.eventId = eventId;
+    } else {
+      // This case should not happen, so let's throw an error
+      callback('NO_EVENT_NAME', null);
+      throw new Meteor.Error('NO_EVENT_NAME');
+    }
 
     // Instead of just passing a null imageId field, this omits the field
     // entirely to stay consistent with the check() function called on the server

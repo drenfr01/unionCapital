@@ -40,7 +40,7 @@ Template.eventCheckinDetails.helpers({
   },
 
   adHoc: function() {
-  	return this._id === 'new';
+  	return Router.current().params.id === 'new';
   }
 });
 
@@ -58,14 +58,30 @@ Template.eventCheckinDetails.events({
   // Async, pass the checkin
   'click .check-in': function(e) {
     e.preventDefault();
-    console.log(this);
-    checkIn.submitCheckIn(this._id, function(error) {
-      if(error) {
-        addErrorMessage(error.reason);
-      } else {
-        Router.go('memberHomePage');
-      }
-    });
+
+    var eventId = Router.current().params.id;
+
+    // Set the event name if it is an ad hoc transaction
+    if (eventId === 'new') {
+    	checkIn.pendingEventName = $('#pendingEventName').val();
+    	checkIn.pendingEventDescription = $('#pendingEventDescription').val();
+    } 
+
+    // Do the form validation here, then call the submit function
+    if (validateFieldsAdHoc()) {
+	    checkIn.submitCheckIn(eventId, function(error, result) {
+	      if(error) {
+	        addErrorMessage(error.reason);
+	      } else {
+	      	if (result === 'not_allowed')
+	      		addErrorMessage('This type of check-in is not allowed');
+	      	else
+	        	Router.go('memberHomePage');
+	      }
+	    });
+	  } else {
+	  	addErrorMessage('Please fill out all fields');
+	  }
   },
 
   'click #back': function(e) {
@@ -81,3 +97,10 @@ Template.eventCheckinDetails.events({
 Template.eventCheckinDetails.destroyed = function () {
 	delete checkIn;
 };
+
+function validateFieldsAdHoc() {
+	return $('#pendingEventName').val() && $('#pendingEventDescription').val();
+}
+
+// TODO:
+// Find out how it is inserting the event/transactions, I don't think it's working correctly
