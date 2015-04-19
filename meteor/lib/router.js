@@ -236,14 +236,6 @@ Router.map(function() {
   this.route('/share', function() {
     this.render('share');
   });
-  this.route('submitnew', {
-    path: '/submitnew',
-    template: 'newAdHoc'
-  });
-  this.route('newAdHoc', {
-    path: '/newAdHoc/:_id',
-    data: function() { return Events.findOne({_id: this.params._id}); }
-  });
 
   this.route('eventCheckinDetails', {
     path: 'checkin/:id',
