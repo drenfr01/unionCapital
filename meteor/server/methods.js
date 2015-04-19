@@ -44,7 +44,7 @@ Meteor.methods({
       pendingEventName: Match.Optional(String),
       pendingEventDescription: Match.Optional(String),
       transactionDate: Match.Optional(Date),
-      partnerOrg: Match.Optional(String),
+      partnerOrg: String,
       userLat: Match.Optional(Number),
       userLng: Match.Optional(Number)
     });

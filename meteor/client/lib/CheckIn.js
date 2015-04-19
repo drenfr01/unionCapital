@@ -12,6 +12,7 @@ CheckIn = function(defaultHours) {
   // Calls insertTransaction and routes the user
   // Private function
   function callInsert(callback) {
+    console.log(self.attributes);
     Meteor.call( 'insertTransaction', self.attributes, callback );
   }
 
