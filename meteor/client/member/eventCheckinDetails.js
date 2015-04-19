@@ -1,76 +1,11 @@
-
-var defaultHours = 3
-hours = new ReactiveVar(defaultHours);
-
-function checkIn(eventId) {
-
-  if( userPhoto.photoURI.get() ) {
-    userPhoto.insert(function(err, fileObj) {
-      if ( err ) {
-        addErrorMessage(err.reason);
-      } else {
-        insertTransaction(eventId, fileObj._id);
-      }
-    });
-  } else {
-    insertTransaction(eventId, null);
-  }
-};
-
-// Sets the attributes prior to calling the insert function
-function insertTransaction(eventId, imageId) {
-  var attributes = {
-    userId: Meteor.userId(),
-    eventId: eventId,
-    hoursSpent: parseInt(hours.get())
-    // pendingEventName: eventName,
-    // pendingEventDescription: eventDescription,
-  };
-
-  // Instead of just passing a null imageId field, this omits the field
-  // entirely to stay consistent with the check() function called on the server
-  if( imageId )
-    attributes.imageId = imageId;
-
-  // If lat or lng is null, then try to get it one more time
-  // Useful if the user accessed this page from a link or bookmark
-  if (gmaps.currentLocation.lat && gmaps.currentLocation.lng) {
-    attributes.userLat = gmaps.currentLocation.lat;
-    attributes.userLng = gmaps.currentLocation.lng;
-    callInsert(attributes);
-  } else {
-    gmaps.getCurrentLocation(function(error, currentLocation) {
-
-      if (!error) {
-        attributes.userLat = currentLocation.lat;
-        attributes.userLng = currentLocation.lng;
-      }
-
-      callInsert(attributes);
-    });
-  }
-};
-
-// Calls insertTransaction and routes the user
-function callInsert(attributes) {
-  Meteor.call('insertTransaction', attributes, function(error) {
-    if(error) {
-      addErrorMessage(error.reason);
-    } else {
-      Router.go('memberHomePage');
-    }
-  });
-
-  Session.set('checkingIn', false);
-};
+var defaultHours = 3;
+var checkIn = {};
 
 Template.eventCheckinDetails.created = function() {
-	userPhoto = new UserPhoto();
+	checkIn = new CheckIn(defaultHours);
 };
 
 Template.eventCheckinDetails.rendered = function() {
-
-  Session.set('checkingIn', false);
 
 	$('#durationSlider').noUiSlider({
 		start: [defaultHours],
@@ -93,42 +28,61 @@ Template.eventCheckinDetails.rendered = function() {
 Template.eventCheckinDetails.helpers({
 
 	'timeAttending': function() {
-		return hours.get();
+		return checkIn ? checkIn.hours.get() : defaultHours;
 	},
 
 	'hasPhoto': function() {
-		return userPhoto.photoURI.get();
+		return checkIn ? checkIn.getPhoto() : false;
 	},
 
   checkingIn: function() {
-    return Session.get('checkingIn');
+    return checkIn ? checkIn.checkingIn.get() : false;
+  },
+
+  adHoc: function() {
+  	return Router.current().params.id === 'new';
   }
 });
 
 Template.eventCheckinDetails.events({
 
 	'change #durationSlider': function() {
-		hours.set($('#durationSlider').val());
+		checkIn.hours.set($('#durationSlider').val());
 	},
 
   'click #addPhoto': function(e) {
     e.preventDefault();
-    userPhoto.takePhoto();
+    checkIn.takePhoto();
   },
 
+  // Async, pass the checkin
   'click .check-in': function(e) {
     e.preventDefault();
 
-    var attributes = {
-      imageId: 1,
-      eventId: this._id,
-      hoursSpent: parseInt(hours.get())
-      // pendingEventName: eventName,
-      // pendingEventDescription: eventDescription,
-    };
+    var eventId = Router.current().params.id;
 
-    Session.set('checkingIn', true);
-    checkIn(this._id);
+    // Set the event name if it is an ad hoc transaction
+    if (eventId === 'new') {
+    	checkIn.pendingEventName = $('#pendingEventName').val();
+    	checkIn.pendingEventDescription = $('#pendingEventDescription').val();
+    }
+
+    // Do the form validation here, then call the submit function
+    checkIn.submitCheckIn(eventId, function(error, result) {
+      if(error) {
+        addErrorMessage(error.reason);
+      } else {
+      	if (result  === 'not_allowed')
+      		addErrorMessage('This type of check-in is not allowed');
+      	else if (result === 'auto') {
+          addSuccessMessage('Sucessfully checked in!')
+        	Router.go('memberHomePage');
+        } else {
+          addSuccessMessage('Check-in submitted for approval');
+          Router.go('memberHomePage');
+        }
+      }
+    });
   },
 
   'click #back': function(e) {
@@ -137,11 +91,17 @@ Template.eventCheckinDetails.events({
   },
 
   'click #photoPanel': function() {
-    userPhoto.remove();
+    checkIn.removePhoto();
   }
-
 });
 
 Template.eventCheckinDetails.destroyed = function () {
-	delete userPhoto;
+	delete checkIn;
 };
+
+function validateFields() {
+	return $('#pendingEventName').val() && $('#pendingEventDescription').val();
+}
+
+// TODO:
+// Find out how it is inserting the event/transactions, I don't think it's working correctly

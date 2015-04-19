@@ -44,7 +44,7 @@ Meteor.methods({
       pendingEventName: Match.Optional(String),
       pendingEventDescription: Match.Optional(String),
       transactionDate: Match.Optional(Date),
-      partnerOrg: Match.Optional(String),
+      partnerOrg: String,
       userLat: Match.Optional(Number),
       userLng: Match.Optional(Number)
     });
@@ -55,9 +55,6 @@ Meteor.methods({
                                                     eventId: attributes.eventId
     });
 
-    console.log(duplicateTransaction);
-
-    // DPROUD: Make this make sense
     //TODO: setup MAIL URL for union capital website
     if(attributes.approvalType === 'super_admin' || attributes.approvalType === 'partner_admin') {
       console.log('A Union Capitalist has submitted a photo for approval',
@@ -77,7 +74,11 @@ Meteor.methods({
       attributes.deleteInd = false;
       console.log(' 88888888  ' + attributes.imageId);
 
-      return Transactions.insert(attributes);
+      if (attributes.approvalType !== 'not_allowed') {
+        Transactions.insert(attributes);
+      }
+
+      return attributes.approvalType;
     }
   },
 
@@ -94,7 +95,7 @@ Meteor.methods({
       imageId: String,
       transactionId: String
     });
-    removeTransaction(attributes.transactionId);
+    DB.removeTransaction(attributes.transactionId);
     //TODO: mark images as logically deleted
   },
 
@@ -123,7 +124,7 @@ Meteor.methods({
     } else {
       attributes.active = 0;
       attributes.isPointsPerHour = false;
-      eventId = insertEvent(attributes);
+      eventId = DB.insertEvent(attributes);
     }
 
     // Update the transaction to show approved
@@ -216,7 +217,7 @@ Meteor.methods({
                  attributes.email
                );
   },
-  
+
   updateUser: function(attributes) {
     check(attributes, {
       email: String,
@@ -245,48 +246,9 @@ Meteor.methods({
                         {$push: {emails: {address: attributes.email
                         }}});
   },
-  geocodeAddress: function(address) {
-    var myFuture = new Future(); 
-    googlemaps.geocode(address, function(err, data) {
-      if(err) {
-        myFuture.throw(err);
-      } else {
-        myFuture.return(data.results[0].geometry);
-      }
-    });
-    return myFuture.wait();
-  },
-  geolocateUser: function(attributes) {
-    check(attributes, {
-      email: String,
-      profile: {
-        firstName: String,
-        lastName: String,
-        street1: String,
-        street2: String,
-        city: String,
-        state: String,
-        zip: String,
-        partnerOrg: String,
-        incomeBracket: String,
-        numberOfKids: String,
-        race: String,
-      }
-    });
-    Meteor.users.update(this.userId,
-                        {$set: { profile: attributes.profile
-                        }});
-    //Note: this assumes only 1 email address
-    Meteor.users.update(this.userId,
-                        {$pop: {emails: {address: attributes.email
-                        }}});
-    Meteor.users.update(this.userId,
-                        {$push: {emails: {address: attributes.email
-                        }}});
-  },
 
   geocodeAddress: function(address) {
-    var myFuture = new Future(); 
+    var myFuture = new Future();
     googlemaps.geocode(address, function(err, data) {
       if(err) {
         myFuture.throw(err);
@@ -297,37 +259,17 @@ Meteor.methods({
     return myFuture.wait();
   },
 
-  // geolocateUser: function(attributes) {
-  //   check(attributes, {
-  //     eventId: String,
-  //     hoursSpent: Number,
-  //     userId: String,
-  //     userLng: Number,
-  //     userLat: Number
-  //   });
-
-  //   //TODO: make this an admin configurable option
-  //   var maxDistance = 0.1; //maximum distance in kilometers to check in
-  //   var event = Events.findOne(attributes.eventId);
-  //   if(Transactions.findOne({userId: attributes.userId, eventId: event._id})) {
-  //     throw new Meteor.Error(400, "You have already checked into this event");
-  //   }
-  //   var distance = helperFunctions.haversineFormula(event, attributes.userLng, attributes.userLat);
-  //   console.log("Distance: " + distance);
-
-  //   if(distance < maxDistance) {
-  //     //TODO: consider adding user geolocation info to transaction?
-  //     Transactions.insert({userId: attributes.userId, eventId: event._id, approvalType: false,
-  //                         transactionDate: Date(), hoursSpent: attributes.hoursSpent,
-  //                         deleteInd: false
-  //     });
-  //     return "Congrats, you are within: " + distance +  " km of your event. Adding points to your total!";
-  //   } else {
-  //     throw new Meteor.Error(400, "You are too far away from the event" +
-  //                            "(" + distance + " km ), please move closer and try again OR take a photo " +
-  //                            "and submit it for manually approval");
-  //   }
-  // },
+  geocodeAddress: function(address) {
+    var myFuture = new Future();
+    googlemaps.geocode(address, function(err, data) {
+      if(err) {
+        myFuture.throw(err);
+      } else {
+        myFuture.return(data.results[0].geometry);
+      }
+    });
+    return myFuture.wait();
+  },
 
   sendEmail: function(attributes) {
     check(attributes, {
@@ -381,7 +323,7 @@ Meteor.methods({
       eventId: event._id,
       approvalType: 'auto',
       approved: true,
-      transactionDate: Date(), 
+      transactionDate: Date(),
       partnerOrg: partnerOrg,
       hoursSpent: hours,
       deleteInd: false

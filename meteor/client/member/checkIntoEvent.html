@@ -5,7 +5,7 @@
     </div>
     <div id="checkinBody">
       <div class="row" id="seachDiv">
-        <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel page-panel-flush">
+        <div class="col-xs-12 page-panel page-panel-flush">
           <div class="input-group flush-input" id="searchDiv">
             <input class="form-control" id="eventSearchBox" placeholder="Begin typing to filter events">
             <span class="input-group-addon cancel-text-addon" id="clearBtn"><span class="glyphicon glyphicon-remove"></span></span>
@@ -48,10 +48,11 @@
         </div>
       </div>
       <div class="row">
-        <a href="{{pathFor 'submitNewEvent'}}">
-          <input type="button" value="Upload New Event"
-          class="btn btn-info btn-block"/>
-        </a>
+        <div class="col-xs-12 page-panel panel-link ad-hoc-panel text-center">
+          <a href="{{pathFor 'eventCheckinDetails' id='new'}}">
+            Submit New Event
+          </a>
+        </div>
         <em>Use this option to submit an event not listed above</em>
       </div>
     </div>

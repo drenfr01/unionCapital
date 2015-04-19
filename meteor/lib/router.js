@@ -236,14 +236,6 @@ Router.map(function() {
   this.route('/share', function() {
     this.render('share');
   });
-  this.route('submitNewEvent', {
-    path: '/submitNewEvent',
-    template: 'takePicture'
-  });
-  this.route('takePicture', {
-    path: '/takePicture/:_id',
-    data: function() { return Events.findOne({_id: this.params._id}); }
-  });
 
   this.route('eventCheckinDetails', {
     path: 'checkin/:id',
