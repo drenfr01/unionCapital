@@ -74,7 +74,11 @@ Meteor.methods({
       attributes.deleteInd = false;
       console.log(' 88888888  ' + attributes.imageId);
 
-      return Transactions.insert(attributes);
+      if (attributes.approvalType !== 'not_allowed') {
+        Transactions.insert(attributes);
+      }
+
+      return attributes.approvalType;
     }
   },
 

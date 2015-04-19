@@ -19,50 +19,65 @@ CheckIn = function(defaultHours) {
   // Semiprivate function - should not be called directly
   self.insertTransaction = function(eventId, imageId, callback) {
 
-    var parsedHours = parseInt(self.hours.get());
+    try {
 
-    self.attributes = {
-      userId: Meteor.userId(),
-      hoursSpent: parsedHours ? parsedHours : 0
-    };
+      var parsedHours = parseInt(self.hours.get());
 
-    // If new, then don't set the eventId to avoid check() errors
-    if (eventId === 'new' && self.attributes.pendingEventName && self.attributes.endingEventDescription) {
-      self.attributes.pendingEventName = self.pendingEventName;
-      self.attributes.endingEventDescription = self.pendingEventDescription;
-    } else if (eventId) {
-      // Else set the event ID
-      self.attributes.eventId = eventId;
-    } else {
-      // This case should not happen, so let's throw an error
-      callback('NO_EVENT_NAME', null);
-      throw new Meteor.Error('NO_EVENT_NAME');
-    }
+      self.attributes = {
+        userId: Meteor.userId(),
+        hoursSpent: parsedHours ? parsedHours : 0
+      };
 
-    // Instead of just passing a null imageId field, this omits the field
-    // entirely to stay consistent with the check() function called on the server
-    if( imageId )
-      self.attributes.imageId = imageId;
+      // If new, then don't set the eventId to avoid check() errors
+      if (eventId === 'new' && self.pendingEventName && self.pendingEventDescription) {
+        self.attributes.pendingEventName = self.pendingEventName;
+        self.attributes.pendingEventDescription = self.pendingEventDescription;
+      } else if (eventId && eventId !== 'new') {
+        // Else set the event ID
+        self.attributes.eventId = eventId;
+      } else {
+        throw new Meteor.Error('NO_EVENT_NAME', 'Please fill out all fields');
+      }
 
-    // If lat or lng is null, then try to get it one more time
-    // Useful if the user accessed this page from a link or bookmark
-    if (gmaps.currentLocation.lat && gmaps.currentLocation.lng) {
+      // Instead of just passing a null imageId field, this omits the field
+      // entirely to stay consistent with the check() function called on the server
+      if( imageId )
+        self.attributes.imageId = imageId;
 
-      self.attributes.userLat = gmaps.currentLocation.lat;
-      self.attributes.userLng = gmaps.currentLocation.lng;
-      callInsert(callback);
+      // If lat or lng is null, then try to get it one more time
+      // Useful if the user accessed this page from a link or bookmark
+      if (gmaps.currentLocation.lat && gmaps.currentLocation.lng) {
 
-    } else {
-
-      gmaps.getCurrentLocation(function(error, currentLocation) {
-
-        if (!error) {
-          self.attributes.userLat = currentLocation.lat;
-          self.attributes.userLng = currentLocation.lng;
-        }
-
+        self.attributes.userLat = gmaps.currentLocation.lat;
+        self.attributes.userLng = gmaps.currentLocation.lng;
         callInsert(callback);
-      });
+
+      } else {
+
+        gmaps.getCurrentLocation(function(error, currentLocation) {
+
+          if (!error) {
+            self.attributes.userLat = currentLocation.lat;
+            self.attributes.userLng = currentLocation.lng;
+          }
+
+          callInsert(callback);
+        });
+      }
+    }
+    catch(error) {
+      // Just pass it through if it is a meteor error
+      if (error.errorType === 'Meteor.Error') {
+        callback(error)
+
+      // Otherwise, create a meteor error
+      // We should find a better way to log the call stack
+      } else {
+        console.log(error.stack);
+
+        var meteorError = new Meteor.Error('UNEXPECTED', 'Unexpected error, please try again');
+        callback(meteorError, null);
+      }
     }
   };
 }

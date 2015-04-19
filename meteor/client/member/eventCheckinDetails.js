@@ -65,23 +65,24 @@ Template.eventCheckinDetails.events({
     if (eventId === 'new') {
     	checkIn.pendingEventName = $('#pendingEventName').val();
     	checkIn.pendingEventDescription = $('#pendingEventDescription').val();
-    } 
+    }
 
     // Do the form validation here, then call the submit function
-    if (validateFieldsAdHoc()) {
-	    checkIn.submitCheckIn(eventId, function(error, result) {
-	      if(error) {
-	        addErrorMessage(error.reason);
-	      } else {
-	      	if (result === 'not_allowed')
-	      		addErrorMessage('This type of check-in is not allowed');
-	      	else
-	        	Router.go('memberHomePage');
-	      }
-	    });
-	  } else {
-	  	addErrorMessage('Please fill out all fields');
-	  }
+    checkIn.submitCheckIn(eventId, function(error, result) {
+      if(error) {
+        addErrorMessage(error.reason);
+      } else {
+      	if (result  === 'not_allowed')
+      		addErrorMessage('This type of check-in is not allowed');
+      	else if (result === 'auto') {
+          addSuccessMessage('Sucessfully checked in!')
+        	Router.go('memberHomePage');
+        } else {
+          addSuccessMessage('Check-in submitted for approval');
+          Router.go('memberHomePage');
+        }
+      }
+    });
   },
 
   'click #back': function(e) {
@@ -98,7 +99,7 @@ Template.eventCheckinDetails.destroyed = function () {
 	delete checkIn;
 };
 
-function validateFieldsAdHoc() {
+function validateFields() {
 	return $('#pendingEventName').val() && $('#pendingEventDescription').val();
 }
 
