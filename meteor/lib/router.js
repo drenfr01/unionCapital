@@ -227,8 +227,8 @@ Router.map(function() {
     this.render('memberProfile');
   });
 
-  this.route('/calendar', function() {
-    this.render('eventsCalendar');
+  this.route('eventsCalendar', {
+    path: '/calendar'
   });
 
   this.route('memberHomePage', {path: '/memberHomePage'});
