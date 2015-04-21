@@ -218,6 +218,10 @@ Router.map(function() {
     this.render('collectUserDemographics');
   });
 
+  this.route('eula', {
+    path: '/eula'
+  });
+
   this.route('/forgot', function() {
     this.render('forgotPassword');
   });
@@ -231,7 +235,7 @@ Router.map(function() {
     path: '/calendar'
   });
 
-  this.route('memberHomePage', {path: '/memberHomePage'});
+  this.route('memberHomePage', {path: '/memberhome'});
   this.route('communityNeeds', {path: '/communityNeeds'});
   this.route('/share', function() {
     this.render('share');
