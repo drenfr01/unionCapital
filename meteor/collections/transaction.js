@@ -49,6 +49,18 @@ Transactions.attachSchema(new SimpleSchema({
       label: 'Number of Hour Spent',
       optional: true
     },
+    userLng: {
+      type: Number,
+      label: 'User Longitude',
+      optional: true,
+      decimal: true
+    },
+    userLat: {
+      type: Number,
+      label: 'User Latitude',
+      optional: true,
+      decimal: true
+    },
     //TODO: remove optional flag once all transactions update
     deleteInd: {
       type: Boolean,

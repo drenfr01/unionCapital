@@ -10,6 +10,7 @@ Template.landing.helpers({
 });
 
 Template.landing.events({
+
   'click #facebook': function(e) {
     e.preventDefault();
     Meteor.loginWithFacebook(function(error) {
@@ -25,9 +26,9 @@ Template.landing.events({
       }
     });
   },
+
   'click #loginSubmit': function(e) {
     e.preventDefault();
-    console.log('click #loginSubmit clicked')
     var email =  $('#userEmail').val();
     var password = $('#userPassword').val();
 

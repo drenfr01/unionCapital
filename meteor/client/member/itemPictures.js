@@ -1,5 +1,5 @@
-//TODO: Both of these functions are similar to those in takePicture
-//We should refactor them and the ones in takePicture to take in a
+//TODO: Both of these functions are similar to those in newAdHoc
+//We should refactor them and the ones in newAdHoc to take in a
 //selector parameter and then place the single functions in a
 //js helper folder on the client
 function insertFiles(files, e, view) {
@@ -59,7 +59,7 @@ Template.itemPictures.events({
   },
 });
 
-Template.takePicture.helpers({
+Template.newAdHoc.helpers({
   images: function(view) {
     return Images.find({"metadata.view": view,
       "metadata.customerId": Session.get('currentCustomer')},

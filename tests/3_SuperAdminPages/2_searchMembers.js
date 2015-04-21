@@ -37,7 +37,7 @@ casper.test.begin('All Members', 18, function suite(test) {
     test.assertExists('#pointsInput');
     test.assertExists('#addPoints');
 
-    test.assertTextExists('Somerville Cooking');
+    test.assertTextExists('Boston Music');
   });
 
   //test adding points
