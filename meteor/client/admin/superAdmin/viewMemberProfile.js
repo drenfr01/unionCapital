@@ -12,7 +12,7 @@ Template.viewMemberProfile.events({
     var attributes = {
       userId: this._id,
       points: points,
-      description: '' 
+      description: ''
     };
 
     Meteor.call('addPointsToUser', attributes, function(error) {
