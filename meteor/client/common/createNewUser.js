@@ -11,6 +11,6 @@ Template.createNewUser.events({
         email: $('#userEmail').val(),
         password: $('#userPassword').val()
     });
-    Router.go('collectUserDemographics');
+    Session.set('signupPage','collectUserDemographics');
   },
 });
