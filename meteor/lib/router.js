@@ -211,11 +211,7 @@ Router.map(function() {
   });
 
   this.route('/signup', function() {
-    this.render('createNewUser');
-  });
-
-  this.route('/collectUserDemographics', function() {
-    this.render('collectUserDemographics');
+    this.render('signup');
   });
 
   this.route('/forgot', function() {
@@ -231,7 +227,7 @@ Router.map(function() {
     path: '/calendar'
   });
 
-  this.route('memberHomePage', {path: '/memberHomePage'});
+  this.route('memberHomePage', {path: '/memberhome'});
   this.route('communityNeeds', {path: '/communityNeeds'});
   this.route('/share', function() {
     this.render('share');

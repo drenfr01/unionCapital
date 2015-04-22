@@ -1,6 +1,6 @@
 casper.test.comment('Signing In');
 
-casper.test.begin('Landing Page', 18, function suite(test) {
+casper.test.begin('Landing Page', 21, function suite(test) {
   casper.start(homeURL, function() {
   });
 
@@ -38,7 +38,7 @@ casper.test.begin('Landing Page', 18, function suite(test) {
     test.assertExists('#races');
 
     test.assertExists('#back');
-    test.assertExists('#submit');
+    test.assertExists('#next');
   });
 
   casper.then(function() {
@@ -64,7 +64,19 @@ casper.test.begin('Landing Page', 18, function suite(test) {
       'select[id="races"]': "African-American or Black"
     }, false);
 
-    this.click('#submit');
+    this.click('#next');
+  });
+
+  casper.waitForSelector('.accept-terms', function() {
+    test.assertExists('#next');
+    test.assertTextExists('End User License Agreement');
+    this.click('#next');
+  });
+
+  casper.wait(500, function() {
+    test.assertTextExists('Please check the box');
+    this.click('#accept-eula');
+    this.click('#next');
   });
 
   casper.wait(3000, function() {
