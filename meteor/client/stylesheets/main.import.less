@@ -15,7 +15,6 @@
 
 .logged-in {
   padding-top: 82px;
-
   @media (min-width: @screen-sm-min) {
     padding-top: 90px;
   }
@@ -470,7 +469,8 @@ margin-right: auto;
   padding-top: 15px;
   padding-bottom: 15px;
   border: 1px solid transparent;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 0px 10px #c8c8c8;
+  // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 
 .page-panel-md {
@@ -679,6 +679,11 @@ margin-right: auto;
   border-style: none;
 }
 
+.bmchp-panel {
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
 .loading {
   height: 50vh;
   vertical-align: middle;
@@ -687,4 +692,16 @@ margin-right: auto;
 .ad-hoc-panel {
   background-color: #f0efa7;
   font-weight: bold;
+}
+
+.welcome-title {
+  font-size: 150%;
+  font-family: @font-family-serif;
+  font-weight: bold;
+  margin-bottom: .5em;
+
+  p {
+    font-size: 75%;
+    font-weight: normal;
+  }
 }
