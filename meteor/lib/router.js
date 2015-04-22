@@ -211,15 +211,7 @@ Router.map(function() {
   });
 
   this.route('/signup', function() {
-    this.render('createNewUser');
-  });
-
-  this.route('/collectUserDemographics', function() {
-    this.render('collectUserDemographics');
-  });
-
-  this.route('eula', {
-    path: '/eula'
+    this.render('signup');
   });
 
   this.route('/forgot', function() {

@@ -5,12 +5,12 @@ Template.createNewUser.events({
   },
   'click #submit': function(e) {
     e.preventDefault();
-    Session.set("profile", {
-        firstName: $('#firstName').val(),
-        lastName: $('#lastName').val(),
-        email: $('#userEmail').val(),
-        password: $('#userPassword').val()
-    });
+
+    userAttributes.profile.firstName = $('#firstName').val();
+    userAttributes.profile.lastName = $('#lastName').val();
+    userAttributes.email = $('#userEmail').val();
+    userAttributes.password = $('#userPassword').val();
+
     Session.set('signupPage','collectUserDemographics');
   },
 });

@@ -19,47 +19,23 @@ Template.collectUserDemographics.helpers({
 Template.collectUserDemographics.events({
   'click #back': function(e) {
     e.preventDefault();
-    Router.go('signup');
+    Session.set('signupPage', 'createNewUser');
   },
 
-  'click #submit': function(e) {
+  'click #next': function(e) {
     e.preventDefault();
 
-    var sessionProfile = Session.get("profile");
+    userAttributes.profile.street1 = $('#street1').val();
+    userAttributes.profile.street2 = $('#street2').val();
+    userAttributes.profile.city = $('#city').val();
+    userAttributes.profile.state = $('#state').val();
+    userAttributes.profile.zip = $('#zip').val();
+    userAttributes.profile.partnerOrg = $('#organizations').val();
+    userAttributes.profile.incomeBracket = $('#incomeBrackets').val();
+    userAttributes.profile.numberOfKids = $('#numberOfKids').val();
+    userAttributes.profile.race = $("#races").val();
+    userAttributes.profile.role = 'user';
 
-    var attributes = {
-      email: sessionProfile.email,
-      password: sessionProfile.password,
-      profile: {
-        firstName: sessionProfile.firstName,
-        lastName: sessionProfile.lastName,
-        street1: $('#street1').val(),
-        street2: $('#street2').val(),
-        city: $('#city').val(),
-        state: $('#state').val(),
-        zip: $('#zip').val(),
-        partnerOrg: $('#organizations').val(),
-        incomeBracket: $('#incomeBrackets').val(),
-        numberOfKids: $('#numberOfKids').val(),
-        race: $("#races").val(),
-        role: 'user'
-      }
-    };
-    //TODO: figure out if this can be done client side only?
-    Meteor.call('createNewUser', attributes, function(error) {
-      if(error) {
-        addErrorMessage(error.reason);
-      } else {
-        Meteor.loginWithPassword(attributes.email, attributes.password,
-                                 function(error) {
-                                   if(error) {
-                                     addErrorMessage(error.reason);
-                                     Router.go('landing');
-                                   } else {
-                                     Router.go('memberHomePage');
-                                   }
-                                 });
-      }
-    });
+    Session.set('signupPage', 'eula');
   }
 });
