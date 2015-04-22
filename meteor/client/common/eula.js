@@ -21,7 +21,7 @@ Template.eula.events({
             }
 
             // Let's delete this so the pw is not sitting around in plaintext
-            delete userAttributes;
+            delete userAttributes.password;
           });
         }
       });
