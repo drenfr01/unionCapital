@@ -1,2 +1,2 @@
-name,address,url,description,institution,category,eventDate,isPointsPerHour,pointsPerHour,points
+name,address,url,description,institution,category,eventDate,duration,isPointsPerHour,pointsPerHour,points,adHoc
 tyler,27 high rock rd,2015-03-30',200,TRUE

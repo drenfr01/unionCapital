@@ -30,12 +30,7 @@ HelperFunctions = {
   }
 };
 
-addHours = function(date, hours) {
-  var result = new Date(date);
-  result.setUTCHours(result.getUTCHours() + hours);
-  return result;
-};
-
+// TODO: Move this up 3 lines and check for usages
 addHours = function(date, hours) {
   var result = new Date(date);
   result.setUTCHours(result.getUTCHours() + hours);
