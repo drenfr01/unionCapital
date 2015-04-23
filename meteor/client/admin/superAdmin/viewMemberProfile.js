@@ -5,14 +5,17 @@ Template.viewMemberProfile.helpers({
 });
 
 Template.viewMemberProfile.events({
-  'click #addPoints': function(e) {
-    var points = parseInt($('#pointsInput').val(),10);
+  'submit form': function(e) {
+    e.preventDefault();
+
+    var points = parseInt(e.target.points.value,10);
+    var description = e.target.description.value;
 
     //TODO: have description for points
     var attributes = {
       userId: this._id,
       points: points,
-      description: ''
+      description: description,
     };
 
     Meteor.call('addPointsToUser', attributes, function(error) {
@@ -36,8 +39,4 @@ Template.viewMemberProfile.events({
       });
     }
   },
-  'click #backButton': function(e) {
-    e.preventDefault();
-    Router.go('allMembers');
-  }
 });
