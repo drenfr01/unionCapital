@@ -274,9 +274,6 @@ Router.map(function() {
   this.route('checkin', {
     path: '/checkin',
     template: 'checkIntoEvent',
-    // data: function() {
-    //   return this.params.hash;
-    // }
   });
   this.route('showMemberRewards', {path: '/rewards'});
   this.route('contactUs', {path: '/contactUs'});
