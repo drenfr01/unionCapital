@@ -29,9 +29,10 @@ SearchSource.defineSource('checkinEventsSearch', function(searchText, options) {
     limit: 20
   };
 
-  // Set the time interval
-  var startDate = moment().add(-12, 'h').toDate();
-  var endDate = moment().add(12, 'h').toDate();
+  // Set the time interval - sends the start date of past events
+  // up to the end date of current events for performance
+  var startDate = moment().add(AppConfig.checkIn.today.hoursAhead, 'h').toDate();
+  var endDate = moment().add(AppConfig.checkIn.past.hoursBehind, 'h').toDate();
 
   if( searchText && searchText.length > 0 ) {
     var regExp = buildRegExp(searchText);

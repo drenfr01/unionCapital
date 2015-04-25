@@ -1,7 +1,7 @@
 //Code taken from: http://stackoverflow.com/questions/17140483/how-do-i-reconfigure-meteors-accounts-facebook-or-where-is-meteors-facebook-c
 
-//Note: 
-//To develop locally:  meteor --settings private/local-settings.json  
+//Note:
+//To develop locally:  meteor --settings private/local-settings.json
 //To deploy remotely: meteor deploy --settings private/prod-settings.json.
 
 configureFacebook = function(config) {
@@ -25,7 +25,3 @@ if(facebookConfig) {
 }
 
 Future = Npm.require('fibers/future');
-
-//Global Variables below
-
-adminEmail = 'eric.leslie@unioncapitalboston.com';
