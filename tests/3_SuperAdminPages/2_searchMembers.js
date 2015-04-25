@@ -33,8 +33,8 @@ casper.test.begin('All Members', 18, function suite(test) {
   casper.waitForSelector('#deleteMember', function() {
     test.assertTextExists('CasperJS');
     test.assertExists('#deleteMember');
-    test.assertExists('#backButton');
-    test.assertExists('#pointsInput');
+    test.assertExists('#pointsToAdd');
+    test.assertExists('#pointsDescription');
     test.assertExists('#addPoints');
 
     test.assertTextExists('Boston Music');
@@ -42,7 +42,7 @@ casper.test.begin('All Members', 18, function suite(test) {
 
   //test adding points
   casper.then(function() {
-    this.sendKeys('#pointsInput', '100');
+    this.sendKeys('#pointsToAdd', '100');
     this.click('#addPoints');
   });
 

@@ -4,35 +4,39 @@
   <div class="col-xs-12 page-panel">
     {{#with profile}}
       <h1 class="text-center">{{firstName}} {{lastName}}</h1>
-      <button type="button" class="btn btn-lg btn-primary" id="backButton">
-        Back
-      </button>
-      <div>Partner Organization: {{partnerOrg}}</div>
-      <div>Address: {{street1}} {{street2}} {{city}} {{state}}</div>
-      <div>Zip: {{zip}}</div>
-      <div>Income Bracket: {{incomeBracket}}</div>
-      <div>Number of Kids: {{numberOfKids}}</div>
-      <div>Ethnicity: {{race}}</div>
+      <table class="table">
+        <tr><td>Partner Organization</td><td>{{partnerOrg}}</td></tr>
+        <tr><td>Address</td><td>{{street1}} {{street2}} {{city}} {{state}}</td></tr>
+        <tr><td>Zip</td><td>{{zip}}</td></tr>
+        <tr><td>Income Bracket</td><td>{{incomeBracket}}</td></tr>
+        <tr><td>Number of Kids</td><td>{{numberOfKids}}</td></tr>
+        <tr><td>Ethnicity</td><td>{{race}}</td></tr>
+      </table>
     {{/with}}
     </div>
   <div class="col-xs-12 page-panel">
-    <button type="button" class="btn btn-block btn-danger"
-      id="deleteMember">
+    <button type="button" class="btn btn-block btn-danger" id="deleteMember">
       Delete Member
     </button>
   </div>
   <div class="col-xs-12 page-panel">
-    <div class="input-group">
-      <input type="text" class="form-control" 
-        id="pointsInput" placeholder="Enter Points here">
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="button" id="addPoints">
-          Add!
-        </button>
-      </span>
-    </div>
-    {{> checkPoints}}
+    <form>
+      <div class="form-group">
+        <label for="pointsToAdd">Points</label>
+        <input type="text" name="points" id="pointsToAdd"
+          class="form-control" placeholder="Number of points">
+      </div>
+      <div class="form-group">
+        <label for="pointsDescription">Description</label>
+        <input type="text" name="description" id="pointsDescription"
+          class="form-control" placeholder="Description of why these points are being added">
+      </div>
+      <button class="btn btn-primary" type="submit" id="addPoints">
+        Add Points
+      </button>
+    </form>
   </div>
+  {{> checkPoints}}
 </div>
 {{/with}}
 </template>
