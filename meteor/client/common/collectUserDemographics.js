@@ -48,7 +48,7 @@ Template.collectUserDemographics.events({
   'click .removeOrg': function(e) {
     FollowingOrganizations.remove(this._id);
   },
-  'click #submit': function(e) {
+  'click #next': function(e) {
     e.preventDefault();
 
     userAttributes.profile.street1 = $('#street1').val();
@@ -61,45 +61,8 @@ Template.collectUserDemographics.events({
     userAttributes.profile.numberOfKids = $('#numberOfKids').val();
     userAttributes.profile.race = $("#races").val();
     userAttributes.profile.role = 'user';
+    userAttributes.profile.followingOrgs = FollowingOrganizations.find().fetch();
 
-    var followingOrgs = FollowingOrganizations.find().fetch();
-
-    var attributes = {
-      email: sessionProfile.email,
-      password: sessionProfile.password,
-      profile: {
-        firstName: sessionProfile.firstName,
-        lastName: sessionProfile.lastName,
-        street1: $('#street1').val(),
-        street2: $('#street2').val(),
-        city: $('#city').val(),
-        state: $('#state').val(),
-        zip: $('#zip').val(),
-        partnerOrg: $('#organizations').val(),
-        incomeBracket: $('#incomeBrackets').val(),
-        numberOfKids: $('#numberOfKids').val(),
-        race: $("#races").val(),
-        followingOrgs: followingOrgs,
-        role: 'user'
-      }
-    };
-    //TODO: figure out if this can be done client side only?
-    Meteor.call('createNewUser', attributes, function(error) {
-      if(error) {
-        addErrorMessage(error.reason);
-      } else {
-        addSuccessMessage("Successfully Created User");
-        Meteor.loginWithPassword(attributes.email, attributes.password,
-                                 function(error) {
-                                   if(error) {
-                                     addErrorMessage(error.reason);
-                                     Router.go('landing');
-                                   } else {
-                                     Router.go('memberHomePage');
-                                   }
-                                 });
-      }
-    });
     Session.set('signupPage', 'eula');
   }
 });
