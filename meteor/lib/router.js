@@ -199,7 +199,7 @@ Router.route('/partnerMembers', function() {
 Router.map(function() {
   //Home Page
   this.route('/', function() {
-    this.render('breakScreen');
+    this.render('landing');
   });
 
   this.route('/eventSearch', function() {
