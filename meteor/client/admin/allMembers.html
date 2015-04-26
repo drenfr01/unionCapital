@@ -53,5 +53,29 @@
         </table>
       </div>
     </div>
+    <br>
+    <table class="table table-hover text-center">
+      <thead>
+        <th id="firstName" class="tableSort">Member Name</th>
+        <th id="zip" class="tableSort">Member Zip</th>
+        <th id="lastEvent" class="tableSort">Last Event</th>
+        <th id="lastEventDate" class="tableSort">Last Event Date</th>
+        <th id="transactions" class="tableSort"># Transactions</th>
+        <th id="totalPoints" class="tableSort"># Points</th>
+      </thead>
+      <tbody>
+        {{#each getMembers}}
+          <tr class="memberRow">
+            <td><a href="#">{{firstName}} {{lastName}}</a></td>
+            <td>{{zip}}</td>
+            <td>{{lastEvent}}</td>
+            <td>{{formatDate lastEventDate}}</td>
+            <td>{{numberOfTransactions}}</td>
+            <td>{{totalPoints}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    <br>
   </div>
 </template>

@@ -421,9 +421,14 @@ Meteor.methods({
     }
   },
 
-  'deleteMember': function(userId) {
+  'archiveMember': function(userId) {
     check(userId, String);
-    Meteor.users.remove({_id: userId});
+    Meteor.users.update({_id: userId}, {$set: {deleteInd: true}})
+  },
+
+  'unarchiveMember': function(userId) {
+    check(userId, String);
+    Meteor.users.update({_id: userId}, {$set: {deleteInd: false}})
   },
 
   'getTopEarners': function(limit) {

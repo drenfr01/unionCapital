@@ -41,7 +41,7 @@ Meteor.publish("events", function() {
 //The idea here is to publish all reservations
 //that a partner admin has access to
 //This is any member that belongs to that partner
-//OR any member attending an event hosted by 
+//OR any member attending an event hosted by
 //that partner.
 Meteor.publish("reservations", function() {
   var partnerAdmin = Meteor.users.findOne({_id: this.userId});
@@ -67,7 +67,7 @@ Meteor.publish("reservations", function() {
   }
 });
 
-//A partner should get access to all transactions for 
+//A partner should get access to all transactions for
 //their members only
 Meteor.publish('transactions', function() {
   var partnerAdmin = Meteor.users.findOne({_id: this.userId});
@@ -97,9 +97,9 @@ Meteor.publish('userData', function() {
   if (Roles.userIsInRole(this.userId, 'admin')) {
     return Meteor.users.find();
   } else if(Roles.userIsInRole(this.userId, 'partnerAdmin')) {
-    return Meteor.users.find({"profile.partnerOrg": user.profile.partnerOrg});
+    return Meteor.users.find({"profile.partnerOrg": user.profile.partnerOrg, deleteInd: false});
   } else if(this.userId) {
-    return Meteor.users.find({_id: this.userId},
+    return Meteor.users.find({_id: this.userId, deleteInd: false},
                              {fields: {'services.facebook.first_name': 1,
                               'services.facebook.last_name': 1,
                               'services.facebook.email': 1}});

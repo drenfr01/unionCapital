@@ -1,29 +1,41 @@
 <template name="viewMemberProfile">
 {{#with member}}
-  <div class="col-xs-12 col-md-6 col-md-offset-3">
-    <div class="row">
-      <div class="col-xs-12 page-panel">
-        {{#with profile}}
-          <h1 class="text-center">{{firstName}} {{lastName}}</h1>
-          <table class="table">
-            <tr><td>Partner Organization</td><td>{{partnerOrg}}</td></tr>
-            <tr><td>Address</td><td>{{street1}} {{street2}} {{city}} {{state}}</td></tr>
-            <tr><td>Zip</td><td>{{zip}}</td></tr>
-            <tr><td>Gender</td><td>{{gender}}</td></tr>
-            <tr><td>Race / Ethnicity</td><td>{{race}}</td></tr>
-            <tr><td>Number of Kids</td><td>{{numberOfKids}}</td></tr>
-            <tr><td>Reduced Lunch</td><td>{{reducedLunch}}</td></tr>
-            <tr><td>Medicaid</td><td>{{medicaid}}</td></tr>
-            <tr><td>UCB App Access</td><td>{{UCBAppAccess}}</td></tr>
-          </table>
-        {{/with}}
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-12 page-panel">
-        <button type="button" class="btn btn-block btn-danger" id="deleteMember">
-          Delete Member
-        </button>
+<div class="col-xs-12 col-md-6 col-md-offset-3">
+  <div class="col-xs-12 page-panel">
+    <h1 class="text-center">
+      {{profile.firstName}} {{profile.lastName}}
+      {{#if isArchived }}
+      <span class="text-warning">(Archived)</span>
+      {{/if}}
+    </h1>
+    <table class="table">
+      <tr><td>Partner Organization</td><td>{{profile.partnerOrg}}</td></tr>
+      <tr><td>Address</td><td>{{profile.street1}} {{profile.street2}} {{profile.city}} {{profile.state}}</td></tr>
+      <tr><td>Zip</td><td>{{profile.zip}}</td></tr>
+      <tr><td>Income Bracket</td><td>{{profile.incomeBracket}}</td></tr>
+      <tr><td>Number of Kids</td><td>{{profile.numberOfKids}}</td></tr>
+      <tr><td>Ethnicity</td><td>{{profile.race}}</td></tr>
+    </table>
+  </div>
+  {{#if isArchived }}
+  <div class="col-xs-12 page-panel">
+    <button type="button" class="btn btn-block btn-success" id="unarchiveMember">
+      Un-archive Member
+    </button>
+  </div>
+  {{ else }}
+  <div class="col-xs-12 page-panel">
+    <button type="button" class="btn btn-block btn-danger" id="archiveMember">
+      Archive Member
+    </button>
+  </div>
+  {{/if}}
+  <div class="col-xs-12 page-panel">
+    <form>
+      <div class="form-group">
+        <label for="pointsToAdd">Points</label>
+        <input type="text" name="points" id="pointsToAdd"
+          class="form-control" placeholder="Number of points">
       </div>
     </div>
     <div class="row">
