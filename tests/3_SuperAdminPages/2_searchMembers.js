@@ -1,6 +1,6 @@
 casper.test.comment("Testing Super Admin Member Search");
 
-casper.test.begin('All Members', 19, function suite(test) {
+casper.test.begin('All Members', 18, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsSuperAdmin();
   });
@@ -37,8 +37,7 @@ casper.test.begin('All Members', 19, function suite(test) {
     test.assertExists('#pointsInput');
     test.assertExists('#addPoints');
 
-    test.assertTextExists('No pending transactions!');
-    test.assertTextExists('Somerville Cooking');
+    test.assertTextExists('Boston Music');
   });
 
   //test adding points

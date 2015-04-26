@@ -1,12 +1,12 @@
 Template.checkPoints.helpers({
   approvedEvents: function() {
-    var transactions = Meteor.users.transactionsFor(this._id, false).fetch();
+    var transactions = Meteor.users.transactionsFor(this._id, true).fetch();
     return _.sortBy(transactions, function(transaction) {
                       return Date.parse(transaction.transactionDate);
                     }).reverse();
   },
   pendingEvents: function() {
-    return Meteor.users.transactionsFor(this._id, true);
+    return Meteor.users.transactionsFor(this._id, false);
   },
   eventName: function(){
     var event = getEvent(this);

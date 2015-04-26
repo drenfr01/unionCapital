@@ -1,4 +1,4 @@
-"name","address","url","description","institution","category","eventDate","isPointsPerHour","pointsPerHour","points"
-"tyler","27 high rock rd","example.com","tyler's awesome description","Brown","health","2015-03-30","true","200","0"
-"Cambridge Film Festival","18 Davis Sq, Somerville, MA","http://example.com/CFF","Watch as many films as you can in just 3 days of mandness!","KIPP Academy","Education (Child/Adult)","2015-03-30","false","150","1"
-"Cambridge Film Festival","garbage","http://example.com/CFF","Watch as many films as you can in just 3 days of mandness!","Not KIPP Academy","Education (Child/Adult)","2015-03-30","false","150","1"
+name,address,url,description,institution,category,eventDate,duration,isPointsPerHour,pointsPerHour,points
+tyler,27 high rock rd,example.com,tyler's awesome description,Brown,health,2015-03-30,1,true,200,0
+Cambridge Film Festival,"18 Davis Sq, Somerville, MA",http://example.com/CFF,Watch as many films as you can in just 3 days of mandness!,KIPP Academy,Education (Child/Adult),2015-03-30,2,false,150,1
+Cambridge Film Festival,garbage,http://example.com/CFF,Watch as many films as you can in just 3 days of mandness!,Not KIPP Academy,Education (Child/Adult),2015-03-30,3,false,150,1

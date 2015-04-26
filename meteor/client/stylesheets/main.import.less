@@ -14,11 +14,14 @@
 */
 
 .logged-in {
-  padding-top: 75px;
+  padding-top: 82px;
+  @media (min-width: @screen-sm-min) {
+    padding-top: 90px;
+  }
 }
 
 .logged-out {
-  padding-top: 10px;
+  padding-top: 7px;
 }
 
 html { height: 100%; }
@@ -465,12 +468,27 @@ margin-right: auto;
   margin-top: 5px;
   padding-top: 15px;
   padding-bottom: 15px;
+  border: 1px solid transparent;
+  box-shadow: 0px 0px 10px #c8c8c8;
+  // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 
 .page-panel-md {
   height: 2.6em;
 }
 
+.text-panel {
+
+  h3 {
+    text-align: center;
+    font-size: 150%;
+    font-family: @font-family-serif;
+    font-weight: bold;
+    margin-top: 0em;
+    padding-bottom: .5em;
+    border-bottom: 1px solid rgba(181, 178, 178, 0.3);
+  }
+}
 
 /* Custom page panel links */
 .signup-panel {
@@ -494,6 +512,8 @@ margin-right: auto;
   margin-bottom: .5em;
   margin-top: .5em;
   padding: 0;
+  border: none;
+  box-shadow: none;
 }
 
 .today-panel {
@@ -565,6 +585,7 @@ margin-right: auto;
   border-style: solid;
   border-color: #bddc6f;
   border-width: 1px;
+  margin-top: 5px;
 }
 
 .flush-input input {
@@ -617,6 +638,8 @@ margin-right: auto;
 .check-in-confirm {
   height: 300%;
   font-size: 250%;
+  background-color: green;
+  color: white;
 }
 
 .no-ui-slider {
@@ -667,4 +690,26 @@ margin-right: auto;
 
 .no-border {
   border-style: none;
+}
+
+.bmchp-panel {
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
+.loading {
+  height: 50vh;
+  vertical-align: middle;
+}
+
+.ad-hoc-panel {
+  background-color: #f0efa7;
+  font-weight: bold;
+}
+
+.accept-terms {
+  margin-top: 1em;
+  margin-bottom: 0;
+  font-weight: bold;
+  font-size: 125%;
 }

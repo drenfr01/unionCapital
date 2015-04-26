@@ -28,6 +28,12 @@ var types = {
 		text: '',
 		icon: '',
 		id: 'iAmNotAnId'
+	},
+	accept: {
+		type: 'button',
+		text: 'I ACCEPT',
+		icon: 'glyphicon glyphicon-ok',
+		id: 'next'
 	}
 }
 

@@ -21,8 +21,16 @@ gmaps = {
   // self marker
   selfMarker: null,
 
+  // User's most recent latitude nad longitude
+  currentLocation: {
+    lat: null,
+    lng: null
+  },
+
   // gets user's current location and executes a callback
   getCurrentLocation: function(callback) {
+
+    var self = this;
 
     // Options for HTML5 navigator
     var positionOptions = {
@@ -35,42 +43,45 @@ gmaps = {
       navigator.geolocation.getCurrentPosition(function(position) {
 
           // Set the current location object
-          var currentLocation = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
+          self.currentLocation.lat = position.coords.latitude;
+          self.currentLocation.lng = position.coords.longitude;
 
-          callback(currentLocation);
+          if (callback)
+            callback(null, self.currentLocation);
         },
-        
+
         // This error fires when navigator exists but encounters a problem
-        function(error) { 
+        function(error) {
           console.log(error.reason);
+          callback(error, null);
         },
         positionOptions
       );
     } else {
-
       // This error fires when navigator does not exist
-      console.log('Could not geolocate. No navigator.');
+      var error = 'Could not geolocate. No navigator.';
+      console.log(error);
+      callback(error, null);
     }
   },
 
   // add a marker given our formatted marker data object
   addMarker: function(marker) {
-    var gLatLng = new google.maps.LatLng(marker.latitude, marker.longitude);
-    var gMarker = new google.maps.Marker({
-      position: gLatLng,
-      map: gmaps.map,
-      title: marker.title,
-      // animation: google.maps.Animation.DROP,
-      icon: marker.icon
-    });
+    if (google) {
+      var gLatLng = new google.maps.LatLng(marker.latitude, marker.longitude);
+      var gMarker = new google.maps.Marker({
+        position: gLatLng,
+        map: gmaps.map,
+        title: marker.title,
+        // animation: google.maps.Animation.DROP,
+        icon: marker.icon
+      });
 
-    gmaps.latLngs.push(gLatLng);
-    gmaps.markers.push(gMarker);
-    gmaps.markerData.push(marker);
-    return gMarker;
+      gmaps.latLngs.push(gLatLng);
+      gmaps.markers.push(gMarker);
+      gmaps.markerData.push(marker);
+      return gMarker;
+    }
   },
 
    // Add or reset the position of the self marker
@@ -94,7 +105,7 @@ gmaps = {
 
       var googleLoc = new google.maps.LatLng(latLng.lat, latLng.lng);
       gmaps.selfMarker.setPosition(googleLoc);
-    
+
     } else {
 
       if (navigator.geolocation) navigator.geolocation.getCurrentPosition(function(pos) {
@@ -117,7 +128,9 @@ gmaps = {
         for (var i = 0, latLngLength; i < latLngLength; i++) {
             bounds.extend(gmaps.latLngs[i]);
         }
-        gmaps.map.fitBounds(bounds);
+
+        // Fits the bounds to the map if it exists
+        bounds && gmaps.map && gmaps.map.fitBounds(bounds);
 
         // Sets the max zoom - it gets a bit cramped otherwise
         gmaps.map.getZoom() > gmaps.options.maxZoom && gmaps.map.setZoom(gmaps.options.maxZoom);
@@ -145,8 +158,11 @@ gmaps = {
     gmaps.selfMarker = null;
 
     console.log("[+] Intializing Google Maps...");
-    gmaps.getCurrentLocation(gmaps.createNewMap);
-    
+    gmaps.getCurrentLocation(function(error, latLng) {
+      if (!error)
+        gmaps.createNewMap(latLng);
+    });
+
   },
 
   // Creates a new instance of google maps using the lat and lng passed to it
@@ -210,12 +226,12 @@ gmaps = {
   // Doesn't work well
   centerMap: function() {
 
-    gmaps.getCurrentLocation(function(latLng) {
-
-      googleLoc = new google.maps.LatLng(latLng.lat, latLng.lng);
-      gmaps.map.setCenter(googleLoc);
-      console.log('Centering based on current location...');
-
+    gmaps.getCurrentLocation(function(error, latLng) {
+      if (!error) {
+        googleLoc = new google.maps.LatLng(latLng.lat, latLng.lng);
+        gmaps.map.setCenter(googleLoc);
+        console.log('Centering based on current location...');
+      }
     });
   }
 }

@@ -43,7 +43,7 @@ Template.collectUserDemographics.events({
   },
   'click #back': function(e) {
     e.preventDefault();
-    Router.go('signup');
+    Session.set('signupPage', 'createNewUser');
   },
   'click .removeOrg': function(e) {
     FollowingOrganizations.remove(this._id);
@@ -51,7 +51,16 @@ Template.collectUserDemographics.events({
   'click #submit': function(e) {
     e.preventDefault();
 
-    var sessionProfile = Session.get("profile");
+    userAttributes.profile.street1 = $('#street1').val();
+    userAttributes.profile.street2 = $('#street2').val();
+    userAttributes.profile.city = $('#city').val();
+    userAttributes.profile.state = $('#state').val();
+    userAttributes.profile.zip = $('#zip').val();
+    userAttributes.profile.partnerOrg = $('#organizations').val();
+    userAttributes.profile.incomeBracket = $('#incomeBrackets').val();
+    userAttributes.profile.numberOfKids = $('#numberOfKids').val();
+    userAttributes.profile.race = $("#races").val();
+    userAttributes.profile.role = 'user';
 
     var followingOrgs = FollowingOrganizations.find().fetch();
 
@@ -91,5 +100,6 @@ Template.collectUserDemographics.events({
                                  });
       }
     });
+    Session.set('signupPage', 'eula');
   }
 });

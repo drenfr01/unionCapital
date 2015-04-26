@@ -1,49 +1,8 @@
-
-var defaultHours = 3
-hours = new ReactiveVar(defaultHours);
-
-var checkIn = function(eventId) {
-
-  if( userPhoto.photoURI.get() ) {
-    userPhoto.insert(function(err, fileObj) {
-      if ( err ) {
-        addErrorMessage(err.reason);
-      } else {
-        console.log(fileObj._id);
-        insertTransaction(eventId, fileObj._id);
-      }
-    });
-  } else {
-    insertTransaction(eventId, null);
-  }
-};
-
-var insertTransaction = function(eventId, imageId) {
-  var attributes = {
-    userId: Meteor.userId(),
-    eventId: eventId,
-    hoursSpent: hours.get()
-    // pendingEventName: eventName,
-    // pendingEventDescription: eventDescription,
-  };
-
-  // Instead of just passing a null imageId field, this omits the field
-  // entirely to stay consistent with the check() function called on the server
-  if( imageId )
-    attributes.imageId = imageId;
-
-  Meteor.call('insertTransaction', attributes, function(error) {
-    if(error) {
-      addErrorMessage(error.reason);
-    } else {
-      addSuccessMessage('Transaction successfully submitted');
-      Router.go('memberHomePage');
-    }
-  });
-};
+var defaultHours = 3;
+var checkIn = {};
 
 Template.eventCheckinDetails.created = function() {
-	userPhoto = new UserPhoto();
+	checkIn = new CheckIn(defaultHours);
 };
 
 Template.eventCheckinDetails.rendered = function() {
@@ -69,49 +28,61 @@ Template.eventCheckinDetails.rendered = function() {
 Template.eventCheckinDetails.helpers({
 
 	'timeAttending': function() {
-		return hours.get();
+		return checkIn ? checkIn.hours.get() : defaultHours;
 	},
 
 	'hasPhoto': function() {
-		return userPhoto.photoURI.get();
-	}
-})
+		return checkIn ? checkIn.getPhoto() : false;
+	},
+
+  checkingIn: function() {
+    return checkIn ? checkIn.checkingIn.get() : false;
+  },
+
+  adHoc: function() {
+  	return Router.current().params.id === 'new';
+  }
+});
 
 Template.eventCheckinDetails.events({
 
 	'change #durationSlider': function() {
-		hours.set($('#durationSlider').val());
+		checkIn.hours.set($('#durationSlider').val());
 	},
-
-	'click #submit': function(e) {
-    e.preventDefault();
-
-    var attributes = {
-      userId: Meteor.userId(),
-      eventId: this._id,
-
-      // hoursSpent: parseInt($('#hours').val(),10),
-    };
-  },
 
   'click #addPhoto': function(e) {
     e.preventDefault();
-    userPhoto.takePhoto();
+    checkIn.takePhoto();
   },
 
+  // Async, pass the checkin
   'click .check-in': function(e) {
     e.preventDefault();
 
-    var attributes = {
-      userId: Meteor.userId(),
-      imageId: 1,
-      eventId: this._id,
-      hoursSpent: hours.get()
-      // pendingEventName: eventName,
-      // pendingEventDescription: eventDescription,
-    };
+    var eventId = Router.current().params.id;
 
-    checkIn(this._id);
+    // Set the event name if it is an ad hoc transaction
+    if (eventId === 'new') {
+    	checkIn.pendingEventName = $('#pendingEventName').val();
+    	checkIn.pendingEventDescription = $('#pendingEventDescription').val();
+    }
+
+    // Do the form validation here, then call the submit function
+    checkIn.submitCheckIn(eventId, function(error, result) {
+      if(error) {
+        addErrorMessage(error.reason);
+      } else {
+      	if (result  === 'not_allowed')
+      		addErrorMessage('This type of check-in is not allowed');
+      	else if (result === 'auto') {
+          addSuccessMessage('Sucessfully checked in!')
+        	Router.go('memberHomePage');
+        } else {
+          addSuccessMessage('Check-in submitted for approval');
+          Router.go('memberHomePage');
+        }
+      }
+    });
   },
 
   'click #back': function(e) {
@@ -120,11 +91,17 @@ Template.eventCheckinDetails.events({
   },
 
   'click #photoPanel': function() {
-    userPhoto.remove();
+    checkIn.removePhoto();
   }
-
 });
 
 Template.eventCheckinDetails.destroyed = function () {
-	delete userPhoto;
+	delete checkIn;
 };
+
+function validateFields() {
+	return $('#pendingEventName').val() && $('#pendingEventDescription').val();
+}
+
+// TODO:
+// Find out how it is inserting the event/transactions, I don't think it's working correctly

@@ -1,38 +1,62 @@
 Meteor.methods({
+
   removeImage: function(imageId) {
     return Images.remove(imageId);
   },
+
   insertTransaction: function(attributes) {
 
+    var currentUser = Meteor.user();
+
     // Determines whether this transaction requires approval
-    checkInRules.validate(attributes);
+    attributes.approvalType = CheckInRules.validate(attributes);
+
+    // Only set it to approved if it is auto
+    if (attributes.approvalType === 'auto')
+      attributes.approved = true;
+    else
+      attributes.approved = false;
 
     // If the user isn't logging an action from the past,
-    // we use the server's time as the sourc eof truth
+    // we use the server's time as the source of truth
     // We should probably figure out a better way to do this
     if (!attributes.transactionDate)
       attributes.transactionDate = new Date();
 
+    // Uses the event's partner org if the transaction is associated with an event
+    // Otherwise uses the user's partner org
+    if (attributes.eventId && Events.findOne({ _id: attributes.eventId })) {
+      var thisEvent = Events.findOne({ _id: attributes.eventId });
+      attributes.partnerOrg = thisEvent.institution;
+      attributes.pendingEventName = thisEvent.name;
+      attributes.pendingEventDescription = thisEvent.description;
+    } else {
+      attributes.partnerOrg = currentUser.profile.partnerOrg;
+    }
+
     check(attributes, {
-      userId: Match.Optional(String),
+      userId: String,
+      hoursSpent: Number,
+      approvalType: String,
       eventId: Match.Optional(String),
-      hoursSpent: Match.Optional(Number),
       imageId: Match.Optional(String),
-      needsApproval: Match.Optional(Boolean),
+      approved: Boolean,
       pendingEventName: Match.Optional(String),
       pendingEventDescription: Match.Optional(String),
-      transactionDate: Match.Optional(Date)
+      transactionDate: Match.Optional(Date),
+      partnerOrg: String,
+      userLat: Match.Optional(Number),
+      userLng: Match.Optional(Number)
     });
 
-    var currentUser = Meteor.users.findOne(attributes.userId);
-
-    var duplicateTransaction = Transactions.findOne({userId: attributes.userId, imageId: attributes.imageId,
+    var duplicateTransaction = Transactions.findOne({userId: currentUser._id, imageId: attributes.imageId,
                                                     pendingEventName: attributes.pendingEventName,
-                                                    pendingEventDescription: attributes.pendingEventDescription
+                                                    pendingEventDescription: attributes.pendingEventDescription,
+                                                    eventId: attributes.eventId
     });
 
     //TODO: setup MAIL URL for union capital website
-    if(attributes.needsApproval) {
+    if(attributes.approvalType === 'super_admin' || attributes.approvalType === 'partner_admin') {
       console.log('A Union Capitalist has submitted a photo for approval',
                   currentUser.profile.firstName + ' ' + currentUser.profile.lastName +
                     ' requests that you log onto the admin website and approve or reject their event.' +
@@ -40,21 +64,30 @@ Meteor.methods({
                  );
     }
 
-    if(attributes.eventId && Transactions.findOne({userId: attributes.userId, eventId: attributes.eventId})) {
+    // Check for duplicate submissions
+    if(attributes.eventId && Transactions.findOne({userId: currentUser._id, eventId: attributes.eventId})) {
       throw new Meteor.Error(400, "You have already checked into this event");
     } else if (duplicateTransaction){
      throw new Meteor.Error(400, "This may be a duplicate submission");
     } else {
+      // Good to go, let's check in
       attributes.deleteInd = false;
       console.log(' 88888888  ' + attributes.imageId);
-      return Transactions.insert(attributes);
+
+      if (attributes.approvalType !== 'not_allowed') {
+        Transactions.insert(attributes);
+      }
+
+      return attributes.approvalType;
     }
   },
+
   insertEvents: function(attributes) {
     check(attributes, {
       point: Number
     });
   },
+
   //Note: we don't want to permanently remove any data
   //so we leave the images intact and just change the flag to false
   rejectTransaction: function(attributes) {
@@ -62,9 +95,10 @@ Meteor.methods({
       imageId: String,
       transactionId: String
     });
-    removeTransaction(attributes.transactionId);
+    DB.removeTransaction(attributes.transactionId);
     //TODO: mark images as logically deleted
   },
+
   //This approves photos for existing events as well as
   //"DIY" events
   approveTransaction: function(attributes) {
@@ -83,21 +117,22 @@ Meteor.methods({
       pointsPerHour: Match.Optional(Number)
     });
 
-    //this creates a new event if the transaction isn't tied to an existing one
-    //Currently the only way to tell DIY events is the active flag, which
-    //isn't ideal because a regular event could be de-activated
+    // This creates a new event if the transaction isn't tied to an existing one
+    // Events created in this manner are marked with the adHoc flag set to true
     if(attributes.eventId) {
       eventId = attributes.eventId;
     } else {
       attributes.active = 0;
       attributes.isPointsPerHour = false;
-      eventId = insertEvent(attributes);
+      eventId = DB.insertEvent(attributes);
     }
+
+    // Update the transaction to show approved
     Transactions.update(attributes.transactionId,
-                        {$set: { needsApproval: false, eventId: eventId} });
+                        {$set: { approved: true, eventId: eventId} });
 
+    // Send an email to let the user know
     var user = Meteor.users.findOne(attributes.userId);
-
     emailHelper(user.emails[0].address,
                 adminEmail,
                 'Your Event has been approved',
@@ -105,6 +140,7 @@ Meteor.methods({
                   "You have earned " + attributes.points + " points for your service!"
                );
   },
+
   createNewUser: function(attributes) {
     check(attributes, {
       email: String,
@@ -150,6 +186,7 @@ Meteor.methods({
                );
     Roles.addUsersToRoles(newUserId, attributes.profile.role);
   },
+
   updateUserProfile: function(attributes) {
     check(attributes, {
       userId: String,
@@ -183,6 +220,7 @@ Meteor.methods({
                  attributes.email
                );
   },
+
   updateUser: function(attributes) {
     check(attributes, {
       email: String,
@@ -211,8 +249,9 @@ Meteor.methods({
                         {$push: {emails: {address: attributes.email
                         }}});
   },
+
   geocodeAddress: function(address) {
-    var myFuture = new Future(); 
+    var myFuture = new Future();
     googlemaps.geocode(address, function(err, data) {
       if(err) {
         myFuture.throw(err);
@@ -222,37 +261,19 @@ Meteor.methods({
     });
     return myFuture.wait();
   },
-  geolocateUser: function(attributes) {
-    check(attributes, {
-      eventId: String,
-      hoursSpent: Number,
-      userId: String,
-      userLong: Number,
-      userLat: Number
+
+  geocodeAddress: function(address) {
+    var myFuture = new Future();
+    googlemaps.geocode(address, function(err, data) {
+      if(err) {
+        myFuture.throw(err);
+      } else {
+        myFuture.return(data.results[0].geometry);
+      }
     });
-
-    //TODO: make this an admin configurable option
-    var maxDistance = 0.1; //maximum distance in kilometers to check in
-    var event = Events.findOne(attributes.eventId);
-    if(Transactions.findOne({userId: attributes.userId, eventId: event._id})) {
-      throw new Meteor.Error(400, "You have already checked into this event");
-    }
-    var distance = haversineFormula(event, attributes.userLong, attributes.userLat);
-    console.log("Distance: " + distance);
-
-    if(distance < maxDistance) {
-      //TODO: consider adding user geolocation info to transaction?
-      Transactions.insert({userId: attributes.userId, eventId: event._id, needsApproval: false,
-                          transactionDate: Date(), hoursSpent: attributes.hoursSpent,
-                          deleteInd: false
-      });
-      return "Congrats, you are within: " + distance +  " km of your event. Adding points to your total!";
-    } else {
-      throw new Meteor.Error(400, "You are too far away from the event" +
-                             "(" + distance + " km ), please move closer and try again OR take a photo " +
-                             "and submit it for manually approval");
-    }
+    return myFuture.wait();
   },
+
   sendEmail: function(attributes) {
     check(attributes, {
       userId: String,
@@ -268,6 +289,7 @@ Meteor.methods({
                   ' says: ' + attributes.comment
                );
   },
+
   deleteEvent: function(eventId) {
     check(eventId, String);
 
@@ -277,6 +299,7 @@ Meteor.methods({
       Events.remove(eventId);
     }
   },
+
   addPointsToUser: function(attributes) {
     check(attributes, {
       userId: String,
@@ -287,18 +310,30 @@ Meteor.methods({
     //calculate appropriate hours based on Administer AdHoc events
     var hours = Math.floor(attributes.points / 100);
 
+    // Find the partner organization
+    var partnerOrg = '';
+    if (Roles.userIsInRole(Meteor.userId(), 'admin')) {
+      partnerOrg = 'super_admin';
+    } else {
+      partnerOrg = Meteor.user().profile.partnerOrg;
+    }
+
     //insert Transaction
     var event = Events.findOne({name: 'Admin Add Points'});
 
-    Transactions.insert({userId: attributes.userId, 
-                        eventId: event._id, 
-                        needsApproval: false, 
-                        transactionDate: Date(), 
-                        hoursSpent: hours,
-                        deleteInd: false
+    Transactions.insert({
+      userId: attributes.userId,
+      eventId: event._id,
+      approvalType: 'auto',
+      approved: true,
+      transactionDate: Date(),
+      partnerOrg: partnerOrg,
+      hoursSpent: hours,
+      deleteInd: false
     });
 
   },
+
   removeReservation: function(attributes) {
    check(attributes, {
     userId: String,
@@ -309,6 +344,7 @@ Meteor.methods({
    Reservations.remove({userId: attributes.userId, eventId: attributes.eventId});
    Events.update({_id: attributes.eventId}, {$inc: {numberRSVPs: -reservation.numberOfPeople}});
   },
+
   'getRsvpList': function(eventId) {
     check(eventId, String);
     var reservations = Reservations.getReservationsForEvent(eventId).fetch();
@@ -320,6 +356,7 @@ Meteor.methods({
     });
     return returnValue;
   },
+
   'adminResetPassword': function(attributes) {
     check(attributes, {
       email: String,
@@ -332,6 +369,7 @@ Meteor.methods({
       throw new Meteor.Error(404, "User with that email not found");
     }
   },
+
   'insertMemberData': function(attributes) {
 
     check(attributes, {
@@ -377,10 +415,12 @@ Meteor.methods({
       return results.reverse();
     }
   },
+
   'deleteMember': function(userId) {
     check(userId, String);
     Meteor.users.remove({_id: userId});
   },
+
   'getTopEarners': function(limit) {
     //map reduce over transactions, returning array of objects with userId & total Points
     //sort that list, and return top <limit> of results
@@ -404,6 +444,7 @@ Meteor.methods({
     });
     return topEarners;
   },
+
   'insertReservations': function(attributes) {
     check(attributes, {
       userId : String,

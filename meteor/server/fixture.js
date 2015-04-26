@@ -14,8 +14,7 @@ Meteor.startup(function () {
   }
 
   //Seeding Partner Organizations
-  if(Meteor.settings.env === 'dev') {
-    PartnerOrgs.remove({});
+  if( Meteor.settings.env === 'dev' && PartnerOrgs.find().count() === 0 ) {
     var partnerOrgs = [
       {name: "KIPP Academy", description: "College Prep Public Schools", 
         sector: "Children", membersReported: 50, deleteInd: false},
@@ -127,7 +126,7 @@ Meteor.startup(function () {
     });
   }
   //Seeding event categories
-  if(EventCategories.find().count() === 0) {
+  if( EventCategories.find().count() === 0 ) {
     var eventCategories =
       ['Education (Child/Adult)',
         'Health (Physical & Mental)',
@@ -141,8 +140,7 @@ Meteor.startup(function () {
   }
 
   //Seeding affiliate organizations
-  if(Meteor.settings.env === 'dev') {
-    EventOrgs.remove({});
+  if( Meteor.settings.env === 'dev' && EventOrgs.find().count() === 0 ) {
     var organizations =
       [ 'Other',
         'BMC Health Net Plan',
@@ -160,8 +158,7 @@ Meteor.startup(function () {
   }
 
   // Users fixture
-  if (Meteor.settings.env === 'dev') {
-    Meteor.users.remove({});
+  if ( Meteor.settings.env === 'dev' && Meteor.users.find().count() === 0 ) {
     var users = [
       {
          email: "admin@gmail.com", username: "admin", password: "admin",
@@ -251,8 +248,7 @@ Meteor.startup(function () {
     Meteor.call("_houston_make_admin", admin._id);
   }
   //Events fixture
-  if ( Meteor.settings.env === 'dev' ) {
-    Events.remove({});
+  if ( Events.find().count() === 0 && Meteor.settings.env === 'dev' ) {
     //NOTE: months are 0 based for dates
     var events = [
       {
@@ -263,12 +259,13 @@ Meteor.startup(function () {
         url: 'http://example.com/CSF',
         description: 'A festival of science for everybody',
         active: 1,
-        eventDate: addDays(new Date(), 7),
+        eventDate: HelperFunctions.addDays(new Date(), 7),
         duration: 3,
         institution: "KIPP Academy",
         category: "Education (Child/Adult)",
         isPointsPerHour: true,
         pointsPerHour: 100,
+        adHoc: false,
         deleteInd: false
       },
       {
@@ -279,12 +276,13 @@ Meteor.startup(function () {
         url: 'http://example.com/SCF',
         description: 'A festival of cooking for the masses',
         active: 1,
-        eventDate: addDays(new Date(), -7),
+        eventDate: HelperFunctions.addDays(new Date(), -7),
         duration: 5,
         institution: "Thrive in Five",
         category: "Health (Physical & Mental)",
         isPointsPerHour: false,
         points: 50,
+        adHoc: false,
         deleteInd: false
       },
       {
@@ -301,6 +299,7 @@ Meteor.startup(function () {
         category: "Education (Child/Adult)",
         isPointsPerHour: true,
         pointsPerHour: 100,
+        adHoc: false,
         deleteInd: false
       },
       {
@@ -311,12 +310,13 @@ Meteor.startup(function () {
         url: 'http://example.com/CFF',
         description: 'Watch as many films as you can in just 3 days of mandness!',
         active: 1,
-        eventDate: addDays(new Date(), 1),
+        eventDate: HelperFunctions.addDays(new Date(), 1),
         duration: 1,
         institution: "Thrive in Five",
         category: "Education (Child/Adult)",
         isPointsPerHour: false,
         points: 150,
+        adHoc: false,
         deleteInd: false
       },
       //This is quite hacky, but the below event only exists to allow admins to add
@@ -334,6 +334,7 @@ Meteor.startup(function () {
         category: "Other",
         isPointsPerHour: true,
         pointsPerHour: 100,
+        adHoc: false,
         deleteInd: false
       }
     ];
@@ -354,6 +355,7 @@ Meteor.startup(function () {
         category: event.category,
         isPointsPerHour: event.isPointsPerHour,
         points: event.points,
+        adHoc: event.adHoc,
         pointsPerHour: event.pointsPerHour
       });
     });

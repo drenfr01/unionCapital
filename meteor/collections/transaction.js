@@ -16,10 +16,18 @@ Transactions.attachSchema(new SimpleSchema({
       label: 'Image Id',
       optional: true
     },
-    //Manually set this to false for QR code submissions
-    needsApproval: {
-      type: Boolean,
+    approvalType: {
+      type: String,
       label: 'Needs Approval'
+    },
+    approved: {
+      type: Boolean,
+      label: 'Approved'
+    },
+    partnerOrg: {
+      type: String,
+      label: 'Partner Organization',
+      optional: true
     },
     pendingEventName: {
       type: String,
@@ -40,6 +48,18 @@ Transactions.attachSchema(new SimpleSchema({
       type: Number,
       label: 'Number of Hour Spent',
       optional: true
+    },
+    userLng: {
+      type: Number,
+      label: 'User Longitude',
+      optional: true,
+      decimal: true
+    },
+    userLat: {
+      type: Number,
+      label: 'User Latitude',
+      optional: true,
+      decimal: true
     },
     //TODO: remove optional flag once all transactions update
     deleteInd: {

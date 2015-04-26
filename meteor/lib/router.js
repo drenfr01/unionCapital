@@ -29,7 +29,7 @@ Router.onBeforeAction(function() {
   } else if (Roles.userIsInRole(Meteor.userId(), ['user'])) {
     this.next();
   } else {
-    console.log("redirectly member");
+    console.log("redirect member");
     this.redirect('login');
   }
 },
@@ -50,7 +50,7 @@ Router.onBeforeAction(function() {
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for members
-  {only: ['allMembers', 'viewMemberProfile','manageEvents', 'exportData']}
+  {only: ['allMembers', 'viewMemberProfile','manageEvents', 'exportData', 'approveTransactions']}
 );
 
 //Partner Admins
@@ -65,7 +65,7 @@ Router.onBeforeAction(function() {
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for members
-  {only: ['partnerAdminHomePage','reviewPhotos']}
+  {only: ['partnerAdminHomePage']}
 );
 
 //Super Admins
@@ -211,11 +211,7 @@ Router.map(function() {
   });
 
   this.route('/signup', function() {
-    this.render('createNewUser');
-  });
-
-  this.route('/collectUserDemographics', function() {
-    this.render('collectUserDemographics');
+    this.render('signup');
   });
 
   this.route('/forgot', function() {
@@ -227,22 +223,14 @@ Router.map(function() {
     this.render('memberProfile');
   });
 
-  this.route('/eventsCalendar', function() {
-    this.render('eventsCalendar');
+  this.route('eventsCalendar', {
+    path: '/calendar'
   });
 
-  this.route('memberHomePage', {path: '/memberHomePage'});
+  this.route('memberHomePage', {path: '/memberhome'});
   this.route('communityNeeds', {path: '/communityNeeds'});
   this.route('/share', function() {
     this.render('share');
-  });
-  this.route('submitNewEvent', {
-    path: '/submitNewEvent',
-    template: 'takePicture'
-  });
-  this.route('takePicture', {
-    path: '/takePicture/:_id',
-    data: function() { return Events.findOne({_id: this.params._id}); }
   });
 
   this.route('eventCheckinDetails', {
@@ -253,7 +241,7 @@ Router.map(function() {
   });
 
   this.route('checkPoints', {
-    path: '/checkPoints'
+    path: '/points'
   });
 
 
@@ -291,7 +279,6 @@ Router.map(function() {
     // }
   });
   this.route('showMemberRewards', {path: '/rewards'});
-  this.route('quickCheckIn', {path: '/quickCheckIn' });
   this.route('contactUs', {path: '/contactUs'});
   this.route('topPointsList', {path: 'topPointsList'});
 
@@ -302,7 +289,7 @@ Router.map(function() {
   this.route('adminHomePage', {path: '/adminHomePage'});
   this.route('addCommunityEvents', {path: '/addCommunityEvents'});
   this.route('addRewards', {path: '/addRewards'});
-  this.route('reviewPhotos', {path: '/reviewPhotos'});
+  this.route('approveTransactions', {path: '/approve'});
   this.route('memberProfiles', {path: '/memberProfiles'});
   this.route('listMembers', {path: '/listMembers'});
 

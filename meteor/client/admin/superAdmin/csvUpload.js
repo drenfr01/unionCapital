@@ -17,6 +17,7 @@ _.extend(CSVUpload.prototype, {
     'institution',
     'category',
     'eventDate',
+    'duration',
     'isPointsPerHour',
     'pointsPerHour',
     'points',
@@ -117,7 +118,8 @@ _.extend(NewEvent.prototype, {
       category: this.eventData.category,
       isPointsPerHour: Boolean(this.eventData.isPointsPerHour),
       points: this.eventData.points,
-      pointsPerHour: this.eventData.pointsPerHour
+      pointsPerHour: this.eventData.pointsPerHour,
+      adHoc: false,
     })
   },
   _addWarning: function(msg){

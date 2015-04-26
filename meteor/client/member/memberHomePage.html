@@ -2,12 +2,12 @@
   <div class="col-xs-12 col-md-6 col-md-offset-3 text-center">
     <div class="row text-center" id="totalPointsDiv">
       <div class="col-xs-12 page-panel panel-link points-panel">
-        <a href="checkPoints">{{totalPoints}} POINTS</a>
+        <a href="{{ pathFor 'checkPoints' }}">{{totalPoints}} POINTS</a>
       </div>
     </div>
     <div class="row text-center">
       <div class="col-xs-12 page-panel panel-link" id="checkInDiv">
-        <a href="checkin">
+        <a href="{{ pathFor 'checkin' }}">
           <img src="images/UCBbutton.png" alt="Check Into Event" height="200" width="200">
           <br>Check In
         </a>
@@ -15,16 +15,24 @@
     </div>
     <div class="row text-center">
       <div class="col-xs-12 page-panel today-panel panel-link" id="eventsCalendarDiv">
-          <a href="eventsCalendar">Today in Boston</a>
+          <a href="{{ pathFor 'eventsCalendar' }}">Today in Boston</a>
       </div>
     </div>
     <div class="row text-center">
-      <div class="col-xs-12 page-panel last-panel" id="fbLikeBoxDiv">
+      <div class="col-xs-12 page-panel" id="fbLikeBoxDiv">
         <div id="fb-root"></div>
         <div class="fb-like-box" data-href="https://www.facebook.com/unioncapitalboston"
           data-colorscheme="light" data-show-faces="true" data-header="false"
           data-stream="false" data-show-border="false" style="width=100%;">
         </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-md-4 col-md-offset-4 bmchp-panel" id="bmchpDiv">
+        <i>Powered by: </i>
+        <a href="http://www.choosebmchp.org">
+          <img src="images/BMCHP-logo.png" width="100%">
+        </a>
       </div>
     </div>
   </div>

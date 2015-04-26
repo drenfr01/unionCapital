@@ -57,7 +57,6 @@ _.extend(UserPhoto.prototype, {
 
       } else {
 
-        addSuccessMessage('Photo taken successfully');
         self.takePhotoFailed.set(false);
         self.photoURI.set(data);
       }
