@@ -4,10 +4,18 @@
       <h1>Checking in...</h1>
       {{>loading}}
     {{else}}
-      {{#if adHoc}}
+      {{#if recognized}}
+        <div class="row">
+          <div class="col-xs-12 page-panel">
+            <h3>{{name}}</h3>
+            <hr class="panel-divider">
+            <p>{{description}}</p>
+          </div>
+        </div>
+      {{else}}
         <div class="row">
           <div class="col-xs-12 page-panel text-center">
-            <h4>Ah Hoc Event Details</h4>
+            <h3>Ah Hoc Event Details</h3>
             <form role="form">
               <div class="form-group">
                 <input type="text" class="form-control" id="pendingEventName" placeholder="Event Name">
@@ -16,23 +24,19 @@
                 <textarea rows="2" class="form-control" id="pendingEventDescription" placeholder="Event Description"></textarea>
               </div>
             </form>
-          </div>
-        </div>
-      {{else}}
-        <div class="row">
-        	<div class="col-xs-12 page-panel">
-          	<h3>{{name}}</h3>
-          	<hr class="panel-divider">
-          	<p>{{description}}</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12 page-panel text-center time-attending-panel">
-          	<p>I'll be here for <span class="time-attending">{{timeAttending}}</span> hours!</p>
-        		<div id="durationSlider" class="no-ui-slider"></div>
+            <label for="adHocEventDate">Event Date</label>
+            <div class="input-group date">
+              <input type="text" class="form-control" id="adHocEventDate"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+            </div>
           </div>
         </div>
       {{/if}}
+        <div class="row">
+          <div class="col-xs-12 page-panel text-center time-attending-panel">
+            <p>I'll be here for <span class="time-attending">{{timeAttending}}</span> hours!</p>
+            <div id="durationSlider" class="no-ui-slider"></div>
+          </div>
+        </div>
       {{#if hasPhoto}}
         <div class="row">
     	    <div class="col-xs-12 page-panel page-panel-flush photo-panel panel-link" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url({{hasPhoto}});" id="photoPanel">

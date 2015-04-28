@@ -43,16 +43,20 @@ Meteor.methods({
       approved: Boolean,
       pendingEventName: Match.Optional(String),
       pendingEventDescription: Match.Optional(String),
+      pendingEventDate: Match.Optional(Date),
       transactionDate: Match.Optional(Date),
       partnerOrg: String,
       userLat: Match.Optional(Number),
       userLng: Match.Optional(Number)
     });
 
-    var duplicateTransaction = Transactions.findOne({userId: currentUser._id, imageId: attributes.imageId,
-                                                    pendingEventName: attributes.pendingEventName,
-                                                    pendingEventDescription: attributes.pendingEventDescription,
-                                                    eventId: attributes.eventId
+    var duplicateTransaction = Transactions.findOne({
+      userId: currentUser._id,
+      imageId: attributes.imageId,
+      pendingEventName: attributes.pendingEventName,
+      pendingEventDescription: attributes.pendingEventDescription,
+      pendingEventDate: attributes.pendingEventDate,
+      eventId: attributes.eventId
     });
 
     //TODO: setup MAIL URL for union capital website
@@ -70,11 +74,13 @@ Meteor.methods({
     } else if (duplicateTransaction){
      throw new Meteor.Error(400, "This may be a duplicate submission");
     } else {
-      // Good to go, let's check in
-      attributes.deleteInd = false;
-      console.log(' 88888888  ' + attributes.imageId);
 
+      // Only insert if allowed approval type - a whitelist would probably be better here
       if (attributes.approvalType !== 'not_allowed') {
+
+        // Good to go, let's check in
+        attributes.deleteInd = false;
+        console.log(' 88888888  ' + attributes.imageId);
         Transactions.insert(attributes);
       }
 

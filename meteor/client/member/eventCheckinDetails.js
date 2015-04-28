@@ -23,6 +23,13 @@ Template.eventCheckinDetails.rendered = function() {
 		mode: 'values',
 		values: [0,1,2,3,4,5,6,7,8]
 	});
+
+  $('.input-group.date').datepicker({
+    autoclose: true,
+    todayHighlight: true,
+    orientation: 'top'
+  });
+
 }
 
 Template.eventCheckinDetails.helpers({
@@ -39,8 +46,8 @@ Template.eventCheckinDetails.helpers({
     return checkIn ? checkIn.checkingIn.get() : false;
   },
 
-  adHoc: function() {
-  	return Router.current().params.id === 'new';
+  recognized: function() {
+  	return !Router.current().params.id === 'new';
   }
 });
 
@@ -65,6 +72,7 @@ Template.eventCheckinDetails.events({
     if (eventId === 'new') {
     	checkIn.pendingEventName = $('#pendingEventName').val();
     	checkIn.pendingEventDescription = $('#pendingEventDescription').val();
+      checkIn.pendingEventDate = new Date($('#adHocEventDate').val());
     }
 
     // Do the form validation here, then call the submit function
