@@ -513,7 +513,9 @@ margin-right: auto;
   margin-top: .5em;
   padding: 0;
   border: none;
-  box-shadow: none;
+  & * {
+    box-shadow: none;
+  }
 }
 
 .today-panel {
@@ -712,4 +714,37 @@ margin-right: auto;
   margin-bottom: 0;
   font-weight: bold;
   font-size: 125%;
+}
+
+/*
+  Hide radio button (the round disc)
+  we will use just the label to create pushbutton effect
+*/
+.radio-button input[type=radio] {
+  display: none;
+  margin: -1px;
+}
+
+/*
+  Change the look'n'feel of labels (which are adjacent to radiobuttons).
+  Add some margin, padding to label
+*/
+.radio-button input[type=radio] + label {
+  margin: 0px;
+  padding: 4px 12px;
+  background-color: #e7e7e7;
+  border-color: #ddd;
+  float: left;
+  width: 50%;
+  font-family: @font-family-sans-serif;
+  text-align: center;
+  font-weight: bold;
+}
+/*
+ Change background color for label next to checked radio button
+ to make it look like highlighted button
+*/
+  .radio-button input[type=radio]:checked + label {
+  background-image: none;
+  background-color: #d0d0d0;
 }

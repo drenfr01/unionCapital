@@ -10,7 +10,7 @@ CheckinEventsSearch = new SearchSource('checkinEventsSearch', fields, options);
 
 // Gets the data for use in the getEvents helper
 function getEventsData() {
-var events = CheckinEventsSearch.getData({
+  var events = CheckinEventsSearch.getData({
     sort: {eventDate: 1}
   });
 
@@ -21,7 +21,27 @@ var events = CheckinEventsSearch.getData({
   } else {
     // Otherwise, check that the end date of the even is before the start date of the check in period
     // AND the start date of the event is before the end of the check in period
-    return events;
+
+    var minStartDate = new Date();
+    var maxEndDate = new Date();
+
+    if (Session.equals('eventTimeframe', 'current')) {
+
+      // Use only events defined as today for a current check in
+      var minStartDate = moment().add(AppConfig.checkIn.today.hoursBehind, 'h').toDate();
+      var maxEndDate = moment().add(AppConfig.checkIn.today.hoursAhead, 'h').toDate();
+
+    } else if (Session.equals('eventTimeframe', 'past')) {
+
+      // Use past events for the specified time frame
+      var minStartDate = moment().add(AppConfig.checkIn.past.hoursBehind, 'h').toDate();
+      var maxEndDate = moment().add(AppConfig.checkIn.past.hoursAhead, 'h').toDate();
+
+    }
+
+    return _.filter(events, function(thisEvent) {
+      return !!(thisEvent.eventDate >= minStartDate && thisEvent.eventDate <= maxEndDate );
+    });
   }
 }
 
@@ -80,6 +100,7 @@ Template.checkIntoEvent.rendered = function() {
 
   // We don't want to start out with an event selected
   Session.set('selectedEvent', null);
+  Session.set('eventTimeframe', 'current');
   setToggleValues();
 
   // Populate the event list on load with no filters
@@ -90,7 +111,6 @@ Template.checkIntoEvent.rendered = function() {
 Template.checkIntoEvent.helpers({
 
   'getEvents': function() {
-
     var eventsArray = getEventsData();
     setMapMarkers(eventsArray);
 
@@ -138,6 +158,11 @@ Template.checkIntoEvent.events({
   'click #clearBtn': function() {
     CheckinEventsSearch.search('');
     $('#eventSearchBox').val('');
+  },
+
+  'click #pastOrCurrentRdoDiv': function(e) {
+    var thisValue = $('.radio-button input[type=radio]:checked').val();
+    Session.set('eventTimeframe', thisValue);
   }
 
   // 'click #cancel': function(e) {

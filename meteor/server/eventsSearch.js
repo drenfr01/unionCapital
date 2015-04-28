@@ -29,7 +29,8 @@ SearchSource.defineSource('checkinEventsSearch', function(searchText, options) {
     limit: 20
   };
 
-  // Set the time interval
+  // Set the time interval - sends the start date of past events
+  // up to the end date of current events for performance
   var startDate = moment().add(-12, 'h').toDate();
   var endDate = moment().add(12, 'h').toDate();
 

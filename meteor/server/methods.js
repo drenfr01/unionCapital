@@ -134,7 +134,7 @@ Meteor.methods({
     // Send an email to let the user know
     var user = Meteor.users.findOne(attributes.userId);
     emailHelper(user.emails[0].address,
-                adminEmail,
+                AppConfig.adminEmail,
                 'Your Event has been approved',
                 'Thanks for attending ' + attributes.eventName + "!" +
                   "You have earned " + attributes.points + " points for your service!"
@@ -171,14 +171,14 @@ Meteor.methods({
 
     //TODO: make this dry with updateUserProfile helper above
     emailHelper(attributes.email,
-                adminEmail,
+                AppConfig.adminEmail,
                 'Thanks for Registering!',
                 "We're excited to work with you! Please use the contact button in the applicaton " +
                   "if you have any trouble using the application."
                );
 
-    emailHelper(adminEmail,
-                adminEmail,
+    emailHelper(AppConfig.adminEmail,
+                AppConfig.adminEmail,
                 'New User Registered',
                 attributes.profile.firstName + " " + attributes.profile.lastName +
                  " has created an account! They can be reached at: " +
@@ -206,14 +206,14 @@ Meteor.methods({
     Roles.addUsersToRoles(attributes.userId, 'user');
     //TODO: make this dry with new user helper below
     emailHelper(attributes.email,
-                adminEmail,
+                AppConfig.adminEmail,
                 'Thanks for Registering!',
                 "We're excited to work with you! Please use the contact button in the applicaton " +
                   "if you have any trouble using the application."
                );
 
-    emailHelper(adminEmail,
-                adminEmail,
+    emailHelper(AppConfig.adminEmail,
+                AppConfig.adminEmail,
                 'New User Registered through Facebook',
                 attributes.profile.firstName + " " + attributes.profile.lastName +
                  " has created an account! They can be reached at: " +
@@ -282,8 +282,8 @@ Meteor.methods({
 
     var currentUser = Meteor.users.findOne(attributes.userId);
 
-    emailHelper(adminEmail,
-                adminEmail,
+    emailHelper(AppConfig.adminEmail,
+                AppConfig.adminEmail,
                 'A Union Capitalist has sent you a comment',
                 currentUser.profile.firstName + ' ' + currentUser.profile.lastName +
                   ' says: ' + attributes.comment
