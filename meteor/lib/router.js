@@ -240,9 +240,15 @@ Router.map(function() {
     }
   });
 
-  this.route('checkPoints', {
-    path: '/points'
+Router.route('/checkPoints', function () {
+  this.render('checkPoints', {
+    data: function () {
+      return Meteor.user();
+    }
   });
+}, {
+  name: 'checkPoints'
+});
 
 
   this.route('exploreEvents', {path: '/exploreEvents'});
