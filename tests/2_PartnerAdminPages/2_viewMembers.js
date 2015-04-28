@@ -1,11 +1,11 @@
 //Note: partner admin is Laura at KIPP Academy
 casper.test.comment("Testing Partner Admin Member Search");
 
-casper.test.begin('All Members', 25, function suite(test) {
+casper.test.begin('All Members', 24, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsPartnerAdmin();
   });
-  
+
   //check home page main panel
   casper.waitForSelector("#login-dropdown-list", function() {
     test.assertExists('#partnerMembers');
@@ -33,11 +33,10 @@ casper.test.begin('All Members', 25, function suite(test) {
     this.click('.memberRow');
   });
 
-  casper.waitWhileSelector('table', function() {
+  casper.waitWhileSelector('table.table-hover', function() {
     test.assertTextExists('kipp');
     test.assertExists('#deleteMember');
-    test.assertExists('#backButton');
-    test.assertExists('#pointsInput');
+    test.assertExists('#pointsToAdd');
     test.assertExists('#addPoints');
 
     test.assertTextExists('No pending transactions!');
@@ -46,7 +45,7 @@ casper.test.begin('All Members', 25, function suite(test) {
 
   //test adding points
   casper.then(function() {
-    this.sendKeys('#pointsInput', '100');
+    this.sendKeys('#pointsToAdd', '100');
     this.click('#addPoints');
   });
 
@@ -55,7 +54,7 @@ casper.test.begin('All Members', 25, function suite(test) {
     //and the actual row
     test.assertTextExists('100');
     test.assertTextExists('Admin Add Points');
-    this.click('#backButton');
+    casper.back()
   });
 
   //ensure that points not added to all users

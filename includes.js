@@ -2,6 +2,10 @@
 
 errorCount = 0;
 
+//This is designed to allow a test to logout
+//only works with Phantom 1.x apparently, 2.x stops on first error
+//casper.options.exitOnError = false;
+
 siteName = 'Union Capital';
 homeURL = "http://localhost:3000/login";
 casper.options.logLevel = "debug";

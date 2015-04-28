@@ -157,6 +157,9 @@ Meteor.methods({
         incomeBracket: Match.Optional(String),
         numberOfKids: Match.Optional(String),
         race: Match.Optional(String),
+        //TODO: the IDs attached here do not correspond
+        //to the actual partner org ids
+        followingOrgs: Match.Optional([Object]),
         role: Match.Optional(String)
       }
     });
