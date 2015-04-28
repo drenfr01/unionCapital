@@ -119,6 +119,7 @@ Events.calculateStartEndDates = function(offset) {
 //TODO: refactor below two functions into one
 Events.pastEvents = function(institution, category) {
   var currentDate = new Date();
+  currentDate.setHours(0,0,0,0);
   var selector = {eventDate: {'$lt': currentDate},
                      institution: institution,
                      category: category,
@@ -141,6 +142,7 @@ Events.pastEvents = function(institution, category) {
 
 Events.currentEvents = function(institution, category) {
   var currentDate = new Date();
+  currentDate.setHours(0,0,0,0);
   var selector = {eventDate: {'$gte': currentDate},
                      institution: institution,
                      category: category,
