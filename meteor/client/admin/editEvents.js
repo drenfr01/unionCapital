@@ -3,7 +3,6 @@ Template.editEvent.rendered = function() {
 
 Template.editEvent.helpers({
   editingDoc: function() {
-    console.log(this);
     return Events.findOne(this._id);
   },
   institutions: function() {

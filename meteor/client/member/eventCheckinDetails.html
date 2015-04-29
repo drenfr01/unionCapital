@@ -3,7 +3,8 @@
     {{#if checkingIn}}
       <h1>Checking in...</h1>
       {{>loading}}
-    {{else}}
+    {{/if}}
+    <div style="display: {{ checkingIn }}">
       {{#if recognized}}
         <div class="row">
           <div class="col-xs-12 page-panel">
@@ -64,6 +65,6 @@
         </div>
       {{/if}}
       {{> bottomNav buttonType="cancel" }}
-    {{/if}}
+    </div>
   </div>
 </template>

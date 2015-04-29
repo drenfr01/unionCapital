@@ -1,4 +1,5 @@
 Template.approveTransactions.rendered = function() {
+  Session.setDefault('selectedPartnerOrg', 'admin_only');
 };
 
 Template.approveTransactions.helpers({
@@ -6,13 +7,34 @@ Template.approveTransactions.helpers({
   // Returns only the points approvals that are assigned to this role
   'pendingTransaction': function() {
 
-    var role = '';
-    if (Roles.userIsInRole(Meteor.userId(), 'admin'))
-      role = 'super_admin';
-    else if (Roles.userIsInRole(Meteor.userId(), 'partnerAdmin'))
-      role = 'partner_admin';
+    // Build the selector starting with this
+    var selector = { approved: false };
 
-    return Transactions.find({ approvalType: role, approved: false });
+    if (Roles.userIsInRole(Meteor.userId(), 'admin')) {
+
+      // Set the appropriate role and partner org
+      // If there is no filtering, it does not add the kv pair
+      if (Session.equals('selectedPartnerOrg', 'super_admin_only')) {
+        selector.approvalType = 'super_admin';
+      } else if (Session.equals('selectedPartnerOrg', 'all')) {
+        selector.approvalType = 'partner_admin';
+      } else {
+        selector.approvalType = 'partner_admin';
+        selector.partnerOrg = Session.get('selectedPartnerOrg');
+      }
+
+    } else if (Roles.userIsInRole(Meteor.userId(), 'partnerAdmin')) {
+
+      // Uses the partner admin's org to filter if not superadmin
+      selector.approvalType = 'partner_admin';
+      selector.partnerOrg = Meteor.user().profile.partnerOrg;
+    }
+
+    return Transactions.find(selector);
+  },
+
+  partnerOrgs: function() {
+    return PartnerOrgs.find();
   },
 
   'modalData': function() {
@@ -44,6 +66,10 @@ Template.approveTransactions.helpers({
     } else {
       return event.points;
     }
+  },
+
+  isAdmin: function() {
+    return Roles.userIsInRole(Meteor.userId(), 'admin');
   }
 });
 
@@ -94,6 +120,9 @@ Template.approveTransactions.events({
         addSuccessMessage('Event submission approved');
       }
     });
+  },
+
+  'change #superAdminFilter': function(event) {
+    Session.set('selectedPartnerOrg', $(event.target).val());
   }
 });
-

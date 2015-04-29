@@ -157,7 +157,6 @@ gmaps = {
     gmaps.clearMarkers();
     gmaps.selfMarker = null;
 
-    console.log("[+] Intializing Google Maps...");
     gmaps.getCurrentLocation(function(error, latLng) {
       if (!error)
         gmaps.createNewMap(latLng);

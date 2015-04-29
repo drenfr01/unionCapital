@@ -6,30 +6,7 @@ Template.eventCheckinDetails.created = function() {
 };
 
 Template.eventCheckinDetails.rendered = function() {
-
-	$('#durationSlider').noUiSlider({
-		start: [defaultHours],
-		range: {
-			min: [0],
-			max: [8]
-		},
-		step: 0.5,
-		format: wNumb({
-			decimals: 1
-		})
-	});
-
-	$('#durationSlider').noUiSlider_pips({
-		mode: 'values',
-		values: [0,1,2,3,4,5,6,7,8]
-	});
-
-  $('.input-group.date').datepicker({
-    autoclose: true,
-    todayHighlight: true,
-    orientation: 'top'
-  });
-
+  addPlugins();
 }
 
 Template.eventCheckinDetails.helpers({
@@ -43,7 +20,8 @@ Template.eventCheckinDetails.helpers({
 	},
 
   checkingIn: function() {
-    return checkIn ? checkIn.checkingIn.get() : false;
+    if (checkIn && checkIn.checkingIn.get())
+    return 'none';
   },
 
   recognized: function() {
@@ -79,10 +57,13 @@ Template.eventCheckinDetails.events({
     checkIn.submitCheckIn(eventId, function(error, result) {
       if(error) {
         addErrorMessage(error.reason);
+        // Router.go('eventCheckinDetails', { id: eventId });
       } else {
-      	if (result  === 'not_allowed')
+      	if (result  === 'not_allowed') {
       		addErrorMessage('This type of check-in is not allowed');
-      	else if (result === 'auto') {
+          // Router.go('memberHomePage');
+          // Router.go('eventCheckinDetails', { id: eventId });
+      	} else if (result === 'auto') {
           addSuccessMessage('Sucessfully checked in!')
         	Router.go('memberHomePage');
         } else {
@@ -91,6 +72,7 @@ Template.eventCheckinDetails.events({
         }
       }
     });
+    return false;
   },
 
   'click #back': function(e) {
@@ -111,5 +93,27 @@ function validateFields() {
 	return $('#pendingEventName').val() && $('#pendingEventDescription').val();
 }
 
-// TODO:
-// Find out how it is inserting the event/transactions, I don't think it's working correctly
+function addPlugins() {
+  $('#durationSlider').noUiSlider({
+    start: [defaultHours],
+    range: {
+      min: [0],
+      max: [8]
+    },
+    step: 0.5,
+    format: wNumb({
+      decimals: 1
+    })
+  });
+
+  $('#durationSlider').noUiSlider_pips({
+    mode: 'values',
+    values: [0,1,2,3,4,5,6,7,8]
+  });
+
+  $('.input-group.date').datepicker({
+    autoclose: true,
+    todayHighlight: true,
+    orientation: 'top'
+  });
+}

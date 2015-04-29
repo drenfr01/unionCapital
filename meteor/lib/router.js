@@ -13,7 +13,6 @@ Router.onBeforeAction(function() {
   if(Meteor.loggingIn()) {
     return; //wait
   } else if (!Meteor.user()) {
-    console.log("redirecting guest user");
     this.redirect('login');
   } else {
     this.next();
@@ -29,7 +28,6 @@ Router.onBeforeAction(function() {
   } else if (Roles.userIsInRole(Meteor.userId(), ['user'])) {
     this.next();
   } else {
-    console.log("redirect member");
     this.redirect('login');
   }
 },
@@ -45,7 +43,6 @@ Router.onBeforeAction(function() {
            Roles.userIsInRole(Meteor.userId(), ['admin'])) {
     this.next();
   } else {
-    console.log("redirecting joint admin");
     this.redirect('login');
   }
 },
@@ -65,7 +62,6 @@ Router.onBeforeAction(function() {
   } else if (Roles.userIsInRole(Meteor.userId(), ['partnerAdmin'])) {
     this.next();
   } else {
-    console.log("redirecting partner admin");
     this.redirect('login');
   }
 },
@@ -80,7 +76,6 @@ Router.onBeforeAction(function() {
   } else if (Roles.userIsInRole(Meteor.userId(), ['admin'])) {
     this.next();
   } else {
-    console.log("redirecting super admin");
     this.redirect('login');
   }
 },

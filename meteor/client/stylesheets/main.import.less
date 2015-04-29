@@ -202,12 +202,6 @@ h3 small {
   font-size: 30px;
 }
 
-.tablesize {
-  width: 85%;
-  margin: auto;
-
-}
-
 caption .pointstable {
   background-color: #f0f0f0;
 }
@@ -472,6 +466,14 @@ margin-right: auto;
     font-family: @font-family-sans-serif;
     font-weight: bold;
     margin-top: 0em;
+    &:only-child {
+      margin-bottom: 0;
+    }
+  }
+
+  p:only-child {
+    margin-bottom: 0;
+    margin-top: 0;
   }
 }
 
