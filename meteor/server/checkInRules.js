@@ -24,7 +24,7 @@ CheckInRules = {
 
 	// Returns 'true' if there is an event within maxAdHocDistance
 	isRecognizedLocation: function(attributes) {
-		var events = Events.find({ adHoc: false }).fetch();
+		var events = Events.find({ adHoc: false, deleteInd: false }).fetch();
 
 		var closeEvent = _.find(events, function(oneEvent) {
 			return HelperFunctions.haversineFormula(oneEvent, attributes.userLng, attributes.userLat) < CheckInRules.options.maxAdHocDistance;
@@ -68,6 +68,8 @@ CheckInRules = {
     }
 	},
 
+  // Determines if the member is trying to check into a current event or a past event
+  // The node should not be reached if there is no event, but check anyway
   isCurrentEvent: function(attributes) {
     var thisEvent = Events.findOne({ _id: attributes.eventId });
 
@@ -128,6 +130,7 @@ CheckInRules.rules = {
   name: 'isRecognizedEvent',
   func: CheckInRules.isRecognizedEvent,
   isTrue: {
+    // Current event
     name: 'isCurrentEvent',
     func: CheckInRules.isCurrentEvent,
     isTrue: {

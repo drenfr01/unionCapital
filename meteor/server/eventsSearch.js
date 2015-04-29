@@ -13,8 +13,8 @@ SearchSource.defineSource('eventsSearch', function(searchText, options) {
     var regExp = buildRegExp(searchText);
     var selector = {
       $or: [
-        { name: regExp },
-        { description: regExp }
+        { name: regExp, deleteInd: false  },
+        { description: regExp, deleteInd: false }
       ]
     };
     return Events.find(selector, options).fetch();
@@ -38,8 +38,8 @@ SearchSource.defineSource('checkinEventsSearch', function(searchText, options) {
     var regExp = buildRegExp(searchText);
     var selector = {
       $or: [
-        { name: regExp, eventDate: { $gte: startDate, $lte: endDate }},
-        { description: regExp, eventDate: { $gte: startDate, $lte: endDate }}
+        { name: regExp, deleteInd: false, eventDate: { $gte: startDate, $lte: endDate }},
+        { description: regExp, deleteInd: false, eventDate: { $gte: startDate, $lte: endDate }}
       ]
     };
     return Events.find(selector, options).fetch();
