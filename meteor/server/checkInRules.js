@@ -18,8 +18,8 @@ CheckInRules = {
 
 	// Returns true if the user is trying to check in to a recognized event
 	isRecognizedEvent: function(attributes) {
-		var event = Events.findOne({ _id: attributes.eventId });
-		return !!event;
+		var thisEvent = Events.findOne({ _id: attributes.eventId });
+		return !!thisEvent;
 	},
 
 	// Returns 'true' if there is an event within maxAdHocDistance
@@ -68,6 +68,20 @@ CheckInRules = {
     }
 	},
 
+  isCurrentEvent: function(attributes) {
+    var thisEvent = Events.findOne({ _id: attributes.eventId });
+
+    if (thisEvent) {
+      var thisEventMoment = moment(thisEvent.eventDate);
+      var minStartDate = moment().add(AppConfig.checkIn.today.hoursBehind, 'h');
+      var maxEndDate = moment().add(AppConfig.checkIn.today.hoursAhead, 'h');
+
+      return thisEventMoment.isBetween(minStartDate, maxEndDate, 'second');
+    } else {
+      return 'NO_EVENT_FOUND';
+    }
+  },
+
 	// TODO: Determine whether we are going to return a value or alter the attributes
 	validate: function(attributes) {
     var currentNode = CheckInRules.rules;
@@ -114,19 +128,30 @@ CheckInRules.rules = {
   name: 'isRecognizedEvent',
   func: CheckInRules.isRecognizedEvent,
   isTrue: {
-    // Geolocation works
-    name: 'geolocSuccess',
-    func: CheckInRules.geolocSuccess,
+    name: 'isCurrentEvent',
+    func: CheckInRules.isCurrentEvent,
     isTrue: {
-      // Is in range of the event
-      name: 'inRange',
-      func: CheckInRules.inRange,
+      // Geolocation works
+      name: 'geolocSuccess',
+      func: CheckInRules.geolocSuccess,
       isTrue: {
-        // Has a photo
-        name: 'hasPhoto',
-        func: CheckInRules.hasPhoto,
-        isTrue: 'auto',
-        isFalse: 'auto'
+        // Is in range of the event
+        name: 'inRange',
+        func: CheckInRules.inRange,
+        isTrue: {
+          // Has a photo
+          name: 'hasPhoto',
+          func: CheckInRules.hasPhoto,
+          isTrue: 'auto',
+          isFalse: 'auto'
+        },
+        isFalse: {
+          // Has a photo
+          name: 'hasPhoto',
+          func: CheckInRules.hasPhoto,
+          isTrue: 'partner_admin',
+          isFalse: 'partner_admin'
+        }
       },
       isFalse: {
         // Has a photo
