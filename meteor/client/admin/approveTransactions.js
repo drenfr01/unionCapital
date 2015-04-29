@@ -7,6 +7,7 @@ Template.approveTransactions.helpers({
   // Returns only the points approvals that are assigned to this role
   'pendingTransaction': function() {
 
+    // Build the selector starting with this
     var selector = { approved: false };
 
     if (Roles.userIsInRole(Meteor.userId(), 'admin')) {
@@ -14,22 +15,21 @@ Template.approveTransactions.helpers({
       // Set the appropriate role and partner org
       // If there is no filtering, it does not add the kv pair
       if (Session.equals('selectedPartnerOrg', 'super_admin_only')) {
-        selector.role = 'super_admin';
+        selector.approvalType = 'super_admin';
       } else if (Session.equals('selectedPartnerOrg', 'all')) {
-        selector.role = 'partner_admin';
+        selector.approvalType = 'partner_admin';
       } else {
-        selector.role = 'partner_admin';
+        selector.approvalType = 'partner_admin';
         selector.partnerOrg = Session.get('selectedPartnerOrg');
       }
 
     } else if (Roles.userIsInRole(Meteor.userId(), 'partnerAdmin')) {
 
       // Uses the partner admin's org to filter if not superadmin
-      selector.role = 'partner_admin';
+      selector.approvalType = 'partner_admin';
       selector.partnerOrg = Meteor.user().profile.partnerOrg;
     }
 
-    // { approvalType: role, approved: false }
     return Transactions.find(selector);
   },
 
@@ -66,6 +66,10 @@ Template.approveTransactions.helpers({
     } else {
       return event.points;
     }
+  },
+
+  isAdmin: function() {
+    return Roles.userIsInRole(Meteor.userId(), 'admin');
   }
 });
 
@@ -116,6 +120,9 @@ Template.approveTransactions.events({
         addSuccessMessage('Event submission approved');
       }
     });
+  },
+
+  'change #superAdminFilter': function(event) {
+    Session.set('selectedPartnerOrg', $(event.target).val());
   }
 });
-
