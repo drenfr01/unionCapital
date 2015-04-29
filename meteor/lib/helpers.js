@@ -36,3 +36,14 @@ addHours = function(date, hours) {
   result.setUTCHours(result.getUTCHours() + hours);
   return result;
 };
+
+// UI helpers that are called on shared code
+// Provide a server stub as well
+uiHelpers = {
+  closeNavDropdown: function() {
+    if (Meteor.isClient) {
+      $(".navbar-collapse").removeClass('in').addClass("collapse");
+      $(".navbar-toggle").stop().removeClass('collapsed');
+    }
+  }
+}

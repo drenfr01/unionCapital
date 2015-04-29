@@ -1,4 +1,5 @@
 Template.layout.events({
+  'click .container-fluid': uiHelpers.closeNavDropdown
 });
 
 Template.layout.helpers({

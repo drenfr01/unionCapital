@@ -776,3 +776,13 @@ margin-right: auto;
   background-color: @brand-warning;
   color: white;
 }
+
+// Fixes the expanded login menu being too wide on mobile
+#login-dropdown-list .dropdown-menu {
+  min-width: inherit;
+}
+
+// Fixes the expanded login menu being too tall for dropdown on mobile
+.navbar-fixed-top .navbar-collapse, .navbar-fixed-bottom .navbar-collapse {
+  max-height: 380px;
+}

@@ -5,48 +5,39 @@
         <h3>Member Profile</h3>
       </div>
     </div>
-    {{#if changingPassword }}
-      {{>_loginButtonsChangePassword}}
-    {{else}}
-      <div class="row">
-        <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel">
-          {{#with memberProfile}}
-            Name: {{firstName}} {{lastName}}
-            <br>
-            Email: {{memberEmail}}
-            <br>
-            Address: {{street1}} {{street2}}
-            <br>
-            City: {{city}}
-            <br>
-            State: {{state}}
-            <br>
-            Zip Code: {{zip}}
-            <br>
-            Partner Organization: {{partnerOrg}}
-            <br>
-            Income Bracket: {{incomeBracket}}
-            <br>
-            Number of Kids: {{numberOfKids}}
-            <br>
-            Ethnicity: {{race}}
-          {{/with}}
-          <hr/>
-          <button type="button" class="btn btn-block" id="edit">
-            Edit
-          </button>
-        </div>
+    <div class="row">
+      <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel">
+        {{#with memberProfile}}
+          Name: {{firstName}} {{lastName}}
+          <br>
+          Email: {{memberEmail}}
+          <br>
+          Address: {{street1}} {{street2}}
+          <br>
+          City: {{city}}
+          <br>
+          State: {{state}}
+          <br>
+          Zip Code: {{zip}}
+          <br>
+          Partner Organization: {{partnerOrg}}
+          <br>
+          Income Bracket: {{incomeBracket}}
+          <br>
+          Number of Kids: {{numberOfKids}}
+          <br>
+          Ethnicity: {{race}}
+        {{/with}}
+        <hr/>
+        <button type="button" class="btn btn-block" id="edit">
+          Edit
+        </button>
       </div>
-      <div class="row">
-        <div class="col-xs-12 page-panel panel-link profile-link change-pw-link">
-          <a href="#" class="" id="change-pw">Change Password</a>
-        </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 page-panel panel-link profile-link last-panel log-out-link">
+        <a href="#" id="sign-out">Sign Out</a>
       </div>
-      <div class="row">
-        <div class="col-xs-12 page-panel panel-link profile-link last-panel log-out-link">
-          <a href="#" id="sign-out">Sign Out</a>
-        </div>
-      </div>
-    {{/if}}
+    </div>
   </div>
 </template>
