@@ -47,7 +47,7 @@ Template.eventCheckinDetails.helpers({
   },
 
   recognized: function() {
-  	return !Router.current().params.id === 'new';
+  	return !(Router.current().params.id === 'new');
   }
 });
 
