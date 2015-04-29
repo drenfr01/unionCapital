@@ -1,4 +1,15 @@
 <template name="approveTransactions">
+
+  <div class="">
+    <select>
+      <option value="super_admin_only">Superadmin Only</option>
+      <option value="all">All</option>
+      {{#each partnerOrgs}}
+        <option value=""></option>
+      {{/each}}
+    </select>
+  </div>
+
   {{#with modalData}}
     <div class="modal fade" id="showImageModal">
       <div class="modal-dialog">

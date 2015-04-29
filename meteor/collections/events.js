@@ -133,8 +133,6 @@ Events.pastEvents = function(institution, category) {
     delete selector.category;
   }
 
-  console.log(selector);
-
   return Events.find(selector,
                      {sort: {eventDate: 1}});
 };

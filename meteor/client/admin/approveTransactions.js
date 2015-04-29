@@ -1,4 +1,5 @@
 Template.approveTransactions.rendered = function() {
+  Session.setDefault('selectedPartnerOrg', 'admin_only');
 };
 
 Template.approveTransactions.helpers({
@@ -6,13 +7,34 @@ Template.approveTransactions.helpers({
   // Returns only the points approvals that are assigned to this role
   'pendingTransaction': function() {
 
-    var role = '';
-    if (Roles.userIsInRole(Meteor.userId(), 'admin'))
-      role = 'super_admin';
-    else if (Roles.userIsInRole(Meteor.userId(), 'partnerAdmin'))
-      role = 'partner_admin';
+    var selector = { approved: false };
 
-    return Transactions.find({ approvalType: role, approved: false });
+    if (Roles.userIsInRole(Meteor.userId(), 'admin')) {
+
+      // Set the appropriate role and partner org
+      // If there is no filtering, it does not add the kv pair
+      if (Session.equals('selectedPartnerOrg', 'super_admin_only')) {
+        selector.role = 'super_admin';
+      } else if (Session.equals('selectedPartnerOrg', 'all')) {
+        selector.role = 'partner_admin';
+      } else {
+        selector.role = 'partner_admin';
+        selector.partnerOrg = Session.get('selectedPartnerOrg');
+      }
+
+    } else if (Roles.userIsInRole(Meteor.userId(), 'partnerAdmin')) {
+
+      // Uses the partner admin's org to filter if not superadmin
+      selector.role = 'partner_admin';
+      selector.partnerOrg = Meteor.user().profile.partnerOrg;
+    }
+
+    // { approvalType: role, approved: false }
+    return Transactions.find(selector);
+  },
+
+  partnerOrgs: function() {
+    return PartnerOrgs.find();
   },
 
   'modalData': function() {
