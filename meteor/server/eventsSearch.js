@@ -13,13 +13,16 @@ SearchSource.defineSource('eventsSearch', function(searchText, options) {
     var regExp = buildRegExp(searchText);
     var selector = {
       $or: [
-        { name: regExp, deleteInd: false  },
-        { description: regExp, deleteInd: false }
+        { name: regExp, deleteInd: false, adHoc: false },
+        { description: regExp, deleteInd: false, adHoc: false }
       ]
     };
     return Events.find(selector, options).fetch();
   } else {
-    return Events.find().fetch();
+    return Events.find({
+      deleteInd: false,
+      adHoc: false
+    }).fetch();
   }
 });
 
@@ -38,13 +41,25 @@ SearchSource.defineSource('checkinEventsSearch', function(searchText, options) {
     var regExp = buildRegExp(searchText);
     var selector = {
       $or: [
-        { name: regExp, deleteInd: false, eventDate: { $gte: startDate, $lte: endDate }},
-        { description: regExp, deleteInd: false, eventDate: { $gte: startDate, $lte: endDate }}
+        { name: regExp,
+          deleteInd: false,
+          adHoc: false,
+          eventDate: { $gte: startDate, $lte: endDate }
+        },
+        { description: regExp,
+          deleteInd: false,
+          adHoc: false,
+          eventDate: { $gte: startDate, $lte: endDate }
+        }
       ]
     };
     return Events.find(selector, options).fetch();
   } else {
-    return Events.find({ eventDate: { $gte: startDate, $lte: endDate }}).fetch();
+    return Events.find({
+      deleteInd: false,
+      adHoc: false,
+      eventDate: { $gte: startDate, $lte: endDate }
+    }).fetch();
   }
 
 });

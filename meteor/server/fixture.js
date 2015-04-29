@@ -16,13 +16,13 @@ Meteor.startup(function () {
   //Seeding Partner Organizations
   if( Meteor.settings.env === 'dev' && PartnerOrgs.find().count() === 0 ) {
     var partnerOrgs = [
-      {name: "KIPP Academy", description: "College Prep Public Schools", 
+      {name: "KIPP Academy", description: "College Prep Public Schools",
         sector: "Children", membersReported: 50, deleteInd: false},
-      {name: "Thrive in Five", description: "Family Engagement through parent leadership", 
+      {name: "Thrive in Five", description: "Family Engagement through parent leadership",
         sector: "Job Training", membersReported: 50, deleteInd: false},
-      {name: "Rosie's Place", description: "A sanctuary for poor and homeless women", 
+      {name: "Rosie's Place", description: "A sanctuary for poor and homeless women",
         sector: "Shelter", membersReported: 50, deleteInd: false},
-      {name: "Union Capital Boston", description: "Overcoming the Poverty Trap", 
+      {name: "Union Capital Boston", description: "Overcoming the Poverty Trap",
         sector: "Other", membersReported: 500, deleteInd: false},
       {name: "Other", sector: "Other", membersReported: 50, deleteInd: false}
     ];
@@ -334,8 +334,8 @@ Meteor.startup(function () {
         category: "Other",
         isPointsPerHour: true,
         pointsPerHour: 100,
-        adHoc: false,
-        deleteInd: false
+        adHoc: true,
+        deleteInd: true
       }
     ];
 
