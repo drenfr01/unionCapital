@@ -18,13 +18,13 @@ CheckInRules = {
 
 	// Returns true if the user is trying to check in to a recognized event
 	isRecognizedEvent: function(attributes) {
-		var event = Events.findOne({ _id: attributes.eventId });
-		return !!event;
+		var thisEvent = Events.findOne({ _id: attributes.eventId });
+		return !!thisEvent;
 	},
 
 	// Returns 'true' if there is an event within maxAdHocDistance
 	isRecognizedLocation: function(attributes) {
-		var events = Events.find({ adHoc: false }).fetch();
+		var events = Events.find({ adHoc: false, deleteInd: false }).fetch();
 
 		var closeEvent = _.find(events, function(oneEvent) {
 			return HelperFunctions.haversineFormula(oneEvent, attributes.userLng, attributes.userLat) < CheckInRules.options.maxAdHocDistance;
@@ -67,6 +67,22 @@ CheckInRules = {
       return false;
     }
 	},
+
+  // Determines if the member is trying to check into a current event or a past event
+  // The node should not be reached if there is no event, but check anyway
+  isCurrentEvent: function(attributes) {
+    var thisEvent = Events.findOne({ _id: attributes.eventId });
+
+    if (thisEvent) {
+      var thisEventMoment = moment(thisEvent.eventDate);
+      var minStartDate = moment().add(AppConfig.checkIn.today.hoursBehind, 'h');
+      var maxEndDate = moment().add(AppConfig.checkIn.today.hoursAhead, 'h');
+
+      return thisEventMoment.isBetween(minStartDate, maxEndDate, 'second');
+    } else {
+      return 'NO_EVENT_FOUND';
+    }
+  },
 
 	// TODO: Determine whether we are going to return a value or alter the attributes
 	validate: function(attributes) {
@@ -114,19 +130,31 @@ CheckInRules.rules = {
   name: 'isRecognizedEvent',
   func: CheckInRules.isRecognizedEvent,
   isTrue: {
-    // Geolocation works
-    name: 'geolocSuccess',
-    func: CheckInRules.geolocSuccess,
+    // Current event
+    name: 'isCurrentEvent',
+    func: CheckInRules.isCurrentEvent,
     isTrue: {
-      // Is in range of the event
-      name: 'inRange',
-      func: CheckInRules.inRange,
+      // Geolocation works
+      name: 'geolocSuccess',
+      func: CheckInRules.geolocSuccess,
       isTrue: {
-        // Has a photo
-        name: 'hasPhoto',
-        func: CheckInRules.hasPhoto,
-        isTrue: 'auto',
-        isFalse: 'auto'
+        // Is in range of the event
+        name: 'inRange',
+        func: CheckInRules.inRange,
+        isTrue: {
+          // Has a photo
+          name: 'hasPhoto',
+          func: CheckInRules.hasPhoto,
+          isTrue: 'auto',
+          isFalse: 'auto'
+        },
+        isFalse: {
+          // Has a photo
+          name: 'hasPhoto',
+          func: CheckInRules.hasPhoto,
+          isTrue: 'partner_admin',
+          isFalse: 'partner_admin'
+        }
       },
       isFalse: {
         // Has a photo

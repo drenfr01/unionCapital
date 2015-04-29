@@ -13,13 +13,16 @@ SearchSource.defineSource('eventsSearch', function(searchText, options) {
     var regExp = buildRegExp(searchText);
     var selector = {
       $or: [
-        { name: regExp },
-        { description: regExp }
+        { name: regExp, deleteInd: false, adHoc: false },
+        { description: regExp, deleteInd: false, adHoc: false }
       ]
     };
     return Events.find(selector, options).fetch();
   } else {
-    return Events.find().fetch();
+    return Events.find({
+      deleteInd: false,
+      adHoc: false
+    }).fetch();
   }
 });
 
@@ -31,20 +34,32 @@ SearchSource.defineSource('checkinEventsSearch', function(searchText, options) {
 
   // Set the time interval - sends the start date of past events
   // up to the end date of current events for performance
-  var startDate = moment().add(-12, 'h').toDate();
-  var endDate = moment().add(12, 'h').toDate();
+  var startDate = moment().add(AppConfig.checkIn.past.hoursBehind, 'h').toDate();
+  var endDate = moment().add(AppConfig.checkIn.today.hoursAhead, 'h').toDate();
 
   if( searchText && searchText.length > 0 ) {
     var regExp = buildRegExp(searchText);
     var selector = {
       $or: [
-        { name: regExp, eventDate: { $gte: startDate, $lte: endDate }},
-        { description: regExp, eventDate: { $gte: startDate, $lte: endDate }}
+        { name: regExp,
+          deleteInd: false,
+          adHoc: false,
+          eventDate: { $gte: startDate, $lte: endDate }
+        },
+        { description: regExp,
+          deleteInd: false,
+          adHoc: false,
+          eventDate: { $gte: startDate, $lte: endDate }
+        }
       ]
     };
     return Events.find(selector, options).fetch();
   } else {
-    return Events.find({ eventDate: { $gte: startDate, $lte: endDate }}).fetch();
+    return Events.find({
+      deleteInd: false,
+      adHoc: false,
+      eventDate: { $gte: startDate, $lte: endDate }
+    }).fetch();
   }
 
 });

@@ -8,6 +8,7 @@ CheckIn = function(defaultHours) {
   self.attributes = {};
   self.pendingEventName = null;
   self.pendingEventDescription = null;
+  self.pendingEventDate = null;
 
   // Calls insertTransaction and routes the user
   // Private function
@@ -30,9 +31,10 @@ CheckIn = function(defaultHours) {
       };
 
       // If new, then don't set the eventId to avoid check() errors
-      if (eventId === 'new' && self.pendingEventName && self.pendingEventDescription) {
+      if (eventId === 'new' && self.pendingEventName && self.pendingEventDescription && self.pendingEventDate) {
         self.attributes.pendingEventName = self.pendingEventName;
         self.attributes.pendingEventDescription = self.pendingEventDescription;
+        self.attributes.pendingEventDate = self.pendingEventDate;
       } else if (eventId && eventId !== 'new') {
         // Else set the event ID
         self.attributes.eventId = eventId;

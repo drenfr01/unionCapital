@@ -92,6 +92,7 @@ observe-sequence@1.0.4
 ordered-dict@1.0.2
 pfafman:filesaver@0.1.0
 raix:eventemitter@0.1.1
+rajit:bootstrap3-datepicker@1.4.1
 random@1.0.2
 reactive-dict@1.0.5
 reactive-var@1.0.4

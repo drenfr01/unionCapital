@@ -53,6 +53,11 @@ Router.onBeforeAction(function() {
   {only: ['allMembers', 'viewMemberProfile','manageEvents', 'exportData', 'approveTransactions']}
 );
 
+Router.onBeforeAction(function() {
+  uiHelpers.closeNavDropdown();
+  this.next();
+});
+
 //Partner Admins
 Router.onBeforeAction(function() {
   if(Meteor.loggingIn()) {
