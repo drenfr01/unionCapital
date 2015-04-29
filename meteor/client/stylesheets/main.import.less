@@ -469,12 +469,18 @@ margin-right: auto;
   h3 {
     text-align: center;
     font-size: 150%;
-    font-family: @font-family-serif;
+    font-family: @font-family-sans-serif;
     font-weight: bold;
     margin-top: 0em;
-    padding-bottom: .5em;
-    border-bottom: 1px solid rgba(181, 178, 178, 0.3);
   }
+}
+
+.title-panel h3 {
+  text-align: center;
+  font-size: 150%;
+  font-family: @font-family-sans-serif;
+  font-weight: bold;
+  margin: 0;
 }
 
 .page-panel-md {
@@ -748,7 +754,25 @@ margin-right: auto;
  Change background color for label next to checked radio button
  to make it look like highlighted button
 */
-  .radio-button input[type=radio]:checked + label {
+.radio-button input[type=radio]:checked + label {
   background-image: none;
   background-color: #d0d0d0;
+}
+
+.profile-link {
+  text-align: center;
+  font-weight: bold;
+  font-size: 125%;
+  margin-top: .25em;
+  margin-bottom: .25em;
+}
+
+.change-pw-link {
+  background-color: @brand-primary;
+  color: white;
+}
+
+.log-out-link {
+  background-color: @brand-warning;
+  color: white;
 }
