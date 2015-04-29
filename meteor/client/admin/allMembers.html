@@ -1,56 +1,57 @@
 <template name="allMembers">
-<br>
-<br>
-  <div class="col-xs-12 col-md-6 col-md-offset-3 text-center">
-    <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel">
-      <div class="input-group">
-        <input type='text' class="form-control" placeholder='Search Member Name'
-        id='search-box'/>
-        <span class="input-group-btn">
-          <button class="btn btn-default btn-large">
-            &times;
-          </button>
-        </span>
+  <div class="col-xs-12 col-md-12 text-center">
+    <div class="row">
+      <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel">
+        <div class="input-group">
+          <input type='text' class="form-control" placeholder='Search Member Name'
+          id='search-box'/>
+          <span class="input-group-btn">
+            <button class="btn btn-default btn-large">
+              &times;
+            </button>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-md-10 col-md-offset-1 page-panel">
+        <div class="text-center">
+          <label class="radio-inline">
+            <input type="radio" name="orderRadioButtons" id="ascending" value="ascending">
+              ascending
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="orderRadioButtons" id="descending"
+            value="descending" checked>
+              descending
+          </label>
+        </div>
+        <br>
+        <table class="table table-hover text-center">
+          <thead>
+            <th id="firstName" class="tableSort">Member Name</th>
+            <th id="zip" class="tableSort">Member Zip</th>
+            <th id="lastEvent" class="tableSort">Last Event</th>
+            <th id="lastEventDate" class="tableSort">Last Event Date</th>
+            <th id="transactions" class="tableSort"># Transactions</th>
+            <th id="totalPoints" class="tableSort"># Points</th>
+          </thead>
+          <tbody>
+            {{#each getMembers}}
+              <tr class="memberRow">
+                <td><a href="#">{{{firstName}}} {{{lastName}}}</a></td>
+                <td>{{zip}}</td>
+                <td>{{lastEvent}}</td>
+                <td>{{formatDate lastEventDate}}</td>
+                <td>{{numberOfTransactions}}</td>
+                <td>{{totalPoints}}</td>
+              </tr>
+            {{else}}
+              <tr><td colspan="6">There are no members to display</td></tr>
+            {{/each}}
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
-  <div class="col-xs-12 col-md-10 col-md-offset-1 page-panel">
-    <br>
-    <div class="text-center">
-      <label class="radio-inline">
-        <input type="radio" name="orderRadioButtons" id="ascending" value="ascending">
-          ascending
-      </label>
-      <label class="radio-inline">
-        <input type="radio" name="orderRadioButtons" id="descending"
-        value="descending" checked>
-          descending
-      </label>
-    </div>
-    <br>
-    <table class="table table-hover text-center">
-      <thead>
-        <th id="firstName" class="tableSort">Member Name</th>
-        <th id="zip" class="tableSort">Member Zip</th>
-        <th id="lastEvent" class="tableSort">Last Event</th>
-        <th id="lastEventDate" class="tableSort">Last Event Date</th>
-        <th id="transactions" class="tableSort"># Transactions</th>
-        <th id="totalPoints" class="tableSort"># Points</th>
-      </thead>
-      <tbody>
-        {{#each getMembers}}
-          <tr class="memberRow">
-            <td><a href="#">{{{firstName}}} {{{lastName}}}</a></td>
-            <td>{{zip}}</td>
-            <td>{{lastEvent}}</td>
-            <td>{{formatDate lastEventDate}}</td>
-            <td>{{numberOfTransactions}}</td>
-            <td>{{totalPoints}}</td>
-          </tr>
-        {{/each}}
-      </tbody>
-    </table>
-    <br>
-  </div>
-
 </template>
