@@ -43,7 +43,7 @@ Meteor.methods({
       approved: Boolean,
       pendingEventName: Match.Optional(String),
       pendingEventDescription: Match.Optional(String),
-      category: String,
+      category: Match.Optional(String),
       pendingEventDate: Match.Optional(Date),
       transactionDate: Match.Optional(Date),
       partnerOrg: String,
