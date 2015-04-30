@@ -119,7 +119,7 @@ Meteor.methods({
       eventName: String,
       eventAddress: String,
       eventDescription: Match.Optional(String),
-      category: String,
+      category: Match.Optional(String),
       hoursSpent: Number,
       eventDate: Date,
       points: Match.Optional(Number),
@@ -129,7 +129,9 @@ Meteor.methods({
     // This creates a new event if the transaction isn't tied to an existing one
     // Events created in this manner are marked with the adHoc flag set to true
     if(attributes.eventId) {
+      var event = Events.findOne(attributes.eventId);
       eventId = attributes.eventId;
+      attributes.category = event.category;
     } else {
       attributes.active = 0;
       attributes.isPointsPerHour = false;
