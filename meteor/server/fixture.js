@@ -250,6 +250,17 @@ Meteor.startup(function () {
   //Events fixture
   if ( Events.find().count() === 0 && Meteor.settings.env === 'dev' ) {
     //NOTE: months are 0 based for dates
+    var cambridgeScienceFestivalDate = HelperFunctions.addDays(new Date(), 7);
+    var cambridgeScienceFestivalDuration = 3;
+
+    var somervilleCookingFestivalDate =  HelperFunctions.addDays(new Date(), -7);
+    var somervilleCookingFestivalDuration = 5;
+
+    var bostonMusicFestivalDate = new Date();
+    var bostonMusicFestivalDuration = 3;
+
+    var cambridgeFilmFestivalDate = HelperFunctions.addDays(new Date(), 1);
+    var cambridgeFilmFestivalDuration = 1;
     var events = [
       {
         name: 'Cambridge Science Festival',
@@ -259,8 +270,9 @@ Meteor.startup(function () {
         url: 'http://example.com/CSF',
         description: 'A festival of science for everybody',
         active: 1,
-        eventDate: HelperFunctions.addDays(new Date(), 7),
-        duration: 3,
+        eventDate: cambridgeScienceFestivalDate,
+        endTime: addHours(moment(cambridgeScienceFestivalDate).toDate(), cambridgeScienceFestivalDuration),
+        duration: cambridgeScienceFestivalDuration,
         institution: "KIPP Academy",
         category: "Education (Child/Adult)",
         isPointsPerHour: true,
@@ -276,8 +288,9 @@ Meteor.startup(function () {
         url: 'http://example.com/SCF',
         description: 'A festival of cooking for the masses',
         active: 1,
-        eventDate: HelperFunctions.addDays(new Date(), -7),
-        duration: 5,
+        eventDate: somervilleCookingFestivalDate,
+        endTime: addHours(moment(somervilleCookingFestivalDate).toDate(), somervilleCookingFestivalDuration),
+        duration: somervilleCookingFestivalDuration,
         institution: "Thrive in Five",
         category: "Health (Physical & Mental)",
         isPointsPerHour: false,
@@ -293,8 +306,9 @@ Meteor.startup(function () {
         url: 'http://example.com/BMF',
         description: 'Music festival; all styles - join us soon!',
         active: 1,
-        eventDate: new Date(),
-        duration: 3,
+        eventDate: bostonMusicFestivalDate,
+        endTime: addHours(moment(bostonMusicFestivalDate).toDate(), bostonMusicFestivalDuration),
+        duration: bostonMusicFestivalDuration,
         institution: "KIPP Academy",
         category: "Education (Child/Adult)",
         isPointsPerHour: true,
@@ -310,8 +324,9 @@ Meteor.startup(function () {
         url: 'http://example.com/CFF',
         description: 'Watch as many films as you can in just 3 days of mandness!',
         active: 1,
-        eventDate: HelperFunctions.addDays(new Date(), 1),
-        duration: 1,
+        eventDate: cambridgeFilmFestivalDate,
+        endTime: addHours(moment(cambridgeFilmFestivalDate).toDate(), cambridgeFilmFestivalDuration),
+        duration: cambridgeFilmFestivalDuration,
         institution: "Thrive in Five",
         category: "Education (Child/Adult)",
         isPointsPerHour: false,

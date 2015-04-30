@@ -2,6 +2,7 @@ AutoForm.hooks({
   insertEventsForm: {
     before: {
       insert: function(doc, template) {
+        doc.adHoc = false;
         doc.latitude = Session.get('latitude');
         doc.longitude = Session.get('longitude');
         doc.endTime = addHours(moment(doc.eventDate).toDate(), doc.duration);
@@ -52,7 +53,7 @@ Template.addEvents.events({
     e.preventDefault();
     eventAddress = $('#eventAddress').val();
     if (eventAddress === '') {
-      addErrorMessage('Please specify an Event Address')
+      addErrorMessage('Please specify an Event Address');
     } else {
       Meteor.call('geocodeAddress', eventAddress,
                   function(error, result) {
@@ -60,12 +61,12 @@ Template.addEvents.events({
                       addErrorMessage(error.reason);
                       Router.go('addEvents');
                     } else {
-                      addSuccessMessage("Geocoding complete: Lat = " + result.location.lat + ", Long = " + result.location.lng)
+                      addSuccessMessage("Geocoding complete: Lat = " + result.location.lat + ", Long = " + result.location.lng);
                       Session.set('latitude', result.location.lat);
                       Session.set('longitude', result.location.lng);
                     }
-                  })
-    };
+                  });
+    }
   },
   'change #pointsType': function(e) {
     Session.set('displayPointsPerHour', 

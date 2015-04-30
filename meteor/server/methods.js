@@ -43,6 +43,7 @@ Meteor.methods({
       approved: Boolean,
       pendingEventName: Match.Optional(String),
       pendingEventDescription: Match.Optional(String),
+      category: Match.Optional(String),
       pendingEventDate: Match.Optional(Date),
       transactionDate: Match.Optional(Date),
       partnerOrg: String,
@@ -98,7 +99,7 @@ Meteor.methods({
   //so we leave the images intact and just change the flag to false
   rejectTransaction: function(attributes) {
     check(attributes, {
-      imageId: String,
+      imageId: Match.Optional(String),
       transactionId: String
     });
     DB.removeTransaction(attributes.transactionId);
@@ -118,6 +119,8 @@ Meteor.methods({
       eventName: String,
       eventAddress: String,
       eventDescription: Match.Optional(String),
+      category: Match.Optional(String),
+      hoursSpent: Number,
       eventDate: Date,
       points: Match.Optional(Number),
       pointsPerHour: Match.Optional(Number)
@@ -126,7 +129,9 @@ Meteor.methods({
     // This creates a new event if the transaction isn't tied to an existing one
     // Events created in this manner are marked with the adHoc flag set to true
     if(attributes.eventId) {
+      var event = Events.findOne(attributes.eventId);
       eventId = attributes.eventId;
+      attributes.category = event.category;
     } else {
       attributes.active = 0;
       attributes.isPointsPerHour = false;
@@ -254,18 +259,6 @@ Meteor.methods({
     Meteor.users.update(this.userId,
                         {$push: {emails: {address: attributes.email
                         }}});
-  },
-
-  geocodeAddress: function(address) {
-    var myFuture = new Future();
-    googlemaps.geocode(address, function(err, data) {
-      if(err) {
-        myFuture.throw(err);
-      } else {
-        myFuture.return(data.results[0].geometry);
-      }
-    });
-    return myFuture.wait();
   },
 
   geocodeAddress: function(address) {

@@ -1,7 +1,7 @@
 
 // Event search setup
 var options = {
-  keepHistory: 1000 * 60 * 5,
+  keepHistory: 1,
   localSearch: false
 };
 var fields = ['name', 'description'];
@@ -28,14 +28,14 @@ function getEventsData() {
     if (Session.equals('eventTimeframe', 'current')) {
 
       // Use only events defined as today for a current check in
-      var minStartDate = moment().add(AppConfig.checkIn.today.hoursBehind, 'h').toDate();
-      var maxEndDate = moment().add(AppConfig.checkIn.today.hoursAhead, 'h').toDate();
+      minStartDate = moment().add(AppConfig.checkIn.today.hoursBehind, 'h').toDate();
+      maxEndDate = moment().add(AppConfig.checkIn.today.hoursAhead, 'h').toDate();
 
     } else if (Session.equals('eventTimeframe', 'past')) {
 
       // Use past events for the specified time frame
-      var minStartDate = moment().add(AppConfig.checkIn.past.hoursBehind, 'h').toDate();
-      var maxEndDate = moment().add(AppConfig.checkIn.past.hoursAhead, 'h').toDate();
+      minStartDate = moment().add(AppConfig.checkIn.past.hoursBehind, 'h').toDate();
+      maxEndDate = moment().add(AppConfig.checkIn.past.hoursAhead, 'h').toDate();
 
     }
 

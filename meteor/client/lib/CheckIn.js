@@ -9,6 +9,7 @@ CheckIn = function(defaultHours) {
   self.pendingEventName = null;
   self.pendingEventDescription = null;
   self.pendingEventDate = null;
+  self.category = null;
 
   // Calls insertTransaction and routes the user
   // Private function
@@ -34,6 +35,7 @@ CheckIn = function(defaultHours) {
         self.attributes.pendingEventName = self.pendingEventName;
         self.attributes.pendingEventDescription = self.pendingEventDescription;
         self.attributes.pendingEventDate = self.pendingEventDate;
+        self.attributes.category = self.category;
       } else if (eventId && eventId !== 'new') {
         // Else set the event ID
         self.attributes.eventId = eventId;
@@ -70,7 +72,7 @@ CheckIn = function(defaultHours) {
     catch(error) {
       // Just pass it through if it is a meteor error
       if (error.errorType === 'Meteor.Error') {
-        callback(error)
+        callback(error);
 
       // Otherwise, create a meteor error
       // We should find a better way to log the call stack
@@ -82,7 +84,7 @@ CheckIn = function(defaultHours) {
       }
     }
   };
-}
+};
 
 //------------- Public functions -------------//
 

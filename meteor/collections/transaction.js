@@ -39,6 +39,11 @@ Transactions.attachSchema(new SimpleSchema({
       label: 'Event Description',
       optional: true
     },
+    category: {
+      type: String,
+      label: 'Event Category',
+      optional: true
+    },
     pendingEventDate: {
       type: Date,
       label: 'Pending Event Date',
