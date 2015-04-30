@@ -97,8 +97,7 @@ Events.attachSchema(new SimpleSchema({
   },
   adHoc: {
     type: Boolean,
-    label: 'Is an Ad Hoc Event',
-    optional: true
+    label: 'Is an Ad Hoc Event'
   }
 }));
 

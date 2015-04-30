@@ -273,18 +273,6 @@ Meteor.methods({
     return myFuture.wait();
   },
 
-  geocodeAddress: function(address) {
-    var myFuture = new Future();
-    googlemaps.geocode(address, function(err, data) {
-      if(err) {
-        myFuture.throw(err);
-      } else {
-        myFuture.return(data.results[0].geometry);
-      }
-    });
-    return myFuture.wait();
-  },
-
   sendEmail: function(attributes) {
     check(attributes, {
       userId: String,
