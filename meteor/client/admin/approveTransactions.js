@@ -8,7 +8,7 @@ Template.approveTransactions.helpers({
   'pendingTransaction': function() {
 
     // Build the selector starting with this
-    var selector = { approved: false };
+    var selector = { approved: false, deleteInd: false };
 
     if (Roles.userIsInRole(Meteor.userId(), 'admin')) {
 
@@ -30,7 +30,6 @@ Template.approveTransactions.helpers({
       selector.partnerOrg = Meteor.user().profile.partnerOrg;
     }
 
-    selector.deleteInd = false;
     return Transactions.find(selector);
   },
 

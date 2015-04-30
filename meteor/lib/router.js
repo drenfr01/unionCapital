@@ -164,7 +164,7 @@ Router.route('/editEvent/:_id', function () {
   name: 'editEvent'
 });
 
-Router.route('/checkPoints', function () {
+Router.route('/checkpoints', function () {
   this.render('checkPoints', {
     data: function () {
       return Meteor.user();
