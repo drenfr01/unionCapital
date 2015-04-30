@@ -39,7 +39,8 @@ Events.attachSchema(new SimpleSchema({
   },
   institution: {
     type: String,
-    label: 'Affiliated Institution'
+    label: 'Affiliated Institution',
+    optional: true //for ad-hoc events
   },
   category: {
     type: String,
@@ -63,7 +64,10 @@ Events.attachSchema(new SimpleSchema({
   },
   duration: {
     type: Number,
-    label: 'Duration of Event in Hours'
+    label: 'Duration of Event in Hours',
+    //for ad-hoc events and time-insenstive events 
+    //e.g. voting, vaccinination, etc.
+    optional: true
   },
   points: {
     type: Number,

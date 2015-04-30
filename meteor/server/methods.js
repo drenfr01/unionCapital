@@ -44,6 +44,7 @@ Meteor.methods({
       pendingEventName: Match.Optional(String),
       pendingEventDescription: Match.Optional(String),
       transactionDate: Match.Optional(Date),
+      category: Match.Optional(String),
       partnerOrg: String,
       userLat: Match.Optional(Number),
       userLng: Match.Optional(Number)
@@ -92,7 +93,7 @@ Meteor.methods({
   //so we leave the images intact and just change the flag to false
   rejectTransaction: function(attributes) {
     check(attributes, {
-      imageId: String,
+      imageId: Match.Optional(String),
       transactionId: String
     });
     DB.removeTransaction(attributes.transactionId);
@@ -104,6 +105,9 @@ Meteor.methods({
   approveTransaction: function(attributes) {
     var eventId;
 
+    //TODO: this is super brittle, and should be refactored
+    //basically should only pass in an transaction ID and the
+    //number of points, then do a lookup
     check(attributes, {
       transactionId: String,
       userId: String,
@@ -113,6 +117,8 @@ Meteor.methods({
       eventAddress: String,
       eventDescription: Match.Optional(String),
       eventDate: Date,
+      hoursSpent: Number,
+      category: String,
       points: Match.Optional(Number),
       pointsPerHour: Match.Optional(Number)
     });
@@ -248,18 +254,6 @@ Meteor.methods({
     Meteor.users.update(this.userId,
                         {$push: {emails: {address: attributes.email
                         }}});
-  },
-
-  geocodeAddress: function(address) {
-    var myFuture = new Future();
-    googlemaps.geocode(address, function(err, data) {
-      if(err) {
-        myFuture.throw(err);
-      } else {
-        myFuture.return(data.results[0].geometry);
-      }
-    });
-    return myFuture.wait();
   },
 
   geocodeAddress: function(address) {

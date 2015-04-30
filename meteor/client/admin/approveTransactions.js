@@ -12,7 +12,7 @@ Template.approveTransactions.helpers({
     else if (Roles.userIsInRole(Meteor.userId(), 'partnerAdmin'))
       role = 'partner_admin';
 
-    return Transactions.find({ approvalType: role, approved: false });
+    return Transactions.find({ approvalType: role, approved: false, deleteInd: false});
   },
 
   'modalData': function() {
@@ -84,6 +84,8 @@ Template.approveTransactions.events({
       eventAddress: "temporary",
       eventDescription: this.pendingEventDescription,
       eventDate: new Date(this.transactionDate),
+      hoursSpent: this.hoursSpent,
+      category: this.category,
       points: parseInt($("#pointsInput").val())
     };
 
