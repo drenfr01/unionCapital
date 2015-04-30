@@ -30,6 +30,7 @@ Template.approveTransactions.helpers({
       selector.partnerOrg = Meteor.user().profile.partnerOrg;
     }
 
+    selector.deleteInd = false;
     return Transactions.find(selector);
   },
 
@@ -110,6 +111,7 @@ Template.approveTransactions.events({
       eventAddress: "temporary",
       eventDescription: this.pendingEventDescription,
       eventDate: new Date(this.transactionDate),
+      category: this.category,
       points: parseInt($("#pointsInput").val())
     };
 

@@ -25,6 +25,17 @@
                 <textarea rows="2" class="form-control" id="pendingEventDescription" placeholder="Event Description"></textarea>
               </div>
             </form>
+            <form role="form" id="organizationForm">
+              <div class="form-group">
+                <label for="categories">Event Category</label>
+                <select class="form-control" id="categories">
+                  <option value="" selected="selected">Select Option Below</option>
+                  {{#each categories}}
+                  <option>{{name}}</option>
+                  {{/each}}
+                </select>
+              </div>
+            </form>
             <label for="adHocEventDate">Event Date</label>
             <div class="input-group date">
               <input type="text" class="form-control" id="adHocEventDate"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
@@ -34,7 +45,7 @@
       {{/if}}
         <div class="row">
           <div class="col-xs-12 page-panel text-center time-attending-panel">
-            <p>I'll be here for <span class="time-attending">{{timeAttending}}</span> hours!</p>
+            <p>I was here for <span class="time-attending">{{timeAttending}}</span> hours!</p>
             <div id="durationSlider" class="no-ui-slider"></div>
           </div>
         </div>

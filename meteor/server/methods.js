@@ -43,6 +43,7 @@ Meteor.methods({
       approved: Boolean,
       pendingEventName: Match.Optional(String),
       pendingEventDescription: Match.Optional(String),
+      category: String,
       pendingEventDate: Match.Optional(Date),
       transactionDate: Match.Optional(Date),
       partnerOrg: String,
@@ -98,7 +99,7 @@ Meteor.methods({
   //so we leave the images intact and just change the flag to false
   rejectTransaction: function(attributes) {
     check(attributes, {
-      imageId: String,
+      imageId: Match.Optional(String),
       transactionId: String
     });
     DB.removeTransaction(attributes.transactionId);
@@ -118,6 +119,7 @@ Meteor.methods({
       eventName: String,
       eventAddress: String,
       eventDescription: Match.Optional(String),
+      category: String,
       eventDate: Date,
       points: Match.Optional(Number),
       pointsPerHour: Match.Optional(Number)

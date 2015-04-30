@@ -67,7 +67,7 @@ Meteor.publish("reservations", function() {
 
 //A partner should get access to all transactions for 
 //their members only
-Meteor.publish('transactions', function(userId) {
+Meteor.publish('transactions', function() {
   var partnerAdmin = Meteor.users.findOne({_id: this.userId});
   if (Roles.userIsInRole(this.userId, 'admin')) {
 
@@ -80,7 +80,7 @@ Meteor.publish('transactions', function(userId) {
 
   } else {
 
-    return Transactions.find({userId: userId});
+    return Transactions.find({userId: this.userId});
 
   }
 });

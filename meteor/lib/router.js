@@ -164,6 +164,16 @@ Router.route('/editEvent/:_id', function () {
   name: 'editEvent'
 });
 
+Router.route('/checkPoints', function () {
+  this.render('checkPoints', {
+    data: function () {
+      return Meteor.user();
+    }
+  });
+}, {
+  name: 'checkPoints'
+});
+
 
 Router.route('/viewPartnerMemberProfile/:_id', function () {
   this.render('viewPartnerMemberProfile', {
@@ -239,11 +249,6 @@ Router.map(function() {
       return Events.findOne({_id: this.params.id});
     }
   });
-
-  this.route('checkPoints', {
-    path: '/points'
-  });
-
 
   this.route('exploreEvents', {path: '/exploreEvents'});
   this.route('listEvents', {
