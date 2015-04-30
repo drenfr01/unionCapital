@@ -39,31 +39,31 @@
     <div class="row">
       <div class="col-xs-12 page-panel">
         {{#if approvedEvents}}
-        <div class="ptheader text-center">Approved Events</div>
-        <table class="table table-striped">
-          <!--      <caption>Your UCB Activities</caption> -->
-          <thead>
+          <div class="ptheader text-center">Approved Events</div>
+          <table class="table table-striped">
+            <!--      <caption>Your UCB Activities</caption> -->
+            <thead>
+              <tr>
+                <th>Event Name</th>
+                <th>Points</th>
+                <th>Check-In Date</th>
+              </tr>
+            </thead>
+            <tbody>
+            {{#each approvedEvents}}
             <tr>
-              <th>Event Name</th>
-              <th>Points</th>
-              <th>Check-In Date</th>
+              <td>{{eventName}}</td>
+              <td>{{eventPoints}}</td>
+              <td>{{formatDate transactionDate}} </td>
+              <!-- <td class="text-right">
+                  <a href="#" class="btn btn-warning btn-xs">Feedback</a>
+                </td>  -->
             </tr>
-          </thead>
-          <tbody>
-          {{#each approvedEvents}}
-          <tr>
-            <td>{{eventName}}</td>
-            <td>{{eventPoints}}</td>
-            <td>{{formatDate transactionDate}} </td>
-            <!-- <td class="text-right">
-                <a href="#" class="btn btn-warning btn-xs">Feedback</a>
-              </td>  -->
-          </tr>
-          {{/each}}
-          </tbody>
-        </table>
+            {{/each}}
+            </tbody>
+          </table>
         {{else}}
-        <h3 class="text-center"><small>No points accrued yet!</small></h3>
+          <h3 class="text-center"><small>No points accrued yet!</small></h3>
         {{/if}}
       </div>
     </div>

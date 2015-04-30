@@ -11,6 +11,7 @@ DB = {
       name: attributes.eventName,
       address: attributes.eventAddress,
       description: attributes.eventName,
+      category: attributes.category,
       active: 0,
       adHoc: true,
       eventDate: attributes.eventDate,

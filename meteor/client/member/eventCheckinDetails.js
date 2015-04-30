@@ -29,7 +29,7 @@ Template.eventCheckinDetails.helpers({
   },
 
   categories: function() {
-    EventCategories.find();
+    return EventCategories.find();
   }
 });
 

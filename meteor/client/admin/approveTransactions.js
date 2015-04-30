@@ -112,6 +112,7 @@ Template.approveTransactions.events({
       eventDescription: this.pendingEventDescription,
       eventDate: new Date(this.transactionDate),
       category: this.category,
+      hoursSpent: this.hoursSpent,
       points: parseInt($("#pointsInput").val())
     };
 

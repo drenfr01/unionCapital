@@ -120,6 +120,7 @@ Meteor.methods({
       eventAddress: String,
       eventDescription: Match.Optional(String),
       category: String,
+      hoursSpent: Number,
       eventDate: Date,
       points: Match.Optional(Number),
       pointsPerHour: Match.Optional(Number)
