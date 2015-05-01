@@ -165,13 +165,16 @@ Meteor.methods({
         state: String,
         zip: String,
         partnerOrg: String,
-        incomeBracket: Match.Optional(String),
         numberOfKids: Match.Optional(String),
         race: Match.Optional(String),
         //TODO: the IDs attached here do not correspond
         //to the actual partner org ids
         followingOrgs: Match.Optional([Object]),
-        role: Match.Optional(String)
+        role: Match.Optional(String),
+        gender: String,
+        medicaid: String,
+        reducedLunch: String,
+        UCBAppAccess: String
       }
     });
     var newUserId = Accounts.createUser({
@@ -244,9 +247,12 @@ Meteor.methods({
         state: String,
         zip: String,
         partnerOrg: String,
-        incomeBracket: String,
         numberOfKids: String,
         race: String,
+        gender: String,
+        medicaid: String,
+        reducedLunch: String,
+        UCBAppAccess: String
       }
     });
     Meteor.users.update(this.userId,

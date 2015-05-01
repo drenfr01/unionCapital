@@ -5,8 +5,9 @@ Meteor.publish('partnerOrgSectors', function() {
 Meteor.publish('races', function() {
   return Races.find();
 });
-Meteor.publish('ethnicities', function() {
-  return Ethnicities.find();
+
+Meteor.publish('kids', function() {
+  return Kids.find();
 });
 Meteor.publish('kids', function() {
   return Kids.find();
@@ -30,6 +31,10 @@ Meteor.publish("eventOrgs", function() {
 
 Meteor.publish("eventCategories", function() {
   return EventCategories.find();
+});
+
+Meteor.publish("ucbappaccess", function() {
+  return UCBAppAccess.find();
 });
 
 Meteor.publish("events", function() {

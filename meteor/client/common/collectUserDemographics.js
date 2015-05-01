@@ -32,6 +32,9 @@ Template.collectUserDemographics.helpers({
   },
   followingOrgs: function() {
     return FollowingOrganizations.find();
+  },
+  UCBAppAccess: function() {
+    return UCBAppAccess.find();
   }
 });
 
@@ -57,11 +60,16 @@ Template.collectUserDemographics.events({
     userAttributes.profile.state = $('#state').val();
     userAttributes.profile.zip = $('#zip').val();
     userAttributes.profile.partnerOrg = $('#organizations').val();
-    userAttributes.profile.incomeBracket = $('#incomeBrackets').val();
     userAttributes.profile.numberOfKids = $('#numberOfKids').val();
     userAttributes.profile.race = $("#races").val();
     userAttributes.profile.role = 'user';
     userAttributes.profile.followingOrgs = FollowingOrganizations.find().fetch();
+    userAttributes.profile.medicaid = $("#medicaid input[type='radio']:checked").val();
+    userAttributes.profile.gender = $("#genderForm input[type='radio']:checked").val();
+    userAttributes.profile.reducedLunch = $("#reducedLunchForm input[type='radio']:checked").val();
+    userAttributes.profile.UCBAppAccess = $('#device').val();
+
+    console.log(userAttributes);
 
     Session.set('signupPage', 'eula');
   }

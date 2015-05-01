@@ -8,6 +8,6 @@ Meteor.subscribe('partnerOrganizations');
 Meteor.subscribe('incomeBrackets');
 Meteor.subscribe('kids');
 Meteor.subscribe('races');
-Meteor.subscribe('ethnicities');
+Meteor.subscribe('ucbappaccess');
 Meteor.subscribe('numberOfPeople');
 Meteor.subscribe('partnerOrgSectors');

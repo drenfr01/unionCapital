@@ -26,7 +26,7 @@ casper.test.begin('Member Profile Page', 16, function suite(test) {
     test.assertTextExists("Boston");
     test.assertTextExists("MA");
     test.assertTextExists("02114");
-    test.assertTextExists("KIPP Academy");
+    test.assertTextExists("KIPP Academy Boston");
     test.assertTextExists("10,000-19,999");
     test.assertTextExists("1");
     test.assertTextExists("African-American or Black");

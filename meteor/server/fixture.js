@@ -5,6 +5,7 @@ Meteor.startup(function () {
       'Children',
       'Job Training',
       'Shelter',
+      'Health',
       'Other'
     ];
 
@@ -16,12 +17,22 @@ Meteor.startup(function () {
   //Seeding Partner Organizations
   if( Meteor.settings.env === 'dev' && PartnerOrgs.find().count() === 0 ) {
     var partnerOrgs = [
-      {name: "KIPP Academy", description: "College Prep Public Schools",
+      {name: "Codman Academy", description: "College Prep Public Schools",
+        sector: "Children", membersReported: 50, deleteInd: false},
+      {name: "Codman Health Center", description: "College Prep Public Schools",
+        sector: "Health", membersReported: 50, deleteInd: false},
+      {name: "FII", description: "College Prep Public Schools",
+        sector: "Health", membersReported: 50, deleteInd: false},
+      {name: "KIPP Academy Boston", description: "College Prep Public Schools",
+        sector: "Children", membersReported: 50, deleteInd: false},
+      {name: "Nurtury Learning Lab", description: "Family Engagement through parent leadership",
+        sector: "Children", membersReported: 50, deleteInd: false},
+      {name: "Project Hope", description: "Where families move up and out of poverty",
+        sector: "Job Training", membersReported: 50, deleteInd: false},
+      {name: "Smart from the Start", description: "Family Engagement through parent leadership",
         sector: "Children", membersReported: 50, deleteInd: false},
       {name: "Thrive in Five", description: "Family Engagement through parent leadership",
-        sector: "Job Training", membersReported: 50, deleteInd: false},
-      {name: "Rosie's Place", description: "A sanctuary for poor and homeless women",
-        sector: "Shelter", membersReported: 50, deleteInd: false},
+        sector: "Children", membersReported: 50, deleteInd: false},
       {name: "Union Capital Boston", description: "Overcoming the Poverty Trap",
         sector: "Other", membersReported: 500, deleteInd: false},
       {name: "Other", sector: "Other", membersReported: 50, deleteInd: false}
@@ -58,11 +69,7 @@ Meteor.startup(function () {
       '3',
       '4',
       '5',
-      '6',
-      '7',
-      '8',
-      '9',
-      '10+'
+      '6+'
     ];
 
     _.each(kids, function(kid) {
@@ -90,41 +97,23 @@ Meteor.startup(function () {
       NumberOfPeople.insert({number: person, deleteInd: false});
     });
   }
-  //Seeding Races
+  //Seeding Races/ethnicities
   if(Races.find().count() === 0) {
     var races = [
-      'African-American or Black',
-      'White',
-      'Alaskan Native or American Indian',
+      'American Indian, Alaskan Native, Native Hawaiian',
       'Asian',
-      'Hawaiian Native or Pacific Islander',
-      'Other',
-      '2+ Races'
+      'Black or African-American',
+      'Hispanic/Latino',
+      'White, Caucasian',
+      '2+ Races',
+      'Other'
     ];
 
     _.each(races, function(race) {
       Races.insert({name: race, deleteInd: false});
     });
   }
-  //Seeding Ethnicities
-  if(Ethnicities.find().count() === 0) {
-    var ethnicities = [
-      '1',
-      '2',
-      '3',
-      '4',
-      '5',
-      '6',
-      '7',
-      '8',
-      '9',
-      '10+'
-    ];
-
-    _.each(ethnicities, function(ethnicity) {
-      Ethnicities.insert({name: ethnicity, deleteInd: false});
-    });
-  }
+  
   //Seeding event categories
   if( EventCategories.find().count() === 0 ) {
     var eventCategories =
@@ -139,17 +128,20 @@ Meteor.startup(function () {
     });
   }
 
-  //Seeding affiliate organizations
+  //Note: this list will differ from partner orgs, because we may 
+  //find organizations sponsoring events that aren't UCB partners yet
   if( Meteor.settings.env === 'dev' && EventOrgs.find().count() === 0 ) {
     var organizations =
-      [ 'Other',
-        'BMC Health Net Plan',
+      [ 'BMC Health Net Plan',
         'Codman Academy',
         'Codman Health Center',
         'FII',
-        'KIPP Boston',
-        'Nurtury',
-        'Thrive in 5'
+        'KIPP Academy Boston',
+        'Nurtury Learning Lab',
+        'Project Hope',
+        'Smart from the Start',
+        'Thrive in 5',
+        'Other'
     ];
 
     _.each(organizations, function(organization) {
@@ -157,6 +149,19 @@ Meteor.startup(function () {
     });
   }
 
+  //Seeding UCB App Access Devices
+  if(UCBAppAccess.find().count() === 0) {
+    var devices = [
+      'Mobile phone',
+      'iPad/Table',
+      'Computer or laptop',
+      'UCB Paper App'
+    ];
+
+    _.each(devices, function(device) {
+      UCBAppAccess.insert({device: device, deleteInd: false});
+    });
+  }
   // Users fixture
   if ( Meteor.settings.env === 'dev' && Meteor.users.find().count() === 0 ) {
     var users = [
