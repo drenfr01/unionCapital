@@ -1,6 +1,6 @@
 casper.test.comment("Testing Partner Admin View Events");
 
-casper.test.begin('Manage Partner Events', 34, function suite(test) {
+casper.test.begin('Manage Partner Events', 33, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsPartnerAdmin();
   });
@@ -21,7 +21,6 @@ casper.test.begin('Manage Partner Events', 34, function suite(test) {
     test.assertExists('#past');
     test.assertExists('#current');
 
-    test.assertExists('#downloadCSV');
     test.assertExists('table');
     test.assertExists('.editEvent');
     test.assertExists('.deleteEvent');
