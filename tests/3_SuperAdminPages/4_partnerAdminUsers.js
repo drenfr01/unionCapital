@@ -48,7 +48,7 @@ casper.test.begin('Partner Admin User', 23, function suite(test) {
     this.sendKeys('#userEmail', 'casperAdmin@gmail.com');
     this.sendKeys('#userPassword', 'casperjs');
     this.sendKeys('#street1', '20 Prospect St');
-    this.sendKeys('#street2');
+    this.sendKeys('#street2', '#3');
     this.sendKeys('#city', 'Cambridge');
     this.sendKeys('#state', 'MA');
     this.sendKeys('#zip', '02139');

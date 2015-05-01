@@ -171,10 +171,10 @@ Meteor.methods({
         //to the actual partner org ids
         followingOrgs: Match.Optional([Object]),
         role: Match.Optional(String),
-        gender: String,
-        medicaid: String,
-        reducedLunch: String,
-        UCBAppAccess: String
+        gender: Match.Optional(String),
+        medicaid: Match.Optional(String),
+        reducedLunch: Match.Optional(String),
+        UCBAppAccess: Match.Optional(String)
       }
     });
     var newUserId = Accounts.createUser({

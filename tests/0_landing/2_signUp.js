@@ -56,7 +56,7 @@ casper.test.begin('Landing Page', 21, function suite(test) {
     }, false);
 
     this.fillSelectors('form#raceForm', {
-      'select[id="races"]': "Black or African American"
+      'select[id="races"]': "Black or African-American"
     }, false);
 
     this.page.injectJs('../../moment.js');

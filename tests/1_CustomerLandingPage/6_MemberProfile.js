@@ -28,7 +28,7 @@ casper.test.begin('Member Profile Page', 16, function suite(test) {
     test.assertTextExists("02114");
     test.assertTextExists("KIPP Academy Boston");
     test.assertTextExists("1");
-    test.assertTextExists("African-American or Black");
+    test.assertTextExists("Black or African-American");
 
     this.click("#edit");
   });

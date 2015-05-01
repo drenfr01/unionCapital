@@ -44,7 +44,7 @@ casper.test.begin('Partner Org Management', 21, function suite(test) {
 
     this.sendKeys('#orgName', 'Casper Testing Hut');
     this.fillSelectors('form#insertPartnerOrgForm', {
-      'select[id="orgSector"]': "Other"
+      'select[id="orgSector"]': "Community"
     }, false);
     this.sendKeys('#membersReported', '500');
 
@@ -54,7 +54,7 @@ casper.test.begin('Partner Org Management', 21, function suite(test) {
   casper.wait(500, function() {
     test.assertTextExists('Casper Testing Hut');
     test.assertTextExists('500');
-    test.assertTextExists('Children');
+    test.assertTextExists('Community');
     //TODO: test out edit and delete buttons for partner org
   });
 
