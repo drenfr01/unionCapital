@@ -179,7 +179,7 @@ Meteor.startup(function () {
           city: 'Boston',
           state: 'MA',
           zip: '02114',
-          partnerOrg: "KIPP Academy",
+          partnerOrg: "KIPP Academy Boston",
           incomeBracket: "25,000-29,999",
           numberOfKids: "2",
           race: "African-American or Black"
@@ -196,7 +196,7 @@ Meteor.startup(function () {
           city: 'Cambridge',
           state: 'MA',
           zip: '02142',
-          partnerOrg: "KIPP Academy",
+          partnerOrg: "KIPP Academy Boston",
           incomeBracket: "20,000-24,999",
           numberOfKids: "4",
           race: "White"
@@ -231,7 +231,7 @@ Meteor.startup(function () {
           city: 'Cambridge',
           state: 'MA',
           zip: '02142',
-          partnerOrg: "KIPP Academy"
+          partnerOrg: "KIPP Academy Boston"
         },
         roles: ['partnerAdmin']
       }
@@ -278,7 +278,7 @@ Meteor.startup(function () {
         eventDate: cambridgeScienceFestivalDate,
         endTime: addHours(moment(cambridgeScienceFestivalDate).toDate(), cambridgeScienceFestivalDuration),
         duration: cambridgeScienceFestivalDuration,
-        institution: "KIPP Academy",
+        institution: "KIPP Academy Boston",
         category: "Education (Child/Adult)",
         isPointsPerHour: true,
         pointsPerHour: 100,
@@ -314,7 +314,7 @@ Meteor.startup(function () {
         eventDate: bostonMusicFestivalDate,
         endTime: addHours(moment(bostonMusicFestivalDate).toDate(), bostonMusicFestivalDuration),
         duration: bostonMusicFestivalDuration,
-        institution: "KIPP Academy",
+        institution: "KIPP Academy Boston",
         category: "Education (Child/Adult)",
         isPointsPerHour: true,
         pointsPerHour: 100,
