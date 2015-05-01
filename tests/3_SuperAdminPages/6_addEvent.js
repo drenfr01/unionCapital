@@ -41,7 +41,7 @@ casper.test.begin('Add Event', 18, function suite(test) {
     this.sendKeys("input[name=description]", 'Dueling Piano Bar');
 
     this.fillSelectors('form#insertEventsForm', {
-      'select[name="institution"]': "KIPP Academy"
+      'select[name="institution"]': "KIPP Academy Boston"
     }, false);
 
     this.fillSelectors('form#insertEventsForm', {
@@ -103,7 +103,7 @@ casper.test.begin('Add Event', 18, function suite(test) {
     this.sendKeys("input[name=description]", 'Dueling Piano Bar');
 
     this.fillSelectors('form#insertEventsForm', {
-      'select[name="institution"]': "KIPP Academy"
+      'select[name="institution"]': "KIPP Academy Boston"
     }, false);
 
     this.fillSelectors('form#insertEventsForm', {

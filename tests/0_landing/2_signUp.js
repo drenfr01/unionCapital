@@ -1,6 +1,6 @@
 casper.test.comment('Signing In');
 
-casper.test.begin('Landing Page', 21, function suite(test) {
+casper.test.begin('Landing Page', 20, function suite(test) {
   casper.start(homeURL, function() {
   });
 
@@ -33,7 +33,6 @@ casper.test.begin('Landing Page', 21, function suite(test) {
     test.assertExists('#state');
     test.assertExists('#zip');
     test.assertExists('#organizations');
-    test.assertExists('#incomeBrackets');
     test.assertExists('#numberOfKids');
     test.assertExists('#races');
 
@@ -49,11 +48,7 @@ casper.test.begin('Landing Page', 21, function suite(test) {
     this.sendKeys('#zip', '02114');
 
     this.fillSelectors('form#organizationForm', {
-      'select[id="organizations"]': "KIPP Academy"
-    }, false);
-
-    this.fillSelectors('form#incomeBracketForm', {
-      'select[id="incomeBrackets"]': "10,000-19,999"
+      'select[id="organizations"]': "KIPP Academy Boston"
     }, false);
 
     this.fillSelectors('form#numberOfKidsForm', {
@@ -61,7 +56,20 @@ casper.test.begin('Landing Page', 21, function suite(test) {
     }, false);
 
     this.fillSelectors('form#raceForm', {
-      'select[id="races"]': "African-American or Black"
+      'select[id="races"]': "Black or African-American"
+    }, false);
+
+    this.page.injectJs('../../moment.js');
+
+    this.evaluate(function() {
+      $("#genderForm input[id='male']").prop('checked', true);
+      $("#medicaid input[id='yes']").prop('checked', true);
+      $("#reducedLunchForm input[id='yes']").prop('checked', true);
+    });
+
+
+    this.fillSelectors('form#deviceForm', {
+      'select[id="device"]': "Mobile phone"
     }, false);
 
     this.click('#next');
