@@ -1,6 +1,6 @@
 casper.test.comment("Testing Super Admin Manage Events");
 
-casper.test.begin('Manage Events', 34, function suite(test) {
+casper.test.begin('Manage Events', 33, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsSuperAdmin();
   });
@@ -20,7 +20,6 @@ casper.test.begin('Manage Events', 34, function suite(test) {
     test.assertExists('#past');
     test.assertExists('#current');
 
-    test.assertExists('#downloadCSV');
     test.assertExists('table');
     test.assertExists('.editEvent');
     test.assertExists('.deleteEvent');
