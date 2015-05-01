@@ -32,7 +32,7 @@ Router.onBeforeAction(function() {
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for members
-  {only: ['memberHomePage','memberProfile', 'editMemberProfile','eventsCalendar', 'checkPoints', 'contactUs','share']}
+  {only: ['memberHomePage','memberProfile', 'editMemberProfile','eventsCalendar', 'checkPoints', 'contactUs']}
 );
 
 //Both Admins
@@ -239,9 +239,6 @@ Router.map(function() {
 
   this.route('memberHomePage', {path: '/memberhome'});
   this.route('communityNeeds', {path: '/communityNeeds'});
-  this.route('/share', function() {
-    this.render('share');
-  });
 
   this.route('eventCheckinDetails', {
     path: 'checkin/:id',
