@@ -2,11 +2,10 @@ Meteor.startup(function () {
   //Seeding Partner Org Sectors
   if(PartnerOrgSectors.find().count() === 0) {
     var sectors = [
-      'Children',
-      'Job Training',
-      'Shelter',
+      'Education',
       'Health',
-      'Other'
+      'Finance',
+      'Community'
     ];
 
     _.each(sectors, function(sector) {
@@ -18,24 +17,24 @@ Meteor.startup(function () {
   if( Meteor.settings.env === 'dev' && PartnerOrgs.find().count() === 0 ) {
     var partnerOrgs = [
       {name: "Codman Academy", description: "College Prep Public Schools",
-        sector: "Children", membersReported: 50, deleteInd: false},
+        sector: "Education", membersReported: 50, deleteInd: false},
       {name: "Codman Health Center", description: "College Prep Public Schools",
         sector: "Health", membersReported: 50, deleteInd: false},
-      {name: "FII", description: "College Prep Public Schools",
-        sector: "Health", membersReported: 50, deleteInd: false},
+      {name: "FII", description: "Family Independence Initiative",
+        sector: "Finance", membersReported: 50, deleteInd: false},
       {name: "KIPP Academy Boston", description: "College Prep Public Schools",
-        sector: "Children", membersReported: 50, deleteInd: false},
+        sector: "Education", membersReported: 50, deleteInd: false},
       {name: "Nurtury Learning Lab", description: "Family Engagement through parent leadership",
-        sector: "Children", membersReported: 50, deleteInd: false},
+        sector: "Education", membersReported: 50, deleteInd: false},
       {name: "Project Hope", description: "Where families move up and out of poverty",
-        sector: "Job Training", membersReported: 50, deleteInd: false},
+        sector: "Community", membersReported: 50, deleteInd: false},
       {name: "Smart from the Start", description: "Family Engagement through parent leadership",
-        sector: "Children", membersReported: 50, deleteInd: false},
+        sector: "Education", membersReported: 50, deleteInd: false},
       {name: "Thrive in Five", description: "Family Engagement through parent leadership",
-        sector: "Children", membersReported: 50, deleteInd: false},
+        sector: "Education", membersReported: 50, deleteInd: false},
       {name: "Union Capital Boston", description: "Overcoming the Poverty Trap",
-        sector: "Other", membersReported: 500, deleteInd: false},
-      {name: "Other", sector: "Other", membersReported: 50, deleteInd: false}
+        sector: "Community", membersReported: 500, deleteInd: false},
+      {name: "Other", sector: "Community", membersReported: 50, deleteInd: false}
     ];
 
     _.each(partnerOrgs, function(org) {
