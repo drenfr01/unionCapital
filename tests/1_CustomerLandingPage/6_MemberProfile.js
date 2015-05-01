@@ -5,7 +5,7 @@ var newApartment = "12F";
 var newIncomeBracket = "25,000-29,999"; 
 var newNumberOfKids = 3;
 
-casper.test.begin('Member Profile Page', 16, function suite(test) {
+casper.test.begin('Member Profile Page', 14, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsUser();
   });
