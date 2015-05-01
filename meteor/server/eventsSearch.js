@@ -14,7 +14,8 @@ SearchSource.defineSource('eventsSearch', function(searchText, options) {
     var selector = {
       $or: [
         { name: regExp, deleteInd: false, adHoc: false },
-        { description: regExp, deleteInd: false, adHoc: false }
+        { institution: regExp, deleteInd: false, adHoc: false },
+        { category: regExp, deleteInd: false, adHoc: false }
       ]
     };
     return Events.find(selector, options).fetch();
