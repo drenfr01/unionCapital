@@ -33,7 +33,6 @@ casper.test.begin('Landing Page', 21, function suite(test) {
     test.assertExists('#state');
     test.assertExists('#zip');
     test.assertExists('#organizations');
-    test.assertExists('#incomeBrackets');
     test.assertExists('#numberOfKids');
     test.assertExists('#races');
 
@@ -60,9 +59,14 @@ casper.test.begin('Landing Page', 21, function suite(test) {
       'select[id="races"]': "Black or African American"
     }, false);
 
-    $("#genderForm input[id='male']").prop('checked', true);
-    $("#medicaid input[id='yes']").prop('checked', true);
-    $("#reducedLunchForm input[id='yes']").prop('checked', true);
+    this.page.injectJs('../../moment.js');
+
+    this.evaluate(function() {
+      $("#genderForm input[id='male']").prop('checked', true);
+      $("#medicaid input[id='yes']").prop('checked', true);
+      $("#reducedLunchForm input[id='yes']").prop('checked', true);
+    });
+
 
     this.fillSelectors('form#deviceForm', {
       'select[id="device"]': "Mobile phone"
