@@ -54,11 +54,12 @@ Template.collectUserDemographics.events({
   'click #next': function(e) {
     e.preventDefault();
 
-    userAttributes.profile.street1 = $('#street1').val();
-    userAttributes.profile.street2 = $('#street2').val();
-    userAttributes.profile.city = $('#city').val();
-    userAttributes.profile.state = $('#state').val();
-    userAttributes.profile.zip = $('#zip').val();
+    userAttributes.profile.street1 = $('#street_number').val() + " " +
+      $('#route').val();
+    userAttributes.profile.street2 = $('#userStreetAddress2').val();
+    userAttributes.profile.city = $('#locality').val();
+    userAttributes.profile.state = $('#administrative_area_level_1').val();
+    userAttributes.profile.zip = $('#postal_code').val();
     userAttributes.profile.partnerOrg = $('#organizations').val();
     userAttributes.profile.numberOfKids = $('#numberOfKids').val();
     userAttributes.profile.race = $("#races").val();

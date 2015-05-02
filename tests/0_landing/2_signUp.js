@@ -1,6 +1,6 @@
 casper.test.comment('Signing In');
 
-casper.test.begin('Landing Page', 20, function suite(test) {
+casper.test.begin('Landing Page', 27, function suite(test) {
   casper.start(homeURL, function() {
   });
 
@@ -27,25 +27,56 @@ casper.test.begin('Landing Page', 20, function suite(test) {
   });
 
   casper.waitWhileSelector('#userPassword', function(){
-    test.assertExists('#street1');
-    test.assertExists('#street2');
-    test.assertExists('#city');
-    test.assertExists('#state');
-    test.assertExists('#zip');
-    test.assertExists('#organizations');
+    test.assertExists('#inputAddress');
+    test.assertExists('#street_number');
+    test.assertExists('#route');
+    test.assertExists('#userStreetAddress2');
+    test.assertExists('#locality');
+    test.assertExists('#administrative_area_level_1');
+    test.assertExists('#postal_code');
+    test.assertExists('#genderForm');
     test.assertExists('#numberOfKids');
     test.assertExists('#races');
+    test.assertExists('#reducedLunchForm');
+    test.assertExists('#medicaid');
+    test.assertExists('#organizations'); //Partner Org
+    test.assertExists('#followingOrgs');
+    test.assertExists('#deviceForm');
 
     test.assertExists('#back');
     test.assertExists('#next');
   });
 
+  /* Couldn't get autocomplete testing to work
   casper.then(function() {
-    this.sendKeys('#street1', '10 Emerson Place');
-    this.sendKeys('#street2', '24H');
-    this.sendKeys('#city', 'Boston');
-    this.sendKeys('#state', 'MA');
-    this.sendKeys('#zip', '02114');
+    this.page.includeJs('https://maps.googleapis.com/maps/api/js?key=AIzaSyBScqNB3QtZ1_8t41CAYGBW0ZvPLXhJ0eM&sensor=true&libraries=places');
+    this.sendKeys('#inputAddress', '10 Emerson Place, Boston, MA', {reset: true, 
+                  keepFocus: true});
+
+  });
+
+  casper.wait(250, function() {
+    
+    test.assertExists('div.pac-item');
+    this.page.injectJs('../../jquery-1.11.2.min.js');
+    this.evaluate(function() {
+      $('#inputAddress').focus();
+    });
+    this.capture('autocomplete.png');
+  });
+
+  */
+
+  casper.wait(250, function() {
+    
+    //checking Google autocomplete
+    this.sendKeys('#street_number', '10');
+    this.sendKeys('#route', 'Emerson Pl');
+    this.sendKeys('#userStreetAddress2', '24H');
+    this.sendKeys('#locality', 'Boston');
+    this.sendKeys('#administrative_area_level_1', 'MA');
+    this.sendKeys('#postal_code', '02114');
+
 
     this.fillSelectors('form#organizationForm', {
       'select[id="organizations"]': "KIPP Academy Boston"
@@ -72,7 +103,9 @@ casper.test.begin('Landing Page', 20, function suite(test) {
       'select[id="device"]': "Mobile phone"
     }, false);
 
+    this.capture('autocomplete.png');
     this.click('#next');
+
   });
 
   casper.waitForSelector('.accept-terms', function() {
