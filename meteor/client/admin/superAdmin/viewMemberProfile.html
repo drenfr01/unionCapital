@@ -37,27 +37,17 @@
         <input type="text" name="points" id="pointsToAdd"
           class="form-control" placeholder="Number of points">
       </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-12 page-panel">
-        <form>
-          <div class="form-group">
-            <label for="pointsToAdd">Points</label>
-            <input type="text" name="points" id="pointsToAdd"
-              class="form-control" placeholder="Number of points">
-          </div>
-          <div class="form-group">
-            <label for="pointsDescription">Description</label>
-            <input type="text" name="description" id="pointsDescription"
-              class="form-control" placeholder="Description of why these points are being added">
-          </div>
-          <button class="btn btn-primary pull-right" type="submit" id="addPoints">
-            Add Points
-          </button>
-        </form>
+      <div class="form-group">
+        <label for="pointsDescription">Description</label>
+        <input type="text" name="description" id="pointsDescription"
+          class="form-control" placeholder="Description of why these points are being added">
       </div>
-    </div>
+      <button class="btn btn-primary pull-right" type="submit" id="addPoints">
+        Add Points
+      </button>
+    </form>
   </div>
   {{> checkPoints}}
+</div>
 {{/with}}
 </template>

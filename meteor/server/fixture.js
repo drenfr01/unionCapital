@@ -165,12 +165,8 @@ Meteor.startup(function () {
   if ( Meteor.settings.env === 'dev' && Meteor.users.find().count() === 0 ) {
     var users = [
       {
-        email: "admin@gmail.com",
-        username: "admin",
-        password: "admin",
-        name: "admin",
-        roles:['admin'],
-        deleteInd: false
+         email: "admin@gmail.com", username: "admin", password: "admin",
+         name: "admin", roles:['admin']
       },
       {
         email: "user@gmail.com", username: "user", password: "user",
@@ -187,8 +183,7 @@ Meteor.startup(function () {
           numberOfKids: "2",
           race: "African-American or Black"
         },
-        roles:['user'],
-        deleteInd: false
+        roles:['user']
       },
       {
         email: "KIPPUser@gmail.com", username: "KIPPUser", password: "user",
@@ -205,8 +200,7 @@ Meteor.startup(function () {
           numberOfKids: "4",
           race: "White"
         },
-        roles:['user'],
-        deleteInd: false
+        roles:['user']
       },
       {
         email: "user2@gmail.com", username: "user2", password: "user",
@@ -223,8 +217,7 @@ Meteor.startup(function () {
           numberOfKids: "1",
           race: "White"
         },
-        roles:['user'],
-        deleteInd: false
+        roles:['user']
       },
       {
         email: "laura@gmail.com", username: "laura",
@@ -239,8 +232,7 @@ Meteor.startup(function () {
           zip: '02142',
           partnerOrg: "KIPP Academy Boston"
         },
-        roles: ['partnerAdmin'],
-        deleteInd: false
+        roles: ['partnerAdmin']
       }
     ];
 
@@ -251,9 +243,8 @@ Meteor.startup(function () {
         profile: user.profile,
       });
 
-      Meteor.users.update({_id: id}, {$set: {deleteInd: false}})
-
       Roles.addUsersToRoles(id, user.roles);
+
     });
 
     //Add Houston Admin users
