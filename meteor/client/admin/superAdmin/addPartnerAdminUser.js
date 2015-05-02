@@ -19,11 +19,12 @@ Template.addPartnerAdminUser.events({
       profile: {
         firstName: $('#firstName').val(),
         lastName: $('#lastName').val(),
-        street1: $('#street1').val(),
-        street2: $('#street2').val(),
-        city: $('#city').val(),
-        state: $('#state').val(),
-        zip: $('#zip').val(),
+        street1 : $('#street_number').val() + " " +
+          $('#route').val(),
+        street2: $('#userStreetAddress2').val(),
+        city: $('#locality').val(),
+        state: $('#administrative_area_level_1').val(),
+        zip: $('#postal_code').val(),
         partnerOrg: $('#organizations').val(),
         role: 'partnerAdmin'
       }
