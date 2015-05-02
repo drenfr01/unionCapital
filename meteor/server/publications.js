@@ -5,9 +5,7 @@ Meteor.publish('partnerOrgSectors', function() {
 Meteor.publish('races', function() {
   return Races.find();
 });
-Meteor.publish('ethnicities', function() {
-  return Ethnicities.find();
-});
+
 Meteor.publish('kids', function() {
   return Kids.find();
 });
@@ -30,6 +28,10 @@ Meteor.publish("eventOrgs", function() {
 
 Meteor.publish("eventCategories", function() {
   return EventCategories.find();
+});
+
+Meteor.publish("ucbappaccess", function() {
+  return UCBAppAccess.find();
 });
 
 Meteor.publish("events", function() {
@@ -67,7 +69,7 @@ Meteor.publish("reservations", function() {
 
 //A partner should get access to all transactions for 
 //their members only
-Meteor.publish('transactions', function(userId) {
+Meteor.publish('transactions', function() {
   var partnerAdmin = Meteor.users.findOne({_id: this.userId});
   if (Roles.userIsInRole(this.userId, 'admin')) {
 
@@ -80,7 +82,7 @@ Meteor.publish('transactions', function(userId) {
 
   } else {
 
-    return Transactions.find({userId: userId});
+    return Transactions.find({userId: this.userId});
 
   }
 });

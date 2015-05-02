@@ -109,10 +109,10 @@ Races.attachSchema(new SimpleSchema({
   }
 }));
 
-Ethnicities = new Meteor.Collection('ethnicities');
+UCBAppAccess = new Meteor.Collection('ucbappaccess');
 
-Ethnicities.attachSchema(new SimpleSchema({
-  name: {
+UCBAppAccess.attachSchema(new SimpleSchema({
+  device: {
     type: String,
     label: 'Ethnicity'
   },

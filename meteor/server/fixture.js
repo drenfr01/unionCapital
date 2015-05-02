@@ -2,10 +2,10 @@ Meteor.startup(function () {
   //Seeding Partner Org Sectors
   if(PartnerOrgSectors.find().count() === 0) {
     var sectors = [
-      'Children',
-      'Job Training',
-      'Shelter',
-      'Other'
+      'Education',
+      'Health',
+      'Finance',
+      'Community'
     ];
 
     _.each(sectors, function(sector) {
@@ -16,15 +16,25 @@ Meteor.startup(function () {
   //Seeding Partner Organizations
   if( Meteor.settings.env === 'dev' && PartnerOrgs.find().count() === 0 ) {
     var partnerOrgs = [
-      {name: "KIPP Academy", description: "College Prep Public Schools",
-        sector: "Children", membersReported: 50, deleteInd: false},
+      {name: "Codman Academy", description: "College Prep Public Schools",
+        sector: "Education", membersReported: 50, deleteInd: false},
+      {name: "Codman Health Center", description: "College Prep Public Schools",
+        sector: "Health", membersReported: 50, deleteInd: false},
+      {name: "FII", description: "Family Independence Initiative",
+        sector: "Finance", membersReported: 50, deleteInd: false},
+      {name: "KIPP Academy Boston", description: "College Prep Public Schools",
+        sector: "Education", membersReported: 50, deleteInd: false},
+      {name: "Nurtury Learning Lab", description: "Family Engagement through parent leadership",
+        sector: "Education", membersReported: 50, deleteInd: false},
+      {name: "Project Hope", description: "Where families move up and out of poverty",
+        sector: "Community", membersReported: 50, deleteInd: false},
+      {name: "Smart from the Start", description: "Family Engagement through parent leadership",
+        sector: "Education", membersReported: 50, deleteInd: false},
       {name: "Thrive in Five", description: "Family Engagement through parent leadership",
-        sector: "Job Training", membersReported: 50, deleteInd: false},
-      {name: "Rosie's Place", description: "A sanctuary for poor and homeless women",
-        sector: "Shelter", membersReported: 50, deleteInd: false},
+        sector: "Education", membersReported: 50, deleteInd: false},
       {name: "Union Capital Boston", description: "Overcoming the Poverty Trap",
-        sector: "Other", membersReported: 500, deleteInd: false},
-      {name: "Other", sector: "Other", membersReported: 50, deleteInd: false}
+        sector: "Community", membersReported: 500, deleteInd: false},
+      {name: "Other", sector: "Community", membersReported: 50, deleteInd: false}
     ];
 
     _.each(partnerOrgs, function(org) {
@@ -58,11 +68,7 @@ Meteor.startup(function () {
       '3',
       '4',
       '5',
-      '6',
-      '7',
-      '8',
-      '9',
-      '10+'
+      '6+'
     ];
 
     _.each(kids, function(kid) {
@@ -90,41 +96,23 @@ Meteor.startup(function () {
       NumberOfPeople.insert({number: person, deleteInd: false});
     });
   }
-  //Seeding Races
+  //Seeding Races/ethnicities
   if(Races.find().count() === 0) {
     var races = [
-      'African-American or Black',
-      'White',
-      'Alaskan Native or American Indian',
+      'American Indian, Alaskan Native, Native Hawaiian',
       'Asian',
-      'Hawaiian Native or Pacific Islander',
-      'Other',
-      '2+ Races'
+      'Black or African-American',
+      'Hispanic/Latino',
+      'White, Caucasian',
+      '2+ Races',
+      'Other'
     ];
 
     _.each(races, function(race) {
       Races.insert({name: race, deleteInd: false});
     });
   }
-  //Seeding Ethnicities
-  if(Ethnicities.find().count() === 0) {
-    var ethnicities = [
-      '1',
-      '2',
-      '3',
-      '4',
-      '5',
-      '6',
-      '7',
-      '8',
-      '9',
-      '10+'
-    ];
-
-    _.each(ethnicities, function(ethnicity) {
-      Ethnicities.insert({name: ethnicity, deleteInd: false});
-    });
-  }
+  
   //Seeding event categories
   if( EventCategories.find().count() === 0 ) {
     var eventCategories =
@@ -139,17 +127,20 @@ Meteor.startup(function () {
     });
   }
 
-  //Seeding affiliate organizations
+  //Note: this list will differ from partner orgs, because we may 
+  //find organizations sponsoring events that aren't UCB partners yet
   if( Meteor.settings.env === 'dev' && EventOrgs.find().count() === 0 ) {
     var organizations =
-      [ 'Other',
-        'BMC Health Net Plan',
+      [ 'BMC Health Net Plan',
         'Codman Academy',
         'Codman Health Center',
         'FII',
-        'KIPP Boston',
-        'Nurtury',
-        'Thrive in 5'
+        'KIPP Academy Boston',
+        'Nurtury Learning Lab',
+        'Project Hope',
+        'Smart from the Start',
+        'Thrive in 5',
+        'Other'
     ];
 
     _.each(organizations, function(organization) {
@@ -157,6 +148,19 @@ Meteor.startup(function () {
     });
   }
 
+  //Seeding UCB App Access Devices
+  if(UCBAppAccess.find().count() === 0) {
+    var devices = [
+      'Mobile phone',
+      'iPad/Table',
+      'Computer or laptop',
+      'UCB Paper App'
+    ];
+
+    _.each(devices, function(device) {
+      UCBAppAccess.insert({device: device, deleteInd: false});
+    });
+  }
   // Users fixture
   if ( Meteor.settings.env === 'dev' && Meteor.users.find().count() === 0 ) {
     var users = [
@@ -174,7 +178,7 @@ Meteor.startup(function () {
           city: 'Boston',
           state: 'MA',
           zip: '02114',
-          partnerOrg: "KIPP Academy",
+          partnerOrg: "KIPP Academy Boston",
           incomeBracket: "25,000-29,999",
           numberOfKids: "2",
           race: "African-American or Black"
@@ -191,7 +195,7 @@ Meteor.startup(function () {
           city: 'Cambridge',
           state: 'MA',
           zip: '02142',
-          partnerOrg: "KIPP Academy",
+          partnerOrg: "KIPP Academy Boston",
           incomeBracket: "20,000-24,999",
           numberOfKids: "4",
           race: "White"
@@ -226,7 +230,7 @@ Meteor.startup(function () {
           city: 'Cambridge',
           state: 'MA',
           zip: '02142',
-          partnerOrg: "KIPP Academy"
+          partnerOrg: "KIPP Academy Boston"
         },
         roles: ['partnerAdmin']
       }
@@ -250,6 +254,17 @@ Meteor.startup(function () {
   //Events fixture
   if ( Events.find().count() === 0 && Meteor.settings.env === 'dev' ) {
     //NOTE: months are 0 based for dates
+    var cambridgeScienceFestivalDate = HelperFunctions.addDays(new Date(), 7);
+    var cambridgeScienceFestivalDuration = 3;
+
+    var somervilleCookingFestivalDate =  HelperFunctions.addDays(new Date(), -7);
+    var somervilleCookingFestivalDuration = 5;
+
+    var bostonMusicFestivalDate = new Date();
+    var bostonMusicFestivalDuration = 3;
+
+    var cambridgeFilmFestivalDate = HelperFunctions.addDays(new Date(), 1);
+    var cambridgeFilmFestivalDuration = 1;
     var events = [
       {
         name: 'Cambridge Science Festival',
@@ -259,9 +274,10 @@ Meteor.startup(function () {
         url: 'http://example.com/CSF',
         description: 'A festival of science for everybody',
         active: 1,
-        eventDate: HelperFunctions.addDays(new Date(), 7),
-        duration: 3,
-        institution: "KIPP Academy",
+        eventDate: cambridgeScienceFestivalDate,
+        endTime: addHours(moment(cambridgeScienceFestivalDate).toDate(), cambridgeScienceFestivalDuration),
+        duration: cambridgeScienceFestivalDuration,
+        institution: "KIPP Academy Boston",
         category: "Education (Child/Adult)",
         isPointsPerHour: true,
         pointsPerHour: 100,
@@ -276,8 +292,9 @@ Meteor.startup(function () {
         url: 'http://example.com/SCF',
         description: 'A festival of cooking for the masses',
         active: 1,
-        eventDate: HelperFunctions.addDays(new Date(), -7),
-        duration: 5,
+        eventDate: somervilleCookingFestivalDate,
+        endTime: addHours(moment(somervilleCookingFestivalDate).toDate(), somervilleCookingFestivalDuration),
+        duration: somervilleCookingFestivalDuration,
         institution: "Thrive in Five",
         category: "Health (Physical & Mental)",
         isPointsPerHour: false,
@@ -293,9 +310,10 @@ Meteor.startup(function () {
         url: 'http://example.com/BMF',
         description: 'Music festival; all styles - join us soon!',
         active: 1,
-        eventDate: new Date(),
-        duration: 3,
-        institution: "KIPP Academy",
+        eventDate: bostonMusicFestivalDate,
+        endTime: addHours(moment(bostonMusicFestivalDate).toDate(), bostonMusicFestivalDuration),
+        duration: bostonMusicFestivalDuration,
+        institution: "KIPP Academy Boston",
         category: "Education (Child/Adult)",
         isPointsPerHour: true,
         pointsPerHour: 100,
@@ -310,8 +328,9 @@ Meteor.startup(function () {
         url: 'http://example.com/CFF',
         description: 'Watch as many films as you can in just 3 days of mandness!',
         active: 1,
-        eventDate: HelperFunctions.addDays(new Date(), 1),
-        duration: 1,
+        eventDate: cambridgeFilmFestivalDate,
+        endTime: addHours(moment(cambridgeFilmFestivalDate).toDate(), cambridgeFilmFestivalDuration),
+        duration: cambridgeFilmFestivalDuration,
         institution: "Thrive in Five",
         category: "Education (Child/Adult)",
         isPointsPerHour: false,

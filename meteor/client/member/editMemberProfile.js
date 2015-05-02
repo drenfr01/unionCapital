@@ -1,9 +1,12 @@
 Template.editMemberProfile.rendered = function() {
   var memberProfile = Meteor.user().profile;
   $('#organizations').val(memberProfile.partnerOrg);
-  $('#incomeBrackets').val(memberProfile.incomeBracket);
   $('#numberOfKids').val(memberProfile.numberOfKids);
   $('#races').val(memberProfile.race);
+  $("#device").val(memberProfile.UCBAppAccess);
+  $("#genderForm input[id='" + memberProfile.gender+ "']").prop('checked', true);
+  $("#medicaid input[id='" + memberProfile.medicaid+ "']").prop('checked', true);
+  $("#reducedLunchForm input[id='" + memberProfile.reducedLunch + "']").prop('checked', true);
 };
 
 
@@ -25,6 +28,9 @@ Template.editMemberProfile.helpers({
   },
   memberEmail: function() {
     return Meteor.user().emails[0].address;
+  },
+  UCBAppAccess: function() {
+    return UCBAppAccess.find();
   }
 });
 
@@ -42,9 +48,12 @@ Template.editMemberProfile.events({
         state: $('#state').val(),
         zip: $('#zip').val(),
         partnerOrg: $('#organizations').val(),
-        incomeBracket: $('#incomeBrackets').val(),
         numberOfKids: $('#numberOfKids').val(),
         race: $("#races").val(),
+        medicaid : $("#medicaid input[type='radio']:checked").val(),
+        gender : $("#genderForm input[type='radio']:checked").val(),
+        reducedLunch : $("#reducedLunchForm input[type='radio']:checked").val(),
+        UCBAppAccess : $('#device').val()
       }
     };
     Meteor.call('updateUser', attributes, function(error) {

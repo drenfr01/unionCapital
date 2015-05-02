@@ -5,7 +5,7 @@ var newApartment = "12F";
 var newIncomeBracket = "25,000-29,999"; 
 var newNumberOfKids = 3;
 
-casper.test.begin('Member Profile Page', 16, function suite(test) {
+casper.test.begin('Member Profile Page', 14, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsUser();
   });
@@ -26,10 +26,9 @@ casper.test.begin('Member Profile Page', 16, function suite(test) {
     test.assertTextExists("Boston");
     test.assertTextExists("MA");
     test.assertTextExists("02114");
-    test.assertTextExists("KIPP Academy");
-    test.assertTextExists("10,000-19,999");
+    test.assertTextExists("KIPP Academy Boston");
     test.assertTextExists("1");
-    test.assertTextExists("African-American or Black");
+    test.assertTextExists("Black or African-American");
 
     this.click("#edit");
   });
@@ -37,9 +36,6 @@ casper.test.begin('Member Profile Page', 16, function suite(test) {
   casper.waitForSelector("#submit", function() {
     this.sendKeys("#street1", newAddress, {reset: true});
     this.sendKeys("#street2", newApartment, {reset: true});
-    this.fillSelectors('form#incomeBracketForm', {
-      'select[id="incomeBrackets"]': newIncomeBracket
-    }, false);
     this.fillSelectors('form#numberOfKidsForm', {
       'select[id="numberOfKids"]': newNumberOfKids
     }, false);
@@ -50,7 +46,6 @@ casper.test.begin('Member Profile Page', 16, function suite(test) {
   casper.waitForSelector("#edit", function() {
     test.assertTextExists(newAddress);
     test.assertTextExists(newApartment);
-    test.assertTextExists(newIncomeBracket);
     test.assertTextExists(newNumberOfKids);
   });
 

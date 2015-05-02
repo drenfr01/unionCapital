@@ -8,7 +8,7 @@ Template.approveTransactions.helpers({
   'pendingTransaction': function() {
 
     // Build the selector starting with this
-    var selector = { approved: false };
+    var selector = { approved: false, deleteInd: false };
 
     if (Roles.userIsInRole(Meteor.userId(), 'admin')) {
 
@@ -110,6 +110,8 @@ Template.approveTransactions.events({
       eventAddress: "temporary",
       eventDescription: this.pendingEventDescription,
       eventDate: new Date(this.transactionDate),
+      category: this.category,
+      hoursSpent: this.hoursSpent,
       points: parseInt($("#pointsInput").val())
     };
 

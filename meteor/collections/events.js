@@ -39,7 +39,8 @@ Events.attachSchema(new SimpleSchema({
   },
   institution: {
     type: String,
-    label: 'Affiliated Institution'
+    label: 'Affiliated Institution',
+    optional: true //for ad-hoc events
   },
   category: {
     type: String,
@@ -96,8 +97,7 @@ Events.attachSchema(new SimpleSchema({
   },
   adHoc: {
     type: Boolean,
-    label: 'Is an Ad Hoc Event',
-    optional: true
+    label: 'Is an Ad Hoc Event'
   }
 }));
 

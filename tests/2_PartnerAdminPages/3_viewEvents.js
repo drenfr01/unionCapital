@@ -74,7 +74,7 @@ casper.test.begin('Manage Partner Events', 34, function suite(test) {
   //KIPP Event
   casper.waitWhileSelector('#addEvent', function() {
     test.assertTextExists('A festival of science for everybody');
-    test.assertTextExists('KIPP Academy');
+    test.assertTextExists('KIPP Academy Boston');
 
     test.assertTextExists('8'); //Total RSVPS
     //KIPP Member
