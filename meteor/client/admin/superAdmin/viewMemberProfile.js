@@ -1,6 +1,10 @@
 Template.viewMemberProfile.helpers({
   member: function() {
     return this;
+  },
+  isArchived: function() {
+    console.log(Meteor.users.findOne(this._id))
+    return Meteor.users.findOne(this._id).deleteInd
   }
 });
 
@@ -27,16 +31,23 @@ Template.viewMemberProfile.events({
       }
     });
   },
-  'click #deleteMember': function(e) {
-    var buttonReturn = confirm("Confirm Deletion of Member");
-    if(buttonReturn) {
-      Meteor.call('deleteMember',this._id, function(error) {
-        if(error) {
-          addErrorMessage(error.reason);
-        } else {
-          addSuccessMessage("Successfully deleted member");
-        }
-      });
-    }
+  'click #archiveMember': function(e) {
+    Meteor.call('archiveMember',this._id, function(error) {
+      if(error) {
+        addErrorMessage(error.reason);
+      } else {
+        addSuccessMessage("Archived member");
+      }
+    });
   },
+  'click #unarchiveMember': function(e) {
+    e.preventDefault()
+    Meteor.call('unarchiveMember',this._id, function(error) {
+      if(error) {
+        addErrorMessage(error.reason);
+      } else {
+        addSuccessMessage("Unarchived member");
+      }
+    })
+  }
 });

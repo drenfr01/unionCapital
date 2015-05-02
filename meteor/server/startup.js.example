@@ -1,7 +1,0 @@
-// Uncomment this line and set it appropriately to enable email sending
-//process.env.MAIL_URL = 'smtp://USERNAME:PASSWORD@HOST:PORT/'
-
-// The path to the folder which images will be uploaded for customer pics
-process.env.UPLOAD_PATH = '~/meteor_apps/apparel/uploads'
-
-process.env.ROOT_URL = 'localhost:3000'
