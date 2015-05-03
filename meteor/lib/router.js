@@ -86,7 +86,8 @@ Router.onBeforeAction(function() {
    'addPartnerAdminUser',
    'addPartnerOrg',
    'partnerOrgs',
-   'uploadEvents']}
+   'uploadEvents',
+   'imageViewer']}
 );
 
 Router.route('/viewMemberProfile/:_id', function () {
@@ -97,6 +98,12 @@ Router.route('/viewMemberProfile/:_id', function () {
   });
 }, {
   name: 'viewMemberProfile'
+});
+
+Router.route('/imageviewer', function () {
+  this.render('imageViewer');
+}, {
+  name: 'imageViewer'
 });
 
 Router.route('/editmemberprofile', function() {
