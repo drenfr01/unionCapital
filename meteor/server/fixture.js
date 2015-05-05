@@ -43,23 +43,6 @@ Meteor.startup(function () {
     });
   }
 
-  //Seeding Income Brackets
-  if(IncomeBrackets.find().count() === 0) {
-    var incomeBrackets = [
-      "0-9,999",
-      "10,000-19,999",
-      "20,000-24,999",
-      "25,000-29,999",
-      "30,000-39,999",
-      "40,000-49,999",
-      "50,000+"
-    ];
-
-    _.each(incomeBrackets, function(bracket) {
-      IncomeBrackets.insert({bracket: bracket, deleteInd: false});
-    });
-  }
-
   //Seeding Number of Kids
   if(Kids.find().count() === 0) {
     var kids = [
@@ -181,9 +164,11 @@ Meteor.startup(function () {
           zip: '02114',
           gender: "male",
           partnerOrg: "KIPP Academy Boston",
-          incomeBracket: "25,000-29,999",
           numberOfKids: "2",
-          race: "African-American or Black"
+          reducedLunch: 'yes',
+          medicaid: 'yes',
+          race: "Black or African-American",
+          UCBAppAccess: 'iPad/Table'
         },
         roles:['user']
       },
@@ -197,10 +182,13 @@ Meteor.startup(function () {
           city: 'Cambridge',
           state: 'MA',
           zip: '02142',
+          gender: 'female',
           partnerOrg: "KIPP Academy Boston",
-          incomeBracket: "20,000-24,999",
           numberOfKids: "4",
-          race: "White"
+          reducedLunch: 'no',
+          medicaid: 'no',
+          race: "White",
+          UCBAppAccess: 'Computer or laptop'
         },
         roles:['user']
       },
@@ -214,10 +202,13 @@ Meteor.startup(function () {
           city: 'Boston',
           state: 'MA',
           zip: '02141',
+          gender: 'female',
           partnerOrg: "Thrive in Five",
-          incomeBracket: "0-9,999",
           numberOfKids: "1",
-          race: "White"
+          reducedLunch: 'yes',
+          medicaid: 'yes',
+          UCBAppAccess: 'Mobile phone',
+          race: "White, Caucasian"
         },
         roles:['user']
       },
