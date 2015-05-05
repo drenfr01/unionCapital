@@ -51,14 +51,6 @@ Template.approveTransactions.helpers({
     }
   },
 
-  'userName': function(userId) {
-    var user = Meteor.users.findOne(userId);
-    //Handling delay in loading collections
-    if(user) {
-      return user.profile.firstName + " " + user.profile.lastName;
-    }
-  },
-
   'getPoints': function(eventId) {
     var event = Events.findOne(eventId);
     if(event.isPointsPerHour) {

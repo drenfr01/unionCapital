@@ -40,23 +40,13 @@ Meteor.publish("events", function() {
 //OR any member attending an event hosted by
 //that partner.
 Meteor.publish("reservations", function() {
-  var partnerAdmin = Meteor.users.findOne({_id: this.userId});
   if(Roles.userIsInRole(this.userId, 'admin')) {
     return Reservations.find();
   } else if(Roles.userIsInRole(this.userId, 'partnerAdmin')) {
-    //TODO: This will perform horribly at scale. Please refactor....
-    var users = Meteor.users.find({"profile.partnerOrg": partnerAdmin.profile.partnerOrg}, {fields: {_id: 1}}).fetch();
-    var usersArray = _.map(users, function(user) {
-      return user._id;
-    });
-    var events = Events.find({institution: partnerAdmin.profile.partnerOrg}, {fields: {_id: 1}}).fetch();
-    var eventsArray = _.map(events, function(event) {
-      return event._id;
-    });
-
+    var partnerAdminScope = ServerHelpers.partnerAdminScope(this.userId);
     return Reservations.find({$or: [
-     {userId: {$in: usersArray}},
-     {eventId: {$in: eventsArray}}
+     {userId: {$in: partnerAdminScope.usersArray}},
+     {eventId: {$in: partnerAdminScope.eventsArray}}
     ]});
   } else {
     return Reservations.find({userId: this.userId});
@@ -83,7 +73,7 @@ Meteor.publish('transactions', function() {
   }
 });
 
-//TODO: limit this
+//Partner Admins can only see images from their users
 Meteor.publish('images', function() {
   return Images.find();
 });

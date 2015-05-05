@@ -6,6 +6,16 @@ Transactions.attachSchema(new SimpleSchema({
       label: 'User Identifier',
       optional: true
     },
+    firstName: {
+      type: String,
+      label: 'Member first name',
+      optional: true,
+    },
+    lastName: {
+      type: String,
+      label: 'Member last name',
+      optional: true
+    },
     eventId: {
       type: String,
       label: 'ID of related Event',
