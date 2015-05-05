@@ -18,10 +18,6 @@ Meteor.publish('partnerOrganizations', function() {
   return PartnerOrgs.find();
 });
 
-Meteor.publish('incomeBrackets', function() {
-  return IncomeBrackets.find();
-});
-
 Meteor.publish("eventOrgs", function() {
   return EventOrgs.find();
 });

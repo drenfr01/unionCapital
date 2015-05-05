@@ -12,7 +12,7 @@ addressAutocomplete = {
     if (elementId === null) {
       console.log('Element does not exist');
     } else {
-      this.autocomplete = new google.maps.places.Autocomplete(document.getElementById(elementId), { types: ['geocode'] });
+      this.autocomplete = new google.maps.places.Autocomplete(document.getElementById(elementId), { types: ['geocode'], componentRestrictions: { country: "us"}});
 
       google.maps.event.addListener(this.autocomplete, 'place_changed', function() {
         self.fillInAddress(componentForm);
