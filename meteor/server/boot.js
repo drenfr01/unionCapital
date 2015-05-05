@@ -12,6 +12,7 @@ configureFacebook = function(config) {
 
   ServiceConfiguration.configurations.insert({
     service: "facebook",
+    loginStyle: "redirect",
     appId: config.clientId,
     secret: config.secret
   });

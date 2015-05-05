@@ -179,6 +179,7 @@ Meteor.startup(function () {
           city: 'Boston',
           state: 'MA',
           zip: '02114',
+          gender: "male",
           partnerOrg: "KIPP Academy Boston",
           incomeBracket: "25,000-29,999",
           numberOfKids: "2",

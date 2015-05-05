@@ -1,0 +1,26 @@
+<template name="memberProfilePartial">
+{{#with memberProfile}}
+    <h1 class="text-center">
+      {{firstName}} {{lastName}}
+      {{#if isArchived }}
+      <span class="text-warning">(Archived)</span>
+      {{/if}}
+    </h1>
+    <table class="table">
+      <tr><td>Partner Organization</td><td>{{partnerOrg}}</td></tr>
+      <tr><td>Email</td><td>{{memberEmail}}</td></tr>
+      <tr><td>Address</td><td>{{street1}} {{street2}}</td></tr>
+      <tr><td>City</td><td>{{city}}</td></tr>
+      <tr><td>State</td><td>{{state}}</td></tr>
+      <tr><td>Zip</td><td>{{zip}}</td></tr>
+      <hr>
+      <tr><td>Gender</td><td>{{gender}}</td></tr>
+      <tr><td>Race / Ethnicity</td><td>{{race}}</td></tr>
+      <tr><td>Number of Kids</td>{{numberOfKids}}</tr>
+      <tr><td>Children Qualify for Free or Reduced Price Lunch Program?</td>
+        <td>{{reducedLunch}}</td></tr>
+      <tr><td>Enrolled in Medicaid</td><td>medicaid</td></tr>
+      <tr><td>Primary way accessing the UCB App</td><td>{{UCBAppAccess}}</td></tr>
+    </table>
+{{/with}}
+</template>
