@@ -25,5 +25,15 @@ AppConfig = {
       // How many hours in the past to look (7*24)
       hoursBehind: -168
     }
+  },
+
+  // Event calendar
+  eventCalendar: {
+
+    // how many days to look into the future
+    daysAhead: 7,
+
+    // how many days to look into the future
+    daysBehind: 7
   }
 }
