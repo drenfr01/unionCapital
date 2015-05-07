@@ -57,17 +57,17 @@ Template.eventsCalendar.helpers({
 });
 
 Template.eventsCalendar.events({
+
   "keyup #search-box": _.throttle(function(e) {
     var text = $(e.target).val().trim();
     CalendarEventsSearch.search(text);
   }, 200),
+
   'click .insertReservation': function(e) {
     e.preventDefault();
     var attributes = {
-      userId : Meteor.userId(),
       eventId : this._id,
-      dateEntered : new Date(),
-      numberOfPeople: $(e.target).closest('div').find('.numberOfPeople').val()
+      numberOfPeople: $('.in .numberOfPeople').val()
     };
 
     Meteor.call('insertReservations', attributes, function(error) {
@@ -78,6 +78,7 @@ Template.eventsCalendar.events({
       }
     });
   },
+
   'click .removeReservation': function(e) {
     //make server side call to remove that reservation
     var attributes = {

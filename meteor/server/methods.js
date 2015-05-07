@@ -452,16 +452,16 @@ Meteor.methods({
 
   'insertReservations': function(attributes) {
     check(attributes, {
-      userId : String,
       eventId : String,
-      dateEntered : Date,
       numberOfPeople: String
     });
 
-    var user = Meteor.users.findOne(attributes.userId);
+    var user = Meteor.user();
 
     attributes.firstName = user.profile.firstName;
     attributes.lastName = user.profile.lastName;
+    attributes.userId = user._id;
+    attributes.dateEntered = new Date();
 
     Reservations.insert(attributes);
     Events.update({_id: attributes.eventId}, {$inc: {numberRSVPs: attributes.numberOfPeople}});
