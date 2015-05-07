@@ -22,7 +22,10 @@ CalendarEvents = function() {
         return !!(doc.eventDate >= minStartDate && doc.eventDate <= maxEndDate );
       })
       .sortBy(function(doc) {
-        return doc.eventdate;
+        return doc.eventDate;
+      })
+      .groupBy(function(doc) {
+        return moment(doc.eventDate).format("MM/DD/YYYY");
       })
       .value();
   }
