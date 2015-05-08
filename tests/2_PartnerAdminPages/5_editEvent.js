@@ -2,7 +2,7 @@ casper.test.comment("Testing Partner Admin Edit Event");
 
 //TODO: implement security on edit / delete events
 
-casper.test.begin('Partner Edit Event', 16, function suite(test) {
+casper.test.begin('Partner Edit Event', 18, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsPartnerAdmin();
   });
@@ -40,6 +40,7 @@ casper.test.begin('Partner Edit Event', 16, function suite(test) {
     test.assertExists('#eventOrg');
     test.assertExists('#eventCategory');
     test.assertExists('#eventDate');
+    test.assertExists("#pointsType");
     test.assertExists("#eventPoints");
     test.assertExists("#back");
     test.assertExists('#submit');
