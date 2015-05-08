@@ -64,5 +64,9 @@ Template.editMemberProfile.events({
         Router.go('memberProfile');
       }
     });
+  },
+  'click #back': function(e) {
+    e.preventDefault();
+    Router.go('memberProfile');
   }
 });
