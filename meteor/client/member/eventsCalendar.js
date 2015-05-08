@@ -76,6 +76,10 @@ Template.eventsCalendar.events({
     $('#search-box').focus();
   },
 
+  // This is a hack. I have invested too much time to start over, sorry.
+  // Bootstrap enforces strict structure on their accordions that, when broken, cause strangeness
+  // with collapsing other accordions during the opening of a new one
+  // This just makes sure to collapse all other accordions when a new one is opened
   'click .panel-heading': function(e) {
     thisId = $(e.target).attr('aria-controls');
     if ( !($(e.target).attr('id') === thisId) )
