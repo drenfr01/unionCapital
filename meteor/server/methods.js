@@ -339,15 +339,17 @@ Meteor.methods({
 
   },
 
-  removeReservation: function(attributes) {
-   check(attributes, {
-    userId: String,
-    eventId: String
-   });
+  removeReservation: function(eventId) {
+    check(eventId, String);
 
-   var reservation = Reservations.findOne({userId: attributes.userId, eventId: attributes.eventId});
-   Reservations.remove({userId: attributes.userId, eventId: attributes.eventId});
-   Events.update({_id: attributes.eventId}, {$inc: {numberRSVPs: -reservation.numberOfPeople}});
+    var userId = Meteor.userId();
+    var reservation = Reservations.findOne({userId: userId, eventId: eventId});
+
+    if (reservation) {
+      // These should be broken out into a method call in dataAccess
+      Reservations.remove({userId: userId, eventId: eventId});
+      Events.update({_id: eventId}, {$inc: {numberRSVPs: -reservation.numberOfPeople}});
+    }
   },
 
   'getRsvpList': function(eventId) {

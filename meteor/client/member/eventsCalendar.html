@@ -6,16 +6,40 @@
           <input type='text' class="form-control" placeholder='Search Events Name'
           id='search-box'/>
           <span class="input-group-btn">
-            <button class="btn btn-default btn-large">
+            <button type="button" class="btn btn-default btn-large" id="clearBtn">
               &times;
             </button>
           </span>
         </div>
       </div>
     </div>
-    {{#each arrayify getFutureEvents}}
-      <div class="row">
-        <div class="col-xs-12 page-panel">
+    {{#if hasFutureEvents}}
+      {{> eventHeader 'Future Events' }}
+      {{> eventPanel getFutureEvents }}
+    {{/if}}
+    {{#if hasPastEvents}}
+      {{> eventHeader 'Past Events' }}
+      {{> eventPanel getPastEvents }}
+    {{/if}}
+    {{#if hasNoEvents}}
+      {{> eventHeader 'There are no events that meet your criteria' }}
+    {{/if}}
+  </div>
+</template>
+
+<template name="eventHeader">
+  <div class="row">
+    <div class="col-xs-12">
+      <h3 class="pastOrFutureHeader">{{this}}</h3>
+    </div>
+  </div>
+</template>
+
+<template name="eventPanel">
+  {{#if hasMembers}}
+    <div class="row">
+      <div class="col-xs-12 page-panel">
+        {{#each arrayify this}}
           <h3 class="text-center">{{ formatPrettyDate name }}</h3>
           <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             {{#each value}}
@@ -51,28 +75,26 @@
                     </div>
                   {{else}}
                     <h5 class="attendingHeader text-center">How many will be attending?</h5>
-                    <!-- <form class="form-inline" id="reservationForm"> -->
-                      <!-- <div class="form-group"> -->
-                      <div class="col-xs-6 col-md-3 col-md-offset-3">
-                        <select class="form-control numberOfPeople">
-                          {{#each people}}
-                            <option>{{number}}</option>
-                          {{/each}}
-                        </select>
-                      </div>
-                      <div class="col-xs-6 col-md-3">
-                        <button type="button" class="btn btn-primary btn-block insertReservation">
-                          RSVP
-                        </button>
-                      </div>
+                    <div class="col-xs-6 col-md-3 col-md-offset-3">
+                      <select class="form-control numberOfPeople">
+                        {{#each people}}
+                          <option>{{number}}</option>
+                        {{/each}}
+                      </select>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                      <button type="button" class="btn btn-primary btn-block insertReservation">
+                        RSVP
+                      </button>
+                    </div>
                   {{/if}}
                 </div>
               </div>
             </div>
             {{/each}}
           </div>
-        </div>
+        {{/each}}
       </div>
-    {{/each}}
-  </div>
+    </div>
+  {{/if}}
 </template>

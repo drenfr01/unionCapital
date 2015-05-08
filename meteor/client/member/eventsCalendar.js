@@ -23,42 +23,31 @@ Template.eventsCalendar.rendered = function() {
 };
 
 Template.eventsCalendar.helpers({
-  // getEvents: function() {
-  //   var events = getEventsData();
-  //   //Note: we could filter server side, but it seemed more flexible
-  //   //to push all data to the client then let it handle filtering
-  //   //We could have a "include past events" flag for the user
-  //   var currentEvents = _.filter(events, function(event) {
-  //     var newEventDate = new Date(event.eventDate);
-  //     newEventDate.setHours(0,0,0,0);
-  //     var currentDate = new Date().setHours(0,0,0,0);
-  //     return newEventDate >= currentDate;
-  //   });
-  //   var eventsByDate = _.groupBy(currentEvents, function(event) {
-  //     return moment(event.eventDate).format("MM/DD/YYYY");
-  //   });
-  //   return eventsByDate;
-  // },
+
   getFutureEvents: function() {
     return CalendarEventsSearch.getFutureEvents();
   },
 
-  getFutureEvents: function() {
+  getPastEvents: function() {
     return CalendarEventsSearch.getPastEvents();
   },
 
-  hasReservation: function() {
-    return Reservations.findOne({ userId: Meteor.userId(),
-                                            eventId: this._id});
+  hasPastEvents: function() {
+    return !_.isEmpty(CalendarEventsSearch.getPastEvents());
   },
-  people: function() {
-    return NumberOfPeople.find();
+
+  hasFutureEvents: function() {
+    return !_.isEmpty(CalendarEventsSearch.getFutureEvents());
+  },
+
+  hasNoEvents: function() {
+    return _.isEmpty(CalendarEventsSearch.getPastEvents()) && _.isEmpty(CalendarEventsSearch.getFutureEvents());
   }
 });
 
 Template.eventsCalendar.events({
 
-  "keyup #search-box": _.throttle(function(e) {
+  'keyup #search-box': _.throttle(function(e) {
     var text = $(e.target).val().trim();
     CalendarEventsSearch.search(text);
   }, 200),
@@ -74,19 +63,16 @@ Template.eventsCalendar.events({
       if(error) {
         addErrorMessage(error.reason);
       } else {
-        addSuccessMessage("Congratulations, you've successfully RSVP'd!");
+        addSuccessMessage("Congratulations, you've successfully RSVPed!");
       }
     });
   },
 
   'click .removeReservation': function(e) {
     //make server side call to remove that reservation
-    var attributes = {
-      userId: Meteor.userId(),
-      eventId: this._id
-    };
+    var eventId = this._id;
 
-    Meteor.call('removeReservation', attributes, function(error) {
+    Meteor.call('removeReservation', eventId, function(error) {
       if(error) {
         addErrorMessage(error.reason);
       } else {
@@ -94,8 +80,35 @@ Template.eventsCalendar.events({
       }
     });
   },
+
   'click #back': function(e) {
     e.preventDefault();
     Router.go('manageEvents');
+  },
+
+  'click #clearBtn': function() {
+    CalendarEventsSearch.search('');
+    $('#search-box').val('');
+    $('#search-box').focus();
+  },
+});
+
+// eventPanel
+Template.eventPanel.helpers({
+
+  hasReservation: function() {
+    return Reservations.findOne({
+      userId: Meteor.userId(),
+      eventId: this._id
+    });
+  },
+
+  people: function() {
+    return NumberOfPeople.find();
+  },
+
+  hasMembers: function() {
+    return !_.isEmpty(this);
   }
 });
+
