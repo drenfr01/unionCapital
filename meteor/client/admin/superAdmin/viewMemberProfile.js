@@ -27,6 +27,8 @@ Template.viewMemberProfile.events({
         addErrorMessage(error.reason);
       } else {
         addSuccessMessage("Added " + points + " points to user!");
+        $('#pointsToAdd').val('');
+        $('#pointsDescription').val('');
       }
     });
   },
@@ -40,13 +42,13 @@ Template.viewMemberProfile.events({
     });
   },
   'click #unarchiveMember': function(e) {
-    e.preventDefault()
+    e.preventDefault();
     Meteor.call('unarchiveMember',this._id, function(error) {
       if(error) {
         addErrorMessage(error.reason);
       } else {
         addSuccessMessage("Unarchived member");
       }
-    })
+    });
   }
 });
