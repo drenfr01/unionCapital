@@ -1,21 +1,3 @@
-// var options = {
-//   keepHistory: 1,
-//   localSearch: false
-// };
-
-// var fields = ['name', 'description'];
-
-// EventsSearch = new SearchSource('eventsSearch', fields, options);
-
-// var getEventsData = function() {
-//   return EventsSearch.getData({
-//     transform: function(matchText, regExp) {
-//       return matchText.replace(regExp, "<span style='color:red'>$&</span>");
-//     },
-//     sort: {eventDate: 1}
-//   });
-// };
-
 CalendarEventsSearch = new CalendarEvents();
 
 Template.eventsCalendar.rendered = function() {

@@ -13,9 +13,6 @@ CalendarEvents = function() {
     maxEndDate = moment().add(AppConfig.eventCalendar[timeframe].hoursAhead, 'h').toDate();
 
     return _.chain(eventsSearch.getData({
-        transform: function(matchText, regExp) {
-          return matchText.replace(regExp, "<span style='color:red'>$&</span>");
-        },
         sort: {eventDate: 1}
       }))
       .filter(function(doc) {
