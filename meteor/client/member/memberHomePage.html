@@ -18,17 +18,17 @@
           <a href="{{ pathFor 'eventsCalendar' }}">Today in Boston</a>
       </div>
     </div>
+    <div class="row">
+      {{> bmcLogo}}
+    </div>
     <div class="row text-center">
       <div class="col-xs-12 page-panel" id="fbLikeBoxDiv">
         <div id="fb-root"></div>
         <div class="fb-like-box" data-href="https://www.facebook.com/unioncapitalboston"
-          data-colorscheme="light" data-show-faces="true" data-header="false"
-          data-stream="false" data-show-border="false" style="width=100%;">
+          data-colorscheme="light" data-show-faces="false" data-header="false"
+          data-stream="true" data-show-border="false" style="width=100%;">
         </div>
       </div>
-    </div>
-    <div class="row">
-      {{> bmcLogo}}
     </div>
   </div>
 </template>
