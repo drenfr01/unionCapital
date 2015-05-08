@@ -82,5 +82,10 @@ Template.allMembers.events({
   'click .memberRow': function(e) {
     e.preventDefault();
     Router.go('viewMemberProfile', {_id: this.memberId});
-  }
+  },
+  'click #clearBtn': function() {
+    MemberNameSearch.search('');
+    $('#search-box').val('');
+    $('#search-box').focus();
+  },
 });
