@@ -82,6 +82,10 @@ Meteor.methods({
         // Good to go, let's check in
         attributes.deleteInd = false;
         console.log(' 88888888  ' + attributes.imageId);
+        //TODO: refactor this to a central database access layer
+        var user = Meteor.users.findOne(attributes.userId);
+        attributes.firstName = user.profile.firstName;
+        attributes.lastName = user.profile.lastName;
         Transactions.insert(attributes);
       }
 
@@ -425,12 +429,12 @@ Meteor.methods({
 
   'archiveMember': function(userId) {
     check(userId, String);
-    Meteor.users.update({_id: userId}, {$set: {deleteInd: true}})
+    Meteor.users.update({_id: userId}, {$set: {deleteInd: true}});
   },
 
   'unarchiveMember': function(userId) {
     check(userId, String);
-    Meteor.users.update({_id: userId}, {$set: {deleteInd: false}})
+    Meteor.users.update({_id: userId}, {$set: {deleteInd: false}});
   },
 
   'getTopEarners': function(limit) {

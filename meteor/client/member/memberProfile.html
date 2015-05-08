@@ -1,40 +1,9 @@
 <template name="memberProfile">
+{{#with member}}
   <div class="col-xs-12 col-md-6 col-md-offset-3">
     <div class="row">
-      <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel title-panel">
-        <h3>Member Profile</h3>
-      </div>
-    </div>
-    <div class="row">
       <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel">
-        {{#with memberProfile}}
-          Name: {{firstName}} {{lastName}}
-          <br>
-          Email: {{memberEmail}}
-          <br>
-          Address: {{street1}} {{street2}}
-          <br>
-          City: {{city}}
-          <br>
-          State: {{state}}
-          <br>
-          Zip Code: {{zip}}
-          <br>
-          Gender: {{gender}}
-          <br>
-          Race / Ethnicity: {{race}}
-          <br>
-          Partner Organization: {{partnerOrg}}
-          <br>
-          Number of Kids: {{numberOfKids}}
-          <br>
-          Children Qualify for Free or Reduced Price Lunch Program?: {{reducedLunch}}
-          <br>
-          Enrolled in Medicaid: {{medicaid}}
-          <br>
-          Primary way accessing the UCB App: {{UCBAppAccess}}
-          <br>
-        {{/with}}
+          {{> memberProfilePartial}}
         <hr/>
         <button type="button" class="btn btn-block" id="edit">
           Edit
@@ -47,4 +16,5 @@
       </div>
     </div>
   </div>
+{{/with}}
 </template>

@@ -3,8 +3,7 @@ Template.viewMemberProfile.helpers({
     return this;
   },
   isArchived: function() {
-    console.log(Meteor.users.findOne(this._id))
-    return Meteor.users.findOne(this._id).deleteInd
+    return Meteor.users.findOne(this._id).deleteInd;
   }
 });
 
