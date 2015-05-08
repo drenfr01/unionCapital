@@ -1,6 +1,6 @@
 casper.test.comment("Testing Member Check-In");
 
-casper.test.begin('Check-In', 17, function suite(test) {
+casper.test.begin('Check-In', 16, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsUser();
   });
@@ -17,9 +17,8 @@ casper.test.begin('Check-In', 17, function suite(test) {
     test.assertExists("#navMemberEvents");
     test.assertExists("#navMemberPoints");
     test.assertExists("#navMemberContact");
-    test.assertExists("#navMemberShare");
 
-    this.click('#checkInDiv a')
+    this.click('#checkInDiv a');
   });
 
   // Check that events are present

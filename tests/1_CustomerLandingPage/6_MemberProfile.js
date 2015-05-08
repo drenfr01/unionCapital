@@ -21,7 +21,7 @@ casper.test.begin('Member Profile Page', 14, function suite(test) {
   casper.waitForSelector("#edit", function() {
     test.assertTextExists("CasperJS");
     test.assertTextExists("casperjs@gmail.com");
-    test.assertTextExists("10 Emerson Place");
+    test.assertTextExists("10 Emerson Pl");
     test.assertTextExists("24H");
     test.assertTextExists("Boston");
     test.assertTextExists("MA");

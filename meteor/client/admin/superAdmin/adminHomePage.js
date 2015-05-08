@@ -18,5 +18,9 @@ Template.adminHomePage.events({
   'click #exportData': function(e) {
     e.preventDefault();
     Router.go('exportData');
+  },
+  'click #imageViewer': function(e) {
+    e.preventDefault();
+    Router.go('imageViewer');
   }
 });

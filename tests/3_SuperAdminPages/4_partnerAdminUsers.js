@@ -1,6 +1,6 @@
 casper.test.comment("Testing Super Admin Partner Admin User Management");
 
-casper.test.begin('Partner Admin User', 23, function suite(test) {
+casper.test.begin('Partner Admin User', 25, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsSuperAdmin();
   });
@@ -33,11 +33,13 @@ casper.test.begin('Partner Admin User', 23, function suite(test) {
     test.assertExists('#lastName');
     test.assertExists('#userEmail');
     test.assertExists('#userPassword');
-    test.assertExists('#street1');
-    test.assertExists('#street2');
-    test.assertExists('#city');
-    test.assertExists('#state');
-    test.assertExists('#zip');
+    test.assertExists('#inputAddress');
+    test.assertExists('#street_number');
+    test.assertExists('#route');
+    test.assertExists('#userStreetAddress2');
+    test.assertExists('#locality');
+    test.assertExists('#administrative_area_level_1');
+    test.assertExists('#postal_code');
     test.assertExists('#organizations');
 
     test.assertExists('#back');
@@ -47,14 +49,16 @@ casper.test.begin('Partner Admin User', 23, function suite(test) {
     this.sendKeys('#lastName', 'Admin');
     this.sendKeys('#userEmail', 'casperAdmin@gmail.com');
     this.sendKeys('#userPassword', 'casperjs');
-    this.sendKeys('#street1', '20 Prospect St');
-    this.sendKeys('#street2', '#3');
-    this.sendKeys('#city', 'Cambridge');
-    this.sendKeys('#state', 'MA');
-    this.sendKeys('#zip', '02139');
+    this.sendKeys('#street_number', '20');
     this.fillSelectors('form#addPartnerAdminUserForm', {
       'select[id="organizations"]': "Thrive in Five"
     }, false);
+
+    this.sendKeys('#route', 'Prospect St');
+    this.sendKeys('#userStreetAddress2', '#3');
+    this.sendKeys('#locality', 'Cambridge');
+    this.sendKeys('#administrative_area_level_1', 'MA');
+    this.sendKeys('#postal_code', '02139');
     this.click('#submit');
   });
 

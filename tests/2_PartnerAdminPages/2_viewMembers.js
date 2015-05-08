@@ -35,7 +35,7 @@ casper.test.begin('All Members', 24, function suite(test) {
 
   casper.waitWhileSelector('table.table-hover', function() {
     test.assertTextExists('kipp');
-    test.assertExists('#deleteMember');
+    test.assertExists('#archiveMember');
     test.assertExists('#pointsToAdd');
     test.assertExists('#addPoints');
 

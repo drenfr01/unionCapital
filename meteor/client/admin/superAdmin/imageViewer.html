@@ -1,0 +1,73 @@
+<template name="imageViewer">
+{{#with modalData}}
+<div class="modal fade" id="showImageModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          &times;</button>
+        <h4 class="modal-title text-center">{{pendingEventName}}</h4>
+      </div>
+      <div class="modal-body text-center">
+        <img src="{{imageUrl this.imageId}}" alt="pending transaction image" height=100% width=100%>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{/with}}
+<div class="col-xs-12 col-md-8 col-md-offset-2">
+  <div class="row">
+    <div class="col-xs-6 col-xs-offset-3 page-panel page-panel-form">
+      <div class="input-group">
+        <input type='text' class="form-control" 
+        placeholder='Search Member or Partner Org Name'
+        id='search-box'/>
+        <span class="input-group-btn">
+          <button class="btn btn-default btn-large">
+            &times;
+          </button>
+        </span>
+      </div>
+      <br>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 page-panel page-panel-form">
+      {{#if images}}
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Member Name</th>
+            <th>Partner Org</th>
+            <th>Submission Time</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each images}}
+            <tr>
+              <td>{{profile.firstName}} {{profile.lastName}}</td>
+              <td>{{profile.partnerOrg}}</td>
+              <td>{{formatDate submissionTime}}</td>
+              <td>
+                <button type="button" class="btn btn-warning btn-xs showImage"
+                  data-toggle="modal" data-target="#showImageModal">
+                  Show Image
+                </button>
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      {{else}}
+        <br>
+        <h3>No images currently available</h3>
+      {{/if}}
+      <br>
+    </div>
+  </div>
+</div>
+</template>

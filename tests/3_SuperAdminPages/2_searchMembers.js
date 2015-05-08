@@ -1,6 +1,6 @@
 casper.test.comment("Testing Super Admin Member Search");
 
-casper.test.begin('All Members', 18, function suite(test) {
+casper.test.begin('All Members', 19, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsSuperAdmin();
   });
@@ -30,15 +30,23 @@ casper.test.begin('All Members', 18, function suite(test) {
     this.click('.memberRow');
   });
 
-  casper.waitForSelector('#deleteMember', function() {
+  casper.waitForSelector('#archiveMember', function() {
     test.assertTextExists('CasperJS');
-    test.assertExists('#deleteMember');
+    test.assertExists('#archiveMember');
     test.assertExists('#pointsToAdd');
     test.assertExists('#pointsDescription');
     test.assertExists('#addPoints');
 
     test.assertTextExists('Boston Music');
   });
+
+  casper.then(function () {
+    this.click('#archiveMember')
+    casper.wait(500, function(){
+      test.assertTextExists('Archived')
+      this.click('#unarchiveMember')
+    })
+  })
 
   //test adding points
   casper.then(function() {
