@@ -116,6 +116,10 @@ h3 small {
   border-radius: 1px;
 }
 
+.panel-default, .panel-heading, .panel-group.panel {
+  border-radius: 1px !important;
+}
+
 .btn-file {
   position: relative;
   overflow: hidden;
@@ -796,8 +800,69 @@ margin-right: auto;
   }
 }
 
+.navbar {
+  font-family: @font-family-serif;
+  font-weight: bold;
+}
+
+.attendingHeader {
+  font-weight: bold;
+  color: @brand-info;
+}
+
+.header-container {
+  margin: -10px -15px;
+  //padding: 10px 15px;
+}
+
+.eventTime {
+  display: table-cell;
+  min-width: 5em;
+  font-size: ceil((@font-size-base * 1.125));
+  padding: 5px;
+  color: white;
+  background-color: @gray;
+  vertical-align: middle;
+}
+
+.eventName {
+  display: table-cell;
+  padding: 0px;
+  font-size: ceil((@font-size-base * 1.125));
+  vertical-align: middle;
+  width: 100%;
+  a {
+    color: black;
+    text-decoration: none;
+    display: block;
+    padding: 5px;
+  }
+}
+
+.more-event-info-div {
+  margin-bottom: 1em;
+  margin-top: 1em;
+  text-decoration: underline;
+}
+
+.event-info-list {
+  font-size: 115%;
+  li {
+    margin: .5em;
+  }
+  .event-date {
+    font-weight: bold;
+  }
+}
+
+.pastOrFutureHeader {
+  color: @gray;
+  font-family: @font-family-serif;
+  text-align: center;
+}
+
 .active-input {
-	border-color: @whip-main;
+	border-color: @new-main;
 }
 
 .inactive-input {

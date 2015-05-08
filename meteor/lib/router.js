@@ -273,7 +273,7 @@ Router.map(function() {
     }
   });
   this.route('singleEvent', {
-    path: '/singleEvent/:_id',
+    path: '/event/:_id',
     data: function() { return Events.findOne({_id: this.params._id }); }
   });
 
