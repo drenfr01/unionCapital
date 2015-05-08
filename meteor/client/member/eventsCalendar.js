@@ -1,81 +1,62 @@
-var options = {
-  keepHistory: 1,
-  localSearch: false
-};
-
-var fields = ['name', 'description'];
-
-EventsSearch = new SearchSource('eventsSearch', fields, options);
-
-var getEventsData = function() {
-  return EventsSearch.getData({
-    transform: function(matchText, regExp) {
-      return matchText.replace(regExp, "<span style='color:red'>$&</span>");
-    },
-    sort: {eventDate: 1}
-  });
-};
+CalendarEventsSearch = new CalendarEvents();
 
 Template.eventsCalendar.rendered = function() {
-  EventsSearch.search("");
+  CalendarEventsSearch.search("");
 };
 
 Template.eventsCalendar.helpers({
-  getEvents: function() {
-    var events = getEventsData();
-    //Note: we could filter server side, but it seemed more flexible
-    //to push all data to the client then let it handle filtering
-    //We could have a "include past events" flag for the user
-    var currentEvents = _.filter(events, function(event) {
-      var newEventDate = new Date(event.eventDate);
-      newEventDate.setHours(0,0,0,0);
-      var currentDate = new Date().setHours(0,0,0,0);
-      return newEventDate >= currentDate;
-    });
-    var eventsByDate = _.groupBy(currentEvents, function(event) {
-      return moment(event.eventDate).format("MM/DD/YYYY");
-    });
-    return eventsByDate;
+
+  getFutureEvents: function() {
+    return CalendarEventsSearch.getFutureEvents();
   },
-  hasReservation: function() {
-    return Reservations.findOne({ userId: Meteor.userId(),
-                                            eventId: this._id});
+
+  getPastEvents: function() {
+    return CalendarEventsSearch.getPastEvents();
   },
-  people: function() {
-    return NumberOfPeople.find();
+
+  hasPastEvents: function() {
+    return !_.isEmpty(CalendarEventsSearch.getPastEvents());
+  },
+
+  hasFutureEvents: function() {
+    return !_.isEmpty(CalendarEventsSearch.getFutureEvents());
+  },
+
+  hasNoEvents: function() {
+    return _.isEmpty(CalendarEventsSearch.getPastEvents()) && _.isEmpty(CalendarEventsSearch.getFutureEvents());
   }
 });
 
 Template.eventsCalendar.events({
-  "keyup #search-box": _.throttle(function(e) {
+
+  'keyup #search-box': _.throttle(function(e) {
     var text = $(e.target).val().trim();
-    EventsSearch.search(text);
+    CalendarEventsSearch.search(text);
   }, 200),
+
   'click .insertReservation': function(e) {
     e.preventDefault();
+
+    thisId = this._id;
     var attributes = {
-      userId : Meteor.userId(),
-      eventId : this._id,
-      dateEntered : new Date(),
-      numberOfPeople: $(e.target).closest('div').find('.numberOfPeople').val()
+      eventId : thisId,
+      numberOfPeople:  $('#select' + thisId).val()
     };
 
     Meteor.call('insertReservations', attributes, function(error) {
       if(error) {
         addErrorMessage(error.reason);
       } else {
-        addSuccessMessage("Congratulations, you've successfully RSVP'd!");
+        addSuccessMessage("Congratulations, you've successfully RSVPed!");
       }
     });
   },
+
   'click .removeReservation': function(e) {
     //make server side call to remove that reservation
-    var attributes = {
-      userId: Meteor.userId(),
-      eventId: this._id
-    };
+    var eventId = this._id;
 
-    Meteor.call('removeReservation', attributes, function(error) {
+    Meteor.call('removeReservation', eventId, function(error) {
       if(error) {
         addErrorMessage(error.reason);
       } else {
@@ -83,8 +64,45 @@ Template.eventsCalendar.events({
       }
     });
   },
+
   'click #back': function(e) {
     e.preventDefault();
     Router.go('manageEvents');
+  },
+
+  'click #clearBtn': function() {
+    CalendarEventsSearch.search('');
+    $('#search-box').val('');
+    $('#search-box').focus();
+  },
+
+  // This is a hack. I have invested too much time to start over, sorry.
+  // Bootstrap enforces strict structure on their accordions that, when broken, cause strangeness
+  // with collapsing other accordions during the opening of a new one
+  // This just makes sure to collapse all other accordions when a new one is opened
+  'click .panel-heading': function(e) {
+    thisId = $(e.target).attr('aria-controls');
+    if ( !($(e.target).attr('id') === thisId) )
+      $('.panel-collapse.in').not(" [id='" + thisId + "'] ").collapse("hide");
   }
 });
+
+// eventPanel
+Template.eventPanel.helpers({
+
+  hasReservation: function() {
+    return Reservations.findOne({
+      userId: Meteor.userId(),
+      eventId: this._id
+    });
+  },
+
+  people: function() {
+    return NumberOfPeople.find();
+  },
+
+  hasMembers: function() {
+    return !_.isEmpty(this);
+  }
+});
+

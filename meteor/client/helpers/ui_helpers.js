@@ -6,6 +6,14 @@ UI.registerHelper('formatDate', function(unformattedDate) {
     }
 });
 
+UI.registerHelper('formatPrettyDate', function(unformattedDate) {
+    if(moment(unformattedDate).isValid()) {
+      return moment(unformattedDate).format('dddd, MMMM Do');
+    } else {
+      return "";
+    }
+});
+
 UI.registerHelper('justTime', function(unformattedDate) {
     return moment(unformattedDate).format('h:mm A');
 });
@@ -17,7 +25,7 @@ UI.registerHelper("eventOptions", function() {
           }).value();
 });
 
-//handlebars supports iterating over object keys, but 
+//handlebars supports iterating over object keys, but
 //Meteor currently does not. This gives Meteor this ability
 UI.registerHelper("arrayify", function(obj) {
   result = [];
@@ -40,7 +48,7 @@ UI.registerHelper('formatEventDate', function(unformattedStartDate, unformattedE
   // which will be either an empty string or the single good day
   if (startDate && endDate) {
     if (moment(startDate).isSame(endDate, 'day'))
-      finalDateString = startDate; 
+      finalDateString = startDate;
     else
       finalDateString = startDate + ' - ' + endDate;
   }

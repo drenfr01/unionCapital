@@ -80,7 +80,6 @@ Meteor.startup(function () {
   //Seeding Number of People for Reservations
   if(NumberOfPeople.find().count() === 0) {
     var people = [
-      '0',
       '1',
       '2',
       '3',
@@ -113,7 +112,7 @@ Meteor.startup(function () {
       Races.insert({name: race, deleteInd: false});
     });
   }
-  
+
   //Seeding event categories
   if( EventCategories.find().count() === 0 ) {
     var eventCategories =
@@ -128,7 +127,7 @@ Meteor.startup(function () {
     });
   }
 
-  //Note: this list will differ from partner orgs, because we may 
+  //Note: this list will differ from partner orgs, because we may
   //find organizations sponsoring events that aren't UCB partners yet
   if( Meteor.settings.env === 'dev' && EventOrgs.find().count() === 0 ) {
     var organizations =

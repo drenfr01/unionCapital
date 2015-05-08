@@ -4,7 +4,7 @@ casper.test.begin('Manage Partner Events', 33, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsPartnerAdmin();
   });
-  
+
   //check home page main panel
   casper.waitForSelector("#login-dropdown-list", function() {
     test.assertExists('#manageEvents');
@@ -59,7 +59,7 @@ casper.test.begin('Manage Partner Events', 33, function suite(test) {
     test.assertTextExists('4'); //Total RSVPS
     //KIPP Member
     test.assertTextExists('CasperJS');
-    test.assertTextExists('2'); 
+    test.assertTextExists('2');
     //Thrive in Five Member
     test.assertTextDoesntExist('Test2');
 
@@ -78,7 +78,7 @@ casper.test.begin('Manage Partner Events', 33, function suite(test) {
     test.assertTextExists('8'); //Total RSVPS
     //KIPP Member
     test.assertTextExists('CasperJS');
-    test.assertTextExists('3'); 
+    test.assertTextExists('3');
     //Thrive in Five Member
     test.assertTextExists('Test2');
     test.assertTextExists('5');
