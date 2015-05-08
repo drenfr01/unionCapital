@@ -103,5 +103,10 @@ Template.manageEvents.events({
   'click #addEvent': function(e) {
     e.preventDefault();
     Router.go('addEvents');
-  }
+  },
+  'click #clearBtn': function() {
+    EventsSearch.search('');
+    $('#search-box').val('');
+    $('#search-box').focus();
+  },
 });

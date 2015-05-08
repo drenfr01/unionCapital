@@ -38,5 +38,10 @@ Template.partnerOrgs.events({
   "keyup #search-box": _.throttle(function(e) {
     var text = $(e.target).val().trim();
     PartnerOrgSearch.search(text);
-  }, 200)
+  }, 200),
+  'click #clearBtn': function() {
+    PartnerOrgSearch.search('');
+    $('#search-box').val('');
+    $('#search-box').focus();
+  },
 });

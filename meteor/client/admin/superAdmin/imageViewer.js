@@ -47,5 +47,10 @@ Template.imageViewer.events({
   },
   'keyup #search-box': function(e) {
     Session.set('searchString', $('#search-box').val());
-  }
+  },
+  'click #clearBtn': function() {
+    Session.set('searchString', null);
+    $('#search-box').val('');
+    $('#search-box').focus();
+  },
 });

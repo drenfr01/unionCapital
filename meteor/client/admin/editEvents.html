@@ -10,7 +10,12 @@
     {{> afQuickField name="institution" options=institutions id="eventOrg"}}
     {{> afQuickField name="category" options=categories id="eventCategory"}}
     {{> afQuickField name="eventDate" type="datetime-local" offset="-0400" id="eventDate"}}
-    {{> afQuickField name="points" id="eventPoints"}}
+    {{> afQuickField name="isPointsPerHour" id="pointsType" type="boolean-radios"}}
+    {{#if isPointsPerHour}}
+      {{> afQuickField name="pointsPerHour" id="eventPoints"}}
+    {{else}}
+      {{> afQuickField name="points" id="eventPoints"}}
+    {{/if}}
   </fieldset>
   <button type="submit" class="btn btn-default" id="submit">Edit Event</button>
   <button type="button" class="btn btn-primary" id="back">Back to Events</button>

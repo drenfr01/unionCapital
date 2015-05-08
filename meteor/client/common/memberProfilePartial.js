@@ -1,8 +1,5 @@
 Template.memberProfilePartial.helpers({
   memberProfile: function() {
-    return this.profile;
-  },
-  memberEmail: function() {
-    return this.emails[0].address;
+    return _.extend(this.profile, {emailAddress: this.emails[0].address});
   }
 });
