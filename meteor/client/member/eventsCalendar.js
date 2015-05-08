@@ -76,7 +76,7 @@ Template.eventsCalendar.events({
     $('#search-box').focus();
   },
 
-  'click .panel': function(e) {
+  'click .panel-heading': function(e) {
     thisId = $(e.target).attr('aria-controls');
     if ( !($(e.target).attr('id') === thisId) )
       $('.panel-collapse.in').not(" [id='" + thisId + "'] ").collapse("hide");
