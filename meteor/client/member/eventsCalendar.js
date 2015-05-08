@@ -36,9 +36,11 @@ Template.eventsCalendar.events({
 
   'click .insertReservation': function(e) {
     e.preventDefault();
+
+    thisId = this._id;
     var attributes = {
-      eventId : this._id,
-      numberOfPeople: $('.in .numberOfPeople').val()
+      eventId : thisId,
+      numberOfPeople:  $('#select' + thisId).val()
     };
 
     Meteor.call('insertReservations', attributes, function(error) {
@@ -73,6 +75,12 @@ Template.eventsCalendar.events({
     $('#search-box').val('');
     $('#search-box').focus();
   },
+
+  'click .panel': function(e) {
+    thisId = $(e.target).attr('aria-controls');
+    if ( !($(e.target).attr('id') === thisId) )
+      $('.panel-collapse.in').not(" [id='" + thisId + "'] ").collapse("hide");
+  }
 });
 
 // eventPanel
