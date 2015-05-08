@@ -48,7 +48,7 @@ Template.editEvent.events({
     Router.go('manageEvents');
   },
   'click #submit': function(e) {
-    //Router.go('manageEvents');
+    Router.go('manageEvents');
   },
   'change #pointsType': function(e) {
     Session.set('displayPointsPerHour', 
