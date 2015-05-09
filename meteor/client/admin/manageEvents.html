@@ -1,139 +1,139 @@
 <template name="manageEvents">
-  <br>
-  <br>
-  <div class="row">
-    <div class="col-xs-12 text-center">
-      <a href="addEvents" type="button" class="btn btn-lg btn-primary" id="addEvent">
-        <span class="glyphicon glyphicon-plus"></span> Add Event
-      </a>
-      <a href="uploadEvents" type="button" class="btn btn-lg btn-info">
-        <span class="glyphicon glyphicon-upload"></span> Upload Event CSV
-      </a>
-    </div>
-  </div>
-  <br>
-  <div class="row">
-    <div class="col-xs-6 col-xs-offset-3">
-      <div class="input-group">
-        <input type='text' class="form-control" placeholder='Search Events'
-        id='search-box'/>
-        <span class="input-group-btn">
-          <button type="button" class="btn btn-default btn-large" id="clearBtn">
-            &times;
-          </button>
-        </span>
-      </div>
-    </div>
-  </div>
-  <br>
-  <form class="horizontal">
+  <div class="col-xs-12">
     <div class="row">
-      <div class="col-xs-2 col-xs-offset-4">
-        <div class="form-group>">
-          <label for="institutions">Institution</label>
-          <select class="form-control" id="institutions">
-            {{#each institutions}}
-              <option>{{name}}</option>
-            {{/each}}
-          </select>
-        </div>
+      <!-- <div class="col-xs-6 col-md-2 col-md-offset-3 text-center"> -->
+      <div class="col-xs-6 col-md-2 col-md-offset-7 text-center">
+        <a href="addEvents" type="button" class="btn btn-block btn-default" id="addEvent">
+          <span class="glyphicon glyphicon-plus"></span> Add Event
+        </a>
       </div>
-      <div class="col-xs-2">
-        <div class="form-group>">
-          <label for="categories">Category</label>
-          <select class="form-control" id="categories">
-            {{#each categories}}
-              <option>{{name}}</option>
-            {{/each}}
-          </select>
-        </div>
-      </div>
-      <div class="col-xs-4">
-        <label class="radio-inline">
-          <input type="radio" name="inlineRadioOptions" id="past" value="past">
-            Past
-        </label>
-        <label class="radio-inline">
-          <input type="radio" name="inlineRadioOptions"
-            id="current" value="current">
-            Current
-        </label>
+      <div class="col-xs-6 col-md-2 text-center">
+        <a href="uploadEvents" type="button" class="btn btn-block btn-default">
+          <span class="glyphicon glyphicon-upload"></span> Upload Event CSV
+        </a>
       </div>
     </div>
-  </form>
-  <hr>
-  <div class="col-xs-12 col-md-10 col-md-offset-1 page-panel">
-    <!-- TODO: this should be partial -->
-    {{#if eventTypeSelected 'new'}}
-      <h1>New Event Form</h1>
-    {{else}}
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th>Name of Event</th>
-          <th>Date</th>
-          <th>Address</th>
-          {{#if eventTypeSelected 'current'}}
-            <th># RSVPs</th>
+    <div class="row">
+      <div class="col-xs-12 col-md-10 col-md-offset-1 page-panel options-panel">
+        <form>
+          <div class="col-xs-12 col-md-4">
+            <div class="form-group>">
+              <label for="institutions" class="label-like-thing">Institution</label>
+              <select class="form-control" id="institutions">
+                {{#each institutions}}
+                  <option>{{name}}</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-4">
+            <div class="form-group>">
+              <label for="categories" class="label-like-thing">Category</label>
+              <select class="form-control" id="categories">
+                {{#each categories}}
+                  <option>{{name}}</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-4 radio-button" id="pastOrCurrentRdoDiv">
+            <p class="label-like-thing">Timeframe</p>
+            <input type="radio" id="current" name="inlineRadioOptions" value="current" checked="checked">
+            <label for="current">Current</label>
+            <input type="radio" id="past" name="inlineRadioOptions" value="past">
+            <label for="past">Past</label>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-md-10 col-md-offset-1 page-panel">
+        <!-- TODO: this should be partial -->
+        {{#if eventTypeSelected 'new'}}
+          <h1>New Event Form</h1>
+        {{else}}
+        <div class="row">
+          <div class="col-xs-12 col-md-6 col-md-offset-3">
+            <div class="input-group">
+              <input type='text' class="form-control" placeholder='Search Events'
+              id='search-box'/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default btn-large" id="clearBtn">
+                  &times;
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Name of Event</th>
+              <th>Date</th>
+              <th>Address</th>
+              {{#if eventTypeSelected 'current'}}
+                <th># RSVPs</th>
+              {{else}}
+                <th># Attended</th>
+              {{/if}}
+              <th>Institution</th>
+              <th>Category</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+          {{#if eventTypeSelected 'searching'}}
+            {{#each arrayify events}}
+              {{#each value}}
+                <tr>
+                  <td class="eventView"><a href="{{pathFor 'singleEvent'}}">
+                      {{{name}}}</a></td>
+                  <td>{{formatDate eventDate}}</td>
+                  <td>{{address}}</td>
+                  <td>{{numberRSVPs}}</td>
+                  <td>{{institution}}</td>
+                  <td>{{category}}</td>
+                  <td>
+                    <button type="button" class="btn btn-default btn-sm editEvent">
+                      Edit
+                    </button>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-default btn-sm deleteEvent">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              {{/each}}
+            {{/each}}
           {{else}}
-            <th># Attended</th>
-          {{/if}}
-          <th>Institution</th>
-          <th>Category</th>
-          <th></th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-      {{#if eventTypeSelected 'searching'}}
-        {{#each arrayify events}}
-          {{#each value}}
+            {{#each events}}
             <tr>
               <td class="eventView"><a href="{{pathFor 'singleEvent'}}">
-                  {{{name}}}</a></td>
-              <td>{{formatDate eventDate}}</td>
+                  {{name}}</a></td>
+              <td>{{formatDate eventDate}}-{{justTime endTime}}</td>
               <td>{{address}}</td>
               <td>{{numberRSVPs}}</td>
               <td>{{institution}}</td>
               <td>{{category}}</td>
               <td>
-                <button type="button" class="btn btn-default btn-sm editEvent">
+                <button type="button" class="btn btn-warning btn-sm editEvent">
                   Edit
                 </button>
               </td>
               <td>
-                <button type="button" class="btn btn-default btn-sm deleteEvent">
+                <button type="button" class="btn btn-danger btn-sm deleteEvent">
                   Delete
                 </button>
               </td>
             </tr>
-          {{/each}}
-        {{/each}}
-      {{else}}
-        {{#each events}}
-        <tr>
-          <td class="eventView"><a href="{{pathFor 'singleEvent'}}">
-              {{name}}</a></td>
-          <td>{{formatDate eventDate}}-{{justTime endTime}}</td>
-          <td>{{address}}</td>
-          <td>{{numberRSVPs}}</td>
-          <td>{{institution}}</td>
-          <td>{{category}}</td>
-          <td>
-            <button type="button" class="btn btn-default btn-sm editEvent">
-              Edit
-            </button>
-          </td>
-          <td>
-            <button type="button" class="btn btn-default btn-sm deleteEvent">
-              Delete
-            </button>
-          </td>
-        </tr>
-        {{/each}}
-      {{/if}}
-      </tbody>
-    </table>
-    {{/if}}
+            {{/each}}
+          {{/if}}
+          </tbody>
+        </table>
+        {{/if}}
+      </div>
+    </div>
   </div>
 </template>

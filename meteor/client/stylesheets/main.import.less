@@ -751,6 +751,8 @@ margin-right: auto;
   font-family: @font-family-sans-serif;
   text-align: center;
   font-weight: bold;
+  color: @gray-light;
+  cursor: pointer;
 }
 /*
  Change background color for label next to checked radio button
@@ -759,6 +761,7 @@ margin-right: auto;
 .radio-button input[type=radio]:checked + label {
   background-image: none;
   background-color: #d0d0d0;
+  color: inherit;
 }
 
 .profile-link {
@@ -867,4 +870,17 @@ margin-right: auto;
 
 .inactive-input {
 	background-color: @gray-lighter;
+}
+
+.label-like-thing {
+  margin-bottom: 5px;
+  margin-top: 5px;
+  font-weight: bold;
+  text-align: center;
+  display: block;
+}
+
+.options-panel {
+  margin-top: 10px;
+  padding-top: 10px;
 }
