@@ -1,7 +1,7 @@
 <template name="addEvents">
   <div class="col-xs-12 col-md-4 col-md-offset-4 text-center page-panel">
     {{#autoForm collection="Events" id="insertEventsForm" type="insert"
-      resetOnSuccess=false}}
+      resetOnSuccess=true}}
     <fieldset>
       <legend>Add Event</legend>
       {{> afQuickField name="name"}}
@@ -12,7 +12,7 @@
       {{> afQuickField name="category" options=categories}}
       {{> afQuickField name="eventDate" type="datetime-local" offset="-0400"}}
       {{> afQuickField name="duration"}}
-      {{> afQuickField name="isPointsPerHour" id="pointsType" value="checked" 
+      {{> afQuickField name="isPointsPerHour" id="pointsType" value="checked"
           type="boolean-radios"}}
       {{#if isPointsPerHour}}
         {{> afQuickField name="pointsPerHour" value=100}}
