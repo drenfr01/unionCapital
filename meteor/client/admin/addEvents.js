@@ -14,6 +14,12 @@ AutoForm.hooks({
         }
         return doc;
       }
+    },
+    onSuccess: function() {
+      addSuccessMessage('Event successfully added!');
+    },
+    onError: function(formType, error) {
+      addErrorMessage('There was an error. Please try again.');
     }
   }
 });
@@ -69,7 +75,7 @@ Template.addEvents.events({
     }
   },
   'change #pointsType': function(e) {
-    Session.set('displayPointsPerHour', 
+    Session.set('displayPointsPerHour',
                 $("input[type='radio'][name='isPointsPerHour']:checked").val());
   },
   'click #back': function(e) {
