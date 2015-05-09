@@ -1,8 +1,8 @@
 SearchSource.defineSource('memberSearch', function(searchText, options) {
   try {
-    //I think we overwrite options because there is both a server side and client side def 
+    //I think we overwrite options because there is both a server side and client side def
     //of this method, so it either calls the client side or after the timeout
-    //does the server side 
+    //does the server side
     var options = {
       sort: {"profile.firstName": 1},
       limit: 20
@@ -25,6 +25,7 @@ SearchSource.defineSource('memberSearch', function(searchText, options) {
       } else if(Roles.userIsInRole(this.userId, 'partnerAdmin')) {
         selector = {
           "profile.partnerOrg": currentUser.profile.partnerOrg,
+          "roles": "user",
           $or: [
           {"profile.firstName": regExp},
           {"profile.lastName": regExp}
@@ -40,7 +41,10 @@ SearchSource.defineSource('memberSearch', function(searchText, options) {
       if (Roles.userIsInRole(this.userId, 'admin')) {
         selector = {};
       } else if(Roles.userIsInRole(this.userId, 'partnerAdmin')) {
-        selector = {"profile.partnerOrg": currentUser.profile.partnerOrg};
+        selector = {
+          "profile.partnerOrg": currentUser.profile.partnerOrg,
+          "roles": "user"
+        };
       }
       else {
         //should never reach here, if you aren't a superAdmin or partnerAdmin
@@ -48,18 +52,18 @@ SearchSource.defineSource('memberSearch', function(searchText, options) {
       }
       users = Meteor.users.find(selector, options).fetch();
     }
-    
+
       //TODO: THE BELOW CODE SNIPPET IS AN OFFENSE TO GOD AND MEN
       var tableRows = _.map(users, function(user) {
-      
+
       //WARNING: unclear if below is a big performance hit (2 cursor calls)
       var transactionCount = Transactions.find({userId: user._id}).count();
       var totalPoints = Meteor.users.totalPointsFor(user._id);
-      var mostRecentTransaction = Transactions.find({userId: user._id}, 
+      var mostRecentTransaction = Transactions.find({userId: user._id},
                             {sort: {transactionDate: -1}, limit: 1}).fetch()[0] ||
                               { eventId: "", transactionDate: ""};
       var mostRecentEvent = Events.findOne(mostRecentTransaction.eventId) || {name: ""};
-      
+
       //if user is admin
       var userProfile = user.profile || {firstName: 'admin', lastName: 'd', zip: ''};
       //if user is logging in with facebook
@@ -72,17 +76,17 @@ SearchSource.defineSource('memberSearch', function(searchText, options) {
       return {
         memberId: user._id,
         firstName: userFirstName.toLowerCase(),
-        lastName: userLastName.toLowerCase(), 
+        lastName: userLastName.toLowerCase(),
         zip: userZip,
         lastEvent: mostRecentEvent.name,
         lastEventDate: mostRecentTransaction.transactionDate,
-        numberOfTransactions: transactionCount, 
+        numberOfTransactions: transactionCount,
         totalPoints: totalPoints};
     });
 
     return tableRows;
   } catch(e) {
-    console.log(e.reason);
+    console.log(e);
   }
 });
 
