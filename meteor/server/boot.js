@@ -12,7 +12,7 @@ configureFacebook = function(config) {
 
   ServiceConfiguration.configurations.insert({
     service: "facebook",
-    loginStyle: "redirect",
+    loginStyle: "popup", //NOTE: changing to redirect causes bug right now
     appId: config.clientId,
     secret: config.secret
   });
