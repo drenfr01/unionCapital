@@ -3,7 +3,6 @@ userAttributes = {
 };
 
 Template.signup.rendered = function() {
-  console.log(this);
   Session.set('signupPage', this.data);
 };
 
