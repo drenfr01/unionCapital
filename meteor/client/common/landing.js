@@ -22,10 +22,8 @@ Template.landing.events({
       } else {
         //Facebook logins populate profile.name
         if(_.isUndefined(Meteor.user().profile.name)) {
-          console.log('Routing to home page');
           Router.go('memberHomePage');
         } else {
-          console.log('Routing to facebook page');
           Router.go('signup', {template: 'createNewUser'});
         }
       }
