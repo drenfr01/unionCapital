@@ -27,12 +27,12 @@ Template.eula.events({
                                        } else {
                                          Router.go('memberHomePage');
                                        }
-                                       // Let's delete this so the pw is not 
-                                       // sitting around in plaintext
-                                       delete userAttributes.password;
                                      });
 
           }
+          // Let's delete this so the pw is not 
+          // sitting around in plaintext
+          delete userAttributes.password;
         }
       });
     } else {
