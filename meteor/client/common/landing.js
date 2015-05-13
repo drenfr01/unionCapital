@@ -26,7 +26,7 @@ Template.landing.events({
           Router.go('memberHomePage');
         } else {
           console.log('Routing to facebook page');
-          Router.go('facebookLogin');
+          Router.go('signup', {template: 'createNewUser'});
         }
       }
     });
