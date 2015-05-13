@@ -47,7 +47,6 @@ _.extend(CSVUpload.prototype, {
       return []
     } else {
       return _.map(data.slice(1), function(row) {
-        console.log(row)
         return _.map(row, function(elem) {
           return $.trim(elem);
         });
