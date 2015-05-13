@@ -7,6 +7,9 @@ Template.landing.rendered = function() {
 };
 
 Template.landing.helpers({
+  getData: function() {
+    return {template: 'createNewUser'};
+  }
 });
 
 Template.landing.events({
@@ -21,7 +24,7 @@ Template.landing.events({
         if(_.isUndefined(Meteor.user().profile.name)) {
           Router.go('memberHomePage');
         } else {
-          Router.go('facebookLogin');
+          Router.go('signup', {template: 'createNewUser'});
         }
       }
     });

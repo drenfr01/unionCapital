@@ -158,6 +158,7 @@ Meteor.methods({
 
   createNewUser: function(attributes) {
     check(attributes, {
+      userId: Match.Optional(String),
       email: String,
       password: String,
       profile: {
@@ -181,13 +182,26 @@ Meteor.methods({
         UCBAppAccess: Match.Optional(String)
       }
     });
-    var newUserId = Accounts.createUser({
-      email: attributes.email,
-      password: attributes.password,
-      profile: attributes.profile
-    });
 
-    //TODO: make this dry with updateUserProfile helper above
+    var newUserId;
+
+    if(attributes.userId) {
+      Meteor.users.update(attributes.userId,
+                          {$set: { profile: attributes.profile
+                          }});
+      Meteor.users.update(attributes.userId,
+                          {$push: {emails: {address: attributes.email
+                          }}});
+      newUserId = attributes.userId;
+      Accounts.setPassword(newUserId, attributes.password);
+    } else {
+      newUserId = Accounts.createUser({
+        email: attributes.email,
+        password: attributes.password,
+        profile: attributes.profile
+      });
+    }
+
     emailHelper(attributes.email,
                 AppConfig.adminEmail,
                 'Thanks for Registering!',
@@ -203,40 +217,6 @@ Meteor.methods({
                  attributes.email
                );
     Roles.addUsersToRoles(newUserId, attributes.profile.role);
-  },
-
-  updateUserProfile: function(attributes) {
-    check(attributes, {
-      userId: String,
-      email: String,
-      profile: {
-        firstName: String,
-        lastName: String,
-        zip: String
-      }
-    });
-    Meteor.users.update(attributes.userId,
-                        {$set: { profile: attributes.profile
-                        }});
-    Meteor.users.update(attributes.userId,
-                        {$push: {emails: {address: attributes.email
-                        }}});
-    Roles.addUsersToRoles(attributes.userId, 'user');
-    //TODO: make this dry with new user helper below
-    emailHelper(attributes.email,
-                AppConfig.adminEmail,
-                'Thanks for Registering!',
-                "We're excited to work with you! Please use the contact button in the applicaton " +
-                  "if you have any trouble using the application."
-               );
-
-    emailHelper(AppConfig.adminEmail,
-                AppConfig.adminEmail,
-                'New User Registered through Facebook',
-                attributes.profile.firstName + " " + attributes.profile.lastName +
-                 " has created an account! They can be reached at: " +
-                 attributes.email
-               );
   },
 
   updateUser: function(attributes) {
