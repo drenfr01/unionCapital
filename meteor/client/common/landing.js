@@ -32,21 +32,43 @@ Template.landing.events({
 
   'click #loginSubmit': function(e) {
     e.preventDefault();
-    var email =  $('#userEmail').val();
-    var password = $('#userPassword').val();
 
-    Meteor.loginWithPassword(email, password, function(error) {
-      if(error) {
-        addErrorMessage(error.reason);
-      } else {
-        if(Roles.userIsInRole(Meteor.userId(), 'admin')) {
-          Router.go('adminHomePage');
-        } else if (Roles.userIsInRole(Meteor.userId(), 'partnerAdmin')){
-          Router.go('partnerAdminHomePage');
-        } else {
-          Router.go('memberHomePage');
+    $('#loginForm').validate({
+      highlight: function(element, errorClass) {
+        $(element).fadeOut(function() {
+          $(element).fadeIn();
+        });
+      },
+      rules: {
+        userEmail: {
+          required: true,
+          email: true
+        },
+        userPassword: {
+          required: true
         }
       }
     });
+    var isValid = $('#loginForm').valid();
+
+    if(isValid) {
+      var email =  $('#userEmail').val();
+      var password = $('#userPassword').val();
+
+      Meteor.loginWithPassword(email, password, function(error) {
+        if(error) {
+          addErrorMessage(error.reason);
+        } else {
+          if(Roles.userIsInRole(Meteor.userId(), 'admin')) {
+            Router.go('adminHomePage');
+          } else if (Roles.userIsInRole(Meteor.userId(), 'partnerAdmin')){
+            Router.go('partnerAdminHomePage');
+          } else {
+            Router.go('memberHomePage');
+          }
+        }
+      });
+
+    }
   }
 });

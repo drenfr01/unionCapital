@@ -38,22 +38,34 @@ Template.collectUserDemographics.events({
   'click #next': function(e) {
     e.preventDefault();
 
-    userAttributes.profile.street1 = $('#street_number').val() + " " +
-      $('#route').val();
-    userAttributes.profile.street2 = $('#userStreetAddress2').val();
-    userAttributes.profile.city = $('#locality').val();
-    userAttributes.profile.state = $('#administrative_area_level_1').val();
-    userAttributes.profile.zip = $('#postal_code').val();
-    userAttributes.profile.partnerOrg = $('#organizations').val();
-    userAttributes.profile.numberOfKids = $('#numberOfKids').val();
-    userAttributes.profile.race = $("#races").val();
-    userAttributes.profile.role = 'user';
-    userAttributes.profile.followingOrgs = FollowingOrganizations.find().fetch();
-    userAttributes.profile.medicaid = $("#medicaid input[type='radio']:checked").val();
-    userAttributes.profile.gender = $("#genderForm input[type='radio']:checked").val();
-    userAttributes.profile.reducedLunch = $("#reducedLunchForm input[type='radio']:checked").val();
-    userAttributes.profile.UCBAppAccess = $('#device').val();
+    $('#genderForm').validate({
+      rules: {
+        inlineRadioOptions: {
+          required: true
+        }
+      }
+    });
+    var genderValid = $('#genderForm').valid();
 
-    Session.set('signupPage', 'eula');
+    var allValid = false;
+    if(allValid) {
+      userAttributes.profile.street1 = $('#street_number').val() + " " +
+        $('#route').val();
+      userAttributes.profile.street2 = $('#userStreetAddress2').val();
+      userAttributes.profile.city = $('#locality').val();
+      userAttributes.profile.state = $('#administrative_area_level_1').val();
+      userAttributes.profile.zip = $('#postal_code').val();
+      userAttributes.profile.partnerOrg = $('#organizations').val();
+      userAttributes.profile.numberOfKids = $('#numberOfKids').val();
+      userAttributes.profile.race = $("#races").val();
+      userAttributes.profile.role = 'user';
+      userAttributes.profile.followingOrgs = FollowingOrganizations.find().fetch();
+      userAttributes.profile.medicaid = $("#medicaid input[type='radio']:checked").val();
+      userAttributes.profile.gender = $("#genderForm input[type='radio']:checked").val();
+      userAttributes.profile.reducedLunch = $("#reducedLunchForm input[type='radio']:checked").val();
+      userAttributes.profile.UCBAppAccess = $('#device').val();
+
+      Session.set('signupPage', 'eula');
+    }
   }
 });
