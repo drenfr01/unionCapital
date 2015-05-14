@@ -109,6 +109,7 @@ srp@1.0.2
 standard-app-packages@1.0.4
 stylus@1.0.6
 templating@1.0.11
+themeteorchef:jquery-validation@1.13.1
 tmeasday:paginated-subscription@0.2.4
 tracker@1.0.5
 ui@1.0.5
