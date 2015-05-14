@@ -1,6 +1,6 @@
 Template.partnerAdminHomePage.helpers({
   userProfile: function() {
-    return Meteor.user().profile;
+    return Meteor.user() ? Meteor.user().profile : null;
   }
 });
 Template.partnerAdminHomePage.events({
