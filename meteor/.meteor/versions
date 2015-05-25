@@ -39,6 +39,7 @@ dburles:collection-helpers@1.0.2
 dburles:mongo-collection-instances@0.2.6
 ddp@1.0.14
 deps@1.0.6
+drewproud:decision-tree@1.0.3
 ejson@1.0.5
 email@1.0.5
 facebook@1.1.3
