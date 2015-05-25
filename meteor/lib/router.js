@@ -181,6 +181,15 @@ Router.route('/checkpoints', function () {
   name: 'checkPoints'
 });
 
+Router.route('/signup/:template', function() {
+  this.render('signup', {
+    data: function() {
+      return this.params.template;
+    }
+  });
+}, {
+  name: 'signup'
+});
 
 Router.route('/viewPartnerMemberProfile/:_id', function () {
   this.render('viewPartnerMemberProfile', {
@@ -227,9 +236,6 @@ Router.map(function() {
     this.render('landing');
   });
 
-  this.route('/signup', function() {
-    this.render('signup');
-  });
 
   this.route('/forgot', function() {
     this.render('forgotPassword');

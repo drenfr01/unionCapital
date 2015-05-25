@@ -3,7 +3,7 @@ userAttributes = {
 };
 
 Template.signup.rendered = function() {
-  Session.set('signupPage', 'createNewUser');
+  Session.set('signupPage', this.data);
 };
 
 Template.signup.helpers({

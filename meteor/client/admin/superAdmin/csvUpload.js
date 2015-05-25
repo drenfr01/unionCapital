@@ -38,11 +38,19 @@ _.extend(CSVUpload.prototype, {
     if(data.length === 1) {
       addErrorMessage('CSV with no events in it');
       return []
-    } else if (!_.isEqual(data[0], this.columnHeaders)) {
+    } else if (!_.isEqual(_.map(
+      data[0],
+      function(elem) {
+        return $.trim(elem);
+      }), this.columnHeaders)) {
       addErrorMessage('Column Header Mismatch')
       return []
     } else {
-      return data.slice(1);
+      return _.map(data.slice(1), function(row) {
+        return _.map(row, function(elem) {
+          return $.trim(elem);
+        });
+      });
     }
   },
   _parseRows: function(data) {
