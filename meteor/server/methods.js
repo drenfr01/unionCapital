@@ -9,7 +9,7 @@ Meteor.methods({
     var currentUser = Meteor.user();
 
     // Determines whether this transaction requires approval
-    attributes.approvalType = CheckInRules.validate(attributes);
+    attributes.approvalType = CheckInRules.run(attributes);
 
     // Only set it to approved if it is auto
     if (attributes.approvalType === 'auto')
