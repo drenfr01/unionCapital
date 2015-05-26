@@ -43,6 +43,9 @@ _.extend(UserPhoto.prototype, {
   },
 
   // Uses mdg:camera to take a photo and store it locally
+  // WARNING: Deprecated for now. Only works with PhoneGap and PC
+  // Does not work with mobile browsers
+  // Use setPhotoURI instead
   takePhoto: function() {
 
     var self = this;
@@ -61,5 +64,23 @@ _.extend(UserPhoto.prototype, {
         self.photoURI.set(data);
       }
     });
+  },
+
+  // Uses a FileReader to grab the data from the input element that is passed as an argument
+  setPhotoURI: function(inputElement) {
+    var self = this;
+    var reader = new FileReader();
+
+    reader.onerror = function(res) {
+      self.takePhotoFailed.set(true);
+      addErrorMessage('Unable to save your photo. Please try again.');
+    };
+
+    reader.onload = function(res) {
+      self.takePhotoFailed.set(false);
+      self.photoURI.set(reader.result);
+    };
+
+    reader.readAsDataURL(inputElement);
   }
 });

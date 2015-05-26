@@ -123,6 +123,11 @@ CheckIn.prototype.takePhoto = function() {
   return this.userPhoto.takePhoto();
 };
 
+// Manually set the photo URI
+CheckIn.prototype.setPhoto = function(inputElement) {
+  return this.userPhoto.setPhotoURI(inputElement);
+};
+
 // Removes the photo
 CheckIn.prototype.removePhoto = function() {
   this.userPhoto.remove();
