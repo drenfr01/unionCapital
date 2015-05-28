@@ -3,28 +3,28 @@
     <h3 class="h3-createuser text-center"><small class="h3-createuser">
         Create an Account
     </small></h3>
-    <form role="form">
+    <form role="form" id="basicForm">
       <div class="row">
         <div class="col-xs-12 page-panel page-panel-form">
           <div class="form-group">
             <label for="firsName" class="sr-only">First Name</label>
-            <input type="text" class="form-control" id="firstName"
+            <input type="text" class="form-control" name="firstName" id="firstName"
              value="{{firstName}}" placeholder="Enter First Name">
           </div>
           <div class="form-group">
             <label for="lastName" class="sr-only">Last Name</label>
-            <input type="text" class="form-control" id="lastName"
+            <input type="text" class="form-control" name="lastName" id="lastName"
             value="{{lastName}}" placeholder="Enter Last Name">
           </div>
           <div class="form-group">
             <label for="userEmail" class="sr-only">Email Address</label>
-            <input type="email" class="form-control" id="userEmail"
+            <input type="email" class="form-control" name="userEmail" id="userEmail"
              value="{{email}}" placeholder="Enter Email">
           </div>
           <div class="form-group">
             <label for="userPassword" class="sr-only">Password</label>
-            <input type="password" class="form-control" id="userPassword"
-            placeholder="Enter Password">
+            <input type="password" class="form-control" name="userPassword"
+            id="userPassword" placeholder="Enter Password">
           </div>
         </div>
       </div>

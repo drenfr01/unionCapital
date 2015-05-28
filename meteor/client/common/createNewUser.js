@@ -19,12 +19,40 @@ Template.createNewUser.events({
   },
   'click #submit': function(e) {
     e.preventDefault();
+ 
+    //note: this returns a Validator object which can be used
+    //see docs of Jquery Validator
+    $("#basicForm").validate({
+      highlight: function(element, errorClass) {
+        $(element).fadeOut(function() {
+          $(element).fadeIn();
+        });
+      },
+      rules: {
+        firstName: {
+          required: true
+        },
+        lastName: {
+          required: true
+        }, 
+        userEmail: {
+          required: true,
+          email: true
+        },
+        userPassword: {
+          required: true,
+          minlength: 6
+        }
+      }
+    });
+    var isValid = $('#basicForm').valid();
 
-    userAttributes.profile.firstName = $('#firstName').val();
-    userAttributes.profile.lastName = $('#lastName').val();
-    userAttributes.email = $('#userEmail').val();
-    userAttributes.password = $('#userPassword').val();
-
-    Session.set('signupPage','collectUserDemographics');
-  },
+    if(isValid) {
+      userAttributes.profile.firstName = $('#firstName').val();
+      userAttributes.profile.lastName = $('#lastName').val();
+      userAttributes.email = $('#userEmail').val();
+      userAttributes.password = $('#userPassword').val();
+      Session.set('signupPage','collectUserDemographics');
+    }
+  }
 });
