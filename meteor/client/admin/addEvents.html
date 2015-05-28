@@ -10,7 +10,8 @@
       {{> afQuickField name="description"}}
       {{> afQuickField name="institution" options=institutions}}
       {{> afQuickField name="category" options=categories}}
-      {{> afQuickField name="eventDate" type="datetime-local" offset="-0400"}}
+      <!-- adding timezoneId="America/New_York" caused a number of problems, assuming that everyone is on the east coast for now -->
+      {{> afQuickField name="eventDate" type="datetime-local"}}
       {{> afQuickField name="duration"}}
       {{> afQuickField name="isPointsPerHour" id="pointsType" value="checked"
           type="boolean-radios"}}
