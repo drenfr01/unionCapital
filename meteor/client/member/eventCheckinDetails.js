@@ -41,7 +41,17 @@ Template.eventCheckinDetails.events({
 
   'click #addPhoto': function(e) {
     e.preventDefault();
-    checkIn.takePhoto();
+    // checkIn.takePhoto();
+    $('#upPhoto').click();
+  },
+
+  'change #upPhoto':  function() {
+    var input = $('#upPhoto')[0];
+
+    if (input.files && input.files[0])
+      checkIn.setPhoto(input.files[0]);
+    else
+      checkIn.removePhoto();
   },
 
   // Async, pass the checkin
