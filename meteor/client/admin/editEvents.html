@@ -9,7 +9,7 @@
     {{> afQuickField name="description" id="eventDesc"}}
     {{> afQuickField name="institution" options=institutions id="eventOrg"}}
     {{> afQuickField name="category" options=categories id="eventCategory"}}
-    {{> afQuickField name="eventDate" type="datetime-local" offset="-0400" id="eventDate"}}
+    {{> afQuickField name="eventDate" type="datetime-local" id="eventDate"}}
     {{> afQuickField name="isPointsPerHour" id="pointsType" type="boolean-radios"}}
     {{#if isPointsPerHour}}
       {{> afQuickField name="pointsPerHour" id="eventPoints"}}

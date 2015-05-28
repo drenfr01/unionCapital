@@ -6,12 +6,6 @@ AutoForm.hooks({
         doc.latitude = Session.get('latitude');
         doc.longitude = Session.get('longitude');
         doc.endTime = addHours(moment(doc.eventDate).toDate(), doc.duration);
-        //UTC is not DST sensitive. So during Winter the US East Coast (EST) is
-        //5 hours behind UTC, but during summer it is 4 hours behind
-        if(moment(doc.eventDate).isDST()) {
-          doc.eventDate = moment(doc.eventDate).subtract(1, 'hours').toDate();
-          doc.endTime = moment(doc.endTime).subtract(1, 'hours').toDate();
-        }
         return doc;
       }
     },
