@@ -32,7 +32,7 @@ _.extend(CSVUpload.prototype, {
         newEvent.insertEvent();
       }
     }, this);
-    //route here
+    Router.go('manageEvents');
   },
   _clean: function(data) {
     if(data.length === 1) {
@@ -127,6 +127,7 @@ _.extend(NewEvent.prototype, {
       isPointsPerHour: Boolean(this.eventData.isPointsPerHour),
       points: this.eventData.points,
       pointsPerHour: this.eventData.pointsPerHour,
+      duration: this.eventData.duration,
       adHoc: false,
     })
   },
