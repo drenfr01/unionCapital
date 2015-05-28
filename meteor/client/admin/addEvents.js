@@ -17,6 +17,7 @@ AutoForm.hooks({
     },
     onSuccess: function() {
       addSuccessMessage('Event successfully added!');
+      Router.go('manageEvents')
     },
     onError: function(formType, error) {
       addErrorMessage('There was an error. Please try again.');
