@@ -6,14 +6,6 @@ Template.eventsCalendar.rendered = function() {
 
 Template.eventsCalendar.helpers({
 
-  getFutureEvents: function() {
-    return CalendarEventsSearch.getFutureEvents();
-  },
-
-  getPastEvents: function() {
-    return CalendarEventsSearch.getPastEvents();
-  },
-
   hasPastEvents: function() {
     return !_.isEmpty(CalendarEventsSearch.getPastEvents());
   },
@@ -89,6 +81,12 @@ Template.eventsCalendar.events({
 
 // eventPanel
 Template.eventPanel.helpers({
+  getEvents: function() {
+    if (this.type === 'past')
+      return CalendarEventsSearch.getPastEvents();
+    else if (this.type === 'future')
+      return CalendarEventsSearch.getFutureEvents();
+  },
 
   hasReservation: function() {
     return Reservations.findOne({
@@ -103,6 +101,15 @@ Template.eventPanel.helpers({
 
   hasMembers: function() {
     return !_.isEmpty(this);
+  },
+
+  isFuture: function(thisType) {
+    return thisType.type === 'future';
   }
 });
 
+Template.eventsCalendar.events({
+  'click .calCheckIn': function() {
+    Router.go('eventCheckinDetails', {id: this._id});
+  }
+});

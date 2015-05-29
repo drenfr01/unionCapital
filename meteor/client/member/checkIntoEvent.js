@@ -21,7 +21,6 @@ function getEventsData() {
   } else {
     // Otherwise, check that the end date of the even is before the start date of the check in period
     // AND the start date of the event is before the end of the check in period
-
     var minStartDate = new Date();
     var maxEndDate = new Date();
 
@@ -164,9 +163,4 @@ Template.checkIntoEvent.events({
     var thisValue = $('.radio-button input[type=radio]:checked').val();
     Session.set('eventTimeframe', thisValue);
   }
-
-  // 'click #cancel': function(e) {
-  //   Router.go('memberHomePage');
-  // },
-
 });
