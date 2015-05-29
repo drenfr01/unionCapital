@@ -302,7 +302,6 @@ Router.map(function() {
   this.route('addCommunityEvents', {path: '/addCommunityEvents'});
   this.route('addRewards', {path: '/addRewards'});
   this.route('approveTransactions', {path: '/approve'});
-  this.route('memberProfiles', {path: '/memberProfiles'});
   this.route('listMembers', {path: '/listMembers'});
 
 });

@@ -9,10 +9,6 @@ Template.partnerAdminHomePage.events({
     //member search handles security for this
     Router.go('allMembers');
   },
-  'click #memberProfiles': function(e) {
-    e.preventDefault();
-    Router.go('memberProfiles');
-  },
   'click #approvePoints': function(e) {
     e.preventDefault();
     Router.go('approveTransactions');

@@ -14,7 +14,6 @@ Template.viewMemberProfile.events({
     var points = parseInt(e.target.points.value,10);
     var description = e.target.description.value;
 
-    //TODO: have description for points
     var attributes = {
       userId: this._id,
       points: points,
