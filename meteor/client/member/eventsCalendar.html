@@ -14,11 +14,11 @@
       </div>
     </div>
     {{#if hasFutureEvents}}
-      {{> eventHeader 'Future Events' }}
+      {{> eventHeader 'Next Week' }}
       {{> eventPanel type='future' }}
     {{/if}}
     {{#if hasPastEvents}}
-      {{> eventHeader 'Past Events' }}
+      {{> eventHeader 'Last Week' }}
       {{> eventPanel type='past' }}
     {{/if}}
     {{#if hasNoEvents}}
