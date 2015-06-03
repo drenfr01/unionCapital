@@ -139,22 +139,20 @@ Events.pastEvents = function(institution, category) {
 };
 
 Events.currentEvents = function(institution, category) {
-  var currentDate = new Date();
-  var selector = {eventDate: {'$gte': currentDate},
-                     institution: institution,
-                     category: category,
-                     deleteInd: false
+  var selector = {
+    $where: function() {
+      return moment(this.eventDate).add(this.duration, 'h').isAfter(moment());
+    },
+    deleteInd: false
   };
 
-  if(institution === 'All') {
-    delete selector.institution;
-  }
+  if(institution !== 'All')
+    selector.institution = institution;
 
-  if(category === 'All') {
-    delete selector.category;
-  }
-  return Events.find(selector,
-                     {sort: {eventDate: 1}});
+  if(category !== 'All')
+    selector.category = category;
+
+  return Events.find(selector, {sort: {eventDate: 1}});
 };
 
 

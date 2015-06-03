@@ -36,11 +36,8 @@ Template.eventsCalendar.events({
     };
 
     Meteor.call('insertReservations', attributes, function(error) {
-      if(error) {
+      if(error)
         addErrorMessage(error.reason);
-      } else {
-        addSuccessMessage("Congratulations, you've successfully RSVPed!");
-      }
     });
   },
 
@@ -49,11 +46,8 @@ Template.eventsCalendar.events({
     var eventId = this._id;
 
     Meteor.call('removeReservation', eventId, function(error) {
-      if(error) {
+      if(error)
         addErrorMessage(error.reason);
-      } else {
-        addSuccessMessage("Your reservation has been removed");
-      }
     });
   },
 
