@@ -894,3 +894,11 @@ margin-right: auto;
 .hidden-input {
   display: none;
 }
+
+// Fixed a strange rendering anomaly in Chrome (at least)
+// May cause performance issues, so disable if things get weird
+.checkInGroup {
+  -webkit-transform: translate3d(0, 0, 0);
+  // -moz-transform: translate3d(0, 0, 0);
+  // -ms-transform: translate3d(0, 0, 0); /*only in IE10*/
+}
