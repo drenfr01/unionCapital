@@ -83,7 +83,7 @@ Events.attachSchema(new SimpleSchema({
   },
   url: {
     type: String,
-    label: 'URL to the event',
+    label: 'Website',
     optional: true
   },
   numberRSVPs: {
