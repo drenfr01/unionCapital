@@ -10,7 +10,7 @@ casper.test.begin('Reservations Page', 4, function suite(test) {
   });
 
   casper.waitForSelector("#login-dropdown-list", function() {
-    this.clickLabel('Today in Boston', 'a');
+    this.clickLabel('What\'s Happening in Boston', 'a');
   });
 
   casper.waitForSelector('#search-box', function() {

@@ -89,7 +89,7 @@
                 <tr>
                   <td class="eventView"><a href="{{pathFor 'singleEvent'}}">
                       {{{name}}}</a></td>
-                  <td>{{formatDate eventDate}}</td>
+                  <td>{{ formattedDateRange eventDate duration }}</td>
                   <td>{{address}}</td>
                   <td>{{numberRSVPs}}</td>
                   <td>{{institution}}</td>
@@ -112,7 +112,7 @@
             <tr>
               <td class="eventView"><a href="{{pathFor 'singleEvent'}}">
                   {{name}}</a></td>
-              <td>{{formatDate eventDate}}-{{justTime endTime}}</td>
+              <td>{{formattedDateRange eventDate duration}}</td>
               <td>{{address}}</td>
               <td>{{numberRSVPs}}</td>
               <td>{{institution}}</td>

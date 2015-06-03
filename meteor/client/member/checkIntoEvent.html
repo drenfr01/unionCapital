@@ -24,7 +24,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel-group checkInGroup" id="accordion" role="tablist" aria-multiselectable="true">
           {{#each getEvents}}
             <div class="panel panel-default">
               <div class="panel-heading" role="tab" id="heading{{_id}}">
@@ -43,7 +43,7 @@
                       <td><i>{{{description}}}</i></td>
                     </tr>
                     <tr>
-                      <td><b>{{formatDate eventDate}}-{{justTime endTime}}</b></td>
+                      <td><b>{{formattedDateRange eventDate duration}}</b></td>
                     </tr>
                   </table>
                   <button type="button" class="btn {{eventSelectClass}} btn-block accordion-button" id="{{_id}}">{{eventSelectText}}</button>

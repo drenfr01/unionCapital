@@ -18,6 +18,15 @@ UI.registerHelper('justTime', function(unformattedDate) {
     return moment(unformattedDate).format('h:mm A');
 });
 
+UI.registerHelper('formattedDateRange', function(startDate, duration) {
+  var formattedStartDate = moment(startDate);
+  var formattedEndDate = formattedStartDate.clone().add(duration, 'h');
+  if (formattedStartDate.isSame(formattedEndDate), 'd')
+    return formattedStartDate.format('MMMM Do h:mm A') + ' - ' + formattedEndDate.format('h:mm A');
+  else
+    return formattedStartDate.format('MMMM Do h:mm A') + ' - ' + formattedEndDate.format('MMMM Do h:mm A');
+});
+
 UI.registerHelper("eventOptions", function() {
   return _.chain(Events.find().fetch())
           .map(function(event){
