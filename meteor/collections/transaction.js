@@ -66,8 +66,9 @@ Transactions.attachSchema(new SimpleSchema({
     },
     hoursSpent: {
       type: Number,
-      label: 'Number of Hour Spent',
-      optional: true
+      label: 'Number of Hours Spent',
+      optional: true,
+      decimal: true
     },
     userLng: {
       type: Number,

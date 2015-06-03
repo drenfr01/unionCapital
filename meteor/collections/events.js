@@ -64,7 +64,8 @@ Events.attachSchema(new SimpleSchema({
   },
   duration: {
     type: Number,
-    label: 'Duration of Event in Hours'
+    label: 'Duration of Event in Hours',
+    decimal: true
   },
   points: {
     type: Number,
