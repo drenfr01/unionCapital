@@ -14,11 +14,11 @@
       </div>
     </div>
     {{#if hasFutureEvents}}
-      {{> eventHeader 'Next Week' }}
+      {{> eventHeader 'Future Events' }}
       {{> eventPanel type='future' }}
     {{/if}}
     {{#if hasPastEvents}}
-      {{> eventHeader 'Last Week' }}
+      {{> eventHeader 'Past Events' }}
       {{> eventPanel type='past' }}
     {{/if}}
     {{#if hasNoEvents}}
@@ -30,7 +30,7 @@
 <template name="eventHeader">
   <div class="row">
     <div class="col-xs-12">
-      <h3 class="pastOrFutureHeader">{{this}}</h3>
+      <p class="pastOrFutureHeader">{{this}}</p>
     </div>
   </div>
 </template>

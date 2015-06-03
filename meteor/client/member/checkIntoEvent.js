@@ -156,6 +156,7 @@ Template.checkIntoEvent.events({
   },
 
   'click #pastOrCurrentRdoDiv': function(e) {
+    Session.set('selectedEvent', null);
     var thisValue = $('.radio-button input[type=radio]:checked').val();
     Session.set('eventTimeframe', thisValue);
   }
