@@ -23,7 +23,7 @@ CheckIn = function(defaultHours) {
 
     try {
 
-      var parsedHours = parseInt(self.hours.get());
+      var parsedHours = parseFloat(self.hours.get());
 
       self.attributes = {
         userId: Meteor.userId(),

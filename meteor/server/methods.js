@@ -30,6 +30,11 @@ Meteor.methods({
       attributes.partnerOrg = thisEvent.institution;
       attributes.pendingEventName = thisEvent.name;
       attributes.pendingEventDescription = thisEvent.description;
+
+      // Check against max possible hours
+      if (attributes.hoursSpent > thisEvent.duration)
+        attributes.hoursSpent = thisEvent.duration;
+
     } else {
       attributes.partnerOrg = currentUser.profile.partnerOrg;
     }

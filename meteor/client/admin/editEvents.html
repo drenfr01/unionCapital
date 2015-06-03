@@ -1,6 +1,6 @@
 <template name="editEvent">
 <div class="col-xs-12 col-md-4 col-md-offset-4 text-center page-panel">
-  {{#autoForm collection="Events" doc=this id="updateEventsForm" type="update"}}
+  {{#autoForm collection="Events" doc=this id="updateEventsForm" type="update" resetOnSuccess=false}}
   <fieldset>
     <legend>Update Event</legend>
     {{> afQuickField name="name" id="eventName"}}
@@ -9,6 +9,7 @@
     {{> afQuickField name="description" id="eventDesc"}}
     {{> afQuickField name="institution" options=institutions id="eventOrg"}}
     {{> afQuickField name="category" options=categories id="eventCategory"}}
+    {{> afQuickField name="duration" id="duration"}}
     {{> afQuickField name="eventDate" type="datetime-local" id="eventDate"}}
     {{> afQuickField name="isPointsPerHour" id="pointsType" type="boolean-radios"}}
     {{#if isPointsPerHour}}
@@ -17,8 +18,8 @@
       {{> afQuickField name="points" id="eventPoints"}}
     {{/if}}
   </fieldset>
-  <button type="button" class="btn btn-primary" id="back">Back to Events</button>
-  <button type="submit" class="btn btn-default" id="submit">Confirm</button>
+  <button type="button" class="btn btn-default" id="back">Back to Events</button>
+  <button type="submit" class="btn btn-primary" id="submit">Confirm</button>
   {{/autoForm}}
 </div>
 </template>
