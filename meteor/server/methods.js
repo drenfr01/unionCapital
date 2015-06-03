@@ -17,6 +17,9 @@ Meteor.methods({
     else
       attributes.approved = false;
 
+    // Set the partner org
+    attributes.partnerOrg = currentUser.profile.partnerOrg;
+
     // If the user isn't logging an action from the past,
     // we use the server's time as the source of truth
     // We should probably figure out a better way to do this
@@ -27,7 +30,10 @@ Meteor.methods({
     // Otherwise uses the user's partner org
     if (attributes.eventId && Events.findOne({ _id: attributes.eventId })) {
       var thisEvent = Events.findOne({ _id: attributes.eventId });
-      attributes.partnerOrg = thisEvent.institution;
+
+      // Commenting this out - it should always default to the member's org
+      // attributes.partnerOrg = thisEvent.institution;
+
       attributes.pendingEventName = thisEvent.name;
       attributes.pendingEventDescription = thisEvent.description;
 
@@ -35,8 +41,6 @@ Meteor.methods({
       if (attributes.hoursSpent > thisEvent.duration)
         attributes.hoursSpent = thisEvent.duration;
 
-    } else {
-      attributes.partnerOrg = currentUser.profile.partnerOrg;
     }
 
     check(attributes, {
@@ -302,7 +306,7 @@ Meteor.methods({
     });
 
     //calculate appropriate hours based on Administer AdHoc events
-    var hours = Math.floor(attributes.points / 100);
+    var hours = attributes.points/100;
 
     // Find the partner organization
     var partnerOrg = '';

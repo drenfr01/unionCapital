@@ -13,6 +13,9 @@ addInfoMessage = function(message) {
 };
 
 addSuccessMessage = function(message) {
-  Alerts.insert({message: message, seen: false, type: 'alert-success'});
+  var id = Alerts.insert({message: message, seen: false, type: 'alert-success'});
+  setTimeout(function() {
+    Alerts.remove(id);
+  }, AppConfig.alerts.successTimeout);
 };
 
