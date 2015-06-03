@@ -21,25 +21,21 @@ function getEventsData() {
   } else {
     // Otherwise, check that the end date of the even is before the start date of the check in period
     // AND the start date of the event is before the end of the check in period
-    var minStartDate = new Date();
-    var maxEndDate = new Date();
+    var minStartDate = moment();
+    var maxEndDate = moment();
 
     if (Session.equals('eventTimeframe', 'current')) {
-
       // Use only events defined as today for a current check in
-      minStartDate = moment().add(AppConfig.checkIn.today.hoursBehind, 'h').toDate();
-      maxEndDate = moment().add(AppConfig.checkIn.today.hoursAhead, 'h').toDate();
-
+      minStartDate = moment().add(AppConfig.checkIn.today.hoursBehind, 'h');
+      maxEndDate = moment().add(AppConfig.checkIn.today.hoursAhead, 'h');
     } else if (Session.equals('eventTimeframe', 'past')) {
-
       // Use past events for the specified time frame
-      minStartDate = moment().add(AppConfig.checkIn.past.hoursBehind, 'h').toDate();
-      maxEndDate = moment().add(AppConfig.checkIn.past.hoursAhead, 'h').toDate();
-
+      minStartDate = moment().add(AppConfig.checkIn.past.hoursBehind, 'h');
+      maxEndDate = moment().add(AppConfig.checkIn.past.hoursAhead, 'h');
     }
 
     return _.filter(events, function(thisEvent) {
-      return !!(thisEvent.eventDate >= minStartDate && thisEvent.eventDate <= maxEndDate );
+      return !!(moment(thisEvent.eventDate).add(thisEvent.duration, 'm').isAfter(minStartDate) && moment(thisEvent.eventDate).isBefore(maxEndDate));
     });
   }
 }

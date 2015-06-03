@@ -22,9 +22,9 @@ UI.registerHelper('formattedDateRange', function(startDate, duration) {
   var formattedStartDate = moment(startDate);
   var formattedEndDate = formattedStartDate.clone().add(duration, 'h');
   if (formattedStartDate.isSame(formattedEndDate), 'd')
-    return formattedStartDate.format('MMMM DD h:mm A') + ' - ' + formattedEndDate.format('h:mm A');
+    return formattedStartDate.format('MMMM Do h:mm A') + ' - ' + formattedEndDate.format('h:mm A');
   else
-    return formattedStartDate.format('MMMM DD h:mm A') + ' - ' + formattedEndDate.format('MMMM DD h:mm A');
+    return formattedStartDate.format('MMMM Do h:mm A') + ' - ' + formattedEndDate.format('MMMM Do h:mm A');
 });
 
 UI.registerHelper("eventOptions", function() {
