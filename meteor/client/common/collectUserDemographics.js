@@ -45,13 +45,10 @@ Template.collectUserDemographics.events({
     userAttributes.profile.state = $('#administrative_area_level_1').val();
     userAttributes.profile.zip = $('#postal_code').val();
     userAttributes.profile.partnerOrg = $('#organizations').val();
-    userAttributes.profile.numberOfKids = $('#numberOfKids').val();
     userAttributes.profile.race = $("#races").val();
     userAttributes.profile.role = 'user';
     userAttributes.profile.followingOrgs = FollowingOrganizations.find().fetch();
-    userAttributes.profile.medicaid = $("#medicaid input[type='radio']:checked").val();
     userAttributes.profile.gender = $("#genderForm input[type='radio']:checked").val();
-    userAttributes.profile.reducedLunch = $("#reducedLunchForm input[type='radio']:checked").val();
     userAttributes.profile.UCBAppAccess = $('#device').val();
 
     Session.set('signupPage', 'eula');

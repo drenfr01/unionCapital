@@ -135,7 +135,7 @@ Meteor.startup(function () {
   if(UCBAppAccess.find().count() === 0) {
     var devices = [
       'Mobile phone',
-      'iPad/Table',
+      'iPad/Tablet',
       'Computer or laptop',
       'UCB Paper App'
     ];
