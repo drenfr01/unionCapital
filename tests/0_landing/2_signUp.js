@@ -35,10 +35,7 @@ casper.test.begin('Landing Page', 27, function suite(test) {
     test.assertExists('#administrative_area_level_1');
     test.assertExists('#postal_code');
     test.assertExists('#genderForm');
-    test.assertExists('#numberOfKids');
     test.assertExists('#races');
-    test.assertExists('#reducedLunchForm');
-    test.assertExists('#medicaid');
     test.assertExists('#organizations'); //Partner Org
     test.assertExists('#followingOrgs');
     test.assertExists('#deviceForm');
@@ -77,13 +74,8 @@ casper.test.begin('Landing Page', 27, function suite(test) {
     this.sendKeys('#administrative_area_level_1', 'MA');
     this.sendKeys('#postal_code', '02114');
 
-
     this.fillSelectors('form#organizationForm', {
       'select[id="organizations"]': "KIPP Academy Boston"
-    }, false);
-
-    this.fillSelectors('form#numberOfKidsForm', {
-      'select[id="numberOfKids"]': "1"
     }, false);
 
     this.fillSelectors('form#raceForm', {
@@ -94,8 +86,6 @@ casper.test.begin('Landing Page', 27, function suite(test) {
 
     this.evaluate(function() {
       $("#genderForm input[id='male']").prop('checked', true);
-      $("#medicaid input[id='yes']").prop('checked', true);
-      $("#reducedLunchForm input[id='yes']").prop('checked', true);
     });
 
 

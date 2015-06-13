@@ -5,7 +5,7 @@ SearchSource.defineSource('memberSearch', function(searchText, options) {
     //does the server side
     var options = {
       sort: {"profile.firstName": 1},
-      limit: 20
+      limit: 1000
     };
     var users = [];
     var currentUser = Meteor.user();
