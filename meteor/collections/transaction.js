@@ -87,6 +87,11 @@ Transactions.attachSchema(new SimpleSchema({
       type: Boolean,
       label: 'Logical Deletion',
       optional: true
+    },
+    hasUCBButton: {
+      type: Boolean,
+      label: "Flag if member wore a button",
+      optional: true
     }
 }));
 

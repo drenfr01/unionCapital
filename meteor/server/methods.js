@@ -53,7 +53,9 @@ Meteor.methods({
       transactionDate: Match.Optional(Date),
       partnerOrg: String,
       userLat: Match.Optional(Number),
-      userLng: Match.Optional(Number)
+      userLng: Match.Optional(Number),
+      hasUCBButton: Match.Optional(Boolean)
+
     });
 
     var duplicateTransaction = Transactions.findOne({
