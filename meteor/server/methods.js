@@ -301,9 +301,6 @@ Meteor.methods({
       description: String
     });
 
-    //calculate appropriate hours based on Administer AdHoc events
-    var hours = Math.floor(attributes.points / 100);
-
     // Find the partner organization
     var partnerOrg = '';
     if (Roles.userIsInRole(Meteor.userId(), 'admin')) {
@@ -312,17 +309,26 @@ Meteor.methods({
       partnerOrg = Meteor.user().profile.partnerOrg;
     }
 
-    //insert Transaction
-    var event = Events.findOne({name: 'Admin Add Points'});
+    //create new ad-hoc event for Admin adding points
+    var eventAttributes = {
+      eventName: attributes.description,
+      eventDate: Date(),
+      eventAddress: '123 Fake St, Boston, MA', //fake address
+      category: 'Admin Adding Points',
+      hoursSpent: 0, //fake duration of event
+      points: attributes.points,
+      isPointsPerHour: false,
+    };
 
+    var event = DB.insertEvent(eventAttributes);
+    
     Transactions.insert({
       userId: attributes.userId,
-      eventId: event._id,
+      eventId: event,
       approvalType: 'auto',
       approved: true,
       transactionDate: Date(),
       partnerOrg: partnerOrg,
-      hoursSpent: hours,
       deleteInd: false
     });
 
