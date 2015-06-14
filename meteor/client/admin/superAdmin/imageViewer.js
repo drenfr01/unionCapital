@@ -9,14 +9,18 @@ Template.imageViewer.helpers({
     var searchString = function() { return Session.get('searchString'); }();
     var users = _.map(userImages, function(userImage) {
       var user = Meteor.users.findOne(userImage.metadata.userId);
+      if (!user) return;
+
+      // Replacing the _id field in user to ensure uniqueness - meteor doesn't like it when there are duplicate _id keys
       _.extend(user, {
+        _id: userImage._id,
         imageId: userImage._id,
         submissionTime: userImage.metadata.submissionTime
       });
-      //
+
       if(_.isString(searchString)) {
         if (user.profile.firstName.indexOf(searchString) > -1  ||
-            user.profile.lastName.indexOf(searchString) > -1 || 
+            user.profile.lastName.indexOf(searchString) > -1 ||
               user.profile.partnerOrg.indexOf(searchString) > -1
            ) {
              return user; //user matches search box string
