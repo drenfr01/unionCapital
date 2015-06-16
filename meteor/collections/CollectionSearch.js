@@ -1,8 +1,8 @@
 // This function applies a regex to all specified fields
 // The 3rd+ arguements are the fields to include in the search
 // ex: Meteor.users.searchFor({}, 'sally', 'profile.firstName', 'profile.lastName', 'profile.partnerOrg')
-function searchFor(selector, searchText, fields) {
-  var out = this.find(selector).fetch();
+function searchFor(selector, searchText, fields, options) {
+  var out = this.find(selector, options).fetch();
 
   // Return all if no text included
   if (!searchText)
@@ -25,13 +25,14 @@ function searchFor(selector, searchText, fields) {
   });
 }
 
-function searchForOne(selector, searchText, fields) {
-  var result = this.searchFor(selector, searchText, fields);
+function searchForOne(selector, searchText, fields, options) {
+  var result = this.searchFor(selector, searchText, fields, options);
 
   if (result)
     return result[0];
 }
 
+// Untested....
 function userMatches(args) {
   var thisSelector = args.thisSelector || {},
     searchText = args.searchText,
@@ -85,8 +86,8 @@ function index(obj, i) {
 }
 
 // Add the search to the users and all normal collections
-Mongo.Collection.prototype.searchFor = searchFor;
-Mongo.Collection.prototype.searchForOne = searchForOne;
-Mongo.Collection.prototype.userMatches = userMatches;
+// Mongo.Collection.prototype.searchFor = searchFor;
+// Mongo.Collection.prototype.searchForOne = searchForOne;
+// Mongo.Collection.prototype.userMatches = userMatches;
 Meteor.users.searchFor = searchFor;
 Meteor.users.searchForOne = searchForOne;

@@ -100,7 +100,7 @@ Meteor.publish('userData', function() {
   if (Roles.userIsInRole(this.userId, 'admin')) {
     return Meteor.users.find();
   } else if(Roles.userIsInRole(this.userId, 'partnerAdmin')) {
-    return Meteor.users.find({"profile.partnerOrg": user.profile.partnerOrg, deleteInd: false});
+    return Meteor.users.find({"profile.partnerOrg": user.profile.partnerOrg, roles: { $all: ['user'] }, deleteInd: false});
   } else if(this.userId) {
     return Meteor.users.find({_id: this.userId, deleteInd: false},
                              {fields: {'services.facebook.first_name': 1,
