@@ -2,7 +2,7 @@ UI.registerHelper('formatDate', function(unformattedDate) {
     if(moment(unformattedDate).isValid()) {
       return moment(unformattedDate).format('MMMM DD h:mm A');
     } else {
-      return "Invalid Date";
+      return "N/A";
     }
 });
 

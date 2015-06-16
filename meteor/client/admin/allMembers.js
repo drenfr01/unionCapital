@@ -5,8 +5,6 @@ var options = {
 
 var fields = ['profile.firstName', 'profile.lastName'];
 
-MemberNameSearch = new SearchSource('memberSearch', fields, options);
-
 Session.set('sortOrder', -1);
 Session.set('sortOn', 'totalPoints');
 
@@ -22,7 +20,6 @@ function getMembersData(sortOn, sortOrder) {
   //of this method, so it either calls the client side or after the timeout
   //does the server side
   var options = {
-    sort: {"profile.firstName": Session.get('sortOrder') },
     limit: 1000
   };
   var currentUser = Meteor.user();
@@ -58,8 +55,8 @@ function getMembersData(sortOn, sortOrder) {
 
     return {
       memberId: user._id,
-      firstName: userFirstName.toLowerCase(),
-      lastName: userLastName.toLowerCase(),
+      firstName: userFirstName,
+      lastName: userLastName,
       zip: userZip,
       lastEvent: mostRecentEvent.name,
       lastEventDate: mostRecentTransaction.transactionDate,
@@ -67,7 +64,10 @@ function getMembersData(sortOn, sortOrder) {
       totalPoints: totalPoints};
   });
 
-  return tableRows;
+  if (Session.get('sortOrder') === -1)
+    return _.sortBy(tableRows, Session.get('sortOn')).reverse();
+  else
+    return _.sortBy(tableRows, Session.get('sortOn'));
 }
 
 function buildRegExp(searchText) {
@@ -76,7 +76,6 @@ function buildRegExp(searchText) {
 }
 
 Template.allMembers.rendered = function() {
-  MemberNameSearch.search("");
   highlightSortedColumn("#" + Session.get('sortOn'));
 };
 
@@ -86,7 +85,9 @@ Template.allMembers.helpers({
   }
 });
 
-//TODO: have each change try to re-render members?
+// TODO: This should be refactored to a single click handler on the parent element
+// using data attributes as the set value
+// Should also set it to allow users to click twice to reverse the ordering
 Template.allMembers.events({
   "keyup #search-box": _.throttle(function(e) {
     searchText.set($(e.target).val().trim());
@@ -127,7 +128,6 @@ Template.allMembers.events({
     Router.go('viewMemberProfile', {_id: this.memberId});
   },
   'click #clearBtn': function() {
-    MemberNameSearch.search('');
     $('#search-box').val('');
     $('#search-box').focus();
   },
