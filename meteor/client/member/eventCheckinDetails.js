@@ -57,6 +57,8 @@ Template.eventCheckinDetails.events({
   // Async, pass the checkin
   'click .check-in': function(e) {
     e.preventDefault();
+    //defaults to true b/c only ad-hoc events need checking
+    var isValid = true; 
 
     var eventId = Router.current().params.id;
 
@@ -66,27 +68,34 @@ Template.eventCheckinDetails.events({
       checkIn.pendingEventDescription = $('#pendingEventDescription').val();
       checkIn.category = $('#categories').val();
       checkIn.pendingEventDate = new Date($('#adHocEventDate').val());
+      
+      //Validate form
+        $('#eventDescForm').validate();
+        $('#organizationForm').validate();
+        $('#adHocEventDate').validate();
+
+        isValid = $('#eventDescForm').valid() && $('#organizationForm').valid() &&
+          $('#adHocEventDate').valid();
     }
 
     // Do the form validation here, then call the submit function
-    checkIn.submitCheckIn(eventId, function(error, result) {
-      if(error) {
-        addErrorMessage(error.reason);
-        // Router.go('eventCheckinDetails', { id: eventId });
-      } else {
-        if (result  === 'not_allowed') {
-          addErrorMessage('This type of check-in is not allowed');
-          // Router.go('memberHomePage');
-          // Router.go('eventCheckinDetails', { id: eventId });
-        } else if (result === 'auto') {
-          addSuccessMessage('Sucessfully checked in!')
-          Router.go('memberHomePage');
+    if(isValid) {
+      checkIn.submitCheckIn(eventId, function(error, result) {
+        if(error) {
+          addErrorMessage(error.reason);
         } else {
-          addSuccessMessage('Check-in submitted for approval');
-          Router.go('memberHomePage');
+          if (result  === 'not_allowed') {
+            addErrorMessage('This type of check-in is not allowed');
+          } else if (result === 'auto') {
+            addSuccessMessage('Sucessfully checked in!');
+            Router.go('memberHomePage');
+          } else {
+            addSuccessMessage('Check-in submitted for approval');
+            Router.go('memberHomePage');
+          }
         }
-      }
-    });
+      });
+    }
     return false;
   },
 
