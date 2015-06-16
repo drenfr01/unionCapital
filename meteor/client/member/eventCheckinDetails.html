@@ -17,18 +17,18 @@
         <div class="row">
           <div class="col-xs-12 page-panel text-center">
             <h3>Selfie Event Details</h3>
-            <form role="form">
+            <form role="form" id="eventDescForm">
               <div class="form-group">
-                <input type="text" class="form-control" id="pendingEventName" placeholder="Event Name">
+                <input type="text" class="form-control" id="pendingEventName" placeholder="Event Name" required>
               </div>
               <div class="form-group">
-                <textarea maxlength="140" rows="2" class="form-control" id="pendingEventDescription" placeholder="Event Description"></textarea>
+                <textarea maxlength="140" rows="2" class="form-control" id="pendingEventDescription" placeholder="Event Description" required></textarea>
               </div>
             </form>
             <form role="form" id="organizationForm">
               <div class="form-group">
                 <label for="categories">Event Category</label>
-                <select class="form-control" id="categories">
+                <select class="form-control" id="categories" required>
                   <option value="" selected="selected">Select Option Below</option>
                   {{#each categories}}
                   <option>{{name}}</option>
@@ -36,10 +36,12 @@
                 </select>
               </div>
             </form>
-            <label for="adHocEventDate">Event Date</label>
-            <div class="input-group date">
-              <input type="text" class="form-control" id="adHocEventDate"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-            </div>
+            <form id="eventDate">
+              <label for="adHocEventDate">Event Date</label>
+              <div class="input-group date">
+                <input type="text" class="form-control" id="adHocEventDate" required><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+              </div>
+            </form>
           </div>
         </div>
       {{/if}}

@@ -75,7 +75,24 @@ Meteor.publish('transactions', function() {
 
 //Partner Admins can only see images from their users
 Meteor.publish('images', function() {
-  return Images.find();
+  var user = Meteor.users.findOne({_id: this.userId});
+
+  if (Roles.userIsInRole(this.userId, 'admin')) {
+
+    return Images.find();
+
+  } else if(Roles.userIsInRole(this.userId, 'partnerAdmin')) {
+
+    var users = Meteor.users.find({ 'profile.partnerOrg': user.profile.partnerOrg }).fetch();
+    return Images.find({ 'metadata.userId': { $in: users }});
+
+  } else if(this.userId) {
+
+    return Images.find({ 'metadata.userId': this.userId });
+
+  } else {
+    this.ready();
+  }
 });
 
 Meteor.publish('userData', function() {
@@ -83,7 +100,7 @@ Meteor.publish('userData', function() {
   if (Roles.userIsInRole(this.userId, 'admin')) {
     return Meteor.users.find();
   } else if(Roles.userIsInRole(this.userId, 'partnerAdmin')) {
-    return Meteor.users.find({"profile.partnerOrg": user.profile.partnerOrg, deleteInd: false});
+    return Meteor.users.find({"profile.partnerOrg": user.profile.partnerOrg, roles: { $all: ['user'] }, deleteInd: false});
   } else if(this.userId) {
     return Meteor.users.find({_id: this.userId, deleteInd: false},
                              {fields: {'services.facebook.first_name': 1,

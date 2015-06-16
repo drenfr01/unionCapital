@@ -5,8 +5,6 @@ var options = {
 
 var fields = ['profile.firstName', 'profile.lastName'];
 
-MemberNameSearch = new SearchSource('memberSearch', fields, options);
-
 Session.set('sortOrder', -1);
 Session.set('sortOn', 'totalPoints');
 
@@ -15,25 +13,66 @@ var highlightSortedColumn = function(target) {
     $(target).css('color','red');
 };
 
-var getMembersData = function(sortOn, sortOrder) {
-  var membersArray = MemberNameSearch.getData({
-    transform: function(matchText, regExp) {
-      return matchText.replace(regExp, "<span style='color:red'>$&</span>");
-    },
-    sort: {"profile.firstName": 1}
-  });
-  //HACK: couldn't figure out how to get Search-Source to
-  //sort client side reatively in above getData.sort object
-  if(sortOrder === 1) { //ascending order
-    return _.sortBy(membersArray, sortOn);
-  } else { //descending order
-    return _.sortBy(membersArray, sortOn).reverse();
+var searchText = new ReactiveVar('');
+
+function getMembersData(sortOn, sortOrder) {
+  //I think we overwrite options because there is both a server side and client side def
+  //of this method, so it either calls the client side or after the timeout
+  //does the server side
+  var options = {
+    limit: 1000
+  };
+  var currentUser = Meteor.user();
+  var fields = ['profile.firstName', 'profile.lastName', 'profile.partnerOrg'];
+  var selector = { deleteInd: false };
+
+  // Restrict to only user-level accounts from own org if partner admin
+  // Should be restricted in pub as well, this is just a safety net
+  if(Roles.userIsInRole(Meteor.userId(), 'partnerAdmin')) {
+    selector['profile.partnerOrg'] = currentUser.profile.partnerOrg;
+    selector.roles = { $all: ['user'] };
   }
-};
+
+  var users = Meteor.users.searchFor(selector, searchText.get(), fields, options);
+
+  //TODO: THE BELOW CODE SNIPPET IS AN OFFENSE TO GOD AND MEN
+  var tableRows = _.map(users, function(user) {
+
+    //WARNING: unclear if below is a big performance hit (2 cursor calls)
+    var transactionCount = Transactions.find({userId: user._id}).count();
+    var totalPoints = Meteor.users.totalPointsFor(user._id);
+    var mostRecentTransaction = Transactions.find({userId: user._id},
+                          {sort: {transactionDate: -1}, limit: 1}).fetch()[0] ||
+                            { eventId: "", transactionDate: ""};
+    var mostRecentEvent = Events.findOne(mostRecentTransaction.eventId) || {name: ""};
+
+    //if user is admin
+    var userProfile = user.profile || {firstName: 'admin', lastName: 'd', zip: ''};
+    //if user is logging in with facebook
+    var userFirstName = userProfile.firstName || userProfile.name || "";
+    var userLastName = userProfile.lastName || userProfile.name || "";
+    var userZip = userProfile.zip || "";
+
+    return {
+      memberId: user._id,
+      firstName: userFirstName,
+      lastName: userLastName,
+      zip: userZip,
+      lastEvent: mostRecentEvent.name,
+      lastEventDate: mostRecentTransaction.transactionDate,
+      numberOfTransactions: transactionCount,
+      totalPoints: totalPoints};
+  });
+
+  if (Session.get('sortOrder') === -1)
+    return _.sortBy(tableRows, Session.get('sortOn')).reverse();
+  else
+    return _.sortBy(tableRows, Session.get('sortOn'));
+}
 
 Template.allMembers.rendered = function() {
-  MemberNameSearch.search("");
   highlightSortedColumn("#" + Session.get('sortOn'));
+  searchText.set('');
 };
 
 Template.allMembers.helpers({
@@ -42,11 +81,12 @@ Template.allMembers.helpers({
   }
 });
 
-//TODO: have each change try to re-render members?
+// TODO: This should be refactored to a single click handler on the parent element
+// using data attributes as the set value
+// Should also set it to allow users to click twice to reverse the ordering
 Template.allMembers.events({
   "keyup #search-box": _.throttle(function(e) {
-    var text = $(e.target).val().trim();
-    MemberNameSearch.search(text);
+    searchText.set($(e.target).val().trim());
   }, 200),
   'click #firstName': function(e) {
     Session.set('sortOn', 'firstName');
@@ -84,7 +124,6 @@ Template.allMembers.events({
     Router.go('viewMemberProfile', {_id: this.memberId});
   },
   'click #clearBtn': function() {
-    MemberNameSearch.search('');
     $('#search-box').val('');
     $('#search-box').focus();
   },
