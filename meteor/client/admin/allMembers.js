@@ -70,13 +70,9 @@ function getMembersData(sortOn, sortOrder) {
     return _.sortBy(tableRows, Session.get('sortOn'));
 }
 
-function buildRegExp(searchText) {
-  var name = searchText.trim().split(" ");
-  return new RegExp("(" + name.join('|') + ")", 'ig');
-}
-
 Template.allMembers.rendered = function() {
   highlightSortedColumn("#" + Session.get('sortOn'));
+  searchText.set('');
 };
 
 Template.allMembers.helpers({
