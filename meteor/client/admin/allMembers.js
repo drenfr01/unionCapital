@@ -29,10 +29,13 @@ function getMembersData(sortOn, sortOrder) {
     var currentUser = Meteor.user();
     var selector;
 
+    console.log('hello');
+
     //TODO: the code below isn't very DRY, I think there's
     //a simpler way and this should be refactored
     if(searchText.get() && searchText.get().length > 0) {
       var regExp = buildRegExp(searchText.get());
+      console.log(regExp);
       //restrict users based on role
       if (Roles.userIsInRole(Meteor.userId(), 'admin')) {
         selector = {$or: [
