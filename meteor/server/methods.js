@@ -277,7 +277,7 @@ Meteor.methods({
     var currentUser = Meteor.users.findOne(attributes.userId);
 
     emailHelper(AppConfig.adminEmail,
-                AppConfig.adminEmail,
+                currentUser.emails[0].address,
                 'A Union Capitalist has sent you a comment',
                 currentUser.profile.firstName + ' ' + currentUser.profile.lastName +
                   ' says: ' + attributes.comment
