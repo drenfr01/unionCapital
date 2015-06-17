@@ -53,6 +53,15 @@
         </div>
       {{#if hasPhoto}}
         <div class="row">
+          <div class="col-xs-12 page-panel panel-link text-center">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" id="ucbButton">I'm wearing my UCB Button!
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
     	    <div class="col-xs-12 page-panel page-panel-flush photo-panel panel-link" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url({{hasPhoto}});" id="photoPanel">
     	    	<div class="flush-panel-text">
     	      	<span class="glyphicon glyphicon-remove pull-left" id="removePhoto"></span><span class="text">Click To Remove Photo</span>
@@ -66,6 +75,11 @@
     	    </div>
         </div>
       {{else}}
+        <div class="row">
+    	    <div class="col-xs-12 page-panel text-center" id="addPhoto">
+            <p><i>If you're wearing a UCB button, submit a photo and check the box for 50 more points!</i></p>
+    	    </div>
+        </div>
         <form class="hidden-input">
           <input type="file" accept="image/*" capture="camera" id="upPhoto">
         </form>

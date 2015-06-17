@@ -330,6 +330,7 @@ Meteor.startup(function () {
         adHoc: false,
         deleteInd: false
       },
+      //TODO: remove admin add points, it's no longer used
       //This is quite hacky, but the below event only exists to allow admins to add
       //transactions linked to this event. Basically we'll adjust the hours / minutes
       //to give the appropriate number of points an admin gives
@@ -345,6 +346,23 @@ Meteor.startup(function () {
         category: "Other",
         isPointsPerHour: true,
         pointsPerHour: 100,
+        adHoc: true,
+        deleteInd: true
+      },
+      //Hacks love company. This allows users to receive 50 bonus points  
+      //if they wear a ucb button and submit a photo
+      {
+        name: AppConfig.ucbButtonEvent,
+        address: 'Boston, MA',
+        url: 'unioncapitalboston.com',
+        description: 'The UCB member wore a UCB button to an event',
+        active: 0,
+        eventDate: new Date(),
+        duration: 0,
+        institution: "Other",
+        category: "Other",
+        isPointsPerHour: false,
+        points: 50,
         adHoc: true,
         deleteInd: true
       }
