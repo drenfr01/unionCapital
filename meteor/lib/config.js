@@ -47,5 +47,6 @@ AppConfig = {
       // how many days to look into the future
       hoursBehind: -7*24
     }
-  }
-}
+  },
+  ucbButtonEvent: 'UCB Button'
+};

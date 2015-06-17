@@ -352,7 +352,7 @@ Meteor.startup(function () {
       //Hacks love company. This allows users to receive 50 bonus points  
       //if they wear a ucb button and submit a photo
       {
-        name: 'UCB Button',
+        name: AppConfig.ucbButtonEvent,
         address: 'Boston, MA',
         url: 'unioncapitalboston.com',
         description: 'The UCB member wore a UCB button to an event',

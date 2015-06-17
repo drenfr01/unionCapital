@@ -29,7 +29,7 @@ CheckIn = function(defaultHours) {
       self.attributes = {
         userId: Meteor.userId(),
         hoursSpent: parsedHours ? parsedHours : 0,
-        hasUCBButton: hasUCBButton
+        hasUCBButton: self.hasUCBButton
       };
 
       // If new, then don't set the eventId to avoid check() errors

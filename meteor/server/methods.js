@@ -5,7 +5,7 @@ Meteor.methods({
   },
 
   insertTransaction: function(attributes) {
-
+    console.log('insert transaction');
     var currentUser = Meteor.user();
 
     // Determines whether this transaction requires approval
@@ -67,7 +67,6 @@ Meteor.methods({
       eventId: attributes.eventId
     });
 
-    //TODO: setup MAIL URL for union capital website
     if(attributes.approvalType === 'super_admin' || attributes.approvalType === 'partner_admin') {
       console.log('A Union Capitalist has submitted a photo for approval',
                   currentUser.profile.firstName + ' ' + currentUser.profile.lastName +
@@ -94,6 +93,11 @@ Meteor.methods({
         attributes.firstName = user.profile.firstName;
         attributes.lastName = user.profile.lastName;
         Transactions.insert(attributes);
+        if(attributes.hasUCBButton) {
+          attributes.eventId = Events.findOne({name: 'UCB Button'})._id;
+          //note: admin will have to separately approve ucb button
+          Transactions.insert(attributes);
+        }
       }
 
       return attributes.approvalType;
