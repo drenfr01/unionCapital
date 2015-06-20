@@ -28,7 +28,7 @@ whoami >> email
 date >> email
 echo "Thanks for deploying, below is the changelog for this deploy:"
 git log --oneline "$env-rollback..$env" >> email
-cat email | mail -s "Union Capital $env Deploy Complete" $(cat maintainerS)
+cat email | mail -s "Union Capital $env Deploy Complete" $(cat maintainers)
 rm email
 
 exit
