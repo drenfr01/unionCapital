@@ -1,4 +1,5 @@
 Events.insert({
+        _id: "FiJkakW4AZhDkGzSM", //random ID from Random.id() in console
         name: AppConfig.ucbButtonEvent, //UCB Button
         address: 'Boston, MA',
         url: 'unioncapitalboston.com',
