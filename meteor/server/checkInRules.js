@@ -6,9 +6,9 @@
 
 var options = {
   // Max distance for ad hoc event in km
-  maxAdHocDistance: 0.1,
+  maxAdHocDistance: AppConfig.checkIn.maxAdHocDistance,
   // Max distance for recognized event in km
-  maxEventDistance: 0.1,
+  maxEventDistance: AppConfig.checkIn.maxEventDistance
 };
 
 CheckInRules = new DecisionTree(1);
