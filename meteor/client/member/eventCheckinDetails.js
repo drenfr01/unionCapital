@@ -1,4 +1,4 @@
-var defaultHours = 3;
+var defaultHours = 1;
 var checkIn = {};
 
 Template.eventCheckinDetails.created = function() {
@@ -62,7 +62,7 @@ Template.eventCheckinDetails.events({
   'click .check-in': function(e) {
     e.preventDefault();
     //defaults to true b/c only ad-hoc events need checking
-    var isValid = true; 
+    var isValid = true;
 
     var eventId = Router.current().params.id;
 
@@ -72,7 +72,7 @@ Template.eventCheckinDetails.events({
       checkIn.pendingEventDescription = $('#pendingEventDescription').val();
       checkIn.category = $('#categories').val();
       checkIn.pendingEventDate = new Date($('#adHocEventDate').val());
-      
+
       //Validate form
         $('#eventDescForm').validate();
         $('#organizationForm').validate();
