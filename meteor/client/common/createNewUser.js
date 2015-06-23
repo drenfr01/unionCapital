@@ -19,7 +19,7 @@ Template.createNewUser.events({
   },
   'click #submit': function(e) {
     e.preventDefault();
- 
+
     //note: this returns a Validator object which can be used
     //see docs of Jquery Validator
     $("#basicForm").validate({
@@ -34,7 +34,7 @@ Template.createNewUser.events({
         },
         lastName: {
           required: true
-        }, 
+        },
         userEmail: {
           required: true,
           email: true
@@ -50,7 +50,7 @@ Template.createNewUser.events({
     if(isValid) {
       userAttributes.profile.firstName = $('#firstName').val();
       userAttributes.profile.lastName = $('#lastName').val();
-      userAttributes.email = $('#userEmail').val();
+      userAttributes.email = $('#userEmail').val().toLowerCase();
       userAttributes.password = $('#userPassword').val();
       Session.set('signupPage','collectUserDemographics');
     }

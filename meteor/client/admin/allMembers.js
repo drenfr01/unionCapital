@@ -64,10 +64,18 @@ function getMembersData(sortOn, sortOrder) {
       totalPoints: totalPoints};
   });
 
+  var out = _.sortBy(tableRows, function(item) {
+    var sortField = item[Session.get('sortOn')];
+    if (typeof sortField === 'number' || typeof sortField === 'date')
+      return sortField;
+    else
+      return sortField.toLowerCase();
+  });
+
   if (Session.get('sortOrder') === -1)
-    return _.sortBy(tableRows, Session.get('sortOn')).reverse();
+    return out.reverse();
   else
-    return _.sortBy(tableRows, Session.get('sortOn'));
+    return out;
 }
 
 Template.allMembers.rendered = function() {
