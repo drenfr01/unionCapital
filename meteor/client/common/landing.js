@@ -52,7 +52,7 @@ Template.landing.events({
     var isValid = $('#loginForm').valid();
 
     if(isValid) {
-      var email =  $('#userEmail').val();
+      var email =  $('#userEmail').val().toLowerCase();
       var password = $('#userPassword').val();
 
       Meteor.loginWithPassword(email, password, function(error) {

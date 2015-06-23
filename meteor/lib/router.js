@@ -5,6 +5,11 @@ Router.configure({
   waitOn: function() { return Meteor.subscribe('events'); }
 });
 
+// Clear alerts when moving to a new page
+Router.onAfterAction(function() {
+  Alerts.remove({});
+});
+
 //Route security
 
 //General Security for non-logged in users. May eventually
