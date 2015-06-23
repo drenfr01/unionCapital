@@ -19,9 +19,9 @@ AppConfig = {
       hoursBehind: -168
     },
     // Max distance for ad hoc event in km
-    maxAdHocDistance: 0.1,
+    maxAdHocDistance: 0.2,
     // Max distance for recognized event in km
-    maxEventDistance: 0.1,
+    maxEventDistance: 0.2,
   },
   // Event calendar
   eventCalendar: {
