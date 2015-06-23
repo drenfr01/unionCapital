@@ -194,6 +194,8 @@ Meteor.methods({
       }
     });
 
+    attributes.email = attributes.email.toLowerCase();
+
     var newUserId;
 
     if(attributes.userId) {
@@ -201,13 +203,13 @@ Meteor.methods({
                           {$set: { profile: attributes.profile
                           }});
       Meteor.users.update(attributes.userId,
-                          {$push: {emails: {address: attributes.email
+                          {$push: {emails: {address: attributes.email.toLowerCase()
                           }}});
       newUserId = attributes.userId;
       Accounts.setPassword(newUserId, attributes.password);
     } else {
       newUserId = Accounts.createUser({
-        email: attributes.email,
+        email: attributes.email.toLowerCase(),
         password: attributes.password,
         profile: attributes.profile
       });
@@ -250,6 +252,9 @@ Meteor.methods({
         UCBAppAccess: String
       }
     });
+
+    attributes.email = attributes.email.toLowerCase();
+
     Meteor.users.update(this.userId,
                         {$set: { profile: attributes.profile
                         }});
@@ -327,7 +332,7 @@ Meteor.methods({
     };
 
     var event = DB.insertEvent(eventAttributes);
-    
+
     Transactions.insert({
       userId: attributes.userId,
       eventId: event,
