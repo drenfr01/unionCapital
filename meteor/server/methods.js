@@ -386,16 +386,18 @@ Meteor.methods({
     });
 
     var users =  Meteor.users.find().fetch();
+    var userIds = _.pluck(users, '_id');
+    //read all relevant transactions into memory?
+    var allTransactions = Transactions.find({userId: {$in: userIds}}).fetch();
+    var events = Events.find().fetch();
 
     var tableRows = _.map(users, function(user) {
 
       //WARNING: unclear if below is a big performance hit (2 cursor calls)
-      var transactionCount = Transactions.find({userId: user._id}).count();
-      var totalPoints = Meteor.users.totalPointsFor(user._id);
-      var mostRecentTransaction = Transactions.find({userId: user._id},
-                            {sort: {transactionDate: -1}, limit: 1}).fetch()[0] ||
-                              { eventId: "", transactionDate: ""};
-      var mostRecentEvent = Events.findOne(mostRecentTransaction.eventId) || {name: ""};
+      var userTransactions = _.where(allTransactions, {userId: user._id});
+      var transactionCount = userTransactions.length;
+      var mostRecentTransaction = userTransactions[0] || { eventId: "", transactionDate: ""};
+      var mostRecentEvent = _.findWhere(events, {eventId: mostRecentTransaction.eventId}) || {name: ""};
 
       //if user is admin
       var userProfile = user.profile || {firstName: 'admin', lastName: '', zip: ''};
@@ -412,7 +414,7 @@ Meteor.methods({
         lastEvent: mostRecentEvent.name,
         lastEventDate: mostRecentTransaction.transactionDate,
         numberOfTransactions: transactionCount,
-        totalPoints: totalPoints};
+        totalPoints: 0}; //TODO: this shouldn't be 0, put back in find total points
     });
     var results = _.sortBy(tableRows, attributes.sortOn);
     // _.sortBy doesn't have a flag for ascending / descending
