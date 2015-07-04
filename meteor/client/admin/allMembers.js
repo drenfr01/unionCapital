@@ -34,17 +34,31 @@ function getMembersData(sortOn, sortOrder) {
   }
 
   var users = Meteor.users.searchFor(selector, searchText.get(), fields, options);
+  var userIds = _.pluck(users, '_id');
+  //improves from 17s to 9s, still crappy though
+  var allTransactions = Transactions.find({userId: {$in: userIds}, approved: true,
+                                          eventId: {$exists: true}}).fetch();
+  var events = Events.find().fetch();
 
-  //TODO: THE BELOW CODE SNIPPET IS AN OFFENSE TO GOD AND MEN
   var tableRows = _.map(users, function(user) {
 
-    //WARNING: unclear if below is a big performance hit (2 cursor calls)
-    var transactionCount = Transactions.find({userId: user._id}).count();
-    var totalPoints = Meteor.users.totalPointsFor(user._id);
-    var mostRecentTransaction = Transactions.find({userId: user._id},
-                          {sort: {transactionDate: -1}, limit: 1}).fetch()[0] ||
-                            { eventId: "", transactionDate: ""};
-    var mostRecentEvent = Events.findOne(mostRecentTransaction.eventId) || {name: ""};
+    //TODO: this is broken, doesn't return last transaction
+    var userTransactions = _.where(allTransactions, {userId: user._id});
+    var transactionCount = userTransactions.length;
+    var mostRecentTransaction = userTransactions[0] || { eventId: "", transactionDate: ""};
+    var mostRecentEvent = _.findWhere(events, {eventId: mostRecentTransaction.eventId}) || {name: ""};
+
+    var totalPoints = 0;
+    if(!_.isEmpty(userTransactions)) {
+      totalPoints = _.reduce(userTransactions, function(sum, transaction) {
+        var event = _.findWhere(events, {_id: transaction.eventId});
+        if(event && event.isPointsPerHour) {
+          return Math.round(sum += event.pointsPerHour * transaction.hoursSpent);
+        } else if(event) {
+          return sum += event.points;
+        }
+      },0);
+    }
 
     //if user is admin
     var userProfile = user.profile || {firstName: 'admin', lastName: 'd', zip: ''};
@@ -77,7 +91,10 @@ Template.allMembers.rendered = function() {
 
 Template.allMembers.helpers({
   getMembers: function() {
-    return getMembersData(Session.get('sortOn'), Session.get('sortOrder'));
+    console.time("function 1");
+    var data = getMembersData(Session.get('sortOn'), Session.get('sortOrder'));
+    console.timeEnd("function 1");
+    return data;
   }
 });
 

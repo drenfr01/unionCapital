@@ -24,3 +24,5 @@ Meteor.users.deny({
     return true;
   }
 });
+
+AllMembers = new Mongo.Collection('allMembers');

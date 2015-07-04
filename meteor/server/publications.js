@@ -110,3 +110,11 @@ Meteor.publish('userData', function() {
     this.ready();
   }
 });
+
+Meteor.publish('allMembers', function() {
+  if (Roles.userIsInRole(this.userId, 'admin')) {
+    AllMembers.find();
+  } else {
+    this.ready();
+  }    
+});

@@ -416,14 +416,7 @@ Meteor.methods({
         numberOfTransactions: transactionCount,
         totalPoints: 0}; //TODO: this shouldn't be 0, put back in find total points
     });
-    var results = _.sortBy(tableRows, attributes.sortOn);
-    // _.sortBy doesn't have a flag for ascending / descending
-    // for some reason...
-    if(attributes.sortOrder === 1) {
-      return results;
-    } else {
-      return results.reverse();
-    }
+    AllMembers.insert(tableRows);
   },
 
   'archiveMember': function(userId) {
