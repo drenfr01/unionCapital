@@ -32,7 +32,13 @@ Template.approveTransactions.helpers({
 
     return Transactions.find(selector);
   },
-
+  eventDate: function() {
+    if(this.eventId) {
+      return Events.findOne(this.eventId).eventDate;
+    } else {
+      return this.pendingEventDate;
+    }
+  },
   partnerOrgs: function() {
     return PartnerOrgs.find();
   },
