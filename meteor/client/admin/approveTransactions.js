@@ -24,7 +24,6 @@ Template.approveTransactions.helpers({
       }
 
     } else if (Roles.userIsInRole(Meteor.userId(), 'partnerAdmin')) {
-
       // Uses the partner admin's org to filter if not superadmin
       selector.approvalType = 'partner_admin';
       selector.partnerOrg = Meteor.user().profile.partnerOrg;
@@ -32,7 +31,13 @@ Template.approveTransactions.helpers({
 
     return Transactions.find(selector);
   },
-
+  eventDate: function() {
+    if(this.eventId) {
+      return Events.findOne(this.eventId).eventDate;
+    } else {
+      return this.pendingEventDate;
+    }
+  },
   partnerOrgs: function() {
     return PartnerOrgs.find();
   },
