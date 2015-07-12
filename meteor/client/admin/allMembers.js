@@ -56,10 +56,12 @@ function getMembersData(sortOn, sortOrder) {
     _.each(transactions, function(transaction) {
       var event = _.findWhere(events, {_id: transaction.eventId});
       if(event && event.isPointsPerHour) {
-        totalPoints = Math.round(totalPoints + 
-                                 (event.pointsPerHour * transaction.hoursSpent));
+        totalPoints = totalPoints + Math.round(event.pointsPerHour * transaction.hoursSpent);
       } else if(event) {
         totalPoints += event.points;
+      }
+      if(transaction.userId === "NSw4KZKznLK5eNDBT") {
+        console.log(transaction._id + " " + totalPoints);
       }
     });
     var mostRecentTransaction = transactions[0] ||
