@@ -6,17 +6,20 @@ Meteor.users.transactionsFor = function(userId, approvedFlag) {
 };
 
 Meteor.users.totalPointsFor = function(userId) {
-  return Transactions
-  .find({userId: userId, approved: true, eventId: {$exists: true} })
-  .fetch()
-  .reduce(function(sum, transaction) {
+  //find all transactions for user
+  //get event to find points
+  //calculate sum
+  var sum = 0;
+  var approvedTransactions = Transactions.find({userId: userId, approved: true, eventId: {$exists: true} });
+  approvedTransactions.forEach(function(transaction) {
     var event = Transactions.eventFor(transaction);
     if(event && event.isPointsPerHour) {
-      return Math.round(sum += event.pointsPerHour * transaction.hoursSpent);
+      sum = Math.round(sum + (event.pointsPerHour * transaction.hoursSpent));
     } else if(event) {
-      return sum += event.points;
+      sum += event.points;
     }
-  }, 0);
+  });
+  return sum;
 };
 
 Meteor.users.deny({

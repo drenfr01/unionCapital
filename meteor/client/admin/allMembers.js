@@ -34,16 +34,41 @@ function getMembersData(sortOn, sortOrder) {
   }
 
   var users = Meteor.users.searchFor(selector, searchText.get(), fields, options);
-
+  //get all transactions and events ahead of time
+  //maybe build a hash of stuff?
+  var userIds = _.pluck(users, "_id");
+  var allTransactions = Transactions.find({userId: {$in: userIds }},
+                                         {sort: {transactionDate: -1}}).fetch();
+ 
+  var eventIds = _.pluck(allTransactions, "eventId");
+  var allEvents = Events.find({_id: {$in: eventIds}}).fetch();
+  
   //TODO: THE BELOW CODE SNIPPET IS AN OFFENSE TO GOD AND MEN
   var tableRows = _.map(users, function(user) {
 
     //WARNING: unclear if below is a big performance hit (2 cursor calls)
-    var transactionCount = Transactions.find({userId: user._id}).count();
-    var totalPoints = Meteor.users.totalPointsFor(user._id);
-    var mostRecentTransaction = Transactions.find({userId: user._id},
-                          {sort: {transactionDate: -1}, limit: 1}).fetch()[0] ||
-                            { eventId: "", transactionDate: ""};
+    var transactions = _.filter(allTransactions, function(trans) {
+      return trans.userId === user._id;
+    });
+    var transactionCount = transactions.length;
+    var totalPoints = 0;
+    var eventIds = _.pluck(transactions, "eventId");
+
+    //var events = Events.find({_id: {$in: eventIds}}).fetch();
+    var events = _.filter(allEvents, function(event) {
+      return eventIds.indexOf(event._id) > -1;
+    });
+    _.each(transactions, function(transaction) {
+      var event = _.findWhere(events, {_id: transaction.eventId});
+      if(event && event.isPointsPerHour) {
+        totalPoints = Math.round(totalPoints + 
+                                 (event.pointsPerHour * transaction.hoursSpent));
+      } else if(event) {
+        totalPoints += event.points;
+      }
+    });
+    var mostRecentTransaction = transactions[0] ||
+      { eventId: "", transactionDate: ""};
     var mostRecentEvent = Events.findOne(mostRecentTransaction.eventId) || {name: ""};
 
     //if user is admin
@@ -85,7 +110,10 @@ Template.allMembers.rendered = function() {
 
 Template.allMembers.helpers({
   getMembers: function() {
-    return getMembersData(Session.get('sortOn'), Session.get('sortOrder'));
+    console.time('all members');
+    var data = getMembersData(Session.get('sortOn'), Session.get('sortOrder'));
+    console.timeEnd('all members');
+    return data;
   }
 });
 
