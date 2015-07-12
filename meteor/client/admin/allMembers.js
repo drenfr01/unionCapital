@@ -91,7 +91,7 @@ function getMembersData(sortOn, sortOrder) {
 
   var out = _.sortBy(tableRows, function(item) {
     var sortField = item[Session.get('sortOn')];
-    if (typeof sortField === 'number' || typeof sortField === 'date')
+    if (typeof sortField === 'number' || sortField instanceof Date)
       return sortField;
     else
       return sortField.toLowerCase();
