@@ -4,7 +4,7 @@ PROD_PROJECT_NAME="UnionCapital"
 QA_PROJECT_NAME="Union Capital QA"
 
 # read -p "Deploy what branch? [default=origin/master]" branch
-read -p "Deploy which environment? [prod/qa]" -i "qa" env
+read -p "Deploy which environment? [prod/qa]" env
 case $env in
     prod )
         export PROJ=$PROD_PROJECT_NAME;;
