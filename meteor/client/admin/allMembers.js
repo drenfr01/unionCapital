@@ -60,9 +60,6 @@ function getMembersData(sortOn, sortOrder) {
       } else if(event) {
         totalPoints += event.points;
       }
-      if(transaction.userId === "NSw4KZKznLK5eNDBT") {
-        console.log(transaction._id + " " + totalPoints);
-      }
     });
     var mostRecentTransaction = transactions[0] ||
       { eventId: "", transactionDate: ""};
@@ -107,9 +104,7 @@ Template.allMembers.rendered = function() {
 
 Template.allMembers.helpers({
   getMembers: function() {
-    console.time('all members');
     var data = getMembersData(Session.get('sortOn'), Session.get('sortOrder'));
-    console.timeEnd('all members');
     return data;
   }
 });
