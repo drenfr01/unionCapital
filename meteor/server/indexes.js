@@ -1,0 +1,4 @@
+Meteor.startup(function() {
+  Transactions._ensureIndex({ "userId": 1  });
+  Transactions._ensureIndex({ "eventId": 1  });
+});
