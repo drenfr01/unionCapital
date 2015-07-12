@@ -35,7 +35,7 @@ function getMembersData(sortOn, sortOrder) {
 
   var users = Meteor.users.searchFor(selector, searchText.get(), fields, options);
   var userIds = _.pluck(users, "_id");
-  var allTransactions = Transactions.find({userId: {$in: userIds }},
+  var allTransactions = Transactions.find({userId: {$in: userIds }, approved: true},
                                          {sort: {transactionDate: -1}}).fetch();
  
   var eventIds = _.pluck(allTransactions, "eventId");
