@@ -22,6 +22,11 @@ AppConfig = {
     maxAdHocDistance: 0.2,
     // Max distance for recognized event in km
     maxEventDistance: 0.2,
+    // photos
+    maxPhotoDimensions: {
+      height: 960,
+      width: 960
+    }
   },
   // Event calendar
   eventCalendar: {

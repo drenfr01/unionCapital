@@ -5,7 +5,6 @@ Meteor.methods({
   },
 
   insertTransaction: function(attributes) {
-    console.log('insert transaction');
     var currentUser = Meteor.user();
 
     // Determines whether this transaction requires approval

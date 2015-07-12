@@ -78,9 +78,53 @@ _.extend(UserPhoto.prototype, {
 
     reader.onload = function(res) {
       self.takePhotoFailed.set(false);
-      self.photoURI.set(reader.result);
+      self.resizeDataURI(reader.result);
     };
 
     reader.readAsDataURL(inputElement);
+  },
+
+  resizeDataURI: function(data) {
+    var self = this;
+
+    // We create an image to receive the Data URI
+    var img = document.createElement('img');
+
+    // When the event "onload" is triggered we can resize the image.
+    img.onload = function() {
+      // We create a canvas and get its context.
+      var canvas = document.createElement('canvas');
+      var ctx = canvas.getContext('2d');
+
+      var maxWidth = AppConfig.checkIn.maxPhotoDimensions.width;
+          maxHeight = AppConfig.checkIn.maxPhotoDimensions.height;
+          imageWidth = img.width,
+          imageHeight = img.height;
+
+      if (imageWidth > imageHeight) {
+        if (imageWidth > maxWidth) {
+          imageHeight *= maxWidth / imageWidth;
+          imageWidth = maxWidth;
+        }
+      } else {
+        if (imageHeight > maxHeight) {
+          imageWidth *= maxHeight / imageHeight;
+          imageHeight = maxHeight;
+        }
+      }
+
+      // We set the dimensions at the wanted size.
+      canvas.width = imageWidth;
+      canvas.height = imageHeight;
+
+      // We resize the image with the canvas method drawImage();
+      ctx.drawImage(this, 0, 0, imageWidth, imageHeight);
+
+      var dataURI = canvas.toDataURL();
+      self.photoURI.set(dataURI);
+    };
+
+    // We put the Data URI in the image's src attribute
+    img.src = data;
   }
 });
