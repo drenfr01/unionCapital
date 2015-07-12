@@ -34,8 +34,6 @@ function getMembersData(sortOn, sortOrder) {
   }
 
   var users = Meteor.users.searchFor(selector, searchText.get(), fields, options);
-  //get all transactions and events ahead of time
-  //maybe build a hash of stuff?
   var userIds = _.pluck(users, "_id");
   var allTransactions = Transactions.find({userId: {$in: userIds }},
                                          {sort: {transactionDate: -1}}).fetch();
@@ -43,10 +41,8 @@ function getMembersData(sortOn, sortOrder) {
   var eventIds = _.pluck(allTransactions, "eventId");
   var allEvents = Events.find({_id: {$in: eventIds}}).fetch();
   
-  //TODO: THE BELOW CODE SNIPPET IS AN OFFENSE TO GOD AND MEN
   var tableRows = _.map(users, function(user) {
 
-    //WARNING: unclear if below is a big performance hit (2 cursor calls)
     var transactions = _.filter(allTransactions, function(trans) {
       return trans.userId === user._id;
     });
@@ -54,7 +50,6 @@ function getMembersData(sortOn, sortOrder) {
     var totalPoints = 0;
     var eventIds = _.pluck(transactions, "eventId");
 
-    //var events = Events.find({_id: {$in: eventIds}}).fetch();
     var events = _.filter(allEvents, function(event) {
       return eventIds.indexOf(event._id) > -1;
     });
