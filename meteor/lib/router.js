@@ -167,14 +167,27 @@ Router.route('/uploadEvents', function() {
   name: 'uploadEvents'
 });
 
-Router.route('/editEvent/:_id', function () {
-  this.render('editEvent', {
-    data: function () {
-      return Events.findOne({_id: this.params._id});
+Router.route('/editEvent/:_id', {
+  name: 'editEvent',
+
+  template: 'editEvent',
+
+  data: function () {
+    return Events.findOne({_id: this.params._id});
+  },
+
+  subscriptions: function() {
+    var self = this;
+    return Meteor.subscribe('singleEvent', self.params._id);
+  },
+
+  action: function () {
+    if (this.ready()) {
+      this.render();
+    } else {
+      this.render('loading');
     }
-  });
-}, {
-  name: 'editEvent'
+  }
 });
 
 Router.route('/checkpoints', function () {
@@ -220,11 +233,12 @@ Router.route('/viewPartnerMemberProfile/:_id', function () {
 });
 
 
-Router.route('/manageEvents', function() {
-  this.render('manageEvents');
-},
-{
-  name: 'manageEvents'
+Router.route('/manageEvents', {
+  template: 'manageEvents',
+  name: 'manageEvents',
+  subscriptions: function() {
+    return Meteor.subscribe('manageEvents');
+  }
 });
 
 Router.route('/partnerAdminPage', function() {

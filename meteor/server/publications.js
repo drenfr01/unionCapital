@@ -61,7 +61,6 @@ Meteor.publish("eventsForUser", function(userId) {
 
 Meteor.publish("eventsForTransactions", function() {
   var self = this;
-
   var selector = { approved: false, deleteInd: false };
 
   if (Roles.userIsInRole(self.userId, 'partnerAdmin')) {
@@ -79,6 +78,16 @@ Meteor.publish("eventsForTransactions", function() {
   eventIds.push(Events.findOne({ name: AppConfig.ucbButtonEvent })._id);
 
   return Events.find({ _id: { $in: eventIds } });
+});
+
+Meteor.publish('manageEvents', function() {
+  var self = this;
+  var selector = {};
+
+  if (Roles.userIsInRole(self.userId, 'partnerAdmin'))
+    selector.institution = Meteor.users.findOne(self.userId).profile.partnerOrg;
+
+  return Events.find(selector);
 });
 
 //The idea here is to publish all reservations
