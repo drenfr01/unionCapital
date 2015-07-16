@@ -28,10 +28,7 @@ SearchSource.defineSource('eventsSearch', function(searchText, options) {
 });
 
 SearchSource.defineSource('checkinEventsSearch', function(searchText, options) {
-  var options = {
-    sort: {startDate: 1},
-    limit: 20
-  };
+  var options = options || { sort: {startDate: 1}, limit: 20 };
 
   // Set the time interval - sends the start date of past events
   // up to the end date of current events for performance

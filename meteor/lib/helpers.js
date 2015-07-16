@@ -27,6 +27,12 @@ HelperFunctions = {
     var result = new Date(date);
     result.setDate(date.getDate() + days);
     return result;
+  },
+
+  // Builds a regexp that returns true when a string contains all words separated by spaces
+  buildRegExp: function(text) {
+    var parts = text.trim().split(' ');
+    return new RegExp("(?=.*" + parts.join(")(?=.*") + ")", 'i');
   }
 };
 

@@ -161,6 +161,43 @@ Events.allEvents = function() {
                      {sort: {startDate: 1}});
 };
 
+Events.eventsSearch = function(searchText, selector, options) {
+  selector = selector || {};
+  selector.deleteInd = false;
+  selector.adHoc = false;
+
+  options = options || {};
+
+  // var selector = {
+  //   deleteInd: false,
+  //   adHoc: false,
+  // };
+
+  // Filter by date only if passed
+  // if (start)
+  //   selector.eventDate = { $gte: start };
+
+  // if (end && selector.eventDate)
+  //   selector.eventDate.$lte = end;
+  // else if (end && !selector.eventDate)
+  //   selector.eventDate = { $lte: end };
+
+  var out = this.find(selector, options).fetch();
+
+  // Run a regexp on concantenated desc and name fields if searchtext is passed
+  if (searchText) {
+    var regExp = HelperFunctions.buildRegExp(searchText);
+
+    out = _.filter(out, function(item) {
+      var string = item.description + item.name;
+
+      return regExp.test(string);
+    });
+  }
+
+  return out;
+}
+
 Events.allow({
   insert: function() {
     return true;

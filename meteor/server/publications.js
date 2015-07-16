@@ -30,8 +30,21 @@ Meteor.publish("ucbappaccess", function() {
   return UCBAppAccess.find();
 });
 
-Meteor.publish("events", function() {
-  return Events.find();
+
+// ------------- EVENT PUBLICATIONS --------------
+Meteor.publish("events", function(start, end) {
+  var selector = {};
+  if (typeof start === 'date' && typeof end === 'date')
+    selector.eventDate = { $gte: start, $lte: end };
+
+  return Events.find(selector);
+});
+
+Meteor.publish("singleEvent", function(id) {
+  if (!id)
+    throw new Error('Bad event id in subscription');
+
+  return Events.find({ _id: id });
 });
 
 //The idea here is to publish all reservations

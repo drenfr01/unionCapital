@@ -2,7 +2,8 @@ Router.configure({
   layoutTemplate: 'layout',
   loadingTemplate: 'loading',
   notFoundTemplate: 'notFound',
-  waitOn: function() { return Meteor.subscribe('events'); }
+
+  // waitOn: function() { return Meteor.subscribe('events'); }
 });
 
 // Clear alerts when moving to a new page
@@ -262,6 +263,15 @@ Router.map(function() {
     path: 'checkin/:id',
     data: function() {
       return Events.findOne({_id: this.params.id});
+    },
+    subscriptions: function() {
+      return Meteor.subscribe('singleEvent', this.params.id);
+    },
+    action: function() {
+      if (this.ready())
+        this.render();
+      else
+        this.render('loading');
     }
   });
 
@@ -285,7 +295,16 @@ Router.map(function() {
   });
   this.route('singleEvent', {
     path: '/event/:_id',
-    data: function() { return Events.findOne({_id: this.params._id }); }
+    data: function() { return Events.findOne({_id: this.params._id }); },
+    subscriptions: function() {
+      return Meteor.subscribe('singleEvent', this.params._id);
+    },
+    action: function() {
+      if (this.ready())
+        this.render();
+      else
+        this.render('loading');
+    }
   });
 
   //TODO: I don't know how to do polymorphic routes yet,
@@ -294,6 +313,11 @@ Router.map(function() {
   this.route('checkin', {
     path: '/checkin',
     template: 'checkIntoEvent',
+    subscriptions: function() {
+      var start = moment().add(AppConfig.checkIn.past.hoursBehind, 'h').toDate();
+      var end = moment().add(AppConfig.checkIn.today.hoursAhead, 'h').toDate();
+      Meteor.subscribe('events', start, end);
+    }
   });
   this.route('showMemberRewards', {path: '/rewards'});
   this.route('contactUs', {path: '/contactUs'});
