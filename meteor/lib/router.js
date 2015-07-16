@@ -339,7 +339,12 @@ Router.map(function() {
   this.route('adminHomePage', {path: '/adminHomePage'});
   this.route('addCommunityEvents', {path: '/addCommunityEvents'});
   this.route('addRewards', {path: '/addRewards'});
-  this.route('approveTransactions', {path: '/approve'});
+  this.route('approveTransactions', {
+    path: '/approve',
+    subscriptions: function() {
+      return Meteor.subscribe('eventsForTransactions');
+    }
+  });
   this.route('listMembers', {path: '/listMembers'});
 
 });

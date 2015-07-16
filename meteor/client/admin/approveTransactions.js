@@ -69,7 +69,7 @@ Template.approveTransactions.helpers({
     return Roles.userIsInRole(Meteor.userId(), 'admin');
   },
   ucbButtonEvent: function() {
-    var buttonEvent = Events.findOne({name: AppConfig.ucbButtonEvent})._id;
+    var buttonEvent = Events.findOne({ name: AppConfig.ucbButtonEvent })._id;
     if (this.eventId === buttonEvent) {
       return 'Y';
     } else {
