@@ -67,7 +67,7 @@ Meteor.publish("eventsForTransactions", function() {
   if (Roles.userIsInRole(self.userId, 'partnerAdmin')) {
     // Uses the partner admin's org to filter if not superadmin
     selector.approvalType = 'partner_admin';
-    selector.partnerOrg = Meteor.users.find(self.userId).profile.partnerOrg;
+    selector.partnerOrg = Meteor.users.findOne(self.userId).profile.partnerOrg;
   }
 
   var eventIds = _.chain(Transactions.find(selector, { fields: { eventId: 1 } }).fetch())

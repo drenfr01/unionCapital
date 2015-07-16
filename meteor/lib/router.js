@@ -182,9 +182,17 @@ Router.route('/checkpoints', function () {
     data: function () {
       return Meteor.user();
     },
+
     subscriptions: function() {
-      console.log(this.data._id);
       return Meteor.subscribe('eventsForUser')
+    },
+
+    action: function () {
+      if (this.ready()) {
+        this.render();
+      } else {
+        this.render('loading');
+      }
     }
   });
 }, {
@@ -263,6 +271,7 @@ Router.map(function() {
       var end = moment().add(AppConfig.eventCalendar.future.hoursAhead, 'h').toDate();
       Meteor.subscribe('events', start, end);
     }
+    // no need to wait on subs here, the search function handles that
   });
 
   this.route('memberHomePage', {path: '/memberhome'});
@@ -327,6 +336,7 @@ Router.map(function() {
       var end = moment().add(AppConfig.checkIn.today.hoursAhead, 'h').toDate();
       Meteor.subscribe('events', start, end);
     }
+    // no need to wait on subs here, the search function handles that
   });
   this.route('showMemberRewards', {path: '/rewards'});
   this.route('contactUs', {path: '/contactUs'});
@@ -341,8 +351,17 @@ Router.map(function() {
   this.route('addRewards', {path: '/addRewards'});
   this.route('approveTransactions', {
     path: '/approve',
+
     subscriptions: function() {
       return Meteor.subscribe('eventsForTransactions');
+    },
+
+    action: function () {
+      if (this.ready()) {
+        this.render();
+      } else {
+        this.render('loading');
+      }
     }
   });
   this.route('listMembers', {path: '/listMembers'});
