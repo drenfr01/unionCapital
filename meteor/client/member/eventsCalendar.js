@@ -1,21 +1,23 @@
 CalendarEventsSearch = new CalendarEvents();
+var searchString = new ReactiveVar();
 
 Template.eventsCalendar.rendered = function() {
-  CalendarEventsSearch.search("");
+  // CalendarEventsSearch.search("");
+  searchString.set('');
 };
 
 Template.eventsCalendar.helpers({
 
   hasPastEvents: function() {
-    return !_.isEmpty(CalendarEventsSearch.getPastEvents());
+    return !_.isEmpty(CalendarEventsSearch.getPastEvents(searchString.get()));
   },
 
   hasFutureEvents: function() {
-    return !_.isEmpty(CalendarEventsSearch.getFutureEvents());
+    return !_.isEmpty(CalendarEventsSearch.getFutureEvents(searchString.get()));
   },
 
   hasNoEvents: function() {
-    return _.isEmpty(CalendarEventsSearch.getPastEvents()) && _.isEmpty(CalendarEventsSearch.getFutureEvents());
+    return _.isEmpty(CalendarEventsSearch.getPastEvents(searchString.get())) && _.isEmpty(CalendarEventsSearch.getFutureEvents(searchString.get()));
   }
 });
 
@@ -23,7 +25,8 @@ Template.eventsCalendar.events({
 
   'keyup #search-box': _.throttle(function(e) {
     var text = $(e.target).val().trim();
-    CalendarEventsSearch.search(text);
+    // CalendarEventsSearch.search(text);
+    searchString.set(text);
   }, 200),
 
   'click .insertReservation': function(e) {
@@ -57,7 +60,8 @@ Template.eventsCalendar.events({
   },
 
   'click #clearBtn': function() {
-    CalendarEventsSearch.search('');
+    searchString.set('');
+    // CalendarEventsSearch.search('');
     $('#search-box').val('');
     $('#search-box').focus();
   },
@@ -77,9 +81,9 @@ Template.eventsCalendar.events({
 Template.eventPanel.helpers({
   getEvents: function() {
     if (this.type === 'past')
-      return CalendarEventsSearch.getPastEvents();
+      return CalendarEventsSearch.getPastEvents(searchString.get());
     else if (this.type === 'future')
-      return CalendarEventsSearch.getFutureEvents();
+      return CalendarEventsSearch.getFutureEvents(searchString.get());
   },
 
   hasReservation: function() {

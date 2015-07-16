@@ -168,20 +168,6 @@ Events.eventsSearch = function(searchText, selector, options) {
 
   options = options || {};
 
-  // var selector = {
-  //   deleteInd: false,
-  //   adHoc: false,
-  // };
-
-  // Filter by date only if passed
-  // if (start)
-  //   selector.eventDate = { $gte: start };
-
-  // if (end && selector.eventDate)
-  //   selector.eventDate.$lte = end;
-  // else if (end && !selector.eventDate)
-  //   selector.eventDate = { $lte: end };
-
   var out = this.find(selector, options).fetch();
 
   // Run a regexp on concantenated desc and name fields if searchtext is passed
@@ -189,7 +175,7 @@ Events.eventsSearch = function(searchText, selector, options) {
     var regExp = HelperFunctions.buildRegExp(searchText);
 
     out = _.filter(out, function(item) {
-      var string = item.description + item.name;
+      var string = item.description + item.name + item.institution + item.category;
 
       return regExp.test(string);
     });

@@ -181,6 +181,10 @@ Router.route('/checkpoints', function () {
   this.render('checkPoints', {
     data: function () {
       return Meteor.user();
+    },
+    subscriptions: function() {
+      console.log(this.data._id);
+      return Meteor.subscribe('eventsForUser')
     }
   });
 }, {
@@ -253,7 +257,12 @@ Router.map(function() {
   });
 
   this.route('eventsCalendar', {
-    path: '/calendar'
+    path: '/calendar',
+    subscriptions: function() {
+      var start = moment().add(AppConfig.eventCalendar.past.hoursBehind, 'h').toDate();
+      var end = moment().add(AppConfig.eventCalendar.future.hoursAhead, 'h').toDate();
+      Meteor.subscribe('events', start, end);
+    }
   });
 
   this.route('memberHomePage', {path: '/memberhome'});

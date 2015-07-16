@@ -47,6 +47,13 @@ Meteor.publish("singleEvent", function(id) {
   return Events.find({ _id: id });
 });
 
+Meteor.publish("eventsForUser", function(userId) {
+  check(userId, String);
+
+  var eventIds = Transactions.find({ userId: userId }, { fields: { eventId: 1 } }).fetch();
+  return Events.find({ _id: { $in: eventIds } });
+});
+
 //The idea here is to publish all reservations
 //that a partner admin has access to
 //This is any member that belongs to that partner
