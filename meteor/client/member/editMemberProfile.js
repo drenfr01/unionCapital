@@ -47,15 +47,17 @@ Template.editMemberProfile.events({
         city: $('#city').val(),
         state: $('#state').val(),
         zip: $('#zip').val(),
-        partnerOrg: $('#organizations').val(),
-        numberOfKids: $('#numberOfKids').val(),
-        race: $("#races").val(),
-        medicaid : $("#medicaid input[type='radio']:checked").val(),
-        gender : $("#genderForm input[type='radio']:checked").val(),
-        reducedLunch : $("#reducedLunchForm input[type='radio']:checked").val(),
-        UCBAppAccess : $('#device').val()
+        partnerOrg: $('#organizations').val()
       }
     };
+
+    if($('#numberOfKids').val()) attributes.profile.numberOfKids = $('#numberOfKids').val();
+    if($("#races").val()) attributes.profile.race = $("#races").val();
+    if($("#medicaid input[type='radio']:checked").val()) attributes.profile.medicaid = $("#medicaid input[type='radio']:checked").val();
+    if($("#genderForm input[type='radio']:checked").val()) attributes.profile.gender = $("#genderForm input[type='radio']:checked").val();
+    if($("#reducedLunchForm input[type='radio']:checked").val()) attributes.profile.reducedLunch = $("#reducedLunchForm input[type='radio']:checked").val();
+    if($('#device').val()) attributes.profile.UCBAppAccess = $('#device').val();
+
     Meteor.call('updateUser', attributes, function(error) {
       if(error) {
         addErrorMessage(error.reason);

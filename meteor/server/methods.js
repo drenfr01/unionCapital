@@ -198,9 +198,26 @@ Meteor.methods({
     var newUserId;
 
     if(attributes.userId) {
-      Meteor.users.update(attributes.userId,
-                          {$set: { profile: attributes.profile
-                          }});
+      Meteor.users.update(attributes.userId, {
+        $set: {
+          'profile.firstName': attributes.profile.firstName,
+          'profile.lastName': attributes.profile.lastName,
+          'profile.street1': attributes.profile.street1,
+          'profile.street2': attributes.profile.street2,
+          'profile.city': attributes.profile.city,
+          'profile.state': attributes.profile.state,
+          'profile.zip': attributes.profile.zip,
+          'profile.partnerOrg': attributes.profile.partnerOrg,
+          'profile.numberOfKids': attributes.profile.numberOfKids,
+          'profile.race': attributes.profile.race,
+          'profile.followingOrgs': attributes.profile.followingOrgs,
+          'profile.role': attributes.profile.role,
+          'profile.gender': attributes.profile.gender,
+          'profile.medicaid': attributes.profile.medicaid,
+          'profile.reducedLunch': attributes.profile.reducedLunch,
+          'profile.UCBAppAccess': attributes.profile.UCBAppAccess
+        }
+      });
       Meteor.users.update(attributes.userId,
                           {$push: {emails: {address: attributes.email.toLowerCase()
                           }}});
@@ -243,26 +260,43 @@ Meteor.methods({
         state: String,
         zip: String,
         partnerOrg: String,
-        numberOfKids: String,
-        race: String,
-        gender: String,
-        medicaid: String,
-        reducedLunch: String,
-        UCBAppAccess: String
+        numberOfKids: Match.Optional(String),
+        race: Match.Optional(String),
+        gender: Match.Optional(String),
+        medicaid: Match.Optional(String),
+        reducedLunch: Match.Optional(String),
+        UCBAppAccess: Match.Optional(String)
       }
     });
 
     attributes.email = attributes.email.toLowerCase();
 
-    Meteor.users.update(this.userId,
-                        {$set: { profile: attributes.profile
-                        }});
+    Meteor.users.update(this.userId, {
+      $set: {
+        'profile.firstName': attributes.profile.firstName,
+        'profile.lastName': attributes.profile.lastName,
+        'profile.street1': attributes.profile.street1,
+        'profile.street2': attributes.profile.street2,
+        'profile.city': attributes.profile.city,
+        'profile.state': attributes.profile.state,
+        'profile.zip': attributes.profile.zip,
+        'profile.partnerOrg': attributes.profile.partnerOrg,
+        'profile.numberOfKids': attributes.profile.numberOfKids,
+        'profile.race': attributes.profile.race,
+        'profile.followingOrgs': attributes.profile.followingOrgs,
+        'profile.role': attributes.profile.role,
+        'profile.gender': attributes.profile.gender,
+        'profile.medicaid': attributes.profile.medicaid,
+        'profile.reducedLunch': attributes.profile.reducedLunch,
+        'profile.UCBAppAccess': attributes.profile.UCBAppAccess
+      }
+    });
     //Note: this assumes only 1 email address
     Meteor.users.update(this.userId,
-                        {$pop: {emails: {address: attributes.email
-                        }}});
-    Meteor.users.update(this.userId,
                         {$push: {emails: {address: attributes.email
+                        }}});
+    Meteor.users.update(this.userId, //{ emails: [ attributes.email ] });
+                        {$pop: {emails: {address: attributes.email
                         }}});
   },
 
