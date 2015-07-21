@@ -301,9 +301,8 @@ Meteor.methods({
 
     //create new ad-hoc event for Admin adding points
     var eventAttributes = {
-      eventName: attributes.description,
+      name: attributes.description,
       eventDate: Date(),
-      eventAddress: '123 Fake St, Boston, MA', //fake address
       category: 'Admin Adding Points',
       hoursSpent: 0, //fake duration of event
       points: attributes.points,
@@ -312,7 +311,6 @@ Meteor.methods({
 
     Transactions.insert({
       userId: attributes.userId,
-      eventId: event,
       approvalType: 'auto',
       approved: true,
       event: eventAttributes,
