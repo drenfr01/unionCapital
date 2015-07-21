@@ -39,6 +39,12 @@ Transactions.attachSchema(new SimpleSchema({
       label: 'Partner Organization',
       optional: true
     },
+    event: {
+      type: Object,
+      label: 'Event Name',
+      blackbox: true,
+      optional: true
+    },
     pendingEventName: {
       type: String,
       label: 'Event Name',
