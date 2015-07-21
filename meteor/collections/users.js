@@ -10,8 +10,9 @@ Meteor.users.totalPointsFor = function(userId) {
   //get event to find points
   //calculate sum
   var sum = 0;
-  var approvedTransactions = Transactions.find({userId: userId, approved: true, eventId: {$exists: true} });
+  var approvedTransactions = Transactions.find({userId: userId, approved: true, event: {$exists: true} });
   approvedTransactions.forEach(function(transaction) {
+    console.log(transaction);
     var event = transaction.event;
     if(event && event.isPointsPerHour) {
       sum = Math.round(sum + (event.pointsPerHour * transaction.hoursSpent));

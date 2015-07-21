@@ -130,12 +130,11 @@ Meteor.methods({
       hoursSpent: Number,
       eventDate: Date,
       points: Match.Optional(Number),
-      pointsPerHour: Match.Optional(Number)
     });
 
     // Update the transaction to show approved
     Transactions.update(attributes.transactionId,
-                        {$set: { approved: true} });
+                        {$set: { approved: true, 'event.points': attributes.points} });
 
     // Send an email to let the user know
     var user = Meteor.users.findOne(attributes.userId);

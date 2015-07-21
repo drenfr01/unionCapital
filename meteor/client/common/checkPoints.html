@@ -21,8 +21,8 @@
           <tbody>
           {{#each pendingEvents}}
           <tr>
-            <td>{{pendingEventName}}</td>
-            <td>{{pendingEventDescription}}</td>
+            <td>{{event.name}}</td>
+            <td>{{event.description}}</td>
             <td>{{formatDate transactionDate}} </td>
             <!-- <td class="text-right">
               <a href="#" class="btn btn-warning btn-xs">Feedback</a>
@@ -52,7 +52,7 @@
             <tbody>
             {{#each approvedEvents}}
             <tr>
-              <td>{{eventName}}</td>
+              <td>{{event.name}}</td>
               <td>{{eventPoints}}</td>
               <td>{{formatDate transactionDate}} </td>
               <!-- <td class="text-right">
