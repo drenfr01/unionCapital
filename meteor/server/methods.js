@@ -54,7 +54,6 @@ Meteor.methods({
       userLat: Match.Optional(Number),
       userLng: Match.Optional(Number),
       hasUCBButton: Match.Optional(Boolean)
-
     });
 
     var duplicateTransaction = Transactions.findOne({
@@ -91,12 +90,6 @@ Meteor.methods({
         var user = Meteor.users.findOne(attributes.userId);
         attributes.firstName = user.profile.firstName;
         attributes.lastName = user.profile.lastName;
-        Transactions.insert(attributes);
-        if(attributes.hasUCBButton) {
-          attributes.eventId = Events.findOne({name: 'UCB Button'})._id;
-          //note: admin will have to separately approve ucb button
-          Transactions.insert(attributes);
-        }
       }
 
       return attributes.approvalType;
@@ -122,63 +115,18 @@ Meteor.methods({
 
   //This approves photos for existing events as well as
   //"DIY" events
-  approveTransaction: function(attributes) {
-    var eventId;
+  approveTransaction: function(transactionId, points) {
+    var transaction = Transactions.findOne(transactionId);
 
+    if (!transaction)
+      throw new Meteor.Error('BAD_ID', 'No transaction found for this ID');
+
+    // members shouldn't be approving transactions
     if (!Roles.userIsInRole(Meteor.userId(), ['admin','partnerAdmin']))
-      throw new Meteor.Error('INVALID_CREDENTIALS', 'Invalid credentials for transaction approval');
+      throw new Meteor.Error('UNAUTHORIZED_ACTION', 'Invalid credentials for transaction approval');
 
-    // TODO: Add Meteor.userId() validation
-
-    check(attributes, {
-      transactionId: String,
-      userId: String,
-      eventId: Match.Optional(String),
-      imageId: Match.Optional(String),
-      eventName: String,
-      eventAddress: String,
-      eventDescription: Match.Optional(String),
-      category: Match.Optional(String),
-      hoursSpent: Number,
-      eventDate: Date,
-      points: Match.Optional(Number),
-      pointsPerHour: Match.Optional(Number)
-    });
-
-    // ------------------
-
-      userId: attributes.userId,
-      eventId: event,
-      approvalType: 'auto',
-      approved: true,
-      transactionDate: Date(),
-      eventName: attributes.description,
-      eventDescription: attributes.description,
-      eventAddress: '123 Fake St, Boston, MA', //fake address
-      eventDate: Date(),
-      category: 'Admin Adding Points',
-      partnerOrg: partnerOrg,
-      points: attributes.points,
-      hoursSpent: 0, //fake duration of event
-      deleteInd: false
-
-    // ------------------
-
-    // This creates a new event if the transaction isn't tied to an existing one
-    // Events created in this manner are marked with the adHoc flag set to true
-    if(attributes.eventId) {
-      var event = Events.findOne(attributes.eventId);
-      eventId = attributes.eventId;
-      attributes.category = event.category;
-    } else {
-      attributes.active = 0;
-      attributes.isPointsPerHour = false;
-      eventId = DB.insertEvent(attributes);
-    }
-
-    // Update the transaction to show approved
-    Transactions.update(attributes.transactionId,
-                        {$set: { approved: true, eventId: eventId} });
+    // Approve it!
+    DB.transactions.approve(transactionId, points);
 
     // Send an email to let the user know
     var user = Meteor.users.findOne(attributes.userId);
@@ -377,15 +325,6 @@ Meteor.methods({
       partnerOrg = Meteor.user().profile.partnerOrg;
     }
 
-    // TODO: Remove when done
-    //create new ad-hoc event for Admin adding points
-    // var eventAttributes = {
-    //   isPointsPerHour: false,
-    // };
-
-    // REMOVED THIS --  this should not need to be here
-    // var event = DB.insertEvent(eventAttributes);
-
     var doc = {
       userId: attributes.userId,
       eventId: event,
@@ -539,5 +478,9 @@ Meteor.methods({
 
     Reservations.insert(attributes);
     Events.update({_id: attributes.eventId}, {$inc: {numberRSVPs: attributes.numberOfPeople}});
+  },
+
+  'calcPoints': function(userId) {
+    return DB.calcPointsForUser(userId);
   }
 });
