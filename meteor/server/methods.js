@@ -27,8 +27,8 @@ Meteor.methods({
     if (attributes.eventId && Events.findOne({ _id: attributes.eventId })) {
       var thisEvent = Events.findOne({ _id: attributes.eventId });
       attributes.partnerOrg = thisEvent.institution;
-      attributes.pendingEventName = thisEvent.name;
-      attributes.pendingEventDescription = thisEvent.description;
+      attributes.eventName = thisEvent.name;
+      attributes.eventDescription = thisEvent.description;
 
       // Check against max possible hours
       if (attributes.hoursSpent > thisEvent.duration)
@@ -45,10 +45,10 @@ Meteor.methods({
       eventId: Match.Optional(String),
       imageId: Match.Optional(String),
       approved: Boolean,
-      pendingEventName: Match.Optional(String),
-      pendingEventDescription: Match.Optional(String),
+      eventName: Match.Optional(String),
+      eventDescription: Match.Optional(String),
       category: Match.Optional(String),
-      pendingEventDate: Match.Optional(Date),
+      eventDate: Match.Optional(Date),
       transactionDate: Match.Optional(Date),
       partnerOrg: String,
       userLat: Match.Optional(Number),
@@ -60,9 +60,9 @@ Meteor.methods({
     var duplicateTransaction = Transactions.findOne({
       userId: currentUser._id,
       imageId: attributes.imageId,
-      pendingEventName: attributes.pendingEventName,
-      pendingEventDescription: attributes.pendingEventDescription,
-      pendingEventDate: attributes.pendingEventDate,
+      eventName: attributes.eventName,
+      eventDescription: attributes.eventDescription,
+      eventDate: attributes.eventDate,
       eventId: attributes.eventId
     });
 
@@ -125,6 +125,11 @@ Meteor.methods({
   approveTransaction: function(attributes) {
     var eventId;
 
+    if (!Roles.userIsInRole(Meteor.userId(), ['admin','partnerAdmin']))
+      throw new Meteor.Error('INVALID_CREDENTIALS', 'Invalid credentials for transaction approval');
+
+    // TODO: Add Meteor.userId() validation
+
     check(attributes, {
       transactionId: String,
       userId: String,
@@ -139,6 +144,25 @@ Meteor.methods({
       points: Match.Optional(Number),
       pointsPerHour: Match.Optional(Number)
     });
+
+    // ------------------
+
+      userId: attributes.userId,
+      eventId: event,
+      approvalType: 'auto',
+      approved: true,
+      transactionDate: Date(),
+      eventName: attributes.description,
+      eventDescription: attributes.description,
+      eventAddress: '123 Fake St, Boston, MA', //fake address
+      eventDate: Date(),
+      category: 'Admin Adding Points',
+      partnerOrg: partnerOrg,
+      points: attributes.points,
+      hoursSpent: 0, //fake duration of event
+      deleteInd: false
+
+    // ------------------
 
     // This creates a new event if the transaction isn't tied to an existing one
     // Events created in this manner are marked with the adHoc flag set to true
@@ -353,29 +377,33 @@ Meteor.methods({
       partnerOrg = Meteor.user().profile.partnerOrg;
     }
 
+    // TODO: Remove when done
     //create new ad-hoc event for Admin adding points
-    var eventAttributes = {
-      eventName: attributes.description,
-      eventDate: Date(),
-      eventAddress: '123 Fake St, Boston, MA', //fake address
-      category: 'Admin Adding Points',
-      hoursSpent: 0, //fake duration of event
-      points: attributes.points,
-      isPointsPerHour: false,
-    };
+    // var eventAttributes = {
+    //   isPointsPerHour: false,
+    // };
 
-    var event = DB.insertEvent(eventAttributes);
+    // REMOVED THIS --  this should not need to be here
+    // var event = DB.insertEvent(eventAttributes);
 
-    Transactions.insert({
+    var doc = {
       userId: attributes.userId,
       eventId: event,
       approvalType: 'auto',
       approved: true,
       transactionDate: Date(),
+      eventName: attributes.description,
+      eventDescription: attributes.description,
+      eventAddress: '123 Fake St, Boston, MA', //fake address
+      eventDate: Date(),
+      category: 'Admin Adding Points',
       partnerOrg: partnerOrg,
+      points: attributes.points,
+      hoursSpent: 0, //fake duration of event
       deleteInd: false
-    });
+    };
 
+    DB.transactions.insert(doc);
   },
 
   removeReservation: function(eventId) {

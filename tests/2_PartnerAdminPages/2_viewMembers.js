@@ -19,7 +19,7 @@ casper.test.begin('All Members', 24, function suite(test) {
     test.assertExists('#descending');
     test.assertExists('table');
 
-    test.assertTextExists('test'); //KIPP Academy User
+    test.assertTextExists('Test'); //KIPP Academy User
     test.assertTextExists('kipp'); //KIPP Academy User
     test.assertTextDoesntExist('test2'); //Thrive in Five User
 
@@ -28,24 +28,24 @@ casper.test.begin('All Members', 24, function suite(test) {
 
   casper.wait(500, function(){
     test.assertTextExists('kipp');
-    test.assertTextDoesntExist('test');
-    test.assertTextDoesntExist('test2');
+    test.assertTextDoesntExist('Test2');
     this.click('.memberRow');
   });
 
   casper.waitWhileSelector('table.table-hover', function() {
-    test.assertTextExists('kipp');
+    test.assertTextExists('KIPP');
     test.assertExists('#archiveMember');
     test.assertExists('#pointsToAdd');
     test.assertExists('#addPoints');
 
-    test.assertTextExists('No pending transactions!');
+    test.assertTextExists('Events Waiting for Approval');
     test.assertTextExists('No points accrued yet!');
   });
 
   //test adding points
   casper.then(function() {
     this.sendKeys('#pointsToAdd', '100');
+    this.sendKeys('#pointsDescription', 'Why not?');
     this.click('#addPoints');
   });
 
@@ -64,7 +64,7 @@ casper.test.begin('All Members', 24, function suite(test) {
 
   casper.wait(500, function(){
     test.assertTextDoesntExist('kipp');
-    test.assertTextExist('test');
+    test.assertTextExist('Test');
     this.click('.memberRow');
   });
 

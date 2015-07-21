@@ -27,7 +27,7 @@ Template.editMemberProfile.helpers({
     return Meteor.user();
   },
   memberEmail: function() {
-    return Meteor.user().emails[0].address;
+    return Meteor.user().emails[0];
   },
   UCBAppAccess: function() {
     return UCBAppAccess.find();
@@ -51,6 +51,7 @@ Template.editMemberProfile.events({
       }
     };
 
+    // Need to not set the value if not present to pass the check() function
     if($('#numberOfKids').val()) attributes.profile.numberOfKids = $('#numberOfKids').val();
     if($("#races").val()) attributes.profile.race = $("#races").val();
     if($("#medicaid input[type='radio']:checked").val()) attributes.profile.medicaid = $("#medicaid input[type='radio']:checked").val();

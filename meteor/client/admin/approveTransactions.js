@@ -35,7 +35,7 @@ Template.approveTransactions.helpers({
     if(this.eventId) {
       return Events.findOne(this.eventId).eventDate;
     } else {
-      return this.pendingEventDate;
+      return this.eventDate;
     }
   },
   partnerOrgs: function() {
@@ -106,21 +106,21 @@ Template.approveTransactions.events({
 
   'click #sendApproval': function(e) {
 
-    var attributes = {
-      transactionId: this._id,
-      userId: this.userId,
-      eventId: this.eventId,
-      imageId: this.imageId,
-      eventName: this.pendingEventName,
-      eventAddress: "temporary",
-      eventDescription: this.pendingEventDescription,
-      eventDate: new Date(this.transactionDate),
-      category: this.category,
-      hoursSpent: this.hoursSpent,
-      points: parseInt($("#pointsInput").val())
-    };
+    // var attributes = {
+    //   transactionId: this._id,
+    //   userId: this.userId,
+    //   eventId: this.eventId,
+    //   imageId: this.imageId,
+    //   eventName: this.eventName,
+    //   eventAddress: "temporary",
+    //   eventDescription: this.eventDescription,
+    //   eventDate: new Date(this.transactionDate),
+    //   category: this.category,
+    //   hoursSpent: this.hoursSpent,
+    var points = parseInt($("#pointsInput").val());
+    // };
 
-    Meteor.call('approveTransaction', attributes, function(error) {
+    Meteor.call('approveTransaction', transactionId, points, function(error) {
       if(error) {
         addErrorMessage(error.reason);
       } else {

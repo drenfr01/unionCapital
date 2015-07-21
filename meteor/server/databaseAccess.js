@@ -22,5 +22,19 @@ DB = {
       latitude: attributes.userLat,
       longitude: attributes.userLng
     });
+  },
+
+  transactions: {
+    insert: function(doc) {
+      Transactions.insert(doc);
+    },
+
+    update: function(doc) {
+
+    }
+  }
+
+  calcPointsForUser: function(userId) {
+    if ()
   }
 };

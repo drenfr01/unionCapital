@@ -18,15 +18,15 @@ casper.test.begin('All Members', 19, function suite(test) {
     test.assertExists('#descending');
     test.assertExists('table');
 
-    test.assertTextExists('test');
-    test.assertTextExists('casperjs');
+    test.assertTextExists('Test');
+    test.assertTextExists('CasperJS');
 
     this.sendKeys('#search-box', 'casperjs');
   });
 
   casper.wait(500, function(){
-    test.assertTextExists('casperjs');
-    test.assertTextDoesntExist('test');
+    test.assertTextExists('CasperJS');
+    test.assertTextDoesntExist('Test');
     this.click('.memberRow');
   });
 

@@ -4,7 +4,7 @@ casper.test.begin('Partner Admin User', 25, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsSuperAdmin();
   });
-  
+
   //check home page main panel
   casper.waitForSelector("#login-dropdown-list", function() {
     test.assertExists('#partnerOrgs');
@@ -65,7 +65,7 @@ casper.test.begin('Partner Admin User', 25, function suite(test) {
   casper.waitForSelector('table', function() {
     test.assertTextExists('Partner Admin Search');
     test.assertTextExists('Casper');
-    test.assertTextExists('casperAdmin@gmail.com');
+    test.assertTextExists('casperadmin@gmail.com');
   });
 
   //TODO: test out edit and delete buttons for partner org

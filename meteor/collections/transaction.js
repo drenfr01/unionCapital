@@ -34,29 +34,38 @@ Transactions.attachSchema(new SimpleSchema({
       type: Boolean,
       label: 'Approved'
     },
+    approvalDate: {
+      type: Date,
+      label: 'Date transaction was approved by admin'
+    },
     partnerOrg: {
       type: String,
       label: 'Partner Organization',
       optional: true
     },
-    pendingEventName: {
+    eventName: {
       type: String,
       label: 'Event Name',
       optional: true
     },
-    pendingEventDescription: {
+    eventDescription: {
       type: String,
-      label: 'Event Description',
+      label: 'Description',
       optional: true
     },
     category: {
       type: String,
-      label: 'Event Category',
+      label: 'Category',
       optional: true
     },
-    pendingEventDate: {
+    eventDate: {
       type: Date,
-      label: 'Pending Event Date',
+      label: 'Event Date',
+      optional: true
+    },
+    eventAddress: {
+      type: String,
+      label: 'Event Address',
       optional: true
     },
     transactionDate: {
@@ -81,6 +90,10 @@ Transactions.attachSchema(new SimpleSchema({
       label: 'User Latitude',
       optional: true,
       decimal: true
+    },
+    points: {
+      type: Number,
+      label: 'Points for this transaction'
     },
     //TODO: remove optional flag once all transactions update
     deleteInd: {
