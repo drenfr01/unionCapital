@@ -102,12 +102,6 @@ Meteor.methods({
     }
   },
 
-  insertEvents: function(attributes) {
-    check(attributes, {
-      point: Number
-    });
-  },
-
   //Note: we don't want to permanently remove any data
   //so we leave the images intact and just change the flag to false
   rejectTransaction: function(attributes) {
@@ -139,21 +133,9 @@ Meteor.methods({
       pointsPerHour: Match.Optional(Number)
     });
 
-    // This creates a new event if the transaction isn't tied to an existing one
-    // Events created in this manner are marked with the adHoc flag set to true
-    if(attributes.eventId) {
-      var event = Events.findOne(attributes.eventId);
-      eventId = attributes.eventId;
-      attributes.category = event.category;
-    } else {
-      attributes.active = 0;
-      attributes.isPointsPerHour = false;
-      eventId = DB.insertEvent(attributes);
-    }
-
     // Update the transaction to show approved
     Transactions.update(attributes.transactionId,
-                        {$set: { approved: true, eventId: eventId} });
+                        {$set: { approved: true} });
 
     // Send an email to let the user know
     var user = Meteor.users.findOne(attributes.userId);
@@ -329,13 +311,12 @@ Meteor.methods({
       isPointsPerHour: false,
     };
 
-    var event = DB.insertEvent(eventAttributes);
-
     Transactions.insert({
       userId: attributes.userId,
       eventId: event,
       approvalType: 'auto',
       approved: true,
+      event: eventAttributes,
       transactionDate: Date(),
       partnerOrg: partnerOrg,
       deleteInd: false
