@@ -66,7 +66,7 @@ DB = {
       var result = Transactions.update(transactionId, setDoc);
 
       // Verfify result is not 0 items updated
-      if !(result)
+      if (!result)
         throw new Meteor.Error('UPDATE_FAILURE', 'Transaction failed to update');
 
       // Update user points
@@ -91,7 +91,7 @@ DB = {
           eventName: transaction.eventName,
           eventAddress: transaction.eventAddress,
           eventDescription: transaction.eventDescription,
-          eventDate: new Date(transaction.transactionDate,
+          eventDate: new Date(transaction.transactionDate),
           hoursSpent: transaction.hoursSpent,
           latitude: transaction.userLat,
           longitude: transaction.userLng,
@@ -110,6 +110,7 @@ DB = {
       // Adds the event id if non existed before
       var setDoc = { $set: { approved: true, eventId: eventId } };
       DB.transactions.update(transactionId, setDoc);
+    }
   },
 
   calcPointsForUser: function(userId) {
@@ -121,13 +122,13 @@ DB = {
     //calculate sum
     var sum = 0;
     var approvedTransactions = Transactions.find({userId: userId, approved: true });
-    approvedTransactions.forEach(function(transaction) {
 
-      if (transaction.points !== null || transaction.points !== undefined) {
+    approvedTransactions.forEach(function(transaction) {
+      if (transaction.points !== null && transaction.points !== undefined) {
         // Normal operation
         sum += transaction.points;
 
-      } else if (transaction.points !== 0) {
+      } else {
         // Handles any unmigrated transactions with normalized points
         var event = Transactions.eventFor(transaction);
 
@@ -138,16 +139,46 @@ DB = {
       }
     });
 
-    Meteor.users.update(userId, { $set: { 'profile.totalPoints': sum, 'profile.pointsUpdatedTimestamp': new Date() } });
+    if (Meteor.users.find(userId).profile)
+      Meteor.users.update(userId, { $set: { 'profile.points': sum, 'profile.pointsUpdatedTimestamp': new Date() } });
 
     return sum;
   },
 
   calcPointsForAllUsers: function() {
-    var users = Meteor.users.find();
+    var users = Meteor.users.find().fetch();
 
-    users.forEach(function(user) {
-      DB.calcPointsForUser(user._id);
+    _.each(users, function(user) {
+      var userId = user._id;
+      DB.calcPointsForUser(userId);
+      // DB.calcPointsForUser(user._id);
     });
-  }
+  },
+
+  calcMostRecentTransaction: function(userId) {
+    var pipeline = [
+      { $match:
+        {
+          userId: userId,
+          approved: true
+        }
+      },
+      { $group:
+        {
+          _id: '$userId',
+          maxDate: { $max: '$transactionDate' }
+        }
+      }
+    ];
+
+    // Grab the most recent
+    var mostRecent = Transactions.aggregate(pipeline)[0].maxDate;
+
+    // Update users collection
+    Meteor.users.update(userId, { $set: { mostRecentTransaction: mostRecent } });
+
+    return mostRecent;
+  },
+
+
 };
