@@ -9,7 +9,7 @@ Template.checkPoints.helpers({
     return Meteor.users.transactionsFor(this._id, false);
   },
   eventName: function(){
-    var event = getEvent(this);
+    var event = this.event;
     if(event) {
       return event.name;
     } else {
@@ -17,7 +17,7 @@ Template.checkPoints.helpers({
     }
   },
   eventPoints: function(){
-    var event = getEvent(this);
+    var event = this.event;
     if(event) {
       if(event.isPointsPerHour) {
         return Math.round(event.pointsPerHour * this.hoursSpent);
