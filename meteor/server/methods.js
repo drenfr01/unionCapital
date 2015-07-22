@@ -5,8 +5,21 @@ Meteor.methods({
   },
 
   insertTransaction: function(attributes) {
-    var currentUser = Meteor.user();
+    check(attributes, {
+      userId: String,
+      hoursSpent: Number,
+      eventId: Match.Optional(String),
+      imageId: Match.Optional(String),
+      pendingEventName: Match.Optional(String),
+      pendingEventDescription: Match.Optional(String),
+      pendingEventDate: Match.Optional(Date),
+      category: Match.Optional(String),
+      userLat: Match.Optional(Number),
+      userLng: Match.Optional(Number),
+      hasUCBButton: Match.Optional(Boolean)
 
+    });
+    var currentUser = Meteor.user();
     // Determines whether this transaction requires approval
     attributes.approvalType = CheckInRules.run(attributes);
 
@@ -24,44 +37,30 @@ Meteor.methods({
 
     // Uses the event's partner org if the transaction is associated with an event
     // Otherwise uses the user's partner org
-    if (attributes.eventId && Events.findOne({ _id: attributes.eventId })) {
-      var thisEvent = Events.findOne({ _id: attributes.eventId });
-      attributes.partnerOrg = thisEvent.institution;
-      attributes.eventName = thisEvent.name;
-      attributes.eventDescription = thisEvent.description;
-
+    var thisEvent = Events.findOne({ _id: attributes.eventId });
+    if (attributes.eventId && thisEvent) {
       // Check against max possible hours
       if (attributes.hoursSpent > thisEvent.duration)
         attributes.hoursSpent = thisEvent.duration;
 
+      //denormalize existing event into transaction
+      attributes.event = thisEvent;
     } else {
+      //build event for transaction, it will be ad-hoc
+      attributes.event = {
+        name: attributes.pendingEventName,
+        description: attributes.pendingEventDescription,
+        eventDate: attributes.pendingEventDate
+      };
       attributes.partnerOrg = currentUser.profile.partnerOrg;
     }
-
-    check(attributes, {
-      userId: String,
-      hoursSpent: Number,
-      approvalType: String,
-      eventId: Match.Optional(String),
-      imageId: Match.Optional(String),
-      approved: Boolean,
-      eventName: Match.Optional(String),
-      eventDescription: Match.Optional(String),
-      category: Match.Optional(String),
-      eventDate: Match.Optional(Date),
-      transactionDate: Match.Optional(Date),
-      partnerOrg: String,
-      userLat: Match.Optional(Number),
-      userLng: Match.Optional(Number),
-      hasUCBButton: Match.Optional(Boolean)
-    });
 
     var duplicateTransaction = Transactions.findOne({
       userId: currentUser._id,
       imageId: attributes.imageId,
-      eventName: attributes.eventName,
-      eventDescription: attributes.eventDescription,
-      eventDate: attributes.eventDate,
+      'event.name': attributes.pendingEventName,
+      'event.description': attributes.pendingEventDescription,
+      'event.eventDate': attributes.pendingEventDate,
       eventId: attributes.eventId
     });
 
@@ -85,7 +84,6 @@ Meteor.methods({
 
         // Good to go, let's check in
         attributes.deleteInd = false;
-        console.log(' 88888888  ' + attributes.imageId);
         //TODO: refactor this to a central database access layer
         var user = Meteor.users.findOne(attributes.userId);
         attributes.firstName = user.profile.firstName;

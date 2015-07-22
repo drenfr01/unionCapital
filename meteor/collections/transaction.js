@@ -21,6 +21,12 @@ Transactions.attachSchema(new SimpleSchema({
       label: 'ID of related Event',
       optional: true
     },
+    event: {
+      type: Object,
+      label: 'Event Name',
+      blackbox: true,
+      optional: true
+    },
     imageId: {
       type: String,
       label: 'Image Id',
@@ -43,29 +49,9 @@ Transactions.attachSchema(new SimpleSchema({
       label: 'Partner Organization',
       optional: true
     },
-    eventName: {
-      type: String,
-      label: 'Event Name',
-      optional: true
-    },
-    eventDescription: {
-      type: String,
-      label: 'Description',
-      optional: true
-    },
     category: {
       type: String,
       label: 'Category',
-      optional: true
-    },
-    eventDate: {
-      type: Date,
-      label: 'Event Date',
-      optional: true
-    },
-    eventAddress: {
-      type: String,
-      label: 'Event Address',
       optional: true
     },
     transactionDate: {
@@ -90,10 +76,6 @@ Transactions.attachSchema(new SimpleSchema({
       label: 'User Latitude',
       optional: true,
       decimal: true
-    },
-    points: {
-      type: Number,
-      label: 'Points for this transaction'
     },
     //TODO: remove optional flag once all transactions update
     deleteInd: {
