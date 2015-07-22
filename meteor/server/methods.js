@@ -319,9 +319,8 @@ Meteor.methods({
     }
 
     var eventAttributes = {
-      eventName: attributes.description,
+      name: attributes.description,
       eventDate: Date(),
-      eventAddress: '123 Fake St, Boston, MA', //fake address
       category: 'Admin Adding Points',
       hoursSpent: 0, //fake duration of event
       points: attributes.points,
@@ -330,7 +329,6 @@ Meteor.methods({
 
     var doc = {
       userId: attributes.userId,
-      eventId: event,
       approvalType: 'auto',
       approved: true,
       transactionDate: Date(),

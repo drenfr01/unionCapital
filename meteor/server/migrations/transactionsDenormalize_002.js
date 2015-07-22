@@ -22,3 +22,20 @@ function function1() {
     }
   });
 }
+
+var denormalizeTransaction = function() {
+  //certain events don't have event ids, have to figure out if that's important
+  //or not. And if so, how to migrate them
+  Transactions.find().forEach(function(user) {
+      
+  });
+};
+
+/*
+Migrations.add({
+  version: 2,
+  name: "Denormalize all transactions",
+  up: denormalizeTransaction,
+  down: backwards2
+});
+*/

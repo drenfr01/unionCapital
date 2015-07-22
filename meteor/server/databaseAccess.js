@@ -78,7 +78,7 @@ DB = {
 
       // Update the transaction to show approved
       // Adds the event id if non existed before
-      var setDoc = { $set: { approved: true} };
+      var setDoc = { $set: { approved: true, 'event.points': points} };
       DB.transactions.update(transactionId, setDoc);
     }
   },
@@ -91,7 +91,7 @@ DB = {
     //get event to find points
     //calculate sum
     var sum = 0;
-    var approvedTransactions = Transactions.find({userId: userId, approved: true });
+    var approvedTransactions = Transactions.find({userId: userId, approved: true, event: {$exists: true} });
 
     approvedTransactions.forEach(function(transaction) {
       if (transaction.points !== null && transaction.points !== undefined) {
