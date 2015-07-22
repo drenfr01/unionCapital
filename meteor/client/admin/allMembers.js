@@ -38,9 +38,6 @@ function getMembersData(sortOn, sortOrder) {
   var allTransactions = Transactions.find({userId: {$in: userIds }, approved: true, eventId: {$exists: true}},
                                          {sort: {transactionDate: -1}}).fetch();
  
-  var eventIds = _.pluck(allTransactions, "eventId");
-  var allEvents = Events.find({_id: {$in: eventIds}}).fetch();
-  
   var tableRows = _.map(users, function(user) {
 
     var transactions = _.filter(allTransactions, function(trans) {
@@ -48,22 +45,14 @@ function getMembersData(sortOn, sortOrder) {
     });
     var transactionCount = transactions.length;
     var totalPoints = 0;
-    var eventIds = _.pluck(transactions, "eventId");
 
-    var events = _.filter(allEvents, function(event) {
-      return eventIds.indexOf(event._id) > -1;
-    });
     _.each(transactions, function(transaction) {
-      var event = _.findWhere(events, {_id: transaction.eventId});
-      if(event && event.isPointsPerHour) {
-        totalPoints = totalPoints + Math.round(event.pointsPerHour * transaction.hoursSpent);
-      } else if(event) {
-        totalPoints += event.points;
-      }
+      var event = transaction.event;
+      totalPoints = Meteor.users.totalPointsFor(transaction.userId);
     });
     var mostRecentTransaction = transactions[0] ||
       { eventId: "", transactionDate: ""};
-    var mostRecentEvent = Events.findOne(mostRecentTransaction.eventId) || {name: ""};
+    var mostRecentEvent = mostRecentTransaction.event || {name: ""};
 
     //if user is admin
     var userProfile = user.profile || {firstName: 'admin', lastName: 'd', zip: ''};
