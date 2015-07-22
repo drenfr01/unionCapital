@@ -35,8 +35,7 @@ Meteor.methods({
     if (!attributes.transactionDate)
       attributes.transactionDate = new Date();
 
-    // Uses the event's partner org if the transaction is associated with an event
-    // Otherwise uses the user's partner org
+    //check to see if this is ad-hoc event
     var thisEvent = Events.findOne({ _id: attributes.eventId });
     if (attributes.eventId && thisEvent) {
       // Check against max possible hours
@@ -94,12 +93,6 @@ Meteor.methods({
     }
   },
 
-  insertEvents: function(attributes) {
-    check(attributes, {
-      point: Number
-    });
-  },
-
   //Note: we don't want to permanently remove any data
   //so we leave the images intact and just change the flag to false
   rejectTransaction: function(attributes) {
@@ -114,6 +107,8 @@ Meteor.methods({
   //This approves photos for existing events as well as
   //"DIY" events
   approveTransaction: function(transactionId, points) {
+    check(transactionId, String);
+    check(points, String);
     var transaction = Transactions.findOne(transactionId);
 
     if (!transaction)

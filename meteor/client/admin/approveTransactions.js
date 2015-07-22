@@ -32,11 +32,7 @@ Template.approveTransactions.helpers({
     return Transactions.find(selector);
   },
   eventDate: function() {
-    if(this.eventId) {
-      return Events.findOne(this.eventId).eventDate;
-    } else {
-      return this.eventDate;
-    }
+    return this.event.eventDate;
   },
   partnerOrgs: function() {
     return PartnerOrgs.find();
@@ -57,7 +53,7 @@ Template.approveTransactions.helpers({
   },
 
   'getPoints': function(eventId) {
-    var event = Events.findOne(eventId);
+    var event = this.event;
     if(event.isPointsPerHour) {
       return event.pointsPerHour * this.hoursSpent;
     } else {

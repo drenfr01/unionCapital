@@ -79,28 +79,6 @@ DB = {
 
     approve: function(transactionId, points) {
       var transaction = Transactions.findOne(transactionId);
-      var thisEvent = Events.findOne(transaction.eventId);
-      var eventId = !!thisEvent ? thisEvent._id : null;
-
-      // This creates a new event if the transaction isn't tied to an existing one
-      // Events created in this manner are marked with the adHoc flag set to true
-      if(!eventId) {
-        var attributes = {
-          userId: transaction.userId,
-          imageId: transaction.imageId,
-          eventName: transaction.eventName,
-          eventAddress: transaction.eventAddress,
-          eventDescription: transaction.eventDescription,
-          eventDate: new Date(transaction.transactionDate),
-          hoursSpent: transaction.hoursSpent,
-          latitude: transaction.userLat,
-          longitude: transaction.userLng,
-          points: points,
-          category: 'selfie'
-        };
-
-        eventId = DB.insertAdHocEvent(attributes);
-      }
 
       // Verify event inserted
       if (!eventId)
@@ -108,7 +86,7 @@ DB = {
 
       // Update the transaction to show approved
       // Adds the event id if non existed before
-      var setDoc = { $set: { approved: true, eventId: eventId } };
+      var setDoc = { $set: { approved: true} };
       DB.transactions.update(transactionId, setDoc);
     }
   },
