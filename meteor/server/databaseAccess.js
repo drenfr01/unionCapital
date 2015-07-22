@@ -32,14 +32,6 @@ DB = {
     });
   },
 
-  // Translates a transaction to an event
-  insertAdHocEvent: function(attributes) {
-    attributes.active = 0;
-    attributes.adHoc = true;
-    attributes.duration = attributes.hoursSpent;
-    attributes.endTime = addHours(moment(attributes.eventDate).toDate(), attributes.hoursSpent);
-    return DB.insertEvent(attributes);
-  },
 
   transactions: {
     insert: function(doc) {

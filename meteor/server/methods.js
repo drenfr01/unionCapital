@@ -318,19 +318,25 @@ Meteor.methods({
       partnerOrg = Meteor.user().profile.partnerOrg;
     }
 
+    var eventAttributes = {
+      eventName: attributes.description,
+      eventDate: Date(),
+      eventAddress: '123 Fake St, Boston, MA', //fake address
+      category: 'Admin Adding Points',
+      hoursSpent: 0, //fake duration of event
+      points: attributes.points,
+      isPointsPerHour: false,
+    };
+
     var doc = {
       userId: attributes.userId,
       eventId: event,
       approvalType: 'auto',
       approved: true,
       transactionDate: Date(),
-      eventName: attributes.description,
-      eventDescription: attributes.description,
-      eventAddress: '123 Fake St, Boston, MA', //fake address
-      eventDate: Date(),
+      event: eventAttributes,
       category: 'Admin Adding Points',
       partnerOrg: partnerOrg,
-      points: attributes.points,
       hoursSpent: 0, //fake duration of event
       deleteInd: false
     };
