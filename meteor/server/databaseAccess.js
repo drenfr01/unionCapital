@@ -99,9 +99,7 @@ DB = {
       }
     });
 
-    debugger;
-
-    if (Meteor.users.find(userId).profile)
+    if (Meteor.users.findOne(userId).profile)
       Meteor.users.update(userId, { $set: { 
         'profile.points': sum, 
         'profile.pointsUpdatedTimestamp': new Date() } 
