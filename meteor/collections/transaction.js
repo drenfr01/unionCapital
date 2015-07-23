@@ -42,7 +42,8 @@ Transactions.attachSchema(new SimpleSchema({
     },
     approvalDate: {
       type: Date,
-      label: 'Date transaction was approved by admin'
+      label: 'Approval Date',
+      optional: true
     },
     partnerOrg: {
       type: String,

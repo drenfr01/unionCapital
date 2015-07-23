@@ -37,6 +37,7 @@ DB = {
     insert: function(doc) {
       // Insert the transaction in question
       var result = Transactions.insert(doc);
+      console.log("Did it insert: " + result);
 
       // Insert additional UCB button transaction
       if(doc.hasUCBButton) {
@@ -78,7 +79,7 @@ DB = {
 
       // Update the transaction to show approved
       // Adds the event id if non existed before
-      var setDoc = { $set: { approved: true, 'event.points': points} };
+      var setDoc = { $set: { approved: true, approvalDate: Date(),'event.points': points} };
       DB.transactions.update(transactionId, setDoc);
     }
   },

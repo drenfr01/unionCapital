@@ -10,14 +10,13 @@ Meteor.methods({
       hoursSpent: Number,
       eventId: Match.Optional(String),
       imageId: Match.Optional(String),
-      pendingEventName: Match.Optional(String),
-      pendingEventDescription: Match.Optional(String),
-      pendingEventDate: Match.Optional(Date),
+      eventName: Match.Optional(String),
+      eventDescription: Match.Optional(String),
+      eventDate: Match.Optional(Date),
       category: Match.Optional(String),
       userLat: Match.Optional(Number),
       userLng: Match.Optional(Number),
       hasUCBButton: Match.Optional(Boolean)
-
     });
     var currentUser = Meteor.user();
     // Determines whether this transaction requires approval
@@ -47,20 +46,21 @@ Meteor.methods({
     } else {
       //build event for transaction, it will be ad-hoc
       attributes.event = {
-        name: attributes.pendingEventName,
-        description: attributes.pendingEventDescription,
-        eventDate: attributes.pendingEventDate
+        name: attributes.eventName,
+        description: attributes.eventDescription,
+        eventDate: attributes.eventDate,
+        userLat: attributes.userLat,
+        userLng: attributes.userLng,
+        imageId: attributes.imageId
       };
       attributes.partnerOrg = currentUser.profile.partnerOrg;
     }
 
     var duplicateTransaction = Transactions.findOne({
       userId: currentUser._id,
-      imageId: attributes.imageId,
-      'event.name': attributes.pendingEventName,
-      'event.description': attributes.pendingEventDescription,
-      'event.eventDate': attributes.pendingEventDate,
-      eventId: attributes.eventId
+      'event.name': attributes.eventName,
+      'event.description': attributes.eventDescription,
+      'event.eventDate': attributes.eventDate
     });
 
     if(attributes.approvalType === 'super_admin' || attributes.approvalType === 'partner_admin') {
@@ -87,6 +87,7 @@ Meteor.methods({
         var user = Meteor.users.findOne(attributes.userId);
         attributes.firstName = user.profile.firstName;
         attributes.lastName = user.profile.lastName;
+        DB.transactions.insert(attributes);
       }
 
       return attributes.approvalType;
@@ -109,6 +110,7 @@ Meteor.methods({
   approveTransaction: function(transactionId, points) {
     check(transactionId, String);
     check(points, String);
+    console.log('approving');
     var transaction = Transactions.findOne(transactionId);
 
     if (!transaction)
@@ -126,7 +128,7 @@ Meteor.methods({
     emailHelper(user.emails[0].address,
                 AppConfig.adminEmail,
                 'Your Event has been approved',
-                'Thanks for attending ' + attributes.eventName + "!" +
+                'Thanks for attending ' + attributes.event.name +  "!" +
                   "You have earned " + attributes.points + " points for your service!"
                );
   },
