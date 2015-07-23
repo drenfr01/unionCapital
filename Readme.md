@@ -18,11 +18,11 @@ Super Administrator - can view all data, create partner administrators, create m
 
 ## Installation
 
-1) Install Meteor (https://www.meteor.com/install). Note Node JS is a pre-requisite and may require a separate install
-2) Clone this repo
-3) Navigate to the /meteor folder in this repo
-4) Run 'meteor --settings <your_settings_file.js>'. Settings files contain Facebook keys, the type of environment, etc.
-5) Navigate in a browser to localhost:3000 to access app
+1) Install Meteor (https://www.meteor.com/install). Note Node JS is a pre-requisite and may require a separate install  
+2) Clone this repo  
+3) Navigate to the /meteor folder in this repo    
+4) Run 'meteor --settings <your_settings_file.js>'. Settings files contain Facebook keys, the type of environment, etc.    
+5) Navigate in a browser to localhost:3000 to access app   
 
 ## License
 
