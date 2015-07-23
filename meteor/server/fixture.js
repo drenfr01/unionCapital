@@ -149,7 +149,11 @@ Meteor.startup(function () {
     var users = [
       {
          email: "admin@gmail.com", username: "admin", password: "admin",
-         name: "admin", roles:['admin']
+         profile: {
+           firstName: 'admin',
+           lastName: 'admin',
+         },
+         roles:['admin']
       },
       {
         email: "user@gmail.com", username: "user", password: "user",

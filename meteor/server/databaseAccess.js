@@ -37,7 +37,6 @@ DB = {
     insert: function(doc) {
       // Insert the transaction in question
       var result = Transactions.insert(doc);
-      console.log("Did it insert: " + result);
 
       // Insert additional UCB button transaction
       if(doc.hasUCBButton) {
@@ -88,30 +87,25 @@ DB = {
     if (!userId)
       throw new Meteor.Error('BAD_ID', 'No user found with this ID');
 
-    //find all transactions for user
-    //get event to find points
-    //calculate sum
     var sum = 0;
     var approvedTransactions = Transactions.find({userId: userId, approved: true, event: {$exists: true} });
 
     approvedTransactions.forEach(function(transaction) {
-      if (transaction.points !== null && transaction.points !== undefined) {
-        // Normal operation
-        sum += transaction.points;
-
-      } else {
-        // Handles any unmigrated transactions with normalized points
-        var event = Transactions.eventFor(transaction);
-
-        if(event && event.isPointsPerHour)
-          sum = Math.round(sum + (event.pointsPerHour * transaction.hoursSpent));
-        else if(event)
-          sum += event.points;
+      var event = transaction.event;
+      if(event && event.isPointsPerHour) {
+        sum = Math.round(sum + (event.pointsPerHour * transaction.hoursSpent));
+      } else if(event) {
+        sum += event.points;
       }
     });
 
+    debugger;
+
     if (Meteor.users.find(userId).profile)
-      Meteor.users.update(userId, { $set: { 'profile.points': sum, 'profile.pointsUpdatedTimestamp': new Date() } });
+      Meteor.users.update(userId, { $set: { 
+        'profile.points': sum, 
+        'profile.pointsUpdatedTimestamp': new Date() } 
+      });
 
     return sum;
   },

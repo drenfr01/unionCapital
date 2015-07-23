@@ -109,7 +109,7 @@ Meteor.methods({
   //"DIY" events
   approveTransaction: function(transactionId, points) {
     check(transactionId, String);
-    check(points, String);
+    check(points, Number);
     console.log('approving');
     var transaction = Transactions.findOne(transactionId);
 
@@ -124,12 +124,12 @@ Meteor.methods({
     DB.transactions.approve(transactionId, points);
 
     // Send an email to let the user know
-    var user = Meteor.users.findOne(attributes.userId);
+    var user = Meteor.users.findOne(transaction.userId);
     emailHelper(user.emails[0].address,
                 AppConfig.adminEmail,
                 'Your Event has been approved',
-                'Thanks for attending ' + attributes.event.name +  "!" +
-                  "You have earned " + attributes.points + " points for your service!"
+                'Thanks for attending ' + transaction.event.name +  "!" +
+                  "You have earned " + points + " points for your service!"
                );
   },
 

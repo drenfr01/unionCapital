@@ -103,7 +103,7 @@ Template.approveTransactions.events({
   'click #sendApproval': function(e) {
     var points = parseInt($("#pointsInput").val());
 
-    Meteor.call('approveTransaction', transactionId, points, function(error) {
+    Meteor.call('approveTransaction', this._id, points, function(error) {
       if(error) {
         addErrorMessage(error.reason);
       } else {
