@@ -110,7 +110,6 @@ Meteor.methods({
   approveTransaction: function(transactionId, points) {
     check(transactionId, String);
     check(points, Number);
-    console.log('approving');
     var transaction = Transactions.findOne(transactionId);
 
     if (!transaction)

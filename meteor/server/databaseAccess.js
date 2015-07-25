@@ -40,7 +40,9 @@ DB = {
 
       // Insert additional UCB button transaction
       if(doc.hasUCBButton) {
-        doc.eventId = Events.findOne({name: 'UCB Button'})._id;
+        var thisEvent = Events.findOne({name: 'UCB Button'});
+        doc.event = thisEvent;
+        doc.eventId = thisEvent._id;
         //note: admin will have to separately approve ucb button
         Transactions.insert(doc);
       }
@@ -72,9 +74,6 @@ DB = {
     approve: function(transactionId, points) {
       var transaction = Transactions.findOne(transactionId);
 
-      // Verify event inserted
-      if (!eventId)
-        throw new Meteor.Error('INSERT_FAILURE', 'Failed to insert ad-hoc event');
 
       // Update the transaction to show approved
       // Adds the event id if non existed before
