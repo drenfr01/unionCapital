@@ -17,6 +17,6 @@ Template.memberHomePage.helpers({
   },
 
   totalPoints: function() {
-    return Meteor.users.totalPointsFor(Meteor.userId());
+    return Meteor.user().profile.points || 0;
   }
 });

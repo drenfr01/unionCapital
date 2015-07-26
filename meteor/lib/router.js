@@ -2,7 +2,8 @@ Router.configure({
   layoutTemplate: 'layout',
   loadingTemplate: 'loading',
   notFoundTemplate: 'notFound',
-  waitOn: function() { return Meteor.subscribe('events'); }
+
+  // waitOn: function() { return Meteor.subscribe('events'); }
 });
 
 // Clear alerts when moving to a new page
@@ -166,20 +167,45 @@ Router.route('/uploadEvents', function() {
   name: 'uploadEvents'
 });
 
-Router.route('/editEvent/:_id', function () {
-  this.render('editEvent', {
-    data: function () {
-      return Events.findOne({_id: this.params._id});
+Router.route('/editEvent/:_id', {
+  name: 'editEvent',
+
+  template: 'editEvent',
+
+  data: function () {
+    return Events.findOne({_id: this.params._id});
+  },
+
+  subscriptions: function() {
+    var self = this;
+    return Meteor.subscribe('singleEvent', self.params._id);
+  },
+
+  action: function () {
+    if (this.ready()) {
+      this.render();
+    } else {
+      this.render('loading');
     }
-  });
-}, {
-  name: 'editEvent'
+  }
 });
 
 Router.route('/checkpoints', function () {
   this.render('checkPoints', {
     data: function () {
       return Meteor.user();
+    },
+
+    subscriptions: function() {
+      return Meteor.subscribe('eventsForUser')
+    },
+
+    action: function () {
+      if (this.ready()) {
+        this.render();
+      } else {
+        this.render('loading');
+      }
     }
   });
 }, {
@@ -207,11 +233,12 @@ Router.route('/viewPartnerMemberProfile/:_id', function () {
 });
 
 
-Router.route('/manageEvents', function() {
-  this.render('manageEvents');
-},
-{
-  name: 'manageEvents'
+Router.route('/manageEvents', {
+  template: 'manageEvents',
+  name: 'manageEvents',
+  subscriptions: function() {
+    return Meteor.subscribe('manageEvents');
+  }
 });
 
 Router.route('/partnerAdminPage', function() {
@@ -252,7 +279,13 @@ Router.map(function() {
   });
 
   this.route('eventsCalendar', {
-    path: '/calendar'
+    path: '/calendar',
+    subscriptions: function() {
+      var start = moment().add(AppConfig.eventCalendar.past.hoursBehind, 'h').toDate();
+      var end = moment().add(AppConfig.eventCalendar.future.hoursAhead, 'h').toDate();
+      Meteor.subscribe('events', start, end);
+    }
+    // no need to wait on subs here, the search function handles that
   });
 
   this.route('memberHomePage', {path: '/memberhome'});
@@ -262,6 +295,15 @@ Router.map(function() {
     path: 'checkin/:id',
     data: function() {
       return Events.findOne({_id: this.params.id});
+    },
+    subscriptions: function() {
+      return Meteor.subscribe('singleEvent', this.params.id);
+    },
+    action: function() {
+      if (this.ready())
+        this.render();
+      else
+        this.render('loading');
     }
   });
 
@@ -285,7 +327,16 @@ Router.map(function() {
   });
   this.route('singleEvent', {
     path: '/event/:_id',
-    data: function() { return Events.findOne({_id: this.params._id }); }
+    data: function() { return Events.findOne({_id: this.params._id }); },
+    subscriptions: function() {
+      return Meteor.subscribe('singleEvent', this.params._id);
+    },
+    action: function() {
+      if (this.ready())
+        this.render();
+      else
+        this.render('loading');
+    }
   });
 
   //TODO: I don't know how to do polymorphic routes yet,
@@ -294,6 +345,12 @@ Router.map(function() {
   this.route('checkin', {
     path: '/checkin',
     template: 'checkIntoEvent',
+    subscriptions: function() {
+      var start = moment().add(AppConfig.checkIn.past.hoursBehind, 'h').toDate();
+      var end = moment().add(AppConfig.checkIn.today.hoursAhead, 'h').toDate();
+      Meteor.subscribe('events', start, end);
+    }
+    // no need to wait on subs here, the search function handles that
   });
   this.route('showMemberRewards', {path: '/rewards'});
   this.route('contactUs', {path: '/contactUs'});
@@ -306,7 +363,21 @@ Router.map(function() {
   this.route('adminHomePage', {path: '/adminHomePage'});
   this.route('addCommunityEvents', {path: '/addCommunityEvents'});
   this.route('addRewards', {path: '/addRewards'});
-  this.route('approveTransactions', {path: '/approve'});
+  this.route('approveTransactions', {
+    path: '/approve',
+
+    subscriptions: function() {
+      return Meteor.subscribe('eventsForTransactions');
+    },
+
+    action: function () {
+      if (this.ready()) {
+        this.render();
+      } else {
+        this.render('loading');
+      }
+    }
+  });
   this.route('listMembers', {path: '/listMembers'});
 
 });

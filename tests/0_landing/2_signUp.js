@@ -1,6 +1,6 @@
 casper.test.comment('Signing In');
 
-casper.test.begin('Landing Page', 27, function suite(test) {
+casper.test.begin('Landing Page', 24, function suite(test) {
   casper.start(homeURL, function() {
   });
 
@@ -47,13 +47,13 @@ casper.test.begin('Landing Page', 27, function suite(test) {
   /* Couldn't get autocomplete testing to work
   casper.then(function() {
     this.page.includeJs('https://maps.googleapis.com/maps/api/js?key=AIzaSyBScqNB3QtZ1_8t41CAYGBW0ZvPLXhJ0eM&sensor=true&libraries=places');
-    this.sendKeys('#inputAddress', '10 Emerson Place, Boston, MA', {reset: true, 
+    this.sendKeys('#inputAddress', '10 Emerson Place, Boston, MA', {reset: true,
                   keepFocus: true});
 
   });
 
   casper.wait(250, function() {
-    
+
     test.assertExists('div.pac-item');
     this.page.injectJs('../../jquery-1.11.2.min.js');
     this.evaluate(function() {
@@ -65,7 +65,7 @@ casper.test.begin('Landing Page', 27, function suite(test) {
   */
 
   casper.wait(250, function() {
-    
+
     //checking Google autocomplete
     this.sendKeys('#street_number', '10');
     this.sendKeys('#route', 'Emerson Pl');
@@ -100,7 +100,7 @@ casper.test.begin('Landing Page', 27, function suite(test) {
 
   casper.waitForSelector('.accept-terms', function() {
     test.assertExists('#next');
-    test.assertTextExists('End User License Agreement');
+    test.assertTextExists('Privacy Policy');
     this.click('#next');
   });
 

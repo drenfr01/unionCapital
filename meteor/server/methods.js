@@ -5,8 +5,20 @@ Meteor.methods({
   },
 
   insertTransaction: function(attributes) {
+    check(attributes, {
+      userId: String,
+      hoursSpent: Number,
+      eventId: Match.Optional(String),
+      imageId: Match.Optional(String),
+      eventName: Match.Optional(String),
+      eventDescription: Match.Optional(String),
+      eventDate: Match.Optional(Date),
+      category: Match.Optional(String),
+      userLat: Match.Optional(Number),
+      userLng: Match.Optional(Number),
+      hasUCBButton: Match.Optional(Boolean)
+    });
     var currentUser = Meteor.user();
-
     // Determines whether this transaction requires approval
     attributes.approvalType = CheckInRules.run(attributes);
 
@@ -22,48 +34,33 @@ Meteor.methods({
     if (!attributes.transactionDate)
       attributes.transactionDate = new Date();
 
-    // Uses the event's partner org if the transaction is associated with an event
-    // Otherwise uses the user's partner org
-    if (attributes.eventId && Events.findOne({ _id: attributes.eventId })) {
-      var thisEvent = Events.findOne({ _id: attributes.eventId });
-      attributes.partnerOrg = thisEvent.institution;
-      attributes.pendingEventName = thisEvent.name;
-      attributes.pendingEventDescription = thisEvent.description;
-
+    //check to see if this is ad-hoc event
+    var thisEvent = Events.findOne({ _id: attributes.eventId });
+    if (attributes.eventId && thisEvent) {
       // Check against max possible hours
       if (attributes.hoursSpent > thisEvent.duration)
         attributes.hoursSpent = thisEvent.duration;
 
+      //denormalize existing event into transaction
+      attributes.event = thisEvent;
     } else {
+      //build event for transaction, it will be ad-hoc
+      attributes.event = {
+        name: attributes.eventName,
+        description: attributes.eventDescription,
+        eventDate: attributes.eventDate,
+        userLat: attributes.userLat,
+        userLng: attributes.userLng,
+        imageId: attributes.imageId
+      };
       attributes.partnerOrg = currentUser.profile.partnerOrg;
     }
 
-    check(attributes, {
-      userId: String,
-      hoursSpent: Number,
-      approvalType: String,
-      eventId: Match.Optional(String),
-      imageId: Match.Optional(String),
-      approved: Boolean,
-      pendingEventName: Match.Optional(String),
-      pendingEventDescription: Match.Optional(String),
-      category: Match.Optional(String),
-      pendingEventDate: Match.Optional(Date),
-      transactionDate: Match.Optional(Date),
-      partnerOrg: String,
-      userLat: Match.Optional(Number),
-      userLng: Match.Optional(Number),
-      hasUCBButton: Match.Optional(Boolean)
-
-    });
-
     var duplicateTransaction = Transactions.findOne({
       userId: currentUser._id,
-      imageId: attributes.imageId,
-      pendingEventName: attributes.pendingEventName,
-      pendingEventDescription: attributes.pendingEventDescription,
-      pendingEventDate: attributes.pendingEventDate,
-      eventId: attributes.eventId
+      'event.name': attributes.eventName,
+      'event.description': attributes.eventDescription,
+      'event.eventDate': attributes.eventDate
     });
 
     if(attributes.approvalType === 'super_admin' || attributes.approvalType === 'partner_admin') {
@@ -86,27 +83,15 @@ Meteor.methods({
 
         // Good to go, let's check in
         attributes.deleteInd = false;
-        console.log(' 88888888  ' + attributes.imageId);
         //TODO: refactor this to a central database access layer
         var user = Meteor.users.findOne(attributes.userId);
         attributes.firstName = user.profile.firstName;
         attributes.lastName = user.profile.lastName;
-        Transactions.insert(attributes);
-        if(attributes.hasUCBButton) {
-          attributes.eventId = Events.findOne({name: 'UCB Button'})._id;
-          //note: admin will have to separately approve ucb button
-          Transactions.insert(attributes);
-        }
+        DB.transactions.insert(attributes);
       }
 
       return attributes.approvalType;
     }
-  },
-
-  insertEvents: function(attributes) {
-    check(attributes, {
-      point: Number
-    });
   },
 
   //Note: we don't want to permanently remove any data
@@ -122,47 +107,28 @@ Meteor.methods({
 
   //This approves photos for existing events as well as
   //"DIY" events
-  approveTransaction: function(attributes) {
-    var eventId;
+  approveTransaction: function(transactionId, points) {
+    check(transactionId, String);
+    check(points, Number);
+    var transaction = Transactions.findOne(transactionId);
 
-    check(attributes, {
-      transactionId: String,
-      userId: String,
-      eventId: Match.Optional(String),
-      imageId: Match.Optional(String),
-      eventName: String,
-      eventAddress: String,
-      eventDescription: Match.Optional(String),
-      category: Match.Optional(String),
-      hoursSpent: Number,
-      eventDate: Date,
-      points: Match.Optional(Number),
-      pointsPerHour: Match.Optional(Number)
-    });
+    if (!transaction)
+      throw new Meteor.Error('BAD_ID', 'No transaction found for this ID');
 
-    // This creates a new event if the transaction isn't tied to an existing one
-    // Events created in this manner are marked with the adHoc flag set to true
-    if(attributes.eventId) {
-      var event = Events.findOne(attributes.eventId);
-      eventId = attributes.eventId;
-      attributes.category = event.category;
-    } else {
-      attributes.active = 0;
-      attributes.isPointsPerHour = false;
-      eventId = DB.insertEvent(attributes);
-    }
+    // members shouldn't be approving transactions
+    if (!Roles.userIsInRole(Meteor.userId(), ['admin','partnerAdmin']))
+      throw new Meteor.Error('UNAUTHORIZED_ACTION', 'Invalid credentials for transaction approval');
 
-    // Update the transaction to show approved
-    Transactions.update(attributes.transactionId,
-                        {$set: { approved: true, eventId: eventId} });
+    // Approve it!
+    DB.transactions.approve(transactionId, points);
 
     // Send an email to let the user know
-    var user = Meteor.users.findOne(attributes.userId);
+    var user = Meteor.users.findOne(transaction.userId);
     emailHelper(user.emails[0].address,
                 AppConfig.adminEmail,
                 'Your Event has been approved',
-                'Thanks for attending ' + attributes.eventName + "!" +
-                  "You have earned " + attributes.points + " points for your service!"
+                'Thanks for attending ' + transaction.event.name +  "!" +
+                  "You have earned " + points + " points for your service!"
                );
   },
 
@@ -198,9 +164,26 @@ Meteor.methods({
     var newUserId;
 
     if(attributes.userId) {
-      Meteor.users.update(attributes.userId,
-                          {$set: { profile: attributes.profile
-                          }});
+      Meteor.users.update(attributes.userId, {
+        $set: {
+          'profile.firstName': attributes.profile.firstName,
+          'profile.lastName': attributes.profile.lastName,
+          'profile.street1': attributes.profile.street1,
+          'profile.street2': attributes.profile.street2,
+          'profile.city': attributes.profile.city,
+          'profile.state': attributes.profile.state,
+          'profile.zip': attributes.profile.zip,
+          'profile.partnerOrg': attributes.profile.partnerOrg,
+          'profile.numberOfKids': attributes.profile.numberOfKids,
+          'profile.race': attributes.profile.race,
+          'profile.followingOrgs': attributes.profile.followingOrgs,
+          'profile.role': attributes.profile.role,
+          'profile.gender': attributes.profile.gender,
+          'profile.medicaid': attributes.profile.medicaid,
+          'profile.reducedLunch': attributes.profile.reducedLunch,
+          'profile.UCBAppAccess': attributes.profile.UCBAppAccess
+        }
+      });
       Meteor.users.update(attributes.userId,
                           {$push: {emails: {address: attributes.email.toLowerCase()
                           }}});
@@ -243,26 +226,43 @@ Meteor.methods({
         state: String,
         zip: String,
         partnerOrg: String,
-        numberOfKids: String,
-        race: String,
-        gender: String,
-        medicaid: String,
-        reducedLunch: String,
-        UCBAppAccess: String
+        numberOfKids: Match.Optional(String),
+        race: Match.Optional(String),
+        gender: Match.Optional(String),
+        medicaid: Match.Optional(String),
+        reducedLunch: Match.Optional(String),
+        UCBAppAccess: Match.Optional(String)
       }
     });
 
     attributes.email = attributes.email.toLowerCase();
 
-    Meteor.users.update(this.userId,
-                        {$set: { profile: attributes.profile
-                        }});
+    Meteor.users.update(this.userId, {
+      $set: {
+        'profile.firstName': attributes.profile.firstName,
+        'profile.lastName': attributes.profile.lastName,
+        'profile.street1': attributes.profile.street1,
+        'profile.street2': attributes.profile.street2,
+        'profile.city': attributes.profile.city,
+        'profile.state': attributes.profile.state,
+        'profile.zip': attributes.profile.zip,
+        'profile.partnerOrg': attributes.profile.partnerOrg,
+        'profile.numberOfKids': attributes.profile.numberOfKids,
+        'profile.race': attributes.profile.race,
+        'profile.followingOrgs': attributes.profile.followingOrgs,
+        'profile.role': attributes.profile.role,
+        'profile.gender': attributes.profile.gender,
+        'profile.medicaid': attributes.profile.medicaid,
+        'profile.reducedLunch': attributes.profile.reducedLunch,
+        'profile.UCBAppAccess': attributes.profile.UCBAppAccess
+      }
+    });
     //Note: this assumes only 1 email address
     Meteor.users.update(this.userId,
-                        {$pop: {emails: {address: attributes.email
-                        }}});
-    Meteor.users.update(this.userId,
                         {$push: {emails: {address: attributes.email
+                        }}});
+    Meteor.users.update(this.userId, //{ emails: [ attributes.email ] });
+                        {$pop: {emails: {address: attributes.email
                         }}});
   },
 
@@ -319,29 +319,28 @@ Meteor.methods({
       partnerOrg = Meteor.user().profile.partnerOrg;
     }
 
-    //create new ad-hoc event for Admin adding points
     var eventAttributes = {
-      eventName: attributes.description,
+      name: attributes.description,
       eventDate: Date(),
-      eventAddress: '123 Fake St, Boston, MA', //fake address
       category: 'Admin Adding Points',
       hoursSpent: 0, //fake duration of event
       points: attributes.points,
       isPointsPerHour: false,
     };
 
-    var event = DB.insertEvent(eventAttributes);
-
-    Transactions.insert({
+    var doc = {
       userId: attributes.userId,
-      eventId: event,
       approvalType: 'auto',
       approved: true,
       transactionDate: Date(),
+      event: eventAttributes,
+      category: 'Admin Adding Points',
       partnerOrg: partnerOrg,
+      hoursSpent: 0, //fake duration of event
       deleteInd: false
-    });
+    };
 
+    DB.transactions.insert(doc);
   },
 
   removeReservation: function(eventId) {
@@ -430,5 +429,9 @@ Meteor.methods({
 
     Reservations.insert(attributes);
     Events.update({_id: attributes.eventId}, {$inc: {numberRSVPs: attributes.numberOfPeople}});
+  },
+
+  'calcPoints': function(userId) {
+    return DB.calcPointsForUser(userId);
   }
 });

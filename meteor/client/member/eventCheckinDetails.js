@@ -68,10 +68,10 @@ Template.eventCheckinDetails.events({
 
     // Set the event name if it is an ad hoc transaction
     if (eventId === 'new') {
-      checkIn.pendingEventName = $('#pendingEventName').val();
-      checkIn.pendingEventDescription = $('#pendingEventDescription').val();
+      checkIn.eventName = $('#eventName').val();
+      checkIn.eventDescription = $('#eventDescription').val();
       checkIn.category = $('#categories').val();
-      checkIn.pendingEventDate = new Date($('#adHocEventDate').val());
+      checkIn.eventDate = new Date($('#adHocEventDate').val());
 
       //Validate form
         $('#eventDescForm').validate();
@@ -120,7 +120,7 @@ Template.eventCheckinDetails.destroyed = function () {
 };
 
 function validateFields() {
-  return $('#pendingEventName').val() && $('#pendingEventDescription').val();
+  return $('#eventName').val() && $('#eventDescription').val();
 }
 
 function addPlugins() {

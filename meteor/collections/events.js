@@ -161,6 +161,29 @@ Events.allEvents = function() {
                      {sort: {startDate: 1}});
 };
 
+Events.eventsSearch = function(searchText, selector, options) {
+  selector = selector || {};
+  selector.deleteInd = false;
+  selector.adHoc = false;
+
+  options = options || {};
+
+  var out = this.find(selector, options).fetch();
+
+  // Run a regexp on concantenated desc and name fields if searchtext is passed
+  if (searchText) {
+    var regExp = HelperFunctions.buildRegExp(searchText);
+
+    out = _.filter(out, function(item) {
+      var string = item.description + item.name + item.institution + item.category;
+
+      return regExp.test(string);
+    });
+  }
+
+  return out;
+}
+
 Events.allow({
   insert: function() {
     return true;

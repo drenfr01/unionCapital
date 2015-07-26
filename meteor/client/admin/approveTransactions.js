@@ -32,11 +32,7 @@ Template.approveTransactions.helpers({
     return Transactions.find(selector);
   },
   eventDate: function() {
-    if(this.eventId) {
-      return Events.findOne(this.eventId).eventDate;
-    } else {
-      return this.pendingEventDate;
-    }
+    return this.event.eventDate;
   },
   partnerOrgs: function() {
     return PartnerOrgs.find();
@@ -57,7 +53,7 @@ Template.approveTransactions.helpers({
   },
 
   'getPoints': function(eventId) {
-    var event = Events.findOne(eventId);
+    var event = this.event;
     if(event.isPointsPerHour) {
       return event.pointsPerHour * this.hoursSpent;
     } else {
@@ -69,7 +65,7 @@ Template.approveTransactions.helpers({
     return Roles.userIsInRole(Meteor.userId(), 'admin');
   },
   ucbButtonEvent: function() {
-    var buttonEvent = Events.findOne({name: AppConfig.ucbButtonEvent})._id;
+    var buttonEvent = Events.findOne({ name: AppConfig.ucbButtonEvent })._id;
     if (this.eventId === buttonEvent) {
       return 'Y';
     } else {
@@ -105,22 +101,9 @@ Template.approveTransactions.events({
   },
 
   'click #sendApproval': function(e) {
+    var points = parseInt($("#pointsInput").val());
 
-    var attributes = {
-      transactionId: this._id,
-      userId: this.userId,
-      eventId: this.eventId,
-      imageId: this.imageId,
-      eventName: this.pendingEventName,
-      eventAddress: "temporary",
-      eventDescription: this.pendingEventDescription,
-      eventDate: new Date(this.transactionDate),
-      category: this.category,
-      hoursSpent: this.hoursSpent,
-      points: parseInt($("#pointsInput").val())
-    };
-
-    Meteor.call('approveTransaction', attributes, function(error) {
+    Meteor.call('approveTransaction', this._id, points, function(error) {
       if(error) {
         addErrorMessage(error.reason);
       } else {

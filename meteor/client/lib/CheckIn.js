@@ -6,9 +6,9 @@ CheckIn = function(defaultHours) {
   self.checkingIn = new ReactiveVar(false);
   self.userPhoto = new UserPhoto();
   self.attributes = {};
-  self.pendingEventName = null;
-  self.pendingEventDescription = null;
-  self.pendingEventDate = null;
+  self.eventName = null;
+  self.eventDescription = null;
+  self.eventDate = null;
   self.category = null;
   self.hasUCBButton = false;
 
@@ -33,10 +33,10 @@ CheckIn = function(defaultHours) {
       };
 
       // If new, then don't set the eventId to avoid check() errors
-      if (eventId === 'new' && self.pendingEventName && self.pendingEventDescription && self.pendingEventDate) {
-        self.attributes.pendingEventName = self.pendingEventName;
-        self.attributes.pendingEventDescription = self.pendingEventDescription;
-        self.attributes.pendingEventDate = self.pendingEventDate;
+      if (eventId === 'new' && self.eventName && self.eventDescription && self.eventDate) {
+        self.attributes.eventName = self.eventName;
+        self.attributes.eventDescription = self.eventDescription;
+        self.attributes.eventDate = self.eventDate;
         self.attributes.category = self.category;
       } else if (eventId && eventId !== 'new') {
         // Else set the event ID

@@ -19,10 +19,10 @@
             <h3>Selfie Event Details</h3>
             <form role="form" id="eventDescForm">
               <div class="form-group">
-                <input type="text" class="form-control" id="pendingEventName" placeholder="Event Name" required>
+                <input type="text" class="form-control" id="eventName" placeholder="Event Name" required>
               </div>
               <div class="form-group">
-                <textarea maxlength="140" rows="2" class="form-control" id="pendingEventDescription" placeholder="Event Description" required></textarea>
+                <textarea maxlength="140" rows="2" class="form-control" id="eventDescription" placeholder="Event Description" required></textarea>
               </div>
             </form>
             <form role="form" id="organizationForm">
@@ -81,7 +81,7 @@
     	    </div>
         </div>
         <form class="hidden-input">
-          <input type="file" accept="image/*" capture="camera" id="upPhoto">
+          <input type="file" name="photo" accept="image/*" capture="camera" id="upPhoto">
         </form>
         <div class="row">
     	    <div class="col-xs-12 page-panel panel-link photo-checkin text-center" id="addPhoto">

@@ -21,11 +21,11 @@
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                 &times;</button>
-              <h4 class="modal-title text-center">{{pendingEventName}}</h4>
+              <h4 class="modal-title text-center">{{event.name}}</h4>
             </div>
             <div class="modal-body text-center">
               {{#if imageUrl this.imageId}}
-                <img src="{{imageUrl this.imageId}}" 
+                <img src="{{imageUrl this.imageId}}"
                   alt="No Image Found" height=100% width=100%>
               {{else}}
                 <h4>No Image Found</h4>
@@ -45,7 +45,7 @@
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                 &times;</button>
-              <h4 class="modal-title text-center">{{pendingEventName}}</h4>
+              <h4 class="modal-title text-center">{{event.name}}</h4>
             </div>
             <div class="modal-body text-center">
               {{#if eventId}}
@@ -91,8 +91,8 @@
             {{#each pendingTransaction}}
               <tr>
                 <td>{{firstName}} {{lastName}}</td>
-                <td>{{pendingEventName}}</td>
-                <td>{{pendingEventDescription}}</td>
+                <td>{{event.name}}</td>
+                <td>{{event.description}}</td>
                 <td>{{formatDate eventDate}}</td>
                 <td>{{formatDate transactionDate}} </td>
                 <td>Hours: {{hoursSpent}}</td>

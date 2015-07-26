@@ -1,44 +1,6 @@
-
-// Event search setup
-var options = {
-  keepHistory: 1,
-  localSearch: false
-};
-var fields = ['name', 'description'];
-
-CheckinEventsSearch = new SearchSource('checkinEventsSearch', fields, options);
-
-// Gets the data for use in the getEvents helper
-function getEventsData() {
-  var events = CheckinEventsSearch.getData({
-    sort: {eventDate: 1}
-  });
-
-  if (Session.get('selectedEvent')) {
-    // If there is an event selected, it narrows the list to only that event
-    return _.where(events, { _id: Session.get('selectedEvent') });
-
-  } else {
-    // Otherwise, check that the end date of the even is before the start date of the check in period
-    // AND the start date of the event is before the end of the check in period
-    var minStartDate = moment();
-    var maxEndDate = moment();
-
-    if (Session.equals('eventTimeframe', 'current')) {
-      // Use only events defined as today for a current check in
-      minStartDate = moment().add(AppConfig.checkIn.today.hoursBehind, 'h');
-      maxEndDate = moment().add(AppConfig.checkIn.today.hoursAhead, 'h');
-    } else if (Session.equals('eventTimeframe', 'past')) {
-      // Use past events for the specified time frame
-      minStartDate = moment().add(AppConfig.checkIn.past.hoursBehind, 'h');
-      maxEndDate = moment().add(AppConfig.checkIn.past.hoursAhead, 'h');
-    }
-
-    return _.filter(events, function(thisEvent) {
-      return !!(moment(thisEvent.eventDate).add(thisEvent.duration, 'm').isAfter(minStartDate) && moment(thisEvent.eventDate).isBefore(maxEndDate));
-    });
-  }
-}
+// Definte variables need to the reactive search
+var searchText = new ReactiveVar();
+var options = { sort: { eventDate: 1 }}
 
 var eventButtonToggle = new ReactiveVar({ eventSelectText: '', eventSelectClass: '' });
 
@@ -95,18 +57,34 @@ Template.checkIntoEvent.rendered = function() {
 
   // We don't want to start out with an event selected
   Session.set('selectedEvent', null);
+
+  // Default timeframe
   Session.set('eventTimeframe', 'current');
   setToggleValues();
-
-  // Populate the event list on load with no filters
-  CheckinEventsSearch.search('');
-
+  searchText.set($('#eventSearchBox').val().trim());
 };
 
 Template.checkIntoEvent.helpers({
 
   'getEvents': function() {
-    var eventsArray = getEventsData();
+    var selector = {};
+
+    if (Session.equals('eventTimeframe', 'current')) {
+      selector.eventDate = {
+        $gte: moment().add(AppConfig.checkIn.today.hoursBehind, 'h').toDate(),
+        $lte: moment().add(AppConfig.checkIn.today.hoursAhead, 'h').toDate()
+      };
+    } else {
+      selector.eventDate = {
+        $gte: moment().add(AppConfig.checkIn.past.hoursBehind, 'h').toDate(),
+        $lte: moment().add(AppConfig.checkIn.past.hoursAhead, 'h').toDate()
+      };
+    }
+
+    var eventsArray = Events.eventsSearch(searchText.get(), selector, options);
+
+    // TODO: find a better way to do this
+    // Shouldn't have a side effect in a template helper
     setMapMarkers(eventsArray);
 
     return eventsArray;
@@ -131,8 +109,8 @@ Template.checkIntoEvent.events({
 
   // Automatically populates the search list on keyup
   'keyup #eventSearchBox': _.throttle(function(e) {
-    CheckinEventsSearch.search($('#eventSearchBox').val().trim());
-  }, 200),
+    searchText.set($('#eventSearchBox').val().trim());
+  }, 100),
 
   'click .in button': function(e) {
     $(e.target).blur();
@@ -151,8 +129,9 @@ Template.checkIntoEvent.events({
   },
 
   'click #clearBtn': function() {
-    CheckinEventsSearch.search('');
-    $('#eventSearchBox').val('');
+    console.log(Events.find().fetch());
+    // CheckinEventsSearch.search('');
+    // $('#eventSearchBox').val('');
   },
 
   'click #pastOrCurrentRdoDiv': function(e) {

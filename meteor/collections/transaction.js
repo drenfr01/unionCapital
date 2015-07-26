@@ -21,6 +21,12 @@ Transactions.attachSchema(new SimpleSchema({
       label: 'ID of related Event',
       optional: true
     },
+    event: {
+      type: Object,
+      label: 'Event Name',
+      blackbox: true,
+      optional: true
+    },
     imageId: {
       type: String,
       label: 'Image Id',
@@ -34,29 +40,19 @@ Transactions.attachSchema(new SimpleSchema({
       type: Boolean,
       label: 'Approved'
     },
+    approvalDate: {
+      type: Date,
+      label: 'Approval Date',
+      optional: true
+    },
     partnerOrg: {
       type: String,
       label: 'Partner Organization',
       optional: true
     },
-    pendingEventName: {
-      type: String,
-      label: 'Event Name',
-      optional: true
-    },
-    pendingEventDescription: {
-      type: String,
-      label: 'Event Description',
-      optional: true
-    },
     category: {
       type: String,
-      label: 'Event Category',
-      optional: true
-    },
-    pendingEventDate: {
-      type: Date,
-      label: 'Pending Event Date',
+      label: 'Category',
       optional: true
     },
     transactionDate: {
