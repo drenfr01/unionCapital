@@ -45,7 +45,7 @@ casper.test.begin('All Members', 24, function suite(test) {
   //test adding points
   casper.then(function() {
     this.sendKeys('#pointsToAdd', '100');
-    this.sendKeys('#pointsDescription', 'Why not?');
+    this.sendKeys('#pointsDescription', 'Admin Add Points');
     this.click('#addPoints');
   });
 

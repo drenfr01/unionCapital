@@ -69,23 +69,23 @@ casper.test.begin('Manage Events', 33, function suite(test) {
     test.assertExists("#back");
     test.assertExists('#submit');
 
-    this.sendKeys('#eventName', 'Somerville Cooking Jubilee', {reset: true});
+    this.sendKeys('#eventName', ' Jubilee');
     this.click('#submit');
   });
 
   //Check event edited, then delete it
   casper.wait(500, function(){
     this.click('#past');
-    test.assertTextExists('Somerville Cooking Jubilee');
+    test.assertTextExists('Somerville Cooking Festival Jubilee');
     test.assertTextExists('Boston Music Festival');
 
     this.evaluate(function() {
-      $("td:contains('Somerville Cooking Jubilee')").parent().find('.deleteEvent').click();
+      $("td:contains('Somerville Cooking Festival Jubilee')").parent().find('.deleteEvent').click();
     });
   });
 
   casper.wait(500, function() {
-    test.assertTextDoesntExist('Somerville Cooking Jubilee');
+    test.assertTextDoesntExist('Somerville Cooking Festival Jubilee');
     test.assertTextExists('Boston Music Festival');
   });
 

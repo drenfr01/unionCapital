@@ -42,26 +42,28 @@ casper.test.begin('Manage Partner Events', 33, function suite(test) {
   });
 
   //ensure present events exists
+  // Should only see partner org events
   casper.wait(500, function() {
     test.assertTextExists('Cambridge Science Festival'); //KIPP
-    test.assertTextExists('Cambridge Film Festival'); //Thrive in Five
+    test.assertTextExists('Boston Music Festival');
 
-    this.clickLabel('Cambridge Film Festival', 'a');
+    this.clickLabel('Boston Music Festival', 'a');
   });
 
   //Thrive in Five Event
+  // REMOVING... this shouldn't be in here...
   casper.waitWhileSelector('#addEvent', function() {
-    test.assertExists('.back');
-    test.assertTextExists('Watch as many films as you can in just 3 days of mandness!');
-    test.assertTextExists('Thrive in Five');
-    test.assertExists('iframe'); //TODO: this is a bad test for the google map
+    // test.assertExists('.back');
+    // test.assertTextExists('Watch as many films as you can in just 3 days of mandness!');
+    // test.assertTextExists('Thrive in Five');
+    // test.assertExists('iframe'); //TODO: this is a bad test for the google map
 
-    test.assertTextExists('4'); //Total RSVPS
-    //KIPP Member
-    test.assertTextExists('CasperJS');
-    test.assertTextExists('2');
-    //Thrive in Five Member
-    test.assertTextDoesntExist('Test2');
+    // test.assertTextExists('4'); //Total RSVPS
+    // //KIPP Member
+    // test.assertTextExists('CasperJS');
+    // test.assertTextExists('2');
+    // //Thrive in Five Member
+    // test.assertTextDoesntExist('Test2');
 
     this.click('.back');
   });
