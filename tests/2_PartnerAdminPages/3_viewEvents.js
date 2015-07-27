@@ -1,6 +1,6 @@
 casper.test.comment("Testing Partner Admin View Events");
 
-casper.test.begin('Manage Partner Events', 33, function suite(test) {
+casper.test.begin('Manage Partner Events', 23, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsPartnerAdmin();
   });
