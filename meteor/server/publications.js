@@ -120,7 +120,7 @@ Meteor.publish('transactions', function() {
   } else if (Roles.userIsInRole(this.userId, 'partnerAdmin')) {
 
     var org = Meteor.users.findOne({ _id: this.userId }).profile.partnerOrg;
-    return Transactions.find({ 'event.institution': org });
+    return Transactions.find({ partnerOrg: org });
 
   } else {
 

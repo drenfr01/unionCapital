@@ -99,9 +99,9 @@ DB = {
     });
 
     if (Meteor.users.findOne(userId).profile)
-      Meteor.users.update(userId, { $set: { 
-        'profile.points': sum, 
-        'profile.pointsUpdatedTimestamp': new Date() } 
+      Meteor.users.update(userId, { $set: {
+        'profile.points': sum,
+        'profile.pointsUpdatedTimestamp': new Date() }
       });
 
     return sum;
