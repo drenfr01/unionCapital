@@ -1,11 +1,5 @@
 /*
-transactions:
-  eventName: pendingEventName,
-  eventDescription: pendingEventDescriptions,
-  eventDate: pendingEventDate
-  eventAddress: Events.findOne...,
-  approvalDate: Events.findOne...,
-  points: function1()
+Basically just want to find each event for a transaction, and then add it under event
 */
 
 // Should denormalize points into transactions

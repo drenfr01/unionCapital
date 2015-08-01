@@ -1,5 +1,6 @@
 var imageStore = new FS.Store.S3("images", {
   bucket: "unioncapitalprod",
+  folder: Meteor.settings.folder,
   accessKeyId: Meteor.settings.AWS_ACCESS_KEY_ID,
   secretAccessKey: Meteor.settings.AWS_SECRET_ACCESS_KEY
 });
