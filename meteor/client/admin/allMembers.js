@@ -37,7 +37,7 @@ function getMembersData(sortOn, sortOrder) {
   var userIds = _.pluck(users, "_id");
   var allTransactions = Transactions.find({userId: {$in: userIds }, approved: true, eventId: {$exists: true}},
                                          {sort: {transactionDate: -1}}).fetch();
- 
+
   var tableRows = _.map(users, function(user) {
 
     var transactions = _.filter(allTransactions, function(trans) {
@@ -140,7 +140,9 @@ Template.allMembers.events({
     e.preventDefault();
     Router.go('viewMemberProfile', {_id: this.memberId});
   },
-  'click #clearBtn': function() {
+  'click #clearBtn': function(e) {
+    e.preventDefault();
+    searchText.set('');
     $('#search-box').val('');
     $('#search-box').focus();
   },

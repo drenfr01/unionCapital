@@ -4,7 +4,7 @@ casper.test.begin('Add Partner Events', 17, function suite(test) {
   casper.start(homeURL, function() {
     casper.loginAsPartnerAdmin();
   });
-  
+
   casper.waitForSelector("#login-dropdown-list", function() {
     test.assertExists('#manageEvents');
     this.click('#manageEvents');
@@ -16,7 +16,7 @@ casper.test.begin('Add Partner Events', 17, function suite(test) {
   });
 
   casper.waitWhileSelector('#addEvent', function() {
-    test.assertTextExists('Add Event'); 
+    test.assertTextExists('Add Event');
     test.assertExists("input[name=name]");
     test.assertExists("input[name=address]");
     test.assertExists("input[name=url]");
@@ -72,10 +72,6 @@ casper.test.begin('Add Partner Events', 17, function suite(test) {
     this.click('#submit');
   });
 
-  casper.wait(250, function() {
-    this.click('#back');
-  });
-
   casper.waitWhileSelector('#geocodeButton', function(){
     test.assertTextExists(newPartnerEvent);
   });
@@ -83,7 +79,7 @@ casper.test.begin('Add Partner Events', 17, function suite(test) {
   casper.then(function() {
     casper.logout(test);
   });
-  
+
   casper.run(function() {
     test.done();
   });

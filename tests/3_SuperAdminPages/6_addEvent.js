@@ -75,11 +75,7 @@ casper.test.begin('Add Event', 18, function suite(test) {
     this.click('#submit');
   });
 
-  casper.wait(250, function() {
-    this.click('#back');
-  });
-
-  casper.waitWhileSelector('#geocodeButton', function(){
+  casper.waitWhileSelector('#submit', function(){
     this.click('#past');
   });
 
@@ -135,11 +131,7 @@ casper.test.begin('Add Event', 18, function suite(test) {
     this.click('#submit');
   });
 
-  casper.wait(250, function() {
-    this.click('#back');
-  });
-
-  casper.waitWhileSelector('#geocodeButton', function(){
+  casper.waitWhileSelector('#submit', function(){
     this.click('#current');
   });
 
