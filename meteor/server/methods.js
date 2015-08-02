@@ -3,6 +3,14 @@ Meteor.methods({
   removeImage: function(imageId) {
     return Images.remove(imageId);
   },
+  removeImagesByDate: function(imageDate) {
+  if (Roles.userIsInRole(this.userId, 'admin')) {
+    console.log("removing images");
+    return Images.remove({"metadata.submissionTime": {$lte: imageDate}});
+  } else {
+    throw new Meteor.Error("SECURITY_ERROR", "not allowed");
+  }
+  },
 
   insertTransaction: function(attributes) {
     check(attributes, {
