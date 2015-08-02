@@ -51,6 +51,7 @@ Meteor.methods({
 
       //denormalize existing event into transaction
       attributes.event = thisEvent;
+      attributes.partnerOrg = thisEvent.institution;
     } else {
       //build event for transaction, it will be ad-hoc
       attributes.event = {

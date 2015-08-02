@@ -197,6 +197,7 @@ Router.route('/checkpoints', function () {
     },
 
     subscriptions: function() {
+      // this.subscribe('transactions')
       return Meteor.subscribe('eventsForUser')
     },
 
