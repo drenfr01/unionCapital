@@ -1,21 +1,13 @@
-/*
 var imageStore = new FS.Store.S3("images", {
   bucket: "unioncapitalprod",
   folder: Meteor.settings.folder,
   accessKeyId: Meteor.settings.AWS_ACCESS_KEY_ID,
   secretAccessKey: Meteor.settings.AWS_SECRET_ACCESS_KEY
 });
-*/
 
-Images = new FS.Collection("images", {
-    stores: [new FS.Store.GridFS("images", {path: '/Users/duncanrenfrow-symon/Documents/Meteor_App/apparel/uploads', maxTries:10})]
-
-});
-/*
 Images = new FS.Collection("images", {
   stores: [imageStore]
 });
-*/
 
 FS.debug = false;
 

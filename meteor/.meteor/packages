@@ -6,7 +6,6 @@
 standard-app-packages
 iron:router
 cfs:standard-packages
-cfs:gridfs
 aldeed:simple-schema
 aldeed:collection2
 aldeed:autoform
