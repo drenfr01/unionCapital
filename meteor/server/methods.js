@@ -4,14 +4,27 @@ Meteor.methods({
     return Images.remove(imageId);
   },
   removeImagesByDate: function(imageDate) {
-  if (Roles.userIsInRole(this.userId, 'admin')) {
-    console.log("removing images");
-    return Images.remove({"metadata.submissionTime": {$lte: imageDate}});
-  } else {
-    throw new Meteor.Error("SECURITY_ERROR", "not allowed");
-  }
+    if (Roles.userIsInRole(this.userId, 'admin')) {
+      console.log("removing images");
+      Images.find().forEach(function(image) {
+        if(image.metadata.submissionTime < imageDate) {
+          console.log("Removed: " + image.metadata.submissionTime);
+          Images.remove(image._id, function() { console.log("removed"); });
+        } else {
+          console.log("Skipped: " + image.metadata.submissionTime);
+        }
+      });
+    } else {
+      throw new Meteor.Error("SECURITY_ERROR", "not allowed");
+    }
   },
-
+  removeAllImages: function() {
+    if (Roles.userIsInRole(this.userId, 'admin')) {
+      return Images.files.remove({});
+    } else {
+      throw new Meteor.Error("SECURITY_ERROR", "not allowed");
+    }
+  },
   insertTransaction: function(attributes) {
     check(attributes, {
       userId: String,
