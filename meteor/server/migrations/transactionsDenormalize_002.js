@@ -49,4 +49,5 @@ Migrations.add({
   down: backwards2
 });
 
-Migrations.migrateTo('2,rerun');
+//Note: uncomment below if you need to rerun the above migration
+//Migrations.migrateTo('2,rerun');
