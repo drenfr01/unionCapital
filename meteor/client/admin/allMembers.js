@@ -16,6 +16,7 @@ var highlightSortedColumn = function(target) {
 var searchText = new ReactiveVar('');
 
 function getMembersData(sortOn, sortOrder) {
+  console.time('getMembersData');
   //I think we overwrite options because there is both a server side and client side def
   //of this method, so it either calls the client side or after the timeout
   //does the server side
@@ -33,11 +34,13 @@ function getMembersData(sortOn, sortOrder) {
     selector.roles = { $all: ['user'] };
   }
 
+  console.time("setup");
   var users = Meteor.users.searchFor(selector, searchText.get(), fields, options);
-  var userIds = _.pluck(users, "_id");
-  var allTransactions = Transactions.find({userId: {$in: userIds }, approved: true, eventId: {$exists: true}},
-                                         {sort: {transactionDate: -1}}).fetch();
+  //Note: the below statement takes bulk of time
+  var allTransactions = Transactions.find({approved: true, eventId: {$exists: true}}).fetch();
 
+  console.timeEnd("setup");
+  console.time("data aggregation");
   var tableRows = _.map(users, function(user) {
 
     var transactions = _.filter(allTransactions, function(trans) {
@@ -46,10 +49,8 @@ function getMembersData(sortOn, sortOrder) {
     var transactionCount = transactions.length;
     var totalPoints = 0;
 
-    _.each(transactions, function(transaction) {
-      var event = transaction.event;
-      totalPoints = Meteor.users.totalPointsFor(transaction.userId);
-    });
+    totalPoints = Meteor.users.totalPointsFor(user._id);
+
     var mostRecentTransaction = transactions[0] ||
       { eventId: "", transactionDate: ""};
     var mostRecentEvent = mostRecentTransaction.event || {name: ""};
@@ -71,7 +72,9 @@ function getMembersData(sortOn, sortOrder) {
       numberOfTransactions: transactionCount,
       totalPoints: totalPoints};
   });
+  console.timeEnd("data aggregation");
 
+  console.time("sorting");
   var out = _.sortBy(tableRows, function(item) {
     var sortField = item[Session.get('sortOn')];
     if (typeof sortField === 'number' || sortField instanceof Date)
@@ -79,11 +82,16 @@ function getMembersData(sortOn, sortOrder) {
     else
       return sortField.toLowerCase();
   });
+  console.timeEnd("sorting");
 
-  if (Session.get('sortOrder') === -1)
+  if (Session.get('sortOrder') === -1) {
+    console.timeEnd('getMembersData');
     return out.reverse();
-  else
+  }
+  else {
+    console.timeEnd('getMembersData');
     return out;
+  }
 }
 
 Template.allMembers.rendered = function() {
@@ -93,8 +101,7 @@ Template.allMembers.rendered = function() {
 
 Template.allMembers.helpers({
   getMembers: function() {
-    var data = getMembersData(Session.get('sortOn'), Session.get('sortOrder'));
-    return data;
+    return getMembersData(Session.get('sortOn'), Session.get('sortOrder'));
   }
 });
 

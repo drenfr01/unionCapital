@@ -115,19 +115,20 @@ Meteor.publish('transactions', function() {
   var partnerAdmin = Meteor.users.findOne({_id: this.userId});
   if (Roles.userIsInRole(this.userId, 'admin')) {
 
-    return Transactions.find();
+    return Transactions.find({}, {sort: {transactionDate: -1}});
 
   } else if (Roles.userIsInRole(this.userId, 'partnerAdmin')) {
 
     var org = Meteor.users.findOne({ _id: this.userId }).profile.partnerOrg;
-    return Transactions.find({ partnerOrg: org });
+    return Transactions.find({ partnerOrg: org }, {sort: {transactionDate: -1}});
 
   } else {
 
-    return Transactions.find({userId: this.userId});
+    return Transactions.find({userId: this.userId}, {sort: {transactionDate: -1}});
 
   }
 });
+
 
 //Partner Admins can only see images from their users
 Meteor.publish('images', function() {

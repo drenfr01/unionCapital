@@ -12,30 +12,41 @@ var denormalizeTransaction = function() {
   Transactions.find().forEach(function(ts) {
     //TODO: removed fields pendingEventName, pendingEventDescription, pendingEventDate 
 
+    var event = {};
+
     //approved events
     if(ts.eventId) {
-      ts.event = Events.findOne(ts.eventId);
+      event = Events.findOne(ts.eventId);
+    } else if (ts.pendingEventName) {
+      event = {
+        name: ts.pendingEventName,
+        description: ts.pendingEventDescription,
+        eventDate: ts.pendingEventDate
+      };
+    } else {
+      //do nothing, something strange happened
+      console.log("Already migrated: " + ts._id);
     }
 
-    //"selfie events"
-    if(ts.pendingEventName) {
-      var pendingEvent = {
-        pendingEventName: ts.pendingEventName,
-        pendingEventDescription: ts.pendingEventDescription,
-        pendingEventDate: ts.pendingEventDate
-      };
-      ts.event = pendingEvent;
+    if(!_.isEmpty(event)) {
+      Transactions.update(ts._id, {$set: {event: event }});
+    } else {
+      console.log("EMPTY!: " + ts._id);
     }
   });
 };
 
 //TODO: as part of migration unset above fields
 
-/*
+var backwards2 = function() {
+  console.log('No backwards migration, because we aint scared.');
+};
+
 Migrations.add({
   version: 2,
   name: "Denormalize all transactions",
   up: denormalizeTransaction,
   down: backwards2
 });
-*/
+
+Migrations.migrateTo('2,rerun');

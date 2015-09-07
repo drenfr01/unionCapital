@@ -52,8 +52,10 @@ Template.eventCheckinDetails.events({
   'change #upPhoto':  function() {
     var input = $('#upPhoto')[0];
 
-    if (input.files && input.files[0])
+    if (input.files && input.files[0]) {
+      console.log(input.files);
       checkIn.setPhoto(input.files[0]);
+    }
     else
       checkIn.removePhoto();
   },
