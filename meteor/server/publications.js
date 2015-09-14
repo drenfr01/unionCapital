@@ -81,11 +81,11 @@ Meteor.publish("eventsForTransactions", function() {
 });
 
 Meteor.publish('manageEvents', function() {
-  var self = this;
   var selector = {};
 
-  if (Roles.userIsInRole(self.userId, 'partnerAdmin'))
-    selector.institution = Meteor.users.findOne(self.userId).profile.partnerOrg;
+  if (Roles.userIsInRole(this.userId, 'partnerAdmin')) {
+    selector.institution = Meteor.users.findOne(this.userId).profile.partnerOrg;
+  }
 
   return Events.find(selector);
 });

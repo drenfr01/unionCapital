@@ -198,7 +198,7 @@ Router.route('/checkpoints', function () {
 
     subscriptions: function() {
       // this.subscribe('transactions')
-      return Meteor.subscribe('eventsForUser')
+      return Meteor.subscribe('eventsForUser');
     },
 
     action: function () {
@@ -211,6 +211,14 @@ Router.route('/checkpoints', function () {
   });
 }, {
   name: 'checkPoints'
+});
+
+Router.route('/visuals', {
+  template: 'visuals',
+  name: 'visuals',
+  waitOn: function() {
+    return Meteor.subscribe('manageEvents');
+  },
 });
 
 Router.route('/signup/:template', function() {

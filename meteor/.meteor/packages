@@ -43,3 +43,4 @@ percolate:migrations
 meteorhacks:aggregate
 cfs:s3
 cfs:gridfs@=0.0.27
+d3
