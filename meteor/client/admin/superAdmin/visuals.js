@@ -46,7 +46,7 @@ Template.visuals.rendered = function() {
     return h - yScale(d[1]);
   })
   .attr("width", function(d) {
-   return w / dataset.length - barPadding;
+    return xScale.rangeBand();
   })
   .attr("height", function(d) {
     return yScale(d[1]);
