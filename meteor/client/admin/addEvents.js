@@ -75,5 +75,16 @@ Template.addEvents.events({
   },
   'click #back': function(e) {
     Router.go('manageEvents');
+  },
+
+  'click #submit': function(e) {
+    var isPph = $('#insertEventsForm input[name="isPointsPerHour"]').val();
+    var pph = $('#insertEventsForm input[name="pointsPerHour"]').val();
+    if (isPph && !pph) {
+      addErrorMessage('You must add the number of points per hour');
+      return false;
+    }
+
+    return true;
   }
 });

@@ -92,9 +92,10 @@ DB = {
     approvedTransactions.forEach(function(transaction) {
       var event = transaction.event;
       if(event && event.isPointsPerHour) {
-        sum = Math.round(sum + (event.pointsPerHour * transaction.hoursSpent));
+        var val = Math.round(sum + (event.pointsPerHour * transaction.hoursSpent));
+        sum += isNaN(val) ? 0 : val;
       } else if(event) {
-        sum += event.points;
+        sum += isNaN(event.points) ? 0 : event.points;
       }
     });
 
