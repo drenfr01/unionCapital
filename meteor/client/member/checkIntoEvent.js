@@ -2,45 +2,45 @@
 var searchText = new ReactiveVar();
 var options = { sort: { eventDate: 1 }}
 
-var eventButtonToggle = new ReactiveVar({ eventSelectText: '', eventSelectClass: '' });
+// var eventButtonToggle = new ReactiveVar({ eventSelectText: '', eventSelectClass: '' });
 
 // Handles all configuration based on if an event is selected
-function setToggleValues() {
-  if (Session.get('selectedEvent')) {
+// function setToggleValues() {
+//   if (Session.get('selectedEvent')) {
 
-    // Event selected
-    $('#searchDiv').hide();
-    $('#checkIntoEventDiv').show();
+//     // Event selected
+//     $('#searchDiv').hide();
+//     $('#checkIntoEventDiv').show();
 
-    eventButtonToggle.set({
-      eventSelectText: 'Cancel',
-      eventSelectClass: 'btn-default'
-    });
+//     eventButtonToggle.set({
+//       eventSelectText: 'Cancel',
+//       eventSelectClass: 'btn-default'
+//     });
 
-  } else {
+//   } else {
 
-    // No event selected
-    $('#searchDiv').show();
-    $('#checkIntoEventDiv').hide();
+//     // No event selected
+//     $('#searchDiv').show();
+//     $('#checkIntoEventDiv').hide();
 
-    eventButtonToggle.set({
-      eventSelectText: 'Select',
-      eventSelectClass: 'btn-primary'
-    });
+//     eventButtonToggle.set({
+//       eventSelectText: 'Select',
+//       eventSelectClass: 'btn-primary'
+//     });
 
-  }
-}
+//   }
+// }
 
 // Runs the function every time the session var changes
-Tracker.autorun(function() {
-  setToggleValues();
-});
+// Tracker.autorun(function() {
+//   setToggleValues();
+// });
 
 // Sets the map markers
 // This is called in the helper function and is throttled for performance
 var setMapMarkers = _.debounce(function(eventsArray) {
 
-  if (eventsArray) {
+  if (eventsArray && gmaps.map) {
     gmaps.addMarkerCollection(eventsArray);
     gmaps.calcBounds();
   }
@@ -56,11 +56,11 @@ Template.checkIntoEvent.created = function () {
 Template.checkIntoEvent.rendered = function() {
 
   // We don't want to start out with an event selected
-  Session.set('selectedEvent', null);
+  // Session.set('selectedEvent', null);
 
   // Default timeframe
   Session.set('eventTimeframe', 'current');
-  setToggleValues();
+  // setToggleValues();
   searchText.set($('#eventSearchBox').val().trim());
 };
 
@@ -90,18 +90,18 @@ Template.checkIntoEvent.helpers({
     return eventsArray;
   },
 
-  'eventSelectText': function() {
-    return eventButtonToggle.get().eventSelectText;
-  },
+  // 'eventSelectText': function() {
+  //   return eventButtonToggle.get().eventSelectText;
+  // },
 
-  'eventSelectClass': function() {
-    return eventButtonToggle.get().eventSelectClass;
-  },
+  // 'eventSelectClass': function() {
+  //   return eventButtonToggle.get().eventSelectClass;
+  // },
 
   // Disables the accordion when there is a selected event
-  'dataToggle': function() {
-    return Session.get('selectedEvent') ? '' : 'collapse';
-  }
+  // 'dataToggle': function() {
+  //   return Session.get('selectedEvent') ? '' : 'collapse';
+  // }
 
 });
 
@@ -112,30 +112,30 @@ Template.checkIntoEvent.events({
     searchText.set($('#eventSearchBox').val().trim());
   }, 100),
 
-  'click .in button': function(e) {
-    $(e.target).blur();
+  // 'click .in button': function(e) {
+  //   $(e.target).blur();
 
-    if (Session.get('selectedEvent'))
-      Session.set('selectedEvent', null);
-    else
-      Session.set('selectedEvent', $(e.target).attr('id'));
-  },
+  //   if (Session.get('selectedEvent'))
+  //     Session.set('selectedEvent', null);
+  //   else
+  //     Session.set('selectedEvent', $(e.target).attr('id'));
+  // },
 
   'click .check-in-button': function(e) {
     e.preventDefault();
 
-    var id = Session.get('selectedEvent');
+    var id = this._id
     id && Router.go('eventCheckinDetails', {id: id} );
   },
 
   'click #clearBtn': function() {
-    console.log(Events.find().fetch());
     // CheckinEventsSearch.search('');
-    // $('#eventSearchBox').val('');
+    searchText.set('');
+    $('#eventSearchBox').val('');
   },
 
   'click #pastOrCurrentRdoDiv': function(e) {
-    Session.set('selectedEvent', null);
+    // Session.set('selectedEvent', null);
     var thisValue = $('.radio-button input[type=radio]:checked').val();
     Session.set('eventTimeframe', thisValue);
   }

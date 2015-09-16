@@ -18,9 +18,6 @@
             <input class="form-control" id="eventSearchBox" placeholder="Begin typing to filter events">
             <span class="input-group-addon cancel-text-addon" id="clearBtn"><span class="glyphicon glyphicon-remove"></span></span>
           </div>
-          <div id="checkIntoEventDiv" class="check-in-div">
-            <button type="button" class="btn btn-success btn-block check-in-button">Check In</button>
-          </div>
         </div>
       </div>
       <div class="row">
@@ -29,7 +26,7 @@
             <div class="panel panel-default">
               <div class="panel-heading" role="tab" id="heading{{_id}}">
                 <h4 class="panel-title">
-                  <a data-toggle="{{dataToggle}}" data-parent="#accordion" href="#panel{{_id}}"
+                  <a data-toggle="collapse" data-parent="#accordion" href="#panel{{_id}}"
                     aria-expanded="true" aria-controls="panel{{_id}}">
                     {{{name}}}
                   </a>
@@ -46,7 +43,7 @@
                       <td><b>{{formattedDateRange eventDate duration}}</b></td>
                     </tr>
                   </table>
-                  <button type="button" class="btn {{eventSelectClass}} btn-block accordion-button" id="{{_id}}">{{eventSelectText}}</button>
+                  <button type="button" class="btn check-in-button btn-block accordion-button btn-primary" id="{{_id}}">Check In</button>
                 </div>
               </div>
             </div>
