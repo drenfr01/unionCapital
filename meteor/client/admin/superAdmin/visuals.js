@@ -28,6 +28,16 @@ Template.visuals.rendered = function() {
     .domain([0, d3.max(dataset, function(d) { return d[1]; })])
     .range([0, h]);
                 
+  //Axis
+  var xAxis = d3.svg.axis()
+  .scale(xScale)
+  .orient("bottom")
+  .ticks(5);
+
+  var yAxis = d3.svg.axis()
+  .scale(yScale)
+  .orient("left")
+  .ticks(5);
 
   //Create SVG element
   var svg = d3.select("#transactions")
@@ -73,4 +83,14 @@ Template.visuals.rendered = function() {
   .attr("font-size", "11px")
   .attr("fill", "white");
 
+  var padding = 20;
+  svg.append("g")
+  .attr("class", "axis")
+  .attr("transform", "translate(0, " + (h-padding) + ")")
+  .call(xAxis);
+
+  svg.append("g")
+  .attr("class", "axis")
+  .attr("transform", "translate(" + padding + ",0")
+  .call(yAxis);
 };
