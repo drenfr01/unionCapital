@@ -221,6 +221,14 @@ Router.route('/visuals', {
   },
 });
 
+Router.route('/partnerVisuals', {
+  template: 'partnerVisuals',
+  name: 'partnerVisuals',
+  waitOn: function() {
+    return Meteor.subscribe('transactions');
+  }
+});
+
 Router.route('/signup/:template', function() {
   this.render('signup', {
     data: function() {
