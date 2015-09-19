@@ -3,9 +3,16 @@
   fill: none;
   stroke: black;
   shape-rendering: crispEdges;
+  stroke-width: "1px";
 }
 
 .axis text {
   font-family: sans-serif;
   font-size: 11px;
+}
+
+#transactions {
+  position: relative;
+  left: 50px:
+  top: 50px;
 }

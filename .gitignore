@@ -1,5 +1,6 @@
 *.DS_Store
 *.swp
+*.swo
 startup.js
 uploads/
 private/
