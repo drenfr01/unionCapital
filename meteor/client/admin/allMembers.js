@@ -16,7 +16,6 @@ var highlightSortedColumn = function(target) {
 var searchText = new ReactiveVar('');
 
 function getMembersData(sortOn, sortOrder) {
-  console.time('getMembersData');
   //I think we overwrite options because there is both a server side and client side def
   //of this method, so it either calls the client side or after the timeout
   //does the server side
@@ -34,13 +33,10 @@ function getMembersData(sortOn, sortOrder) {
     selector.roles = { $all: ['user'] };
   }
 
-  console.time("setup");
   var users = Meteor.users.searchFor(selector, searchText.get(), fields, options);
   //Note: the below statement takes bulk of time
   var allTransactions = Transactions.find({approved: true, eventId: {$exists: true}}).fetch();
 
-  console.timeEnd("setup");
-  console.time("data aggregation");
   var tableRows = _.map(users, function(user) {
 
     var transactions = _.filter(allTransactions, function(trans) {
@@ -72,9 +68,7 @@ function getMembersData(sortOn, sortOrder) {
       numberOfTransactions: transactionCount,
       totalPoints: totalPoints};
   });
-  console.timeEnd("data aggregation");
 
-  console.time("sorting");
   var out = _.sortBy(tableRows, function(item) {
     var sortField = item[Session.get('sortOn')];
     if (typeof sortField === 'number' || sortField instanceof Date)
@@ -82,14 +76,11 @@ function getMembersData(sortOn, sortOrder) {
     else
       return sortField.toLowerCase();
   });
-  console.timeEnd("sorting");
 
   if (Session.get('sortOrder') === -1) {
-    console.timeEnd('getMembersData');
     return out.reverse();
   }
   else {
-    console.timeEnd('getMembersData');
     return out;
   }
 }
