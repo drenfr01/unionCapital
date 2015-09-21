@@ -103,13 +103,17 @@ Template.approveTransactions.events({
   'click #sendApproval': function(e) {
     var points = parseInt($("#pointsInput").val());
 
-    Meteor.call('approveTransaction', this._id, points, function(error) {
-      if(error) {
-        addErrorMessage(error.reason);
-      } else {
-        addSuccessMessage('Event submission approved');
-      }
-    });
+    if(_.isNaN(points) || _.isNull(points)) {
+        addErrorMessage("Please enter points into the box");
+    } else {
+      Meteor.call('approveTransaction', this._id, points, function(error) {
+        if(error) {
+          addErrorMessage(error.reason);
+        } else {
+          addSuccessMessage('Event submission approved');
+        }
+      });
+    }
   },
 
   'change #superAdminFilter': function(event) {
