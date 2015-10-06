@@ -28,8 +28,6 @@ Template.visuals.rendered = function() {
     .domain([0, d3.max(dataset, function(d) { return d[1]; })])
     .range([0, h]);
                 
-  //TODO: make this a column chart, have text go right along side it (i.e. text
-  //read normally)
 
   //Create SVG element
   var svg = d3.select("#transactions")

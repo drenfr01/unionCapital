@@ -16,3 +16,8 @@
   left: 50px:
   top: 50px;
 }
+
+path.line {
+  fill: none;
+  stroke: black;
+}
