@@ -19,20 +19,21 @@ Template.lineVisual.rendered = function() {
   ];
 
   var dataset = _.map(grouped, function(value, key, list) {
-    return {x: monthNames[moment(key).month()], y: value.length};
+    return {x: moment(key).month(), y: value.length};
   });
 
+  dataset = [dataset];
   console.log(dataset);
 
   //scales
 
 
 
-  x = d3.scale.ordinal() // <-A
-  .domain(monthNames)
-  .rangePoints(width - margin, margin),
+  x = d3.scale.linear() // <-A
+  .domain([0, 10])
+  .range([margin, width - margin]),
   y = d3.scale.linear() // <-B
-  .domain([0, 200])
+  .domain([0, 5000])
   .range([height - margin, margin]);
 
   var data = [ // <-C
