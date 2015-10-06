@@ -19,7 +19,7 @@ Template.lineVisual.rendered = function() {
   ];
 
   var dataset = _.map(grouped, function(value, key, list) {
-    return {x: moment(key).month(), y: value.length};
+    return {x: monthNames[moment(key).month()], y: value.length};
   });
 
   dataset = [dataset];
@@ -29,8 +29,8 @@ Template.lineVisual.rendered = function() {
 
 
 
-  x = d3.scale.linear() // <-A
-  .domain([0, 10])
+  x = d3.scale.ordinal() // <-A
+  .domain(monthNames)
   .range([margin, width - margin]),
   y = d3.scale.linear() // <-B
   .domain([0, 5000])
@@ -69,7 +69,8 @@ Template.lineVisual.rendered = function() {
   function renderAxes(svg){ // <-G
     var xAxis = d3.svg.axis()
     .scale(x.range([0, quadrantWidth()]))
-    .orient("bottom");
+    .orient("bottom")
+    .ticks(12);
 
     var yAxis = d3.svg.axis()
     .scale(y.range([quadrantHeight(), 0]))
