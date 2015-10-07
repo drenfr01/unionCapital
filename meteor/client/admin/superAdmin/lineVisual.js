@@ -64,13 +64,12 @@ Template.lineVisual.rendered = function() {
   .attr("class", "line")            
   .attr("d", function(d){return line(d);}); // <-F
 
-  renderAxes(svg);
+  renderAxes(svg, x, y);
 
-  function renderAxes(svg){ // <-G
+  function renderAxes(svg, xScale, yScale){ // <-G
     var xAxis = d3.svg.axis()
     .scale(x.range([0, quadrantWidth()]))
     .orient("bottom")
-    .ticks(12);
 
     var yAxis = d3.svg.axis()
     .scale(y.range([quadrantHeight(), 0]))

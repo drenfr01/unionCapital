@@ -221,6 +221,11 @@ Router.route('/visuals', {
   },
 });
 
+Router.route('/bubbleVisual', {
+  template: 'bubbleVisual',
+  name: 'bubbleVisual',
+});
+
 Router.route('/lineVisual', {
   template: 'lineVisual',
   name: 'lineVisual',
