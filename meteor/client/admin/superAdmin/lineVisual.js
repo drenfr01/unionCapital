@@ -31,7 +31,7 @@ Template.lineVisual.rendered = function() {
 
   x = d3.scale.ordinal() // <-A
   .domain(monthNames)
-  .range([margin, width - margin]),
+
   y = d3.scale.linear() // <-B
   .domain([0, 5000])
   .range([height - margin, margin]);
@@ -68,7 +68,8 @@ Template.lineVisual.rendered = function() {
 
   function renderAxes(svg, xScale, yScale){ // <-G
     var xAxis = d3.svg.axis()
-    .scale(x.range([0, quadrantWidth()]))
+    .scale(x.rangePoints([0, quadrantWidth()]))
+    .tickValues(x.domain())
     .orient("bottom")
 
     var yAxis = d3.svg.axis()
