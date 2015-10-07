@@ -99,7 +99,8 @@ function bubbleChart() {
                 .attr("class", "axes");
 
         var xAxis = d3.svg.axis()
-                .scale(_x.range([0, quadrantWidth()]))
+                .scale(_x.rangePoints([0, quadrantWidth()]))
+                .tickValues(_x.domain())
                 .orient("bottom");
 
         var yAxis = d3.svg.axis()
@@ -286,9 +287,9 @@ function play() {
 }
 
 var chart = bubbleChart()
-        .x(d3.scale.linear().domain(skills))
+        .x(d3.scale.ordinal().domain(skills))
         .y(d3.scale.linear().domain([0,10]))
-        .r(d3.scale.pow().exponent(0.1).domain([0, 3500]));
+        .r(d3.scale.pow().exponent(0.5).domain([0, 3500]));
 
 
 chart.addSeries(data[currentSeries]);
