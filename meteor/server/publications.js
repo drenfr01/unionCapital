@@ -34,8 +34,9 @@ Meteor.publish("ucbappaccess", function() {
 // ------------- EVENT PUBLICATIONS --------------
 Meteor.publish("events", function(start, end) {
   var selector = {};
-  if (typeof start === 'date' && typeof end === 'date')
-    selector.eventDate = { $gte: start, $lte: end };
+  selector.deleteInd = false;
+  selector.adHoc = false;
+  selector.eventDate = { $gte: start, $lte: end };
 
   return Events.find(selector);
 });
