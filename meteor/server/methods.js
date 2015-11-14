@@ -70,6 +70,7 @@ Meteor.methods({
       attributes.event = {
         name: attributes.eventName,
         description: attributes.eventDescription,
+        category: attributes.category,
         eventDate: attributes.eventDate,
         userLat: attributes.userLat,
         userLng: attributes.userLng,
