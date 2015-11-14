@@ -1,6 +1,26 @@
+//given a datetime, returns a moment time adjusted for DST
+var DSTCorrectedTime = function(datetime) {
+  var isDSTNow = moment().isDST();
+  if(isDSTNow) {
+    if(moment(datetime).isDST()) {
+      return moment(datetime);
+    } else {
+      return moment(datetime).subtract(-1, "hours");
+    }
+  } else {
+    if(moment(datetime).isDST()) {
+      return moment(datetime).add(1, "hours");
+    } else {
+      return moment(datetime);
+    }
+
+  }
+};
+
+
 UI.registerHelper('formatDate', function(unformattedDate) {
     if(moment(unformattedDate).isValid()) {
-      return moment(unformattedDate).format('MMMM DD h:mm A');
+      return DSTCorrectedTime(unformattedDate).format('MMMM DD h:mm A');
     } else {
       return "";
     }
@@ -8,18 +28,18 @@ UI.registerHelper('formatDate', function(unformattedDate) {
 
 UI.registerHelper('formatPrettyDate', function(unformattedDate) {
     if(moment(unformattedDate).isValid()) {
-      return moment(unformattedDate).format('dddd, MMMM Do');
+      return DSTCorrectedTime(unformattedDate).format('dddd, MMMM Do');
     } else {
       return "Invalid Date";
     }
 });
 
 UI.registerHelper('justTime', function(unformattedDate) {
-    return moment(unformattedDate).format('h:mm A');
+    return DSTCorrectedTime(unformattedDate).format('h:mm A');
 });
 
 UI.registerHelper('formattedDateRange', function(startDate, duration) {
-  var formattedStartDate = moment(startDate);
+  var formattedStartDate = DSTCorrectedTime(startDate);
   var formattedEndDate = formattedStartDate.clone().add(duration, 'h');
   if (formattedStartDate.isSame(formattedEndDate), 'd')
     return formattedStartDate.format('MMMM Do h:mm A') + ' - ' + formattedEndDate.format('h:mm A');
