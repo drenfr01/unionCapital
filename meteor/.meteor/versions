@@ -104,6 +104,7 @@ mongo-id@1.0.1
 mongo-livedata@1.0.9
 mrt:googlemaps-server@1.0.0
 npm-bcrypt@0.7.8_2
+npm-container@1.2.0
 npm-mongo@1.4.39_1
 oauth@1.1.6
 oauth2@1.1.5

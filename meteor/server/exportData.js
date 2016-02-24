@@ -1,5 +1,5 @@
-//var jsZip = Meteor.npmRequire('jszip');
-//var fastCsv = Meteor.npmRequire('fast-csv');
+var jsZip = Meteor.npmRequire('jszip');
+var fastCsv = Meteor.npmRequire('fast-csv');
 
 helperFlattenProfile = function (members) {
   return _.map(members, function(profile) {

@@ -47,3 +47,6 @@ cfs:gridfs@=0.0.27
 
 standard-minifiers
 huttonr:bootstrap3
+
+
+npm-container
