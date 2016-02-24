@@ -32,7 +32,6 @@ meteorhacks:npm
 meteorhacks:async
 pfafman:filesaver
 less
-nemo64:bootstrap
 harrison:papa-parse
 rajit:bootstrap3-datepicker
 themeteorchef:jquery-validation
@@ -47,3 +46,4 @@ cfs:gridfs@=0.0.27
 
 
 standard-minifiers
+huttonr:bootstrap3

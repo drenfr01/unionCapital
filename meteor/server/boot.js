@@ -29,4 +29,4 @@ Future = Npm.require('fibers/future');
 
 // In the event of a bad deploy, this can be rolled back by changing this to:
 // Migrations.migrateTo(<num>) where <num> is the db revision you want to migrate to
-Migrations.migrateTo('latest');
+//Migrations.migrateTo('latest');

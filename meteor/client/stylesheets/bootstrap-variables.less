@@ -1,16 +1,10 @@
-// This File is for you to modify!
-// It won't be overwritten as long as it exists.
-// You may include this file into your less files to benefit from
-// mixins and variables that bootstrap provides.
 
-@import "{}/client/stylesheets/bootstrap-variables.less";
-@import "custom.bootstrap.mixins.import.less";
+// These are custom bootstrap variables for you to edit.
+// These simply override any default bootstrap variables.
+// This means that you may delete anything in this file
+// and the default bootstrap values will be used instead.
 
 
-// @import "bootstrap/less/variables.less"
-//
-// Variables
-// --------------------------------------------------
 
 
 //== Colors
@@ -30,32 +24,6 @@
 @brand-warning:         #f0ad4e;
 @brand-danger:          #d9534f;
 
-// Color scheme provided with help from Paletton.com
-@color-primary-0: #BDDC6F;  /* Main Primary color */
-@color-primary-1: #EBF9C8;
-@color-primary-2: #DBF3A0;
-@color-primary-3: #95B742;
-@color-primary-4: #749622;
-
-@color-secondary-1-0: #73C362;  /* Main Secondary color (1) */
-@color-secondary-1-1: #C7EDBF;
-@color-secondary-1-2: #9EDD91;
-@color-secondary-1-3: #4CA23A;
-@color-secondary-1-4: #30851E;
-
-@color-secondary-2-0: #E2727D;  /* Main Secondary color (2) */
-@color-secondary-2-1: #FBCBCF;
-@color-secondary-2-2: #F8A3AB;
-@color-secondary-2-3: #BC434F;
-@color-secondary-2-4: #9A232E;
-
-@color-complement-0: #B45B95; /* Main Complement color */
-@color-complement-1: #E6B9D6;
-@color-complement-2: #CF88B7;
-@color-complement-3: #963674;
-@color-complement-4: #7B1C5A;
-
-@new-main: #27566B;
 
 //== Scaffolding
 //
@@ -78,8 +46,8 @@
 //
 //## Font, line-height, and color for body text, headings, and more.
 
-@font-family-sans-serif:  'Open Sans', sans-serif;
-@font-family-serif:       'Roboto Slab', serif;
+@font-family-sans-serif:  "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-serif:       Georgia, "Times New Roman", Times, serif;
 //** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
 @font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace;
 @font-family-base:        @font-family-sans-serif;
@@ -112,11 +80,11 @@
 //## Specify custom location and filename of the included Glyphicons icon font. Useful for those including Bootstrap via Bower.
 
 //** Load fonts from this directory.
-@icon-font-path:          "../fonts/";
+// '@icon-font-path' automatically set by Bootstrap package.
 //** File name for all font files.
-@icon-font-name:          "glyphicons-halflings-regular";
+// '@icon-font-name' automatically set by Bootstrap package.
 //** Element ID within SVG icon file.
-@icon-font-svg-id:        "glyphicons_halflingsregular";
+// '@icon-font-svg-id' automatically set by Bootstrap package.
 
 
 //== Components
@@ -205,6 +173,11 @@
 @btn-danger-border:              darken(@btn-danger-bg, 5%);
 
 @btn-link-disabled-color:        @gray-light;
+
+// Allows for customizing button radius independently from global border radius
+@btn-border-radius-base:         @border-radius-base;
+@btn-border-radius-large:        @border-radius-large;
+@btn-border-radius-small:        @border-radius-small;
 
 
 //== Forms
@@ -419,7 +392,7 @@
 @navbar-default-toggle-border-color:       #ddd;
 
 
-// Inverted navbar
+//=== Inverted navbar
 // Reset inverted navbar basics
 @navbar-inverse-color:                      lighten(@gray-light, 15%);
 @navbar-inverse-bg:                         #222;
@@ -520,6 +493,7 @@
 @jumbotron-bg:                   @gray-lighter;
 @jumbotron-heading-color:        inherit;
 @jumbotron-font-size:            ceil((@font-size-base * 1.5));
+@jumbotron-heading-font-size:    ceil((@font-size-base * 4.5));
 
 
 //== Form states and alerts
@@ -893,5 +867,7 @@
 @page-header-border-color:    @gray-lighter;
 //** Width of horizontal description list titles
 @dl-horizontal-offset:        @component-offset-horizontal;
+//** Point at which .dl-horizontal becomes horizontal
+@dl-horizontal-breakpoint:    @grid-float-breakpoint;
 //** Horizontal line color.
 @hr-border:                   @gray-lighter;
