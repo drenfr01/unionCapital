@@ -63,9 +63,9 @@ function getMembersData(sortOn, sortOrder) {
       firstName: userFirstName,
       lastName: userLastName,
       zip: userZip,
-      lastEvent: userProfile.lastEventName,
-      lastEventDate: userProfile.lastTransDate,
-      numberOfTransactions: userProfile.transCount,
+      lastEvent: userProfile.lastEventName || "",
+      lastEventDate: userProfile.lastTransDate || "",
+      numberOfTransactions: userProfile.transCount || 0,
       totalPoints: totalPoints};
   });
 
