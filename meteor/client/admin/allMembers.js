@@ -39,17 +39,7 @@ function getMembersData(sortOn, sortOrder) {
 
   var tableRows = _.map(users, function(user) {
 
-    var transactions = _.filter(allTransactions, function(trans) {
-      return trans.userId === user._id;
-    });
-    var transactionCount = transactions.length;
-    var totalPoints = 0;
-
-    totalPoints = Meteor.users.totalPointsFor(user._id);
-
-    var mostRecentTransaction = transactions[0] ||
-      { eventId: "", transactionDate: ""};
-    var mostRecentEvent = mostRecentTransaction.event || {name: ""};
+    var totalPoints = Meteor.users.totalPointsFor(user._id);
 
     //if user is admin
     var userProfile = user.profile || {firstName: 'admin', lastName: 'd', zip: ''};
