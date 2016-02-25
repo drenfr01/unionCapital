@@ -153,18 +153,3 @@ Meteor.publish('images', function() {
   }
 });
 
-Meteor.publish('userData', function() {
-  var user = Meteor.users.findOne({_id: this.userId});
-  if (Roles.userIsInRole(this.userId, 'admin')) {
-    return Meteor.users.find();
-  } else if(Roles.userIsInRole(this.userId, 'partnerAdmin')) {
-    return Meteor.users.find({"profile.partnerOrg": user.profile.partnerOrg, roles: { $all: ['user'] }, deleteInd: false});
-  } else if(this.userId) {
-    return Meteor.users.find({_id: this.userId, deleteInd: false},
-                             {fields: {'services.facebook.first_name': 1,
-                              'services.facebook.last_name': 1,
-                              'services.facebook.email': 1}});
-  } else {
-    this.ready();
-  }
-});

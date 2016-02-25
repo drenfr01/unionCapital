@@ -63,9 +63,9 @@ function getMembersData(sortOn, sortOrder) {
       firstName: userFirstName,
       lastName: userLastName,
       zip: userZip,
-      lastEvent: mostRecentEvent.name,
-      lastEventDate: mostRecentTransaction.transactionDate,
-      numberOfTransactions: transactionCount,
+      lastEvent: userProfile.lastEventName,
+      lastEventDate: userProfile.lastTransDate,
+      numberOfTransactions: userProfile.transCount,
       totalPoints: totalPoints};
   });
 
@@ -84,6 +84,10 @@ function getMembersData(sortOn, sortOrder) {
     return out;
   }
 }
+
+Template.allMembers.onCreated(function() {
+  this.subscribe('userData');
+});
 
 Template.allMembers.rendered = function() {
   highlightSortedColumn("#" + Session.get('sortOn'));
