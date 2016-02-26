@@ -76,7 +76,11 @@ function getMembersData(sortOn, sortOrder) {
 }
 
 Template.allMembers.onCreated(function() {
-  this.subscribe('userData');
+  var template = this;
+  template.autorun(function() {
+    var skipCount = (currentPage() - 1) * AppConfig.public.recordsPerPage;
+    template.subscribe('userData', skipCount);
+  });
 });
 
 Template.allMembers.rendered = function() {
@@ -87,6 +91,20 @@ Template.allMembers.rendered = function() {
 Template.allMembers.helpers({
   getMembers: function() {
     return getMembersData(Session.get('sortOn'), Session.get('sortOrder'));
+  },
+  prevPage: function() {
+    var previousPage = currentPage() === 1 ? 1 : currentPage() - 1;
+    return Router.routes.allMembers.path({page: previousPage});
+  },
+  nextPage: function() {
+    var nextPage = hasMorePages() ? currentPage() + 1 : currentPage();
+    return Router.routes.allMembers.path({page: nextPage});
+  },
+  prevPageClass: function() {
+    return currentPage() <= 1 ? "disabled" : "";
+  },
+  nextPageClass: function() {
+    return hasMorePages() ? "" : "disabled";
   }
 });
 
@@ -139,3 +157,12 @@ Template.allMembers.events({
     $('#search-box').focus();
   },
 });
+
+var hasMorePages = function() {
+  var totalMembers = Counts.get('userCount');
+  return currentPage() * parseInt(AppConfig.public.recordsPerPage) < totalMembers;
+}
+
+var currentPage = function() {
+  return parseInt(Router.current().params.page) || 1;
+}

@@ -43,5 +43,8 @@ AppConfig = {
       hoursBehind: -7*24
     }
   },
-  ucbButtonEvent: 'UCB Button'
+  ucbButtonEvent: 'UCB Button',
+  "public": {
+    "recordsPerPage": 50
+  }
 };

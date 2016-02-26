@@ -136,6 +136,7 @@ templating@1.1.5
 templating-tools@1.0.0
 themeteorchef:jquery-validation@1.14.0
 tmeasday:paginated-subscription@0.2.4
+tmeasday:publish-counts@0.7.3
 tracker@1.0.9
 ui@1.0.8
 underscore@1.0.4

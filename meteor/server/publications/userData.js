@@ -10,7 +10,7 @@ Meteor.publish('userData', function(skipCount) {
 
   var user = Meteor.users.findOne({_id: this.userId});
   var userSelector = {};
-  var userOptions = {};
+  var userOptions = {sort: {points: -1}};
   if (Roles.userIsInRole(this.userId, 'admin')) {
     //do nothing
   } else if(Roles.userIsInRole(this.userId, 'partnerAdmin')) {
@@ -18,9 +18,10 @@ Meteor.publish('userData', function(skipCount) {
       { $all: ['user'] }, deleteInd: false};
   } else if(this.userId) {
     userSelector = {_id: this.userId, deleteInd: false};
-    userOptions = {fields: {'services.facebook.first_name': 1,
+    userOptions = _.extend(userOptions, {fields: {'services.facebook.first_name': 1,
                               'services.facebook.last_name': 1,
-                              'services.facebook.email': 1}};
+                              'services.facebook.email': 1}}
+                          );
   } else {
     this.ready();
   }
@@ -46,7 +47,12 @@ Meteor.publish('userData', function(skipCount) {
                           }});
   });
   //TODO make the below global
-  userOptions = _.extend(userOptions, {limit: 3, skip: 50});
+  userOptions = _.extend(userOptions, {limit: AppConfig.public.recordsPerPage, 
+                         skip: skipCount});
+
+  Counts.publish(this, 'userCount', Meteor.users.find(), {
+    noReady: true
+  });
   return Meteor.users.find(userSelector, userOptions);
 });
 

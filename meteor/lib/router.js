@@ -96,6 +96,12 @@ Router.onBeforeAction(function() {
    'imageViewer']}
 );
 
+Router.route('/allMembers/:page?', function() {
+    this.render('allMembers');
+}, {
+  name: 'allMembers'
+});
+
 Router.route('/viewMemberProfile/:_id', function () {
   this.render('viewMemberProfile', {
     data: function () {
@@ -358,9 +364,6 @@ Router.map(function() {
   this.route('topPointsList', {path: 'topPointsList'});
 
   //Admin Routes
-  this.route('/allMembers', function() {
-    this.render('allMembers');
-  });
   this.route('adminHomePage', {path: '/adminHomePage'});
   this.route('addCommunityEvents', {path: '/addCommunityEvents'});
   this.route('addRewards', {path: '/addRewards'});
