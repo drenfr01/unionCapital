@@ -10,7 +10,7 @@ Meteor.publish('userData', function(skipCount) {
 
   var user = Meteor.users.findOne({_id: this.userId});
   var userSelector = {};
-  var userOptions = {sort: {points: -1}};
+  var userOptions = {sort: {"profile.points": -1}};
   if (Roles.userIsInRole(this.userId, 'admin')) {
     //do nothing
   } else if(Roles.userIsInRole(this.userId, 'partnerAdmin')) {
@@ -47,8 +47,10 @@ Meteor.publish('userData', function(skipCount) {
                           }});
   });
   //TODO make the below global
-  userOptions = _.extend(userOptions, {limit: AppConfig.public.recordsPerPage, 
-                         skip: skipCount});
+  userOptions = _.extend(userOptions, {
+    limit: AppConfig.public.recordsPerPage, 
+    skip: skipCount
+  });
 
   Counts.publish(this, 'userCount', Meteor.users.find(), {
     noReady: true
