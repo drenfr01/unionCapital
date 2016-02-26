@@ -36,7 +36,6 @@ harrison:papa-parse
 rajit:bootstrap3-datepicker
 themeteorchef:jquery-validation
 drewproud:decision-tree
-meteorhacks:kadira
 percolate:migrations
 meteorhacks:aggregate
 cfs:s3
@@ -50,3 +49,4 @@ huttonr:bootstrap3
 
 
 npm-container
+meteorhacks:kadira

@@ -1,5 +1,13 @@
 //note: this is only used in allMembers template
-Meteor.publish('userData', function() {
+Meteor.publish('userData', function(skipCount) {
+  //TODO: make this a global?
+  var positiveIntegerCheck = Match.Where(function(x) {
+    check(x, Match.Integer);
+    return x >= 0; 
+  });
+
+  check(skipCount, positiveIntegerCheck);
+
   var user = Meteor.users.findOne({_id: this.userId});
   var userSelector = {};
   var userOptions = {};
@@ -37,6 +45,8 @@ Meteor.publish('userData', function() {
                             "profile.lastTransDate": sum.lastTransactionDate
                           }});
   });
+  //TODO make the below global
+  userOptions = _.extend(userOptions, {limit: 3, skip: 50});
   return Meteor.users.find(userSelector, userOptions);
 });
 

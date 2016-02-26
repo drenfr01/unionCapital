@@ -1,14 +1,23 @@
+var selector = { approved: false, deleteInd: false };
+
 Template.approveTransactions.rendered = function() {
   Session.setDefault('selectedPartnerOrg', 'admin_only');
 };
+
+Template.approveTransactions.onCreated(function() {
+  var pageLength = 50;  //TODO: add to config
+  var currentPage = parseInt(Router.current().params.page) || 1;
+  var skipCount = (currentPage - 1) * pageLength;
+  this.subscribe('transactions', skipCount);
+});
 
 Template.approveTransactions.helpers({
 
   // Returns only the points approvals that are assigned to this role
   'pendingTransaction': function() {
 
-    // Build the selector starting with this
-    var selector = { approved: false, deleteInd: false };
+    //reset the selector
+    selector = { approved: false, deleteInd: false }
 
     if (Roles.userIsInRole(Meteor.userId(), 'admin')) {
 
@@ -29,6 +38,7 @@ Template.approveTransactions.helpers({
       selector.partnerOrg = Meteor.user().profile.partnerOrg;
     }
 
+    console.log(selector);
     return Transactions.find(selector);
   },
   eventDate: function() {

@@ -1,7 +1,6 @@
-/*
-Meteor.subscribe('transactions');
+//Meteor.subscribe('transactions');
 Meteor.subscribe('images');
-Meteor.subscribe('userData');
+//Meteor.subscribe('userData');
 Meteor.subscribe('reservations');
 Meteor.subscribe('eventCategories');
 Meteor.subscribe('eventOrgs');
@@ -11,4 +10,3 @@ Meteor.subscribe('races');
 Meteor.subscribe('ucbappaccess');
 Meteor.subscribe('numberOfPeople');
 Meteor.subscribe('partnerOrgSectors');
-*/
