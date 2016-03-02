@@ -1,5 +1,5 @@
 //note: this is only used in allMembers template
-Meteor.publish('userData', function(skipCount) {
+Meteor.publish('userData', function(skipCount, sortOn, sortOrder) {
   //TODO: make this a global?
   var positiveIntegerCheck = Match.Where(function(x) {
     check(x, Match.Integer);
@@ -10,7 +10,7 @@ Meteor.publish('userData', function(skipCount) {
 
   var user = Meteor.users.findOne({_id: this.userId});
   var userSelector = {};
-  var userOptions = {sort: {"profile.points": -1}};
+  var userOptions = {sort: {sortOn: sortOrder}};
   if (Roles.userIsInRole(this.userId, 'admin')) {
     //do nothing
   } else if(Roles.userIsInRole(this.userId, 'partnerAdmin')) {

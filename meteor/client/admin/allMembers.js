@@ -6,7 +6,7 @@ var options = {
 var fields = ['profile.firstName', 'profile.lastName'];
 
 Session.set('sortOrder', -1);
-Session.set('sortOn', 'totalPoints');
+Session.set('sortOn', 'profile.points');
 
 var highlightSortedColumn = function(target) {
     $(".tableSort").css('color', 'black');
@@ -59,27 +59,15 @@ function getMembersData(sortOn, sortOrder) {
       totalPoints: totalPoints};
   });
 
-  var out = _.sortBy(tableRows, function(item) {
-    var sortField = item[Session.get('sortOn')];
-    if (typeof sortField === 'number' || sortField instanceof Date)
-      return sortField;
-    else
-      return sortField.toLowerCase();
-  });
-
-  if (Session.get('sortOrder') === -1) {
-    return out.reverse();
-  }
-  else {
-    return out;
-  }
+  return tableRows;
 }
 
 Template.allMembers.onCreated(function() {
   var template = this;
   template.autorun(function() {
     var skipCount = (currentPage() - 1) * AppConfig.public.recordsPerPage;
-    template.subscribe('userData', skipCount);
+    template.subscribe('userData', skipCount, Session.get('sortOn'), 
+                       Session.get('sortOrder'));
   });
 });
 
@@ -128,7 +116,7 @@ Template.allMembers.events({
     highlightSortedColumn(e.target);
   },
   'click #totalPoints': function(e) {
-    Session.set('sortOn', 'totalPoints');
+    Session.set('sortOn', 'profile.points');
     highlightSortedColumn(e.target);
   },
   'click #lastEvent': function(e) {
