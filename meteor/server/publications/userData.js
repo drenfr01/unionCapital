@@ -14,7 +14,10 @@ Meteor.publish('userData', function(skipCount, sortOn, sortOrder) {
 
   var user = Meteor.users.findOne({_id: this.userId});
   var userSelector = {};
-  var userOptions = {sort: {sortOn: sortOrderInt}};
+  //TODO: there's a more elegant way to do this
+  var sortOptions = {};
+  sortOptions[sortOn] = sortOrderInt;
+  var userOptions = {sort: sortOptions};
   if (Roles.userIsInRole(this.userId, 'admin')) {
     //do nothing
   } else if(Roles.userIsInRole(this.userId, 'partnerAdmin')) {
