@@ -7,10 +7,14 @@ Meteor.publish('userData', function(skipCount, sortOn, sortOrder) {
   });
 
   check(skipCount, positiveIntegerCheck);
+  check(sortOn, String);
+  check(sortOrder, Match.Integer); //TODO: make this check for 1 or -1 explicitly
+
+  var sortOrderInt = parseInt(sortOrder); 
 
   var user = Meteor.users.findOne({_id: this.userId});
   var userSelector = {};
-  var userOptions = {sort: {sortOn: sortOrder}};
+  var userOptions = {sort: {sortOn: sortOrderInt}};
   if (Roles.userIsInRole(this.userId, 'admin')) {
     //do nothing
   } else if(Roles.userIsInRole(this.userId, 'partnerAdmin')) {
