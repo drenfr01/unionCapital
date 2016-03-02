@@ -6,7 +6,7 @@ var options = {
 var fields = ['profile.firstName', 'profile.lastName'];
 
 Session.set('sortOrder', -1);
-Session.set('sortOn', 'profile.points');
+Session.set('sortOn', 'points');
 
 var highlightSortedColumn = function(target) {
     $(".tableSort").css('color', 'black');
@@ -111,20 +111,21 @@ Template.allMembers.events({
     Session.set('sortOn', 'zip');
     highlightSortedColumn(e.target);
   },
-  'click #transactions': function(e) {
-    Session.set('sortOn', 'numberOfTransactions');
+  'click #transCount': function(e) {
+    Session.set('sortOn', 'transCount');
     highlightSortedColumn(e.target);
   },
-  'click #totalPoints': function(e) {
-    Session.set('sortOn', 'profile.points');
+  "click #points": function(e) {
+    Session.set('sortOn', 'points');
+    highlightSortedColumn(e.target);
+    console.log(e.target);
+  },
+  'click #lastEventName': function(e) {
+    Session.set('sortOn', 'lastEventName');
     highlightSortedColumn(e.target);
   },
-  'click #lastEvent': function(e) {
-    Session.set('sortOn', 'lastEvent');
-    highlightSortedColumn(e.target);
-  },
-  'click #lastEventDate': function(e) {
-    Session.set('sortOn', 'lastEventDate');
+  'click #lastTransDate': function(e) {
+    Session.set('sortOn', 'lastTransDate');
     highlightSortedColumn(e.target);
   },
   'change .radio-inline': function(e) {

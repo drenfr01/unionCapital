@@ -1,3 +1,4 @@
+/*
 var imageStore = new FS.Store.S3("images", {
   bucket: "unioncapitalprod",
   folder: Meteor.settings.folder,
@@ -26,3 +27,4 @@ Images.allow({
     return true;
   }
 });
+*/
