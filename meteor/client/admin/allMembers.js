@@ -7,8 +7,6 @@ var fields = ['profile.firstName', 'profile.lastName'];
 
 Session.set('sortOrder', -1);
 Session.set('sortOn', 'points');
-
-
 var searchText = new ReactiveVar('');
 
 
@@ -128,9 +126,6 @@ function getMembersData(sortOn, sortOrder) {
   }
 
   var users = Meteor.users.searchFor(selector, searchText.get(), fields, options);
-  //Note: the below statement takes bulk of time
-  var allTransactions = Transactions.find({approved: true, eventId: {$exists: true}}).fetch();
-
   var tableRows = _.map(users, function(user) {
 
     var totalPoints = Meteor.users.totalPointsFor(user._id);
