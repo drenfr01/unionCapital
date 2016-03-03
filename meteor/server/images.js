@@ -1,4 +1,5 @@
-/*
+FS.debug = true;
+
 var imageStore = new FS.Store.S3("images", {
   bucket: "unioncapitalprod",
   folder: Meteor.settings.folder,
@@ -10,7 +11,6 @@ Images = new FS.Collection("images", {
   stores: [imageStore]
 });
 
-FS.debug = false;
 
 //TODO: obviously change trivially true return when we implement user login
 Images.allow({
@@ -27,4 +27,3 @@ Images.allow({
     return true;
   }
 });
-*/
