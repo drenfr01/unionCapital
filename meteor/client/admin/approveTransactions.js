@@ -5,10 +5,7 @@ Template.approveTransactions.rendered = function() {
 };
 
 Template.approveTransactions.onCreated(function() {
-  var pageLength = 50;  //TODO: add to config
-  var currentPage = parseInt(Router.current().params.page) || 1;
-  var skipCount = (currentPage - 1) * pageLength;
-  this.subscribe('userData', skipCount);
+  this.subscribe('transactions', {approved: false});
 });
 
 Template.approveTransactions.helpers({

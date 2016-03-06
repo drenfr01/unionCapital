@@ -6,9 +6,11 @@ Meteor.publish('userData', function(skipCount, sortOn, sortOrder) {
     return x >= 0; 
   });
 
+  /*
   check(skipCount, positiveIntegerCheck);
-  check(sortOn, String);
-  check(sortOrder, Match.Integer); //TODO: make this check for 1 or -1 explicitly
+  check(sortOn, Match.Optional(String));
+  check(sortOrder, Match.Optional(Match.Integer)); //TODO: make this check for 1 or -1 explicitly
+ */
 
   var sortOrderInt = parseInt(sortOrder); 
   var sortOn = "profile." + sortOn;

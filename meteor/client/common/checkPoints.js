@@ -1,3 +1,7 @@
+Template.checkPoints.onCreated(function() {
+  this.subscribe('transactions', {deleteInd: false});
+});
+
 Template.checkPoints.helpers({
   approvedEvents: function() {
     var transactions = Meteor.users.transactionsFor(this._id, true).fetch();
