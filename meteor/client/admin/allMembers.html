@@ -14,6 +14,22 @@
       </div>
     </div>
     <div class="row">
+      <nav>
+        <ul class="pager">
+          <li class="{{prevPageClass}}">
+            <a id="prevPage" href="{{prevPage}}">
+              <span aria-hidden="true">&larr;</span> Previous
+            </a>
+          </li>
+          <li class="{{nextPageClass}}">
+            <a id="nextPage" href="{{nextPage}}">
+              Next <span aria-hidden="true">&rarr;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="row">
       <div class="col-xs-12 col-md-10 col-md-offset-1 page-panel">
         <div class="text-center">
           <label class="radio-inline">
@@ -31,12 +47,13 @@
           <thead>
             <th id="firstName" class="tableSort">Member Name</th>
             <th id="zip" class="tableSort">Member Zip</th>
-            <th id="lastEvent" class="tableSort">Last Event</th>
-            <th id="lastEventDate" class="tableSort">Last Event Date</th>
-            <th id="transactions" class="tableSort"># Transactions</th>
-            <th id="totalPoints" class="tableSort"># Points</th>
+            <th id="lastEventName" class="tableSort">Last Event</th>
+            <th id="lastTransDate" class="tableSort">Last Event Date</th>
+            <th id="transCount" class="tableSort"># Transactions</th>
+            <th id="points" class="tableSort"># Points</th>
           </thead>
           <tbody>
+          {{#if Template.subscriptionsReady}}
             {{#each getMembers}}
               <tr class="memberRow">
                 <td><a href="#">{{{firstName}}} {{{lastName}}}</a></td>
@@ -49,6 +66,9 @@
             {{else}}
               <tr><td colspan="6">There are no members to display</td></tr>
             {{/each}}
+          {{else}}
+            {{> spinner}}
+          {{/if}}
           </tbody>
         </table>
       </div>

@@ -1,7 +1,7 @@
 Template.adminHomePage.events({
   'click #allMembers': function(e) {
     e.preventDefault();
-    Router.go('allMembers');
+    Router.go('allMembers', {page: 1});
   },
   'click #partnerOrgs': function(e) {
     e.preventDefault();

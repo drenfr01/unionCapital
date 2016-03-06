@@ -120,7 +120,7 @@ _.extend(UserPhoto.prototype, {
       // We resize the image with the canvas method drawImage();
       ctx.drawImage(this, 0, 0, imageWidth, imageHeight);
 
-      var dataURI = canvas.toDataURL();
+      var dataURI = canvas.toDataURL("image/jpeg", 0.3);
       self.photoURI.set(dataURI);
     };
 

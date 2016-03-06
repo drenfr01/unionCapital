@@ -1,3 +1,4 @@
+console.log("Starting eventsSearch");
 SearchSource.defineSource('eventsSearch', function(searchText, options) {
   //I think we overwrite options because there is both a
   //server side and client side def
@@ -64,7 +65,7 @@ SearchSource.defineSource('checkinEventsSearch', function(searchText, options) {
   }
 
 });
-
+console.log("Ending eventsSearch");
 function buildRegExp(searchText) {
   var parts = searchText.trim().split(' ');
   // note that \\s intrepets to \s, a single whitespace character

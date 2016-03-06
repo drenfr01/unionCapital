@@ -110,27 +110,6 @@ Meteor.publish("reservations", function() {
   }
 });
 
-//A partner should get access to all transactions for
-//their members only
-Meteor.publish('transactions', function() {
-  var partnerAdmin = Meteor.users.findOne({_id: this.userId});
-  if (Roles.userIsInRole(this.userId, 'admin')) {
-
-    return Transactions.find({}, {sort: {transactionDate: -1}});
-
-  } else if (Roles.userIsInRole(this.userId, 'partnerAdmin')) {
-
-    var org = Meteor.users.findOne({ _id: this.userId }).profile.partnerOrg;
-    return Transactions.find({ partnerOrg: org }, {sort: {transactionDate: -1}});
-
-  } else {
-
-    return Transactions.find({userId: this.userId}, {sort: {transactionDate: -1}});
-
-  }
-});
-
-
 //Partner Admins can only see images from their users
 Meteor.publish('images', function() {
   var user = Meteor.users.findOne({_id: this.userId});
@@ -153,18 +132,3 @@ Meteor.publish('images', function() {
   }
 });
 
-Meteor.publish('userData', function() {
-  var user = Meteor.users.findOne({_id: this.userId});
-  if (Roles.userIsInRole(this.userId, 'admin')) {
-    return Meteor.users.find();
-  } else if(Roles.userIsInRole(this.userId, 'partnerAdmin')) {
-    return Meteor.users.find({"profile.partnerOrg": user.profile.partnerOrg, roles: { $all: ['user'] }, deleteInd: false});
-  } else if(this.userId) {
-    return Meteor.users.find({_id: this.userId, deleteInd: false},
-                             {fields: {'services.facebook.first_name': 1,
-                              'services.facebook.last_name': 1,
-                              'services.facebook.email': 1}});
-  } else {
-    this.ready();
-  }
-});
