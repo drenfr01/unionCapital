@@ -1,3 +1,8 @@
+Template.landing.onCreated(function() {
+  const template = this;
+  template.loggingIn = new ReactiveVar(false);
+});
+
 Template.landing.rendered = function() {
   //TODO: this may inadvertently bounce an admin user
   //to the member home page...
@@ -9,7 +14,12 @@ Template.landing.rendered = function() {
 Template.landing.helpers({
   getData: function() {
     return {template: 'createNewUser'};
-  }
+  },
+
+  loggingIn: function() {
+    const template = Template.instance();
+    return template.loggingIn.get();
+  },
 });
 
 Template.landing.events({
@@ -30,7 +40,7 @@ Template.landing.events({
     });
   },
 
-  'click #loginSubmit': function(e) {
+  'click #loginSubmit': function(e, template) {
     e.preventDefault();
 
     $('#loginForm').validate({
@@ -55,7 +65,10 @@ Template.landing.events({
       var email =  $('#userEmail').val().toLowerCase();
       var password = $('#userPassword').val();
 
+      template.loggingIn.set(true);
       Meteor.loginWithPassword(email, password, function(error) {
+        template.loggingIn.set(false);
+
         if(error) {
           addErrorMessage(error.reason);
         } else {

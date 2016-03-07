@@ -152,6 +152,12 @@ Router.route('/partnerOrgs', function() {
   name: 'partnerOrgs'
 });
 
+Router.route('/engagement', function() {
+  this.render('memberEngagement');
+}, {
+  name: 'memberEngagement',
+});
+
 Router.route('/partnerAdminView', function() {
   this.render('partnerAdminView');
 },
