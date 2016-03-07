@@ -8,6 +8,7 @@ Template.eventsCalendar.rendered = function() {
 
 Template.eventsCalendar.onCreated(function() {
   this.subscribe('reservations');
+  this.subscribe('numberOfPeople');
 });
 
 Template.eventsCalendar.helpers({
