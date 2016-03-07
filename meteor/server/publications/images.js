@@ -20,3 +20,14 @@ Meteor.publish('images', function() {
   }
 });
 
+Meteor.publish('singleImage', function(userId) {
+  check(userId, String);
+  if (Roles.userIsInRole(this.userId, 'admin')) {
+
+    return Images.find({'metadata.userId': userId});
+
+  } else {
+    this.ready();
+  }
+
+});
