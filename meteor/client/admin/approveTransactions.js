@@ -8,11 +8,11 @@ Template.approveTransactions.onCreated(function() {
   this.subscribe('transactions', {approved: false});
   this.subscribe('partnerOrganizations');
 
-  var self = this;
-  self.autorun(function() {
-    var dataContext = Session.get('modalDataContext');
-    self.subscribe('singleImage', dataContext.userId);
-  });
+    var self = this;
+    self.autorun(function() {
+      var dataContext = Session.get('modalDataContext') || {userId: ""};
+      self.subscribe('singleImage', dataContext.userId);
+    });
 });
 
 Template.approveTransactions.helpers({
