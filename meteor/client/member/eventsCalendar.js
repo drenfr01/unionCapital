@@ -6,6 +6,10 @@ Template.eventsCalendar.rendered = function() {
   searchString.set('');
 };
 
+Template.eventsCalendar.onCreated(function() {
+  this.subscribe('reservations');
+});
+
 Template.eventsCalendar.helpers({
 
   hasPastEvents: function() {

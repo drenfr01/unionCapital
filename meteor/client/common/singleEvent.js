@@ -1,5 +1,9 @@
 Session.setDefault('rsvpList', null);
 
+Template.singleEvent.onCreated(function() {
+  this.subscribe('reservations');
+});
+
 Template.singleEvent.helpers({
   'rsvpList': function() {
     return Reservations.find({eventId: this._id});

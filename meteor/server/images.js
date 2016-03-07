@@ -1,4 +1,4 @@
-FS.debug = true;
+FS.debug = false;
 
 var imageStore = new FS.Store.S3("images", {
   bucket: "unioncapitalprod",
