@@ -42,7 +42,6 @@ Template.approveTransactions.helpers({
       selector.partnerOrg = Meteor.user().profile.partnerOrg;
     }
 
-    console.log(selector);
     return Transactions.find(selector);
   },
   eventDate: function() {
@@ -132,5 +131,12 @@ Template.approveTransactions.events({
 
   'change #superAdminFilter': function(event) {
     Session.set('selectedPartnerOrg', $(event.target).val());
+  },
+
+  'click .close': function(e) {
+    Session.set('modalDataContext');
+    $('#showImageModal').modal('hide');
+    $('.body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
   }
 });
