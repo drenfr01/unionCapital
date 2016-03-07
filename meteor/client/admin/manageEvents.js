@@ -19,6 +19,14 @@ var getEventsData = function() {
 
 Session.set('eventTypeSelected', "current");
 
+Template.manageEvents.onCreated(function() {
+  this.subscribe('reservations'); 
+  this.subscribe('eventCategories');
+  this.subscribe('eventOrgs');
+  this.subscribe('partnerOrganizations');
+  this.subscribe('partnerOrgSectors');
+});
+
 Template.manageEvents.rendered = function() {
   Session.set("category", $("#categories").val());
   Session.set("institution", $("#institutions").val());

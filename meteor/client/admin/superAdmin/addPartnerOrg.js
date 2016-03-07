@@ -17,6 +17,10 @@ Template.addPartnerOrg.helpers({
   }
 });
 
+Template.addPartnerOrg.onCreated(function() {
+  this.subscribe('partnerOrgSectors');
+});
+
 Template.addPartnerOrg.events({
   'click #back': function(e) {
     Router.go('partnerOrgs');

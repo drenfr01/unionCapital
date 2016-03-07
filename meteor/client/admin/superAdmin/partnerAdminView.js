@@ -1,6 +1,11 @@
+
+Template.partnerAdminView.onCreated(function() {
+  this.subscribe('partnerAdminUsers');
+});
+
 Template.partnerAdminView.helpers({
   partnerAdmins: function() {
-    return Meteor.users.find({roles: {$in: ['partnerAdmin'] }});
+    return Meteor.users.find();
   }
 });
 

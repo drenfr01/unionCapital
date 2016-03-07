@@ -1,6 +1,7 @@
 //A partner should get access to all transactions for
 //their members only
 Meteor.publish('transactions', function(selector) {
+  //check(selector, {approved: Match.Optional(Boolean)});
   var partnerAdmin = Meteor.users.findOne({_id: this.userId});
   var selector = selector;
   if (Roles.userIsInRole(this.userId, 'admin')) {

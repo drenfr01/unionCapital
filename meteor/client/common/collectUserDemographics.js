@@ -1,6 +1,17 @@
 //Used to hold organizations user wants to follow
 FollowingOrganizations = new Meteor.Collection(null);
 
+Template.collectUserDemographics.onCreated(function() {
+  this.subscribe('eventCategories');
+  this.subscribe('eventOrgs');
+  this.subscribe('partnerOrganizations');
+  this.subscribe('kids');
+  this.subscribe('races');
+  this.subscribe('ucbappaccess');
+  this.subscribe('numberOfPeople');
+  this.subscribe('partnerOrgSectors');
+});
+
 Template.collectUserDemographics.helpers({
   organizations: function() {
     return PartnerOrgs.find();

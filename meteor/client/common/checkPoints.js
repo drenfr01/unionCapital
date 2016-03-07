@@ -1,3 +1,13 @@
+Template.checkPoints.onCreated(function() {
+  //TODO: bit of a hack, basically this is re-used for the view member
+  //profile template in super admin and the check points for a user
+  var selector = {deleteInd: false}
+  if(Router.current().params._id) {
+    selector.userId = Router.current().params._id
+  }   
+  this.subscribe('transactions', selector);
+});
+
 Template.checkPoints.helpers({
   approvedEvents: function() {
     var transactions = Meteor.users.transactionsFor(this._id, true).fetch();

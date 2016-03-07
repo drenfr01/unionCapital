@@ -1,9 +1,10 @@
 var defaultHours = 1;
 var checkIn = {};
 
-Template.eventCheckinDetails.created = function() {
+Template.eventCheckinDetails.onCreated(function() {
+  this.subscribe('eventCategories');
   checkIn = new CheckIn(defaultHours);
-};
+});
 
 Template.eventCheckinDetails.rendered = function() {
   addPlugins();

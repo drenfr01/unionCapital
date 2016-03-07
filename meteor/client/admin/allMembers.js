@@ -11,8 +11,10 @@ var searchText = new ReactiveVar('');
 
 
 Template.allMembers.onCreated(function() {
+  console.log("Created");
   var template = this;
   template.autorun(function() {
+    console.log('autorunning');
     var skipCount = (currentPage() - 1) * AppConfig.public.recordsPerPage;
     template.subscribe('userData', skipCount, Session.get('sortOn'), 
                        Session.get('sortOrder'));
