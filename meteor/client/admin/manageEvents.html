@@ -46,6 +46,7 @@
         </form>
       </div>
     </div>
+    {{#if Template.subscriptionsReady}}
     <div class="row">
       <div class="col-xs-12 col-md-10 col-md-offset-1 page-panel">
         <!-- TODO: this should be partial -->
@@ -131,5 +132,8 @@
         {{/if}}
       </div>
     </div>
+    {{else}}
+      {{> spinner}}
+    {{/if}}
   </div>
 </template>

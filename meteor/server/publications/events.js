@@ -47,12 +47,38 @@ Meteor.publish("eventsForTransactions", function() {
   return Events.find({ _id: { $in: eventIds } });
 });
 
-Meteor.publish('manageEvents', function() {
-  var self = this;
-  var selector = {};
+Meteor.publish('manageEvents', function(range, institution, category) {
+  //var self = this;
+  check(range, String);
+  var selector = {deleteInd: false};
+  var currentDate = new Date();
 
-  if (Roles.userIsInRole(self.userId, 'partnerAdmin'))
+  //double check to make sure admin users can't manage other events
+  if (Roles.userIsInRole(this.userId, 'partnerAdmin')) {
     selector.institution = Meteor.users.findOne(self.userId).profile.partnerOrg;
+  } else {
+    if(institution) {
+      selector.institution = institution;
+    }
+  }
+
+  if(category) {
+    selector.category = category;
+  }
+
+  if(range === AppConfig.eventRange.current) {
+    selector = _.extend(selector, {
+      $where: function() {
+        return moment(this.eventDate).add(this.duration, 'h').isAfter(moment());
+      }
+    });
+
+  } else if (range === AppConfig.eventRange.past) {
+    selector.eventDate = {'$lt': currentDate};
+    
+  } else {
+    throw new Meteor.Error("INCORRECT_PARAMETER","parameter should be either current or past");
+  }
 
   return Events.find(selector);
 });

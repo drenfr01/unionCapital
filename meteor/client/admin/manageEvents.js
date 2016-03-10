@@ -1,26 +1,7 @@
-//TODO: this is duplicate code from eventsCalendar
-var options = {
-  keepHistory: 1, //new events won't appear if this is set too long
-  localSearch: false
-};
-
-var fields = ['name', 'description'];
-
-EventsSearch = new SearchSource('eventsSearch', fields, options);
-
-var getEventsData = function() {
-  return EventsSearch.getData({
-    transform: function(matchText, regExp) {
-      return matchText.replace(regExp, "<span style='color:red'>$&</span>");
-    },
-    sort: {eventDate: 1}
-  });
-};
-
 Session.set('eventTypeSelected', "current");
 
 Template.manageEvents.onCreated(function() {
-  this.subscribe('reservations'); 
+  //this.subscribe('reservations'); 
   this.subscribe('eventCategories');
   this.subscribe('eventOrgs');
   this.subscribe('partnerOrganizations');
@@ -30,7 +11,6 @@ Template.manageEvents.onCreated(function() {
 Template.manageEvents.rendered = function() {
   Session.set("category", $("#categories").val());
   Session.set("institution", $("#institutions").val());
-  EventsSearch.search("");
 };
 
 Template.manageEvents.helpers({
@@ -59,11 +39,7 @@ Template.manageEvents.helpers({
       return Events.currentEvents(Session.get("institution"),
                                  Session.get("category"));
     } else { //user is using search bar
-      var events = getEventsData();
-      var eventsByDate = _.groupBy(events, function(event) {
-        return moment(event.eventDate).format("YYYY MM DD");
-      });
-      return eventsByDate;
+      //TODO
     }
   },
 
@@ -91,7 +67,7 @@ Template.manageEvents.events({
     var text = $(e.target).val().trim();
     if(text) {
       Session.set("eventTypeSelected", "searching");
-      EventsSearch.search(text);
+      //TODO: do stuff with search bar
     } else {
       Session.set("eventTypeSelected", "current");
       $("#current").prop('checked', true);

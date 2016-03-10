@@ -242,10 +242,7 @@ Router.route('/viewPartnerMemberProfile/:_id', function () {
 
 Router.route('/manageEvents', {
   template: 'manageEvents',
-  name: 'manageEvents',
-  subscriptions: function() {
-    return Meteor.subscribe('manageEvents');
-  }
+  name: 'manageEvents'
 });
 
 Router.route('/partnerAdminPage', function() {
