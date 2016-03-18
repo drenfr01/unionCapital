@@ -35,7 +35,6 @@ function getChartData(field) {
   return getPointDataForPartnerOrg(field, transactionsForPartnerOrg, allUsersDict);
 }
 
-
 Meteor.methods({
   getChartData: function(field) {
     const pointDataForPartnerOrg = getChartData(field);
