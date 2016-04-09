@@ -27,7 +27,6 @@ function buildUserSelector(user, searchText) {
                           );
   } 
 
-  console.log(selector);
   return selector;
 
 }
