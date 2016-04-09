@@ -17,7 +17,7 @@ Meteor.publish("singleEvent", function(id) {
 Meteor.publish("eventsForUser", function(userId) {
   var self = this;
 
-  check(userId, String);
+  check(userId, Match.Optional(String));
 
   if (!Roles.userIsInRole(self.userId, ['admin', 'partnerAdmin']))
     userId = self.userId;
