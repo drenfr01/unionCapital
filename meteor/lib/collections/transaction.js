@@ -106,3 +106,9 @@ Transactions.allow({
 Transactions.eventFor = function(transaction) {
   return Events.findOne({ _id: transaction.eventId });
 };
+
+//Collection hook to update image document with affiliated transaction ID
+//used to improve experience for approve points template for super admins
+Transactions.after.insert(function(userId, doc){
+  Images.update(doc.imageId, {$set: {'metadata.transactionId': doc._id}});
+});

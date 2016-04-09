@@ -88,7 +88,14 @@ DB = {
       throw new Meteor.Error('BAD_ID', 'No user found with this ID');
 
     var sum = 0;
-    var approvedTransactions = Transactions.find({userId: userId, approved: true, event: {$exists: true} });
+    var approvedTransactions = Transactions.find({
+      userId: userId,
+      approved: true,
+      event: { $exists: true },
+      deleteInd: { $ne: true },
+    });
+
+    console.log(approvedTransactions);
 
     approvedTransactions.forEach(function(transaction) {
       var event = transaction.event;

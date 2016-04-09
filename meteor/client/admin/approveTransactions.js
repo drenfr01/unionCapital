@@ -5,10 +5,14 @@ Template.approveTransactions.rendered = function() {
 };
 
 Template.approveTransactions.onCreated(function() {
-  var pageLength = 50;  //TODO: add to config
-  var currentPage = parseInt(Router.current().params.page) || 1;
-  var skipCount = (currentPage - 1) * pageLength;
-  this.subscribe('userData', skipCount);
+  this.subscribe('transactions', {approved: false});
+  this.subscribe('partnerOrganizations');
+
+    var self = this;
+    self.autorun(function() {
+      var dataContext = Session.get('modalDataContext') || {userId: ""};
+      self.subscribe('singleImage', dataContext.userId);
+    });
 });
 
 Template.approveTransactions.helpers({
@@ -38,7 +42,6 @@ Template.approveTransactions.helpers({
       selector.partnerOrg = Meteor.user().profile.partnerOrg;
     }
 
-    console.log(selector);
     return Transactions.find(selector);
   },
   eventDate: function() {
@@ -128,5 +131,12 @@ Template.approveTransactions.events({
 
   'change #superAdminFilter': function(event) {
     Session.set('selectedPartnerOrg', $(event.target).val());
+  },
+
+  'click .close': function(e) {
+    Session.set('modalDataContext');
+    $('#showImageModal').modal('hide');
+    $('.body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
   }
 });

@@ -24,15 +24,19 @@
               <h4 class="modal-title text-center">{{event.name}}</h4>
             </div>
             <div class="modal-body text-center">
-              {{#if imageUrl this.imageId}}
-                <img src="{{imageUrl this.imageId}}"
-                  alt="No Image Found" height=100% width=100%>
+              {{#if Template.subscriptionsReady}}
+                {{#if imageUrl this.imageId}}
+                  <img src="{{imageUrl this.imageId}}"
+                    alt="No Image Found" height=100% width=100%>
+                {{else}}
+                  <h4>No Image Found</h4>
+                {{/if}}
               {{else}}
-                <h4>No Image Found</h4>
+                {{> spinner}}
               {{/if}}
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-default close" data-dismiss="modal">Close</button>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

@@ -1,3 +1,7 @@
+Template.viewMemberProfile.onCreated(function() {
+  this.subscribe('singleUser',Router.current().params._id);
+});
+
 Template.viewMemberProfile.helpers({
   member: function() {
     return this;

@@ -2,6 +2,10 @@ Template.imageViewer.rendered = function() {
   Session.set('searchString', null);
 };
 
+Template.imageViewer.onCreated(function() {
+  this.subscribe('images');
+});
+
 Template.imageViewer.helpers({
   'images': function() {
     var userImages = Images.find().fetch();

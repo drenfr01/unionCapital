@@ -19,6 +19,11 @@ AutoForm.hooks({
   }
 });
 
+Template.addEvents.onCreated(function() {
+  this.subscribe('eventCategories');
+  this.subscribe('partnerOrganizations');
+});
+
 Template.addEvents.rendered = function() {
   Session.set('latitude', null);
   Session.set('longitude', null);
