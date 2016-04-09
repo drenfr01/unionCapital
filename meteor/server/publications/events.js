@@ -47,15 +47,15 @@ Meteor.publish("eventsForTransactions", function() {
   return Events.find({ _id: { $in: eventIds } });
 });
 
-Meteor.publish('manageEvents', function(range, institution, category) {
-  //var self = this;
-  check(range, String);
+
+function buildManageEventsSelector(userId, range, institution, category) {
+
   var selector = {deleteInd: false};
   var currentDate = new Date();
 
   //double check to make sure admin users can't manage other events
-  if (Roles.userIsInRole(this.userId, 'partnerAdmin')) {
-    selector.institution = Meteor.users.findOne(self.userId).profile.partnerOrg;
+  if (Roles.userIsInRole(userId, 'partnerAdmin')) {
+    selector.institution = Meteor.users.findOne(userId).profile.partnerOrg;
   } else {
     if(institution) {
       selector.institution = institution;
@@ -67,18 +67,30 @@ Meteor.publish('manageEvents', function(range, institution, category) {
   }
 
   if(range === AppConfig.eventRange.current) {
-    selector = _.extend(selector, {
-      $where: function() {
-        return moment(this.eventDate).add(this.duration, 'h').isAfter(moment());
-      }
-    });
+    selector.eventDate = {'$gte': currentDate}
 
   } else if (range === AppConfig.eventRange.past) {
     selector.eventDate = {'$lt': currentDate};
     
   } else {
-    throw new Meteor.Error("INCORRECT_PARAMETER","parameter should be either current or past");
+    //TODO: throwing an error doesn't work here, for some reason it gets
+    //silenced..
+    return new Meteor.Error("INCORRECT_PARAMETER","parameter should be either current or past");
   }
+
+  return selector;
+}
+
+Meteor.publish('manageEvents', function(range, institution, category) {
+  check(range, String);
+  //TODO there is a known bug with Match.Optional where it doesn't work with
+  //nulls, and DDP coerces undefineds to null. Uncomment & switch to Match.Maybe
+  //when we bump to 1.3
+  //check(institution, Match.Optional(String));
+  //check(category, Match.Optional(String));
+
+  var selector = buildManageEventsSelector(this.userId, range, institution, category);
+  console.log(selector);
 
   return Events.find(selector);
 });

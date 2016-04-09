@@ -1,4 +1,3 @@
-/*
 FS.debug = false;
 
 var imageStore = new FS.Store.S3("images", {
@@ -28,4 +27,3 @@ Images.allow({
     return true;
   }
 });
-*/

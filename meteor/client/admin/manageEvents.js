@@ -1,17 +1,24 @@
 Session.set('eventTypeSelected', "current");
+Session.set("category", null);
+Session.set("institution", null);
 
 Template.manageEvents.onCreated(function() {
+
   //this.subscribe('reservations'); 
   this.subscribe('eventCategories');
   this.subscribe('eventOrgs');
   this.subscribe('partnerOrganizations');
   this.subscribe('partnerOrgSectors');
-});
 
-Template.manageEvents.rendered = function() {
-  Session.set("category", $("#categories").val());
-  Session.set("institution", $("#institutions").val());
-};
+  var template = this;
+  template.autorun(function() {
+    template.subscribe('manageEvents', 
+                   'current',
+                   Session.get('institution'),
+                   Session.get('category') 
+                  );
+  });
+});
 
 Template.manageEvents.helpers({
 
@@ -32,15 +39,7 @@ Template.manageEvents.helpers({
   },
 
   events: function() {
-    if(Session.equals('eventTypeSelected', "past")) {
-      return Events.pastEvents(Session.get("institution"),
-                              Session.get("category"));
-    } else if (Session.equals('eventTypeSelected', "current")){
-      return Events.currentEvents(Session.get("institution"),
-                                 Session.get("category"));
-    } else { //user is using search bar
-      //TODO
-    }
+    return Events.find();
   },
 
   eventTypeSelected: function(eventType) {
