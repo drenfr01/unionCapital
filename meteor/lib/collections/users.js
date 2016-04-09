@@ -12,7 +12,7 @@ Meteor.users.totalPointsFor = function(userId) {
   if (user.profile.points === undefined || user.profile.points === null)
     Meteor.call('calcPoints', userId);
 
-  return user.profile.points;
+  return user.profile.points || 0;
 };
 
 Meteor.users.deny({
