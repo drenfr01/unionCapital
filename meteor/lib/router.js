@@ -245,6 +245,11 @@ Router.route('/manageEvents/:page?', {
   name: 'manageEvents'
 });
 
+Router.route('/eventsHistory/:page?', {
+  template: 'eventsHistory',
+  name: 'eventsHistory'
+});
+
 Router.route('/partnerAdminPage', function() {
   this.render('partnerAdminHomePage');
 },

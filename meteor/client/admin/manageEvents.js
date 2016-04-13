@@ -51,21 +51,6 @@ Template.manageEvents.helpers({
     return Session.equals("eventTypeSelected", eventType);
   },
 
-  prevPage: function() {
-    var previousPage = currentPage() === 1 ? 1 : currentPage() - 1;
-    return Router.routes.manageEvents.path({page: previousPage});
-  },
-
-  nextPage: function() {
-    var nextPage = hasMorePages() ? currentPage() + 1 : currentPage();
-    return Router.routes.manageEvents.path({page: nextPage});
-  },
-  prevPageClass: function() {
-    return currentPage() <= 1 ? "disabled" : "";
-  },
-  nextPageClass: function() {
-    return hasMorePages() ? "" : "disabled";
-  }
 });
 
 Template.manageEvents.events({
@@ -127,13 +112,4 @@ Template.manageEvents.events({
     $('#search-box').focus();
   },
 });
-
-var currentPage = function() {
-  return parseInt(Router.current().params.page) || 1;
-}
-
-var hasMorePages = function() {
-  var totalEvents = Counts.get('eventsCount');
-  return currentPage() * parseInt(AppConfig.public.recordsPerPage) < totalEvents;
-}
 
