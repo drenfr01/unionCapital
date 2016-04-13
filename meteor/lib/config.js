@@ -46,5 +46,9 @@ AppConfig = {
   ucbButtonEvent: 'UCB Button',
   "public": {
     "recordsPerPage": 50
+  },
+  eventRange: {
+    current: "current",
+    past: "past"
   }
 };

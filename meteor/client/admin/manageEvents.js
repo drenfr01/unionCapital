@@ -1,37 +1,29 @@
-//TODO: this is duplicate code from eventsCalendar
-var options = {
-  keepHistory: 1, //new events won't appear if this is set too long
-  localSearch: false
-};
-
-var fields = ['name', 'description'];
-
-EventsSearch = new SearchSource('eventsSearch', fields, options);
-
-var getEventsData = function() {
-  return EventsSearch.getData({
-    transform: function(matchText, regExp) {
-      return matchText.replace(regExp, "<span style='color:red'>$&</span>");
-    },
-    sort: {eventDate: 1}
-  });
-};
-
 Session.set('eventTypeSelected', "current");
+Session.set("category", null);
+Session.set("institution", null);
+Session.set("eventTypeSelected", AppConfig.eventRange.current);
+var searchText = new ReactiveVar(null);
 
 Template.manageEvents.onCreated(function() {
-  this.subscribe('reservations'); 
+
+  //this.subscribe('reservations'); 
   this.subscribe('eventCategories');
   this.subscribe('eventOrgs');
   this.subscribe('partnerOrganizations');
   this.subscribe('partnerOrgSectors');
-});
 
-Template.manageEvents.rendered = function() {
-  Session.set("category", $("#categories").val());
-  Session.set("institution", $("#institutions").val());
-  EventsSearch.search("");
-};
+  var template = this;
+  template.autorun(function() {
+    var skipCount = (currentPage() - 1) * AppConfig.public.recordsPerPage;
+    template.subscribe('manageEvents', 
+                   Session.get('eventTypeSelected'),
+                   Session.get('institution'),
+                   Session.get('category'),
+                   searchText.get(),
+                   skipCount
+                  );
+  });
+});
 
 Template.manageEvents.helpers({
 
@@ -52,23 +44,27 @@ Template.manageEvents.helpers({
   },
 
   events: function() {
-    if(Session.equals('eventTypeSelected', "past")) {
-      return Events.pastEvents(Session.get("institution"),
-                              Session.get("category"));
-    } else if (Session.equals('eventTypeSelected', "current")){
-      return Events.currentEvents(Session.get("institution"),
-                                 Session.get("category"));
-    } else { //user is using search bar
-      var events = getEventsData();
-      var eventsByDate = _.groupBy(events, function(event) {
-        return moment(event.eventDate).format("YYYY MM DD");
-      });
-      return eventsByDate;
-    }
+    return Events.find();
   },
 
   eventTypeSelected: function(eventType) {
     return Session.equals("eventTypeSelected", eventType);
+  },
+
+  prevPage: function() {
+    var previousPage = currentPage() === 1 ? 1 : currentPage() - 1;
+    return Router.routes.manageEvents.path({page: previousPage});
+  },
+
+  nextPage: function() {
+    var nextPage = hasMorePages() ? currentPage() + 1 : currentPage();
+    return Router.routes.manageEvents.path({page: nextPage});
+  },
+  prevPageClass: function() {
+    return currentPage() <= 1 ? "disabled" : "";
+  },
+  nextPageClass: function() {
+    return hasMorePages() ? "" : "disabled";
   }
 });
 
@@ -90,11 +86,9 @@ Template.manageEvents.events({
   'keyup #search-box': _.throttle(function(e) {
     var text = $(e.target).val().trim();
     if(text) {
-      Session.set("eventTypeSelected", "searching");
-      EventsSearch.search(text);
+      searchText.set(text);
     } else {
-      Session.set("eventTypeSelected", "current");
-      $("#current").prop('checked', true);
+      searchText.set(null);
     }
   }, 200),
 
@@ -128,8 +122,18 @@ Template.manageEvents.events({
   },
 
   'click #clearBtn': function() {
-    EventsSearch.search('');
+    searchText.set(null);
     $('#search-box').val('');
     $('#search-box').focus();
   },
 });
+
+var currentPage = function() {
+  return parseInt(Router.current().params.page) || 1;
+}
+
+var hasMorePages = function() {
+  var totalEvents = Counts.get('eventsCount');
+  return currentPage() * parseInt(AppConfig.public.recordsPerPage) < totalEvents;
+}
+
