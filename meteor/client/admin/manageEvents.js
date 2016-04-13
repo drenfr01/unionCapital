@@ -1,6 +1,8 @@
 Session.set('eventTypeSelected', "current");
 Session.set("category", null);
 Session.set("institution", null);
+Session.set("eventTypeSelected", AppConfig.eventRange.current);
+var searchText = new ReactiveVar(null);
 
 Template.manageEvents.onCreated(function() {
 
@@ -12,10 +14,13 @@ Template.manageEvents.onCreated(function() {
 
   var template = this;
   template.autorun(function() {
+    var skipCount = (currentPage() - 1) * AppConfig.public.recordsPerPage;
     template.subscribe('manageEvents', 
-                   'current',
+                   Session.get('eventTypeSelected'),
                    Session.get('institution'),
-                   Session.get('category') 
+                   Session.get('category'),
+                   searchText.get(),
+                   skipCount
                   );
   });
 });
@@ -44,6 +49,22 @@ Template.manageEvents.helpers({
 
   eventTypeSelected: function(eventType) {
     return Session.equals("eventTypeSelected", eventType);
+  },
+
+  prevPage: function() {
+    var previousPage = currentPage() === 1 ? 1 : currentPage() - 1;
+    return Router.routes.manageEvents.path({page: previousPage});
+  },
+
+  nextPage: function() {
+    var nextPage = hasMorePages() ? currentPage() + 1 : currentPage();
+    return Router.routes.manageEvents.path({page: nextPage});
+  },
+  prevPageClass: function() {
+    return currentPage() <= 1 ? "disabled" : "";
+  },
+  nextPageClass: function() {
+    return hasMorePages() ? "" : "disabled";
   }
 });
 
@@ -65,11 +86,9 @@ Template.manageEvents.events({
   'keyup #search-box': _.throttle(function(e) {
     var text = $(e.target).val().trim();
     if(text) {
-      Session.set("eventTypeSelected", "searching");
-      //TODO: do stuff with search bar
+      searchText.set(text);
     } else {
-      Session.set("eventTypeSelected", "current");
-      $("#current").prop('checked', true);
+      searchText.set(null);
     }
   }, 200),
 
@@ -103,8 +122,18 @@ Template.manageEvents.events({
   },
 
   'click #clearBtn': function() {
-    EventsSearch.search('');
+    searchText.set(null);
     $('#search-box').val('');
     $('#search-box').focus();
   },
 });
+
+var currentPage = function() {
+  return parseInt(Router.current().params.page) || 1;
+}
+
+var hasMorePages = function() {
+  var totalEvents = Counts.get('eventsCount');
+  return currentPage() * parseInt(AppConfig.public.recordsPerPage) < totalEvents;
+}
+

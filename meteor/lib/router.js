@@ -240,7 +240,7 @@ Router.route('/viewPartnerMemberProfile/:_id', function () {
 });
 
 
-Router.route('/manageEvents', {
+Router.route('/manageEvents/:page?', {
   template: 'manageEvents',
   name: 'manageEvents'
 });

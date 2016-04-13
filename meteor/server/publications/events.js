@@ -48,7 +48,8 @@ Meteor.publish("eventsForTransactions", function() {
 });
 
 
-function buildManageEventsSelector(userId, range, institution, category) {
+function buildManageEventsSelector(userId, range, institution, category, searchText) 
+{
 
   var selector = {deleteInd: false};
   var currentDate = new Date();
@@ -57,12 +58,14 @@ function buildManageEventsSelector(userId, range, institution, category) {
   if (Roles.userIsInRole(userId, 'partnerAdmin')) {
     selector.institution = Meteor.users.findOne(userId).profile.partnerOrg;
   } else {
-    if(institution) {
+    //TODO: make All a config value
+    if(institution && institution !== "All") {
       selector.institution = institution;
     }
   }
 
-  if(category) {
+  //TODO: make All a config value
+  if(category && category !== "All") {
     selector.category = category;
   }
 
@@ -78,19 +81,31 @@ function buildManageEventsSelector(userId, range, institution, category) {
     return new Meteor.Error("INCORRECT_PARAMETER","parameter should be either current or past");
   }
 
+  if(searchText) {
+    selector = _.extend(selector, {name: {$regex: searchText, $options: "i"}});
+  };
+
   return selector;
 }
 
-Meteor.publish('manageEvents', function(range, institution, category) {
+Meteor.publish('manageEvents', function(range, institution, category, 
+                                        searchText, skipCount) {
   check(range, String);
+  check(skipCount, Number);
   //TODO there is a known bug with Match.Optional where it doesn't work with
   //nulls, and DDP coerces undefineds to null. Uncomment & switch to Match.Maybe
   //when we bump to 1.3
   //check(institution, Match.Optional(String));
   //check(category, Match.Optional(String));
 
-  var selector = buildManageEventsSelector(this.userId, range, institution, category);
+  var selector = buildManageEventsSelector(this.userId, range, institution,
+                                           category, searchText);
   console.log(selector);
 
-  return Events.find(selector);
+  Counts.publish(this, 'eventsCount', Events.find(selector), {
+    noReady: true
+  });
+
+  var eventOptions = {limit: AppConfig.public.recordsPerPage, skip: skipCount};
+  return Events.find(selector, eventOptions);
 });
