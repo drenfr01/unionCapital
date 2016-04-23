@@ -10,8 +10,7 @@ const getPoints = R.compose(
 function getPointDataForPartnerOrg(field, transactionsForPartnerOrg, allUsersDict) {
   return R.compose(
     R.map(sumPointsForUser(allUsersDict)),
-    R.values,
-    R.groupBy(R.prop(field))
+    R.groupBy(R.prop('_id'))
   )(transactionsForPartnerOrg);
 }
 
