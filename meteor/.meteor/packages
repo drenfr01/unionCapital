@@ -44,7 +44,6 @@ cfs:gridfs@=0.0.27
 
 
 
-standard-minifiers
 huttonr:bootstrap3
 
 
@@ -52,3 +51,5 @@ npm-container
 tmeasday:publish-counts
 meteorhacks:kadira
 matb33:collection-hooks
+standard-minifier-css
+standard-minifier-js

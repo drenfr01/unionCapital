@@ -1,3 +1,5 @@
+/* global Roles */
+
 Router.configure({
   layoutTemplate: 'layout',
   loadingTemplate: 'loading',
@@ -19,7 +21,7 @@ Router.onBeforeAction(function() {
   if(Meteor.loggingIn()) {
     return; //wait
   } else if (!Meteor.user()) {
-    this.redirect('login');
+    this.redirect('/');
   } else {
     this.next();
   }
@@ -34,11 +36,11 @@ Router.onBeforeAction(function() {
   } else if (Roles.userIsInRole(Meteor.userId(), ['user'])) {
     this.next();
   } else {
-    this.redirect('login');
+    this.redirect('/');
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for members
-  {only: ['memberHomePage','memberProfile', 'editMemberProfile','eventsCalendar', 'checkPoints', 'contactUs']}
+  {only: ['memberHomePage', 'memberProfile', 'editMemberProfile','eventsCalendar', 'checkPoints', 'contactUs']}
 );
 
 //Both Admins
@@ -49,7 +51,7 @@ Router.onBeforeAction(function() {
            Roles.userIsInRole(Meteor.userId(), ['admin'])) {
     this.next();
   } else {
-    this.redirect('login');
+    this.redirect('/');
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for members
@@ -68,7 +70,7 @@ Router.onBeforeAction(function() {
   } else if (Roles.userIsInRole(Meteor.userId(), ['partnerAdmin'])) {
     this.next();
   } else {
-    this.redirect('login');
+    this.redirect('/');
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for members
@@ -82,7 +84,7 @@ Router.onBeforeAction(function() {
   } else if (Roles.userIsInRole(Meteor.userId(), ['admin'])) {
     this.next();
   } else {
-    this.redirect('login');
+    this.redirect('/');
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for superAdmins
@@ -266,7 +268,13 @@ Router.route('/partnerMembers', function() {
 Router.map(function() {
   //Home Page
   this.route('/', function() {
-    this.render('landing');
+    if (Roles.userIsInRole(Meteor.userId(), ['user'])) {
+      this.render('memberHomePage');
+    } else if (Roles.userIsInRole(Meteor.userId(), ['partnerAdmin'])) {
+      this.render('partnerAdminHomePage');
+    } else if (Roles.userIsInRole(Meteor.userId(), ['admin'])) {
+      this.render('adminHomePage');
+    }
   });
 
   this.route('/eventSearch', function() {
@@ -274,9 +282,12 @@ Router.map(function() {
   });
 
   this.route('/login', function() {
-    this.render('landing');
+    if (Meteor.user()) {
+      this.redirect('/');
+    } else {
+      this.render('landing');
+    }
   });
-
 
   this.route('/forgot', function() {
     this.render('forgotPassword');
