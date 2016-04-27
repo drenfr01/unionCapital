@@ -14,7 +14,8 @@ Template.manageEvents.onCreated(function() {
 
   var template = this;
   template.autorun(function() {
-    var skipCount = (currentPage() - 1) * AppConfig.public.recordsPerPage;
+    var skipCount = (GlobalHelpers.currentPage() - 1) * 
+      AppConfig.public.recordsPerPage;
     template.subscribe('manageEvents', 
                    Session.get('eventTypeSelected'),
                    Session.get('institution'),

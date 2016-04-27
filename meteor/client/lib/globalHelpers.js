@@ -7,31 +7,39 @@ Template.registerHelper("eventCategories", function() {
 });
 
 Template.registerHelper("prevPage", function() {
-  var previousPage = currentPage() === 1 ? 1 : currentPage() - 1;
+  var previousPage = GlobalHelpers.currentPage() === 1 ? 1 : 
+    GlobalHelpers.currentPage() - 1;
   return Router.routes.manageEvents.path({page: previousPage});
 });
 
 Template.registerHelper("nextPage", function() {
-  var nextPage = hasMorePages() ? currentPage() + 1 : currentPage();
+  var nextPage = GlobalHelpers.hasMorePages() ? GlobalHelpers.currentPage() + 1 :
+    GlobalHelpers.currentPage();
   return Router.routes.manageEvents.path({page: nextPage});
 });
 
 Template.registerHelper("prevPageClass", function() {
-  return currentPage() <= 1 ? "disabled" : "";
+  return GlobalHelpers.currentPage() <= 1 ? "disabled" : "";
 });
 
 Template.registerHelper("nextPageClass", function() {
-  return hasMorePages() ? "" : "disabled";
+  return GlobalHelpers.hasMorePages() ? "" : "disabled";
 });
 
-var currentPage = function() {
-  return parseInt(Router.current().params.page) || 1;
-}
+GlobalHelpers = (function() {
 
-var hasMorePages = function() {
-  var totalEvents = Counts.get('eventsCount');
-  return currentPage() * parseInt(AppConfig.public.recordsPerPage) < totalEvents;
-}
+  function currentPage() {
+      return parseInt(Router.current().params.page) || 1;
+  }  
 
+  return {
 
+    currentPage,
+
+    hasMorePages: function() {
+      var totalEvents = Counts.get('eventsCount');
+      return currentPage() * parseInt(AppConfig.public.recordsPerPage) < totalEvents;
+    },
+  }
+})();
 
