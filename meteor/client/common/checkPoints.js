@@ -11,12 +11,18 @@ Template.checkPoints.onCreated(function() {
 Template.checkPoints.helpers({
   approvedEvents: function() {
     var transactions = Meteor.users.transactionsFor(this._id, true).fetch();
-    return _.sortBy(transactions, function(transaction) {
+    return {
+      events: _.sortBy(transactions, function(transaction) {
                       return Date.parse(transaction.transactionDate);
-                    }).reverse();
+                    }).reverse(),
+      title: 'Approved events'
+    };
   },
   pendingEvents: function() {
-    return Meteor.users.transactionsFor(this._id, false);
+    return {
+    events: Meteor.users.transactionsFor(this._id, false),
+    title: 'Events waiting for approval'
+    };
   },
   eventName: function(){
     var event = this.event;
@@ -25,6 +31,26 @@ Template.checkPoints.helpers({
     } else {
       return "";
     }
+  },
+  totalPoints: function() {
+    return Meteor.users.totalPointsFor(this._id);
+  },
+  
+});
+
+Template.pointTemplate.events({
+  'click .acidjs-rating-stars': function(e) {
+    console.log(e.target.value);;
+  }
+});
+
+Template.pointTemplate.helpers({
+  eventsToDisplay: function() {
+    return this.events;
+  },
+
+  rowBackgroundClass: function() {
+    return adhocStatus(this.event) ? "selfie-event" : "member-event" ;  
   },
   eventPoints: function(){
     var event = this.event;
@@ -38,13 +64,12 @@ Template.checkPoints.helpers({
       return "";
     }
   },
-  totalPoints: function() {
-    return Meteor.users.totalPointsFor(this._id);
-  },
-  
-  rowBackgroundClass: function() {
-    //some selfies don't have the adhoc flag for some reason... 
-    var isAdhoc = _.isBoolean(this.event.adHoc) ? this.event.adHoc : true;
-    return isAdhoc ? "selfie-event" : "member-event" ;  
+  isUCBEvent: function() {
+    return !adhocStatus(this.event);
   }
 });
+
+    //some selfies don't have the adhoc flag for some reason... 
+function adhocStatus(event) {
+  return _.isBoolean(event.adHoc) ? this.event.adHoc : true;
+}
