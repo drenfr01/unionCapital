@@ -40,5 +40,11 @@ Template.checkPoints.helpers({
   },
   totalPoints: function() {
     return Meteor.users.totalPointsFor(this._id);
+  },
+  
+  rowBackgroundClass: function() {
+    //some selfies don't have the adhoc flag for some reason... 
+    var isAdhoc = _.isBoolean(this.event.adHoc) ? this.event.adHoc : true;
+    return isAdhoc ? "selfie-event" : "member-event" ;  
   }
 });

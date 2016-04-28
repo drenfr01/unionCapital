@@ -9,7 +9,7 @@
       <div class="col-xs-12 page-panel">
         {{#if pendingEvents.count}}
         <div class="ptheader text-center">Events Waiting for Approval</div>
-        <table class="table table-striped">
+        <table class="table">
           <!--      <caption>Your UCB Activities</caption> -->
           <thead>
             <tr>
@@ -20,7 +20,7 @@
           </thead>
           <tbody>
           {{#each pendingEvents}}
-          <tr>
+          <tr class="{{rowBackgroundClass}}">
             <td>{{event.name}}</td>
             <td>{{event.description}}</td>
             <td>{{formatDate transactionDate}} </td>
@@ -40,7 +40,7 @@
       <div class="col-xs-12 page-panel">
         {{#if approvedEvents}}
           <div class="ptheader text-center">Approved Events</div>
-          <table class="table table-striped">
+          <table class="table">
             <!--      <caption>Your UCB Activities</caption> -->
             <thead>
               <tr>
@@ -51,7 +51,7 @@
             </thead>
             <tbody>
             {{#each approvedEvents}}
-            <tr>
+            <tr class="{{rowBackgroundClass}}">
               <td>{{event.name}}</td>
               <td>{{eventPoints}}</td>
               <td>{{formatDate transactionDate}} </td>
