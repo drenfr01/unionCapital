@@ -69,7 +69,7 @@ Template.pointTemplate.helpers({
   }
 });
 
-    //some selfies don't have the adhoc flag for some reason... 
+//some selfies don't have the adhoc flag for some reason... 
 function adhocStatus(event) {
   return _.isBoolean(event.adHoc) ? this.event.adHoc : true;
 }

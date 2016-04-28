@@ -247,6 +247,11 @@ Router.route('/manageEvents/:page?', {
   name: 'manageEvents'
 });
 
+Router.route('/invite', {
+  template: 'testCalendar',
+  name: 'testCalendar'
+});
+
 Router.route('/eventsHistory/:page?', {
   template: 'eventsHistory',
   name: 'eventsHistory'
