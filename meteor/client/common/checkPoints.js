@@ -39,9 +39,13 @@ Template.checkPoints.helpers({
 });
 
 Template.pointTemplate.events({
-  'click .acidjs-rating-stars': function(e) {
-    console.log(e.target.value);;
-  }
+  'click .acidjs-rating-stars input': function(e) {
+    console.log(e.target.value);
+  },
+
+  'click .post': function(e) {
+    console.log($(e.target).parent().siblings().val());
+  },
 });
 
 Template.pointTemplate.helpers({
@@ -50,7 +54,7 @@ Template.pointTemplate.helpers({
   },
 
   rowBackgroundClass: function() {
-    return adhocStatus(this.event) ? "selfie-event" : "member-event" ;  
+    return adhocStatus(this.event) ? "selfie-event" : "member-event";
   },
   eventPoints: function(){
     var event = this.event;
