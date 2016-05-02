@@ -26,6 +26,16 @@ Template.registerHelper("nextPageClass", function() {
   return GlobalHelpers.hasMorePages() ? "" : "disabled";
 });
 
+Template.registerHelper("institutions", function() {
+  if (Roles.userIsInRole(Meteor.userId(), 'partnerAdmin')) {
+    return [{ name: Meteor.user().profile.partnerOrg }];
+  } else {
+    var orgs = PartnerOrgs.find().fetch();
+    orgs.push({ name: 'All' });
+    return _.sortBy(orgs, "name");
+  }
+});
+
 GlobalHelpers = (function() {
 
   function currentPage() {

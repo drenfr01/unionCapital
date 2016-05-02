@@ -88,10 +88,11 @@
             <tr>
               <th>Name of Event</th>
               <th>Date</th>
-              <th>Address</th>
-              <th># RSVPs</th>
+              <th>RSVPs</th>
               <th>Institution</th>
               <th>Category</th>
+              <th>Comments</th>
+              <th>Rating</th>
               <th></th>
               <th></th>
             </tr>
@@ -104,10 +105,11 @@
                   <td class="eventView"><a href="{{pathFor 'singleEvent'}}">
                       {{{name}}}</a></td>
                   <td>{{ formattedDateRange eventDate duration }}</td>
-                  <td>{{address}}</td>
                   <td>{{numberRSVPs}}</td>
                   <td>{{institution}}</td>
                   <td>{{category}}</td>
+                  <td></td>
+                  <td></td>
                   <td>
                     <button type="button" class="btn btn-default btn-sm editEvent">
                       Edit
@@ -127,10 +129,11 @@
               <td class="eventView"><a href="{{pathFor 'singleEvent'}}">
                   {{name}}</a></td>
               <td>{{formattedDateRange eventDate duration}}</td>
-              <td>{{address}}</td>
               <td>{{numberRSVPs}}</td>
               <td>{{institution}}</td>
               <td>{{category}}</td>
+              <td></td>
+              <td></td>
               <td>
                 <button type="button" class="btn btn-warning btn-sm editEvent">
                   Edit

@@ -1,0 +1,70 @@
+<template name="feedback">
+  <div class="col-xs-12">
+    <div class="row">
+      <!-- <div class="col-xs-6 col-md-2 col-md-offset-3 text-center"> -->
+      <div class="col-xs-12 col-md-10 col-md-offset-1 page-panel options-panel">
+        <div class="row">
+          <div class="col-xs-offset-4 col-xs-4">
+            <form>
+              <div class="col-xs-12 col-md-4">
+                <div class="form-group>">
+                  <label for="institutions" class="label-like-thing">
+                    Institution</label>
+                  <select class="form-control" id="institutions">
+                    {{#each institutions}}
+                    <option>{{name}}</option>
+                    {{/each}}
+                  </select>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="row">
+          <nav>
+            <ul class="pager">
+              <li class="{{prevPageClass}}">
+                <a id="prevPage" href="{{prevPage}}">
+                  <span aria-hidden="true">&larr;</span> Previous
+                </a>
+              </li>
+              <li class="{{nextPageClass}}">
+                <a id="nextPage" href="{{nextPage}}">
+                  Next <span aria-hidden="true">&rarr;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+    {{#if Template.subscriptionsReady}}
+    <div class="row">
+      <div class="col-xs-12 col-md-10 col-md-offset-1 page-panel">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Event</th>
+              <th>Institution</th>
+              <th>Comment Date</th>
+              <th>Feedback</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each comment}}
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            {{/each}}
+          </tbody>
+          </table>
+      </div>
+    </div>
+    {{/if}}
+  </div>
+</template>

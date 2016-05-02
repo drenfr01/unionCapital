@@ -175,6 +175,11 @@ Router.route('/uploadEvents', function() {
   name: 'uploadEvents'
 });
 
+Router.route('/feedback/:page?', {
+  name: 'feedback',
+  template: 'feedback'
+});
+
 Router.route('/editEvent/:_id', {
   name: 'editEvent',
 
