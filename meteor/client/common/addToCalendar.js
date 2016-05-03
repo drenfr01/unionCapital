@@ -1,23 +1,13 @@
-
-Template.testCalendar.onRendered(function() {
-  GoogleCalendar.checkAuth();
+Template.addToCalendar.onRendered(function() {
+  //TODO:
+  //GoogleCalendar.checkAuth();
 });
 
-Template.testCalendar.events({
+Template.addToCalendar.events({
   'click #authorize-button': function(e) {
+    GoogleCalendar.setEvent(event);
     GoogleCalendar.handleAuthClick(e);
   },
-
-  'click #insert': function(e) {
-    var request = gapi.client.calendar.events.insert({
-      'calendarId': 'primary',
-      'resource': event
-    });
-
-    request.execute(function(event) {
-      GoogleCalendar.appendPre('Event created: ' + event.htmlLink);
-    });
-  }
 
 });
 
