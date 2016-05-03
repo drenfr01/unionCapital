@@ -13,8 +13,7 @@ EventCategories.attachSchema({
 });
 
 EventOrgs = new Meteor.Collection('eventOrgs');
-Comments = new Mongo.Collection('comments');
-Ratings = new Mongo.Collection('ratings');
+Feedback = new Mongo.Collection('feedback');
 
 Events = new Meteor.Collection('events');
 Events.attachSchema(new SimpleSchema({
@@ -103,13 +102,8 @@ Events.attachSchema(new SimpleSchema({
     type: Boolean,
     label: 'Is an Ad Hoc Event'
   },
-  ratings: {
-    type: [String],
-    blackbox: true,
-    optional: true
-  }, 
-  comments: {
-    type: [String],
+  feedback: {
+    type: [Object],
     blackbox: true,
     optional: true
   },

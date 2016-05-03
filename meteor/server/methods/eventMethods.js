@@ -1,37 +1,27 @@
 Meteor.methods({
-  postComment: function(event, comment) {
+  postFeedback: function(event, feedbackContent, feedbackType) {
     check(event, Object);
-    check(comment, String);
+    check(feedbackContent, Match.OneOf(String, Number));
+    check(feedbackType, String);
+
+    var user = Meteor.users.findOne(this.userId);
     
-    const commentObject = {
-      comment: comment,
+    //Note: type is an Enum
+    const feedbackObject = {
+      feedbackContent: feedbackContent,
+      feedbackType: feedbackType,
       userId: this.userId,
-      date: Date.now(),
+      userName: user.profile.firstName + ' ' + user.profile.lastName,
+      feedbackTimestamp: Date.now(),
       eventId: event._id,
       eventName: event.name,
-      eventInstitution: event.institution
-
+      eventInstitution: event.institution,
+      deleteInd: false
     };
 
-    const commentId = Comments.insert(commentObject);
-    Events.update(event._id, {$push: {comments: commentId} });
+    const feedbackId = Feedback.insert(feedbackObject);
+    Events.update(event._id, {$push: {feedback: feedbackObject} });
 
   },
 
-  postRating: function(event, rating) {
-    check(event, Object);
-    check(rating, Number);
-
-    const ratingObject = {
-      rating: rating,
-      userId: this.userId,
-      date: Date.now(),
-      eventId: event._id,
-      eventName: event.name,
-      eventInstitution: event.institution
-    };
-
-    const ratingId = Ratings.insert(ratingObject);
-    Events.update(event._id, {$push: {ratings: ratingId} });
-  }
 });

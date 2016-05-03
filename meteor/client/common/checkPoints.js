@@ -40,20 +40,21 @@ Template.checkPoints.helpers({
 
 Template.pointTemplate.events({
   'click .acidjs-rating-stars input': function(e) {
-    Meteor.call('postRating', this.event, parseInt(e.target.value), function(err, result) {
-      if(err) {
-        console.log(err)
-      } else {
-        //TODO: disable the stars in a persistent way
-        $(e.target).siblings().prop('disabled', 'disabled');
-        addSuccessMessage('Rated!');
-      }
-    });
+    Meteor.call('postFeedback', this.event, parseInt(e.target.value), AppConfig.feedbackType.rating,
+      function(err, result) {
+        if(err) {
+          console.log(err)
+        } else {
+          //TODO: disable the stars in a persistent way
+          $(e.target).siblings().prop('disabled', 'disabled');
+          addSuccessMessage('Rated!');
+        }
+      });
   },
 
   'click .post': function(e) {
-    Meteor.call('postComment', this.event, $(e.target).parent().siblings().val(),
-      function(err, result) {
+    Meteor.call('postFeedback', this.event, $(e.target).parent().siblings().val(), 
+      AppConfig.feedbackType.comment, function(err, result) {
         if(err) {
           console.log(err);
         } else {

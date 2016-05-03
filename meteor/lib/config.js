@@ -50,5 +50,9 @@ AppConfig = {
   eventRange: {
     current: "current",
     past: "past"
+  },
+  feedbackType: {
+    rating: "rating",
+    comment: "comment"
   }
 };
