@@ -51,10 +51,6 @@ Template.eventCheckinDetails.events({
     $('#upPhoto').click();
   },
 
-  'click #ucbButton': function(e) {
-    checkIn.hasUCBButton = $('#ucbButton').prop('checked');
-  },
-
   'change #upPhoto':  function() {
     var input = $('#upPhoto')[0];
 

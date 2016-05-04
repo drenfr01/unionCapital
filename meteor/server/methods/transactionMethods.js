@@ -11,7 +11,6 @@ Meteor.methods({
       category: Match.Optional(String),
       userLat: Match.Optional(Number),
       userLng: Match.Optional(Number),
-      hasUCBButton: Match.Optional(Boolean),
       addons: Match.Optional([Object])
     });
     var currentUser = Meteor.user();

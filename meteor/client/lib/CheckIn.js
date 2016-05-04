@@ -10,7 +10,6 @@ CheckIn = function(defaultHours) {
   self.eventDescription = null;
   self.eventDate = null;
   self.category = null;
-  self.hasUCBButton = false;
 
   // Calls insertTransaction and routes the user
   // Private function
@@ -28,8 +27,7 @@ CheckIn = function(defaultHours) {
 
       self.attributes = {
         userId: Meteor.userId(),
-        hoursSpent: parsedHours ? parsedHours : 0,
-        hasUCBButton: self.hasUCBButton
+        hoursSpent: parsedHours ? parsedHours : 0
       };
 
       // If new, then don't set the eventId to avoid check() errors
