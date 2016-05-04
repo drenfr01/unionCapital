@@ -7,3 +7,4 @@ tests/.reports/
 tests/a1-package-stubs.js
 meteor/maintainers
 screenshots/
+*meteorup.sh

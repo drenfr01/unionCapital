@@ -1,4 +1,3 @@
-console.log("Starting eventsSearch");
 SearchSource.defineSource('eventsSearch', function(searchText, options) {
   //I think we overwrite options because there is both a
   //server side and client side def
