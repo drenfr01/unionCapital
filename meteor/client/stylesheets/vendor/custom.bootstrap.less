@@ -6,7 +6,6 @@
 // To fix that remove that file and then recover your changes.
 
 @import "custom.bootstrap.import.less";
-@icon-font-path: "/packages/nemo64_bootstrap-data/bootstrap/fonts/";
 
 
 // @import "bootstrap/less/normalize.less"
@@ -2203,16 +2202,6 @@ input[type="button"] {
 //
 // <a href="#"><span class="glyphicon glyphicon-star"></span> Star</a>
 
-// Import the fonts
-@font-face {
-  font-family: 'Glyphicons Halflings';
-  src: url('@{icon-font-path}@{icon-font-name}.eot');
-  src: url('@{icon-font-path}@{icon-font-name}.eot?#iefix') format('embedded-opentype'),
-       url('@{icon-font-path}@{icon-font-name}.woff2') format('woff2'),
-       url('@{icon-font-path}@{icon-font-name}.woff') format('woff'),
-       url('@{icon-font-path}@{icon-font-name}.ttf') format('truetype'),
-       url('@{icon-font-path}@{icon-font-name}.svg#@{icon-font-svg-id}') format('svg');
-}
 
 // Catchall baseclass
 .glyphicon {

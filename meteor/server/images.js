@@ -1,7 +1,7 @@
 /* global FS */
 /* global Images */
 
-FS.debug = true;
+FS.debug = false;
 
 if (Meteor.settings.env !== 'dev') {
   var imageStore = new FS.Store.S3("images", {
