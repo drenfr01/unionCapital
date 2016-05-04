@@ -1,3 +1,4 @@
+Images = new Mongo.Collection('blahblahblah');
 /*
 FS.debug = false;
 

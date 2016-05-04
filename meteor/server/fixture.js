@@ -393,4 +393,21 @@ Meteor.startup(function () {
       });
     });
   }
+
+  if(Addons.find().count() === 0) {
+    var addons = [
+      {
+        name: 'UCB Button',
+        points: 50
+      },
+      {
+        name: 'Test Addon',
+        points: 100
+      }
+    ];
+
+    _.each(addons, function(addon) {
+      Addons.insert(addon);
+    });
+  }
 });

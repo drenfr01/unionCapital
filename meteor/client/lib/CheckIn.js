@@ -20,7 +20,7 @@ CheckIn = function(defaultHours) {
 
   // Sets the attributes prior to calling the insert function
   // Semiprivate function - should not be called directly
-  self.insertTransaction = function(eventId, imageId, callback) {
+  self.insertTransaction = function(eventId, addons, imageId, callback) {
 
     try {
 
@@ -49,6 +49,12 @@ CheckIn = function(defaultHours) {
       // entirely to stay consistent with the check() function called on the server
       if( imageId )
         self.attributes.imageId = imageId;
+
+      //omits the field entirely, same as above comment
+      //TODO: make this a check for empty
+      if (addons) {
+        self.addons;
+      }
 
       // If lat or lng is null, then try to get it one more time
       // Useful if the user accessed this page from a link or bookmark
@@ -91,7 +97,7 @@ CheckIn = function(defaultHours) {
 //------------- Public functions -------------//
 
 // Checks the user in
-CheckIn.prototype.submitCheckIn = function(eventId, callback) {
+CheckIn.prototype.submitCheckIn = function(eventId, addons, callback) {
   var self = this;
   self.checkingIn.set(true);
 
@@ -111,7 +117,7 @@ CheckIn.prototype.submitCheckIn = function(eventId, callback) {
       }
     });
   } else {
-    self.insertTransaction(eventId, null, newCallback);
+    self.insertTransaction(eventId, addons, null, newCallback);
   }
 };
 
