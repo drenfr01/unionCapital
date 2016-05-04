@@ -41,9 +41,9 @@ cfs:storage-adapter@0.2.3
 cfs:tempstore@0.1.3
 cfs:upload-http@0.0.19
 cfs:worker@0.1.3
-cosmos:browserify@0.9.4
 check@1.2.1
 coffeescript@1.0.17
+cosmos:browserify@0.9.4
 dburles:collection-helpers@1.0.4
 dburles:mongo-collection-instances@0.3.5
 ddp@1.2.5
@@ -78,8 +78,8 @@ iron:location@1.0.11
 iron:middleware-stack@1.0.11
 iron:router@1.0.12
 iron:url@1.0.11
-jsx@0.2.3
 jquery@1.11.8
+jsx@0.2.4
 lai:collection-extensions@0.2.1_1
 launch-screen@1.0.11
 less@2.6.0
@@ -123,14 +123,14 @@ promise@0.6.7
 raix:eventemitter@0.1.3
 rajit:bootstrap3-datepicker@1.5.1
 ramda:ramda@0.19.0
+random@1.0.9
+rate-limit@1.0.4
 react@0.14.3
 react-meteor-data@0.2.4
 react-runtime@0.14.4
 react-runtime-dev@0.14.4
 react-runtime-prod@0.14.4
 react-template-helper@0.2.5
-random@1.0.9
-rate-limit@1.0.4
 reactive-dict@1.1.7
 reactive-var@1.0.9
 reload@1.1.8
@@ -146,6 +146,7 @@ srp@1.0.8
 standard-app-packages@1.0.9
 standard-minifier-css@1.0.6
 standard-minifier-js@1.0.6
+standard-minifiers@1.0.6
 stylus@2.511.5
 templating@1.1.9
 templating-tools@1.0.4
