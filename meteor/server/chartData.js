@@ -1,3 +1,6 @@
+/* global R */
+/* global Transactions */
+
 const getPoints = R.compose(
   R.defaultTo(0),
   R.ifElse(
@@ -7,30 +10,40 @@ const getPoints = R.compose(
   )
 );
 
+function calculatePointsWithUserData(acc, trans) {
+  acc.calculatedTotalPoints = R.defaultTo(0, acc.calculatedTotalPoints) + getPoints(trans);
+  return acc;
+}
+
+const sumPointsForUser = R.curry(function(allUsersDict, userTransactions) {
+  const userProfile = allUsersDict[userTransactions[0].userId];
+  return R.reduce(calculatePointsWithUserData, userProfile, userTransactions);
+});
+
+const joinUserToTransaction = R.curry(function(allUsersDict, transaction) {
+  return {
+    ...allUsersDict[transaction.userId],
+    ...transaction,
+  };
+});
+
 function getPointDataForPartnerOrg(field, transactionsForPartnerOrg, allUsersDict) {
   return R.compose(
     R.map(sumPointsForUser(allUsersDict)),
-    R.groupBy(R.prop('_id'))
+    R.groupBy(R.prop(field)),
+    R.map(joinUserToTransaction(allUsersDict))
   )(transactionsForPartnerOrg);
 }
 
-function addPointsAndUserData(acc, trans) {
-  return {
-    ...acc,
-    totalPoints: R.defaultTo(0, acc.totalPoints) + getPoints(trans),
-  };
-}
-
-const toDict = R.reduce((acc, val) => ({ ...acc, [val._id]: val.profile }), {});
-
-const sumPointsForUser = R.curry(function(allUsersDict, userTransactions) {
-  return R.reduce(addPointsAndUserData, allUsersDict[userTransactions[0].userId])(userTransactions);
-});
+const getUsersDict = R.compose(
+  R.map(R.prop('profile')),
+  R.indexBy(R.prop('_id'))
+);
 
 function getChartData(field) {
   const partnerOrg = 'Family Independence Initiative';
   const transactionsForPartnerOrg = Transactions.find({ partnerOrg: partnerOrg }).fetch();
-  const allUsersDict = toDict(Meteor.users.find({}).fetch());
+  const allUsersDict = getUsersDict(Meteor.users.find({}).fetch());
   return getPointDataForPartnerOrg(field, transactionsForPartnerOrg, allUsersDict);
 }
 
