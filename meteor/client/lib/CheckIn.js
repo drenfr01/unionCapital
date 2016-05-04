@@ -52,8 +52,8 @@ CheckIn = function(defaultHours) {
 
       //omits the field entirely, same as above comment
       //TODO: make this a check for empty
-      if (addons) {
-        self.addons;
+      if (!R.isEmpty(addons)) {
+        self.attributes.addons = addons;
       }
 
       // If lat or lng is null, then try to get it one more time
