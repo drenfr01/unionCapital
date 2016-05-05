@@ -5,12 +5,19 @@ deleteUCBButtons = function() {
     function(trans){
     //TODO: need to find transaction it's linked to...via event?
     //use imageId?, ignore events that don't have an imageId
-    var transToUpdate = Transactions.findOne({imageId: trans.imageId});
-      console.log(Transactions.update({_id: transToUpdate._id, 
-      imageId: {$exists: true}}, 
-      {$push: {addons: {name: "UCB Button", points: 50 }}}));
+    if(!R.isNil(trans.imageId)) {
+      var transToUpdate = Transactions.findOne({
+        'event.name': {$ne: AppConfig.ucbButtonEvent},
+        imageId: trans.imageId});
+      if(!R.isNil(transToUpdate)) {
+        Transactions.update({_id: transToUpdate._id, 
+                            imageId: {$exists: true}}, 
+                            {$push: {addons: {name: "UCB Button", points: 50 }}});
+      }
+    }
   });
-  Transactions.remove({'event.name': AppConfig.ucbButtonEvent});
+  Transactions.remove({'event.name': AppConfig.ucbButtonEvent, 
+    imageId: {$exists: true}});
 };
 
 var backwards = function() {
