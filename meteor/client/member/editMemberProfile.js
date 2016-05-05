@@ -70,7 +70,6 @@ Template.editMemberProfile.events({
     if($("#reducedLunchForm input[type='radio']:checked").val()) attributes.profile.reducedLunch = $("#reducedLunchForm input[type='radio']:checked").val();
     if($('#device').val()) attributes.profile.UCBAppAccess = $('#device').val();
 
-    console.log(attributes);
     Meteor.call('updateUser', attributes, function(error) {
       if(error) {
         addErrorMessage(error.reason);

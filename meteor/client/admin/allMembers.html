@@ -51,6 +51,7 @@
             <th id="lastTransDate" class="tableSort">Last Event Date</th>
             <th id="transCount" class="tableSort"># Transactions</th>
             <th id="points" class="tableSort"># Points</th>
+            <th></th>
           </thead>
           <tbody>
           {{#if Template.subscriptionsReady}}
@@ -62,6 +63,10 @@
                 <td>{{formatDate lastEventDate}}</td>
                 <td>{{numberOfTransactions}}</td>
                 <td>{{totalPoints}}</td>
+                <td><button class="btn btn-warning btn-sm" 
+                    data-impersonate={{memberId}}>
+                    Impersonate
+                  </button></td>
               </tr>
             {{else}}
               <tr><td colspan="6">There are no members to display</td></tr>

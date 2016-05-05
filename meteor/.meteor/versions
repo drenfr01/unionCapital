@@ -61,6 +61,8 @@ email@1.0.12
 facebook@1.2.6
 fastclick@1.0.11
 geojson-utils@1.0.8
+gwendall:body-events@0.1.6
+gwendall:impersonate@0.2.2
 harrison:papa-parse@1.1.1
 houston:admin@2.0.7
 html-tools@1.0.9
