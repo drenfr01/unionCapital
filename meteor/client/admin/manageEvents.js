@@ -42,6 +42,42 @@ Template.manageEvents.helpers({
     return Session.equals("eventTypeSelected", eventType);
   },
 
+  numOfComments: function() {
+    if(this.feedback) {
+      var isComment = function (feedbackItem) {
+        return feedbackItem.feedbackType === AppConfig.feedbackType.comment;
+      }
+      return R.filter(isComment, this.feedback).length || 0;
+    } else {
+      return 0; 
+    }
+  },
+
+  avgRating: function() {
+    if(this.feedback) {
+      var isRating = function(feedbackItem) {
+        return feedbackItem.feedbackType === AppConfig.feedbackType.rating;
+      } 
+
+      const calculateAverageFromArray = R.converge(
+        R.divide,
+        [R.sum, R.length]
+      );
+      
+      //note: could also have done this
+      //with a reduce with a tuple as first 
+      //parameter
+      return R.compose(
+        calculateAverageFromArray,
+        R.pluck('feedbackContent'),
+        R.filter(isRating)
+      )(this.feedback);
+
+    } else {
+      return 'None' 
+    }
+  }
+
 });
 
 Template.manageEvents.events({
