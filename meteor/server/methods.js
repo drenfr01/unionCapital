@@ -129,10 +129,12 @@ Meteor.methods({
       }
     });
 
+
     attributes.email = attributes.email.toLowerCase();
 
     Meteor.users.update(this.userId, {
       $set: {
+        'emails.0.address': attributes.email,
         'profile.firstName': attributes.profile.firstName,
         'profile.lastName': attributes.profile.lastName,
         'profile.street1': attributes.profile.street1,
@@ -151,13 +153,6 @@ Meteor.methods({
         'profile.UCBAppAccess': attributes.profile.UCBAppAccess
       }
     });
-    //Note: this assumes only 1 email address
-    Meteor.users.update(this.userId,
-                        {$push: {emails: {address: attributes.email
-                        }}});
-    Meteor.users.update(this.userId, //{ emails: [ attributes.email ] });
-                        {$pop: {emails: {address: attributes.email
-                        }}});
   },
 
   geocodeAddress: function(address) {
