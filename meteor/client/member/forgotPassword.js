@@ -1,26 +1,11 @@
 Template.forgotPassword.events({
   'click #submit': function(e) {
-    var password = $("#newPassword").val();
-    var confirmPassword = $("#confirmPassword").val();
     var userEmail = $("#userEmail").val();
-
-    var attributes= {
-      email: userEmail,
-      password: password
-    };
-    
-    if(password !== confirmPassword) {
-      addErrorMessage("Passwords do not match!");
+    if(R.is(String, userEmail) && userEmail !== '') {
+      addSuccessMessage('Reset password email sent');
+      Accounts.forgotPassword({email: userEmail});
     } else {
-      //DANGER: is this transmitted in free text on the wire???
-      Meteor.call('adminResetPassword', attributes, function(error) {
-        if(error) {
-          addErrorMessage(error.reason);
-        } else {
-          addSuccessMessage("Password successfully reset! Use new password to login.");
-          Router.go('login');
-        }
-      });
+      addErrorMessage('Please enter a valid email');
     }
   },
   'click #back': function(e) {
