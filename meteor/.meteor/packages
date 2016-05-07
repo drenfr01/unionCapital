@@ -49,7 +49,6 @@ ramda:ramda
 react-template-helper
 jsx
 react-meteor-data
-react
 ecmascript
 matb33:collection-hooks
 standard-minifier-css

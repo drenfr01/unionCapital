@@ -1,5 +1,5 @@
 <template name="memberEngagement">
   <div>
-    {{> highchartsHelper chartId="engagement" chartWidth="100%" charHeight="100%" chartObject=chart}}
+    {{> React component=MemberEngagementChart chartData=chartData refreshChartData=refreshChartData }}
   </div>
 </template>

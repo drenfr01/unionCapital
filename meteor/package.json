@@ -1,0 +1,31 @@
+{
+  "name": "ucb",
+  "version": "1.0.0",
+  "description": "This application is designed to allow members of a community to log their participation in communal events through mobile or desktop devices. Once registered, members can \"check into\" pre-existing events or document their own events through text input, geolocation, and photographs. These submissions will either be auto-approved (if sufficient data like geolocation exists) or sent to partner administrators or super admins for approval.",
+  "main": "includes.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "dependencies": {
+    "rd3": "^0.6.3",
+    "react": "^15.0.2",
+    "react-addons-pure-render-mixin": "^15.0.2",
+    "react-dom": "^15.0.2",
+    "victory": "^0.6.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drenfr01/unionCapital.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/drenfr01/unionCapital/issues"
+  },
+  "homepage": "https://github.com/drenfr01/unionCapital#readme"
+}

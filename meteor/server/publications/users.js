@@ -1,13 +1,17 @@
-Meteor.publish('singleUser', function(userId) {
+/* global Roles */
+/* global MemberEngagementData */
+
+Meteor.publish('memberEngagementData', function() {
+  const user = Meteor.users.findOne({ _id: this.userId });
+
   if (Roles.userIsInRole(this.userId, 'admin')) {
-    return Meteor.users.find(userId);
-  } else if(Roles.userIsInRole(this.userId, 'partnerAdmin')) {
-    //TODO: limit this to only their users?
-    return Meteor.users.find(userId);
-  } else {
-    //TODO: should we limit this for a regular user or is that already
-    //automatically published? (I think it is...)
-    this.ready();
+    return MemberEngagementData.find({});
   }
+  
+  if (!!user && Roles.userIsInRole(this.userId, 'partnerAdmin')) {
+    return MemberEngagementData.find({ _id: user.partnerOrg });
+  }
+
+  return this.ready();
 });
 
