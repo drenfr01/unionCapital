@@ -5,14 +5,16 @@ Meteor.publish("events", function(start, end) {
   selector.eventDate = { $gte: start, $lte: end };
 
   var user = Meteor.users.findOne(this.userId);
+  var userEmail = user.emails[0].address;
   
   selector = _.extend(selector, {$or: [
     {privateEvent: false},
-    {privateWhitelist: this.userId},
+    {privateWhitelist: userEmail},
     {privateWhitelist: user.profile.partnerOrg}
   ]});
 
 
+  console.log(selector);
   return Events.find(selector);
 
 });

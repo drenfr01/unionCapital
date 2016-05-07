@@ -24,7 +24,7 @@
       {{> afQuickField name="privateEvent" trueLabel="Yes" falseLabel="No"
       value=false type="boolean-radios" id="privateEvent"}}
       {{#if isPrivateEvent}}
-        {{> afQuickField name="privateWhitelist" template="blah"}}
+        {{> afQuickField name="privateWhitelist" template="private"}}
       {{/if}}
     </fieldset>
     <button type="button" class="btn btn-default" id="geocodeButton">
@@ -41,6 +41,16 @@
     {{/autoForm}}
   </div>
 </template>
-<template name="blah">
-  <h1>test</h1>
+
+<template name="afArrayField_private">
+  <form class="form-inline">
+    <!-- consider combining these into one with an auto-search -->
+    <div class="form-group">   
+      <input type="text" class="form-control" id="userEmail">
+    </div> 
+    <div class="form-group">
+      <input type="text" class="form-control" id="partnerOrg"
+      placeholder="partnerOrg">
+    </div>
+  </form>
 </template>
