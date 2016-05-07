@@ -4,7 +4,17 @@ Meteor.publish("events", function(start, end) {
   selector.adHoc = false;
   selector.eventDate = { $gte: start, $lte: end };
 
+  var user = Meteor.users.findOne(this.userId);
+  
+  selector = _.extend(selector, {$or: [
+    {privateEvent: false},
+    {privateWhitelist: this.userId},
+    {privateWhitelist: user.profile.partnerOrg}
+  ]});
+
+
   return Events.find(selector);
+
 });
 
 Meteor.publish("singleEvent", function(id) {

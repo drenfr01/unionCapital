@@ -19,6 +19,8 @@ AutoForm.hooks({
   }
 });
 
+var isPrivateEvent = new ReactiveVar(false);
+
 Template.addEvents.onCreated(function() {
   this.subscribe('eventCategories');
   this.subscribe('partnerOrganizations');
@@ -51,6 +53,9 @@ Template.addEvents.helpers({
   },
   isPointsPerHour: function() {
     return Session.equals("displayPointsPerHour", "true");
+  },
+  isPrivateEvent: function() {
+    return isPrivateEvent.get(); 
   }
 });
 
@@ -82,10 +87,14 @@ Template.addEvents.events({
     Router.go('manageEvents');
   },
 
+  'click #privateEvent': function(e) {
+    isPrivateEvent.set(e.target.value);
+  },
+
   'click #submit': function(e) {
-    var isPph = $('#insertEventsForm input[name="isPointsPerHour"]').val();
+    var isPph = $("input[type='radio'][name='isPointsPerHour']:checked").val();
     var pph = $('#insertEventsForm input[name="pointsPerHour"]').val();
-    if (isPph && !pph) {
+    if (isPph === "true" && !pph) {
       addErrorMessage('You must add the number of points per hour');
       return false;
     }

@@ -107,6 +107,15 @@ Events.attachSchema(new SimpleSchema({
     blackbox: true,
     optional: true
   },
+  privateEvent: {
+    type: Boolean,
+    label:'Private Event?'
+  },
+  privateWhitelist: {
+    type: [String],
+    label: 'Who can see this event? Specify a user email(s) or Partner Org(s)',
+    optional: true
+  },
 }));
 
 Events.calculateStartEndDates = function(offset) {
