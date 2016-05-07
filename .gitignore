@@ -8,4 +8,4 @@ tests/a1-package-stubs.js
 meteor/maintainers
 screenshots/
 *meteorup.sh
-/node_modules/
+node_modules/
