@@ -65,9 +65,6 @@ Meteor.publish("eventsForTransactions", function() {
                   .uniq()
                   .value();
 
-  // Add the special button event
-  eventIds.push(Events.findOne({ name: AppConfig.ucbButtonEvent })._id);
-
   return Events.find({ _id: { $in: eventIds } });
 });
 
