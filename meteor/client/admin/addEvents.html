@@ -24,8 +24,19 @@
       {{> afQuickField name="privateEvent" trueLabel="Yes" falseLabel="No"
       value=false type="boolean-radios" id="privateEvent"}}
       {{#if isPrivateEvent}}
-        {{> afQuickField name="privateWhitelist" template="private"}}
+        {{> inputAutocomplete settings=settings id="msg" class="col-xs-12" 
+        placeholder="Enter @useremail or !partnerOrg to search"
+        autocomplete="false"}}
+        <br>
+        <br> 
+        {{#each currentWhitelist}}
+          {{whitelistIdentifier}} 
+          <span class="glyphicon glyphicon-remove" aria-hidden="true">
+          </span>
+          <br>
+        {{/each}}
       {{/if}}
+      <br>
     </fieldset>
     <button type="button" class="btn btn-default" id="geocodeButton">
       Calculate Location
@@ -42,15 +53,10 @@
   </div>
 </template>
 
-<template name="afArrayField_private">
-  <form class="form-inline">
-    <!-- consider combining these into one with an auto-search -->
-    <div class="form-group">   
-      <input type="text" class="form-control" id="userEmail">
-    </div> 
-    <div class="form-group">
-      <input type="text" class="form-control" id="partnerOrg"
-      placeholder="partnerOrg">
-    </div>
-  </form>
+<template name="userTemplate">
+  <span>{{profile.firstName}} {{profile.lastName}} - {{email}}</span>
+</template>
+
+<template name="partnerOrgTemplate">
+  <span>{{name}}</span>
 </template>

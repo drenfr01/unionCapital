@@ -5,16 +5,15 @@ Meteor.publish("events", function(start, end) {
   selector.eventDate = { $gte: start, $lte: end };
 
   var user = Meteor.users.findOne(this.userId);
-  var userEmail = user.emails[0].address;
+  var partnerOrg = PartnerOrgs.findOne({name: user.profile.partnerOrg});
   
   selector = _.extend(selector, {$or: [
     {privateEvent: false},
-    {privateWhitelist: userEmail},
-    {privateWhitelist: user.profile.partnerOrg}
+    {privateWhitelist: this.userId},
+    {privateWhitelist: partnerOrg._id}
   ]});
 
 
-  console.log(selector);
   return Events.find(selector);
 
 });
@@ -123,7 +122,6 @@ Meteor.publish('manageEvents', function(range, institution, category,
 
   var selector = buildManageEventsSelector(this.userId, range, institution,
                                            category, searchText);
-  console.log(selector);
 
   Counts.publish(this, 'eventsCount', Events.find(selector), {
     noReady: true

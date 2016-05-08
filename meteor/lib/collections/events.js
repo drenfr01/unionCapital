@@ -113,7 +113,7 @@ Events.attachSchema(new SimpleSchema({
   },
   privateWhitelist: {
     type: [String],
-    label: 'Who can see this event? Specify a user email(s) or Partner Org(s)',
+    label: 'Who can see this event? Specify a user or Partner Org(s)',
     optional: true
   },
 }));

@@ -1,4 +1,6 @@
 //approvedFlag is boolean which determines if the transaction is pending or already submitted
+UCBMembers = Meteor.users;
+
 Meteor.users.transactionsFor = function(userId, approvedFlag) {
   return Transactions.find(
     { userId: userId, approved: approvedFlag , deleteInd: { $ne: true }},
