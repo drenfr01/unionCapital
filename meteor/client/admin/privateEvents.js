@@ -8,6 +8,11 @@ var isPrivateEvent = new ReactiveVar(false);
 Template.privateEvents.onRendered(function() {
   this.subscribe('partnerOrganizations');
   this.subscribe('allUsers');
+  //set the private event in edit event template
+  if(this.data && this.data.privateEvent) {
+    console.log(this.data.privateEvent);
+    $('#privateEvent').prop('checked',this.data.privateEvent); 
+  };
 });
 
 Template.privateEvents.helpers({

@@ -1,15 +1,4 @@
 AutoForm.hooks({
-  updateEventsForm: {
-    before: {
-      update: function(doc, template) {
-        console.log(doc);
-        console.log(R.pluck('_id',whitelist.find({}, {fields: {_id: 1}}).fetch()));
-        doc.privateWhitelist = R.pluck('_id', 
-          whitelist.find({}, {fields: {_id: 1}}).fetch());
-        return doc;
-      }
-    },
-
     onSuccess: function(formType, result) {
       addSuccessMessage("Event Successfully Changed!");
     },
@@ -17,7 +6,6 @@ AutoForm.hooks({
     onError: function(formType, error) {
       addErrorMessage(error);
     }
-  }
 });
 
 Template.editEvent.onRendered(function() {
@@ -31,6 +19,7 @@ Template.editEvent.onRendered(function() {
     Session.set("displayPointsPerHour", "false");
   }
 
+  whitelist.remove({});
   var whitelistData = this.data.privateWhitelist;
   var template = this;
   this.subscribe('partnerOrganizations');
@@ -90,6 +79,12 @@ Template.editEvent.events({
     Router.go('manageEvents');
   },
   'click #submit': function(e) {
+    //Note: ideally this would be in an Autoform hook,
+    //but I had issues getting it to work (it wouldn't accept
+    //any return value I tried in the return of before.update
+    const whitelistArray = R.pluck('_id', 
+      whitelist.find({}, {fields: {_id: 1}}).fetch());
+    Events.update({_id: this._id}, {$set: {privateWhitelist: whitelistArray}});
     Router.go('manageEvents');
   },
   'change #pointsType': function(e) {
