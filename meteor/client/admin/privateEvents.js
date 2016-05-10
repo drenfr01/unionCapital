@@ -1,4 +1,8 @@
-var testwhitelist = new Mongo.Collection(null);
+/* Globals
+ * whitelist
+*/
+
+whitelist = new Mongo.Collection(null);
 var isPrivateEvent = new ReactiveVar(false);
 
 Template.privateEvents.onRendered(function() {

@@ -1,12 +1,26 @@
 AutoForm.hooks({
   updateEventsForm: {
+    before: {
+      update: function(doc, template) {
+        console.log(doc);
+        console.log(R.pluck('_id',whitelist.find({}, {fields: {_id: 1}}).fetch()));
+        doc.privateWhitelist = R.pluck('_id', 
+          whitelist.find({}, {fields: {_id: 1}}).fetch());
+        return doc;
+      }
+    },
+
     onSuccess: function(formType, result) {
       addSuccessMessage("Event Successfully Changed!");
+    },
+
+    onError: function(formType, error) {
+      addErrorMessage(error);
     }
   }
 });
 
-Template.editEvent.rendered = function() {
+Template.editEvent.onRendered(function() {
   //TODO: this is because the radio button values
   //return true and false in string form,
   //while the object property is stored as a 
@@ -16,7 +30,35 @@ Template.editEvent.rendered = function() {
   } else {
     Session.set("displayPointsPerHour", "false");
   }
-};
+
+  var whitelistData = this.data.privateWhitelist;
+  var template = this;
+  this.subscribe('partnerOrganizations');
+  this.subscribe('allUsers');
+  this.subscribe('eventCategories');
+
+  template.autorun(function() {
+    if(Template.instance().subscriptionsReady()) {
+      console.log(UCBMembers.find().count());
+
+      var insertData = function(docId) {
+        const partnerOrg = PartnerOrgs.findOne({_id: docId});
+        const user = UCBMembers.findOne({_id: docId});
+        if(!R.isNil(partnerOrg)) {
+          whitelist.insert(partnerOrg);  
+        } else if(!R.isNil(user)) {
+          whitelist.insert(user);
+        } else {
+          console.log("No match found for id: " + docId);
+        }
+      }
+
+      R.map(insertData, whitelistData);
+    }
+  
+  });
+
+});
 
 Template.editEvent.helpers({
   editingDoc: function() {
