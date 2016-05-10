@@ -17,6 +17,19 @@
     {{else}}
       {{> afQuickField name="points" id="eventPoints"}}
     {{/if}}
+    {{#if isPrivateEvent}}
+      {{> inputAutocomplete settings=settings id="msg" class="col-xs-12" 
+      placeholder="Enter @useremail or !partnerOrg to search"
+      autocomplete="false"}}
+      <br>
+      <br> 
+      {{#each currentWhitelist}}
+        {{whitelistIdentifier}} 
+        <span class="glyphicon glyphicon-remove" aria-hidden="true">
+        </span>
+        <br>
+      {{/each}}
+    {{/if}}
   </fieldset>
   <button type="button" class="btn btn-default" id="back">Back to Events</button>
   <button type="submit" class="btn btn-primary" id="submit">Confirm</button>

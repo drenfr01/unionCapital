@@ -32,11 +32,12 @@ Template.addEvents.onCreated(function() {
   this.subscribe('allUsers');
 });
 
-Template.addEvents.rendered = function() {
+Template.addEvents.onRendered(function() {
+  whitelist.remove({});
   Session.set('latitude', null);
   Session.set('longitude', null);
   Session.set('displayPointsPerHour', false);
-};
+});
 
 Template.addEvents.helpers({
   'geocodeResultsReturned': function() {
@@ -162,13 +163,3 @@ Template.addEvents.events({
     whitelist.remove(this._id);
   }
 });
-
-Template.userTemplate.helpers({
-  email: function() {
-    if(this && this.emails[0]) {
-      return this.emails[0].address; 
-    } else {
-      return 'No Email';
-    }
-  }
-})

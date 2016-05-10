@@ -23,6 +23,7 @@
       {{/if}}
       {{> afQuickField name="privateEvent" trueLabel="Yes" falseLabel="No"
       value=false type="boolean-radios" id="privateEvent"}}
+      {{> privateEvents}}
       {{#if isPrivateEvent}}
         {{> inputAutocomplete settings=settings id="msg" class="col-xs-12" 
         placeholder="Enter @useremail or !partnerOrg to search"
@@ -53,10 +54,3 @@
   </div>
 </template>
 
-<template name="userTemplate">
-  <span>{{profile.firstName}} {{profile.lastName}} - {{email}}</span>
-</template>
-
-<template name="partnerOrgTemplate">
-  <span>{{name}}</span>
-</template>
