@@ -352,23 +352,6 @@ Meteor.startup(function () {
         pointsPerHour: 100,
         adHoc: true,
         deleteInd: true
-      },
-      //Hacks love company. This allows users to receive 50 bonus points  
-      //if they wear a ucb button and submit a photo
-      {
-        name: AppConfig.ucbButtonEvent,
-        address: 'Boston, MA',
-        url: 'unioncapitalboston.com',
-        description: 'The UCB member wore a UCB button to an event',
-        active: 0,
-        eventDate: new Date(),
-        duration: 0,
-        institution: "Other",
-        category: "Other",
-        isPointsPerHour: false,
-        points: 50,
-        adHoc: true,
-        deleteInd: true
       }
     ];
 
@@ -391,6 +374,23 @@ Meteor.startup(function () {
         adHoc: event.adHoc,
         pointsPerHour: event.pointsPerHour
       });
+    });
+  }
+
+  if(Addons.find().count() === 0) {
+    var addons = [
+      {
+        name: 'UCB Button',
+        points: 50
+      },
+      {
+        name: 'Test Addon',
+        points: 100
+      }
+    ];
+
+    _.each(addons, function(addon) {
+      Addons.insert(addon);
     });
   }
 });

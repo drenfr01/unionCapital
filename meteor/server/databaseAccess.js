@@ -95,8 +95,6 @@ DB = {
       deleteInd: { $ne: true },
     });
 
-    console.log(approvedTransactions);
-
     approvedTransactions.forEach(function(transaction) {
       var event = transaction.event;
       if(event && event.isPointsPerHour) {
@@ -104,6 +102,12 @@ DB = {
         sum += isNaN(val) ? 0 : val;
       } else if(event) {
         sum += isNaN(event.points) ? 0 : event.points;
+      }
+
+      if(transaction.addons) {
+        _.each(transaction.addons, function(addon) {
+          sum += addon.points; 
+        });
       }
     });
 

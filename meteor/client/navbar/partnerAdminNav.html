@@ -24,6 +24,9 @@
         <li><a href="{{pathFor  'manageEvents'}}" id="navSAManageEvents">
           Manage Events
         </a></li>
+        {{#if isImpersonating}}
+          <li><button class="btn btn-danger btn-lg" data-unimpersonate>Stop Impersonating</button></li>
+        {{/if}}
       </ul>
       <ul class="nav navbar-nav navbar-right">
         {{> loginButtons}}

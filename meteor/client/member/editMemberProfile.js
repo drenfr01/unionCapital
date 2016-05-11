@@ -1,3 +1,14 @@
+Template.editMemberProfile.onCreated(function() {
+  this.subscribe('eventCategories');
+  this.subscribe('eventOrgs');
+  this.subscribe('partnerOrganizations');
+  this.subscribe('kids');
+  this.subscribe('races');
+  this.subscribe('ucbappaccess');
+  this.subscribe('numberOfPeople');
+  this.subscribe('partnerOrgSectors');
+});
+
 Template.editMemberProfile.rendered = function() {
   var memberProfile = Meteor.user().profile;
   $('#organizations').val(memberProfile.partnerOrg);
@@ -27,7 +38,7 @@ Template.editMemberProfile.helpers({
     return Meteor.user();
   },
   memberEmail: function() {
-    return Meteor.user().emails[0];
+    return Meteor.user().emails[0].address;
   },
   UCBAppAccess: function() {
     return UCBAppAccess.find();

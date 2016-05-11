@@ -88,7 +88,13 @@ Transactions.attachSchema(new SimpleSchema({
       type: Boolean,
       label: "Flag if member wore a button",
       optional: true
-    }
+    },
+    addons: {
+      type: [Object],
+      label: 'Point modifiers',
+      blackbox: true,
+      optional: true
+    },
 }));
 
 Transactions.allow({

@@ -13,13 +13,18 @@
       <!-- adding timezoneId="America/New_York" caused a number of problems, assuming that everyone is on the east coast for now -->
       {{> afQuickField name="eventDate" type="datetime-local"}}
       {{> afQuickField name="duration" step=".5"}}
-      {{> afQuickField name="isPointsPerHour" id="pointsType" value="checked"
+      {{> afQuickField name="isPointsPerHour" id="pointsType" 
+          trueLabel="Yes" falseLabel="No" value=false 
           type="boolean-radios"}}
       {{#if isPointsPerHour}}
         {{> afQuickField name="pointsPerHour" value=100}}
       {{else}}
         {{> afQuickField name="points"}}
       {{/if}}
+      {{#if Template.subscriptionsReady}}
+        {{> privateEvents}}
+      {{/if}}
+      <br>
     </fieldset>
     <button type="button" class="btn btn-default" id="geocodeButton">
       Calculate Location
@@ -35,3 +40,4 @@
     {{/autoForm}}
   </div>
 </template>
+

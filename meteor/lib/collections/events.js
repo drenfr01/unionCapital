@@ -1,5 +1,6 @@
 EventCategories = new Meteor.Collection('eventCategories');
 
+
 EventCategories.attachSchema({
   name: {
     type: String,
@@ -12,6 +13,7 @@ EventCategories.attachSchema({
 });
 
 EventOrgs = new Meteor.Collection('eventOrgs');
+Feedback = new Mongo.Collection('feedback');
 
 Events = new Meteor.Collection('events');
 Events.attachSchema(new SimpleSchema({
@@ -99,7 +101,21 @@ Events.attachSchema(new SimpleSchema({
   adHoc: {
     type: Boolean,
     label: 'Is an Ad Hoc Event'
-  }
+  },
+  feedback: {
+    type: [Object],
+    blackbox: true,
+    optional: true
+  },
+  privateEvent: {
+    type: Boolean,
+    label:'Private Event?'
+  },
+  privateWhitelist: {
+    type: [String],
+    label: 'Who can see this event? Specify a user or Partner Org(s)',
+    optional: true
+  },
 }));
 
 Events.calculateStartEndDates = function(offset) {

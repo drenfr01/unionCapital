@@ -154,6 +154,12 @@ Router.route('/partnerOrgs', function() {
   name: 'partnerOrgs'
 });
 
+Router.route('/engagement', function() {
+  this.render('memberEngagement');
+}, {
+  name: 'memberEngagement',
+});
+
 Router.route('/partnerAdminView', function() {
   this.render('partnerAdminView');
 },
@@ -173,6 +179,11 @@ Router.route('/uploadEvents', function() {
 },
 {
   name: 'uploadEvents'
+});
+
+Router.route('/feedback/:page?', {
+  name: 'feedback',
+  template: 'feedback'
 });
 
 Router.route('/editEvent/:_id', {
@@ -245,6 +256,16 @@ Router.route('/viewPartnerMemberProfile/:_id', function () {
 Router.route('/manageEvents/:page?', {
   template: 'manageEvents',
   name: 'manageEvents'
+});
+
+Router.route('/invite', {
+  template: 'testCalendar',
+  name: 'testCalendar'
+});
+
+Router.route('/eventsHistory/:page?', {
+  template: 'eventsHistory',
+  name: 'eventsHistory'
 });
 
 Router.route('/partnerAdminPage', function() {

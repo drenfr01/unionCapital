@@ -14,7 +14,8 @@ Template.manageEvents.onCreated(function() {
 
   var template = this;
   template.autorun(function() {
-    var skipCount = (currentPage() - 1) * AppConfig.public.recordsPerPage;
+    var skipCount = (GlobalHelpers.currentPage() - 1) * 
+      AppConfig.public.recordsPerPage;
     template.subscribe('manageEvents', 
                    Session.get('eventTypeSelected'),
                    Session.get('institution'),
@@ -26,16 +27,6 @@ Template.manageEvents.onCreated(function() {
 });
 
 Template.manageEvents.helpers({
-
-  institutions: function() {
-    if (Roles.userIsInRole(Meteor.userId(), 'partnerAdmin')) {
-      return [{ name: Meteor.user().profile.partnerOrg }];
-    } else {
-      var orgs = PartnerOrgs.find().fetch();
-      orgs.push({ name: 'All' });
-      return _.sortBy(orgs, "name");
-    }
-  },
 
   categories: function() {
     var eventCategories = EventCategories.find().fetch();
@@ -51,21 +42,42 @@ Template.manageEvents.helpers({
     return Session.equals("eventTypeSelected", eventType);
   },
 
-  prevPage: function() {
-    var previousPage = currentPage() === 1 ? 1 : currentPage() - 1;
-    return Router.routes.manageEvents.path({page: previousPage});
+  numOfComments: function() {
+    if(this.feedback) {
+      var isComment = function (feedbackItem) {
+        return feedbackItem.feedbackType === AppConfig.feedbackType.comment;
+      }
+      return R.filter(isComment, this.feedback).length || 0;
+    } else {
+      return 0; 
+    }
   },
 
-  nextPage: function() {
-    var nextPage = hasMorePages() ? currentPage() + 1 : currentPage();
-    return Router.routes.manageEvents.path({page: nextPage});
-  },
-  prevPageClass: function() {
-    return currentPage() <= 1 ? "disabled" : "";
-  },
-  nextPageClass: function() {
-    return hasMorePages() ? "" : "disabled";
+  avgRating: function() {
+    if(this.feedback) {
+      var isRating = function(feedbackItem) {
+        return feedbackItem.feedbackType === AppConfig.feedbackType.rating;
+      } 
+
+      const calculateAverageFromArray = R.converge(
+        R.divide,
+        [R.sum, R.length]
+      );
+      
+      //note: could also have done this
+      //with a reduce with a tuple as first 
+      //parameter
+      return R.compose(
+        calculateAverageFromArray,
+        R.pluck('feedbackContent'),
+        R.filter(isRating)
+      )(this.feedback);
+
+    } else {
+      return 'None' 
+    }
   }
+
 });
 
 Template.manageEvents.events({
@@ -127,13 +139,4 @@ Template.manageEvents.events({
     $('#search-box').focus();
   },
 });
-
-var currentPage = function() {
-  return parseInt(Router.current().params.page) || 1;
-}
-
-var hasMorePages = function() {
-  var totalEvents = Counts.get('eventsCount');
-  return currentPage() * parseInt(AppConfig.public.recordsPerPage) < totalEvents;
-}
 

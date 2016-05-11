@@ -10,7 +10,6 @@ CheckIn = function(defaultHours) {
   self.eventDescription = null;
   self.eventDate = null;
   self.category = null;
-  self.hasUCBButton = false;
 
   // Calls insertTransaction and routes the user
   // Private function
@@ -20,7 +19,7 @@ CheckIn = function(defaultHours) {
 
   // Sets the attributes prior to calling the insert function
   // Semiprivate function - should not be called directly
-  self.insertTransaction = function(eventId, imageId, callback) {
+  self.insertTransaction = function(eventId, addons, imageId, callback) {
 
     try {
 
@@ -28,8 +27,7 @@ CheckIn = function(defaultHours) {
 
       self.attributes = {
         userId: Meteor.userId(),
-        hoursSpent: parsedHours ? parsedHours : 0,
-        hasUCBButton: self.hasUCBButton
+        hoursSpent: parsedHours ? parsedHours : 0
       };
 
       // If new, then don't set the eventId to avoid check() errors
@@ -49,6 +47,12 @@ CheckIn = function(defaultHours) {
       // entirely to stay consistent with the check() function called on the server
       if( imageId )
         self.attributes.imageId = imageId;
+
+      //omits the field entirely, same as above comment
+      //TODO: make this a check for empty
+      if (!R.isEmpty(addons)) {
+        self.attributes.addons = addons;
+      }
 
       // If lat or lng is null, then try to get it one more time
       // Useful if the user accessed this page from a link or bookmark
@@ -91,7 +95,7 @@ CheckIn = function(defaultHours) {
 //------------- Public functions -------------//
 
 // Checks the user in
-CheckIn.prototype.submitCheckIn = function(eventId, callback) {
+CheckIn.prototype.submitCheckIn = function(eventId, addons, callback) {
   var self = this;
   self.checkingIn.set(true);
 
@@ -111,7 +115,7 @@ CheckIn.prototype.submitCheckIn = function(eventId, callback) {
       }
     });
   } else {
-    self.insertTransaction(eventId, null, newCallback);
+    self.insertTransaction(eventId, addons, null, newCallback);
   }
 };
 

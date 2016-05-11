@@ -11,3 +11,10 @@ Meteor.publish('singleUser', function(userId) {
   }
 });
 
+Meteor.publish('allUsers', function() {
+  if (Roles.userIsInRole(this.userId, 'admin')) {
+    return UCBMembers.find();
+  } else {
+    this.ready(); 
+  }
+});

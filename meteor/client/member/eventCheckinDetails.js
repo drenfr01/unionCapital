@@ -3,6 +3,7 @@ var checkIn = {};
 
 Template.eventCheckinDetails.onCreated(function() {
   this.subscribe('eventCategories');
+  this.subscribe('addons');
   checkIn = new CheckIn(defaultHours);
 });
 
@@ -31,6 +32,10 @@ Template.eventCheckinDetails.helpers({
 
   categories: function() {
     return EventCategories.find();
+  },
+
+  addons: function() {
+    return Addons.find(); 
   }
 });
 
@@ -44,10 +49,6 @@ Template.eventCheckinDetails.events({
     e.preventDefault();
     // checkIn.takePhoto();
     $('#upPhoto').click();
-  },
-
-  'click #ucbButton': function(e) {
-    checkIn.hasUCBButton = $('#ucbButton').prop('checked');
   },
 
   'change #upPhoto':  function() {
@@ -69,6 +70,8 @@ Template.eventCheckinDetails.events({
 
     var eventId = Router.current().params.id;
 
+    var addons = getAddOns('.addons:checkbox:checked');
+
     // Set the event name if it is an ad hoc transaction
     if (eventId === 'new') {
       checkIn.eventName = $('#eventName').val();
@@ -87,7 +90,7 @@ Template.eventCheckinDetails.events({
 
     // Do the form validation here, then call the submit function
     if(isValid) {
-      checkIn.submitCheckIn(eventId, function(error, result) {
+      checkIn.submitCheckIn(eventId, addons, function(error, result) {
         if(error) {
           addErrorMessage(error.reason);
         } else {
@@ -150,3 +153,12 @@ function addPlugins() {
     orientation: 'top'
   });
 }
+
+function getAddOns(element) {
+  return $(element).map(function() {
+    return {
+      name: this.name,
+      points: parseInt(this.value)
+    };
+  }).get();
+};

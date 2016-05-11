@@ -6,6 +6,9 @@ AutoForm.hooks({
         doc.latitude = Session.get('latitude');
         doc.longitude = Session.get('longitude');
         doc.endTime = addHours(moment(doc.eventDate).toDate(), doc.duration);
+        console.log(R.pluck('_id',whitelist.find({}, {fields: {_id: 1}}).fetch()));
+        doc.privateWhitelist = R.pluck('_id', whitelist.find({}, 
+          {fields: {_id: 1}}).fetch());
         return doc;
       }
     },
@@ -14,21 +17,21 @@ AutoForm.hooks({
       Router.go('manageEvents')
     },
     onError: function(formType, error) {
-      addErrorMessage('There was an error. Please try again.');
+      addErrorMessage(error);
     }
   }
 });
 
 Template.addEvents.onCreated(function() {
   this.subscribe('eventCategories');
-  this.subscribe('partnerOrganizations');
 });
 
-Template.addEvents.rendered = function() {
+Template.addEvents.onRendered(function() {
+  whitelist.remove({});
   Session.set('latitude', null);
   Session.set('longitude', null);
   Session.set('displayPointsPerHour', false);
-};
+});
 
 Template.addEvents.helpers({
   'geocodeResultsReturned': function() {
@@ -51,7 +54,8 @@ Template.addEvents.helpers({
   },
   isPointsPerHour: function() {
     return Session.equals("displayPointsPerHour", "true");
-  }
+  },
+  
 });
 
 Template.addEvents.events({
@@ -82,14 +86,15 @@ Template.addEvents.events({
     Router.go('manageEvents');
   },
 
+
   'click #submit': function(e) {
-    var isPph = $('#insertEventsForm input[name="isPointsPerHour"]').val();
+    var isPph = $("input[type='radio'][name='isPointsPerHour']:checked").val();
     var pph = $('#insertEventsForm input[name="pointsPerHour"]').val();
-    if (isPph && !pph) {
+    if (isPph === "true" && !pph) {
       addErrorMessage('You must add the number of points per hour');
       return false;
     }
 
     return true;
-  }
+  },
 });

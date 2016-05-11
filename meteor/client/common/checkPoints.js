@@ -11,12 +11,18 @@ Template.checkPoints.onCreated(function() {
 Template.checkPoints.helpers({
   approvedEvents: function() {
     var transactions = Meteor.users.transactionsFor(this._id, true).fetch();
-    return _.sortBy(transactions, function(transaction) {
+    return {
+      events: _.sortBy(transactions, function(transaction) {
                       return Date.parse(transaction.transactionDate);
-                    }).reverse();
+                    }).reverse(),
+      title: 'Approved events'
+    };
   },
   pendingEvents: function() {
-    return Meteor.users.transactionsFor(this._id, false);
+    return {
+    events: Meteor.users.transactionsFor(this._id, false),
+    title: 'Events waiting for approval'
+    };
   },
   eventName: function(){
     var event = this.event;
@@ -26,19 +32,70 @@ Template.checkPoints.helpers({
       return "";
     }
   },
-  eventPoints: function(){
-    var event = this.event;
-    if(event) {
-      if(event.isPointsPerHour) {
-        return Math.round(event.pointsPerHour * this.hoursSpent) || '?';
-      } else {
-        return event.points;
-      }
-    } else {
-      return "";
-    }
-  },
   totalPoints: function() {
     return Meteor.users.totalPointsFor(this._id);
+  },
+  
+});
+
+Template.pointTemplate.events({
+  'click .acidjs-rating-stars input': function(e) {
+    Meteor.call('postFeedback', this.event, parseInt(e.target.value), AppConfig.feedbackType.rating,
+      function(err, result) {
+        if(err) {
+          console.log(err)
+        } else {
+          //TODO: disable the stars in a persistent way
+          $(e.target).siblings().prop('disabled', 'disabled');
+          addSuccessMessage('Rated!');
+        }
+      });
+  },
+
+  'click .post': function(e) {
+    Meteor.call('postFeedback', this.event, $(e.target).parent().siblings().val(), 
+      AppConfig.feedbackType.comment, function(err, result) {
+        if(err) {
+          console.log(err);
+        } else {
+          addSuccessMessage('Posted!');
+        }   
+    });
+  },
+});
+
+Template.pointTemplate.helpers({
+  eventsToDisplay: function() {
+    return this.events;
+  },
+
+  rowBackgroundClass: function() {
+    return adhocStatus(this.event) ? "selfie-event" : "member-event";
+  },
+  eventPoints: function(){
+
+    const sum = R.compose(
+        R.reduce((acc, value) => acc + value, 0),
+        R.map(R.prop('points')),
+        R.defaultTo([])
+      )(this.addons);
+
+    var event = this.event;
+    if(event && event.isPointsPerHour) {
+      return sum + Math.round(event.pointsPerHour * this.hoursSpent) || '?';
+    } else if (event && event.points){
+      return sum + event.points;
+    } else {
+      return 'TBD'; 
+    }
+  },
+
+  isUCBEvent: function() {
+    return !adhocStatus(this.event);
   }
 });
+
+//some selfies don't have the adhoc flag for some reason... 
+function adhocStatus(event) {
+  return _.isBoolean(event.adHoc) ? this.event.adHoc : true;
+}

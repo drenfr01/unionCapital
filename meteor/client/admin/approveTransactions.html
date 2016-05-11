@@ -84,8 +84,8 @@
                 <th>Event Description</th>
                 <th>Event Date</th>
                 <th>Event Submission Date</th>
-                <th>Time Spent</th>
-                <th>UCB Button?</th>
+                <th>Time Spent (hours)</th>
+                <th>Addons</th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -96,11 +96,18 @@
               <tr>
                 <td>{{firstName}} {{lastName}}</td>
                 <td>{{event.name}}</td>
-                <td>{{event.description}}</td>
+                <td>{{transactionDescription}}</td>
                 <td>{{formatDate eventDate}}</td>
                 <td>{{formatDate transactionDate}} </td>
-                <td>Hours: {{hoursSpent}}</td>
-                <td>{{ucbButtonEvent}}</td>
+                <td>{{hoursSpent}}</td>
+                <td>
+                  {{#each addons}}
+                  {{name}} - <b>{{points}}</b>
+                    <br>
+                  {{else}}
+                    None
+                  {{/each}}
+                </td>
                 <td>
                   <button type="button" class="btn btn-warning btn-xs showImage"
                     data-toggle="modal" data-target="#showImageModal">

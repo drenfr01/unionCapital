@@ -4,7 +4,18 @@ Meteor.publish("events", function(start, end) {
   selector.adHoc = false;
   selector.eventDate = { $gte: start, $lte: end };
 
+  var user = Meteor.users.findOne(this.userId);
+  var partnerOrg = PartnerOrgs.findOne({name: user.profile.partnerOrg});
+  
+  selector = _.extend(selector, {$or: [
+    {privateEvent: false},
+    {privateWhitelist: this.userId},
+    {privateWhitelist: partnerOrg._id}
+  ]});
+
+
   return Events.find(selector);
+
 });
 
 Meteor.publish("singleEvent", function(id) {
@@ -14,16 +25,30 @@ Meteor.publish("singleEvent", function(id) {
   return Events.find({ _id: id });
 });
 
+//this is used in two places. Once for an admin or 
+//partner admin to check a user's points and then
+//another for a user to check their own points
+//NOTE: this only returns non-selfie events
 Meteor.publish("eventsForUser", function(userId) {
   var self = this;
 
   check(userId, Match.Optional(String));
 
-  if (!Roles.userIsInRole(self.userId, ['admin', 'partnerAdmin']))
+  //set the userId if the user is checking their own points
+  if (!Roles.userIsInRole(self.userId, ['admin', 'partnerAdmin'])) {
     userId = self.userId;
+  }
 
-  var eventIds = Transactions.find({ userId: userId }, { fields: { eventId: 1 } }).fetch();
+  var eventIds = Transactions.find({ userId: userId }, 
+                                   { fields: { eventId: 1 } }
+                                  ).fetch();
   return Events.find({ _id: { $in: eventIds } });
+});
+
+Meteor.publish('eventHistoryForUser', function() {
+  //TODO: when we redo UCB button events we should get rid of this
+  return Transactions.find({userId: this.userId, 
+                           'event.name': {$ne: AppConfig.ucbButtonEvent} });
 });
 
 Meteor.publish("eventsForTransactions", function() {
@@ -40,9 +65,6 @@ Meteor.publish("eventsForTransactions", function() {
                   .pluck('eventId')
                   .uniq()
                   .value();
-
-  // Add the special button event
-  eventIds.push(Events.findOne({ name: AppConfig.ucbButtonEvent })._id);
 
   return Events.find({ _id: { $in: eventIds } });
 });
@@ -100,7 +122,6 @@ Meteor.publish('manageEvents', function(range, institution, category,
 
   var selector = buildManageEventsSelector(this.userId, range, institution,
                                            category, searchText);
-  console.log(selector);
 
   Counts.publish(this, 'eventsCount', Events.find(selector), {
     noReady: true
