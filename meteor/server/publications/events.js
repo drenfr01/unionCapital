@@ -5,7 +5,7 @@ Meteor.publish("events", function(start, end) {
   selector.eventDate = { $gte: start, $lte: end };
 
   var user = Meteor.users.findOne(this.userId);
-  var partnerOrg = PartnerOrgs.findOne({name: user.profile.partnerOrg});
+  var partnerOrg = PartnerOrgs.findOne({name: R.head(user.profile.partnerOrg)});
   
   selector = _.extend(selector, {$or: [
     {privateEvent: false},

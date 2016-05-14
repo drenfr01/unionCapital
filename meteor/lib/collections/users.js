@@ -22,3 +22,18 @@ Meteor.users.deny({
     return true;
   }
 });
+
+//note: this will become more complex as we 
+//implement an organizational hierarchy
+Meteor.users.primaryPartner = function(userId) {
+  var user = this.findOne(userId);
+
+  return R.head(user.profile.partnerOrg);
+}
+
+Meteor.users.helpers({
+  primaryPartnerOrg() {
+    return R.head(this.profile.partnerOrg);
+  }
+})
+

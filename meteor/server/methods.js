@@ -39,7 +39,7 @@ Meteor.methods({
         city: String,
         state: String,
         zip: String,
-        partnerOrg: String,
+        partnerOrg: [String],
         numberOfKids: Match.Optional(String),
         race: Match.Optional(String),
         //TODO: the IDs attached here do not correspond

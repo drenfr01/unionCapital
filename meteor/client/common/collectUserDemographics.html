@@ -51,6 +51,12 @@
             </select>
           </div>
         </form>
+        {{#each partnerOrgs}}
+        <b>{{name}}:</b> {{description}} 
+          <span class="glyphicon glyphicon-remove removePartnerOrg" 
+            area-hidden="true"></span>
+          <br>
+        {{/each}}
       </div>
     </div>
     <div class="row">

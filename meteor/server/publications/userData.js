@@ -17,7 +17,8 @@ function buildUserSelector(user, searchText) {
   if(Roles.userIsInRole(user._id, 'admin')) {
     //no restrictions on admins
   } else if(Roles.userIsInRole(user._id, 'partnerAdmin')) {
-    selector = _.extend(selector, {"profile.partnerOrg": user.profile.partnerOrg, 
+    selector = _.extend(selector, {"profile.partnerOrg": 
+                        {$in: user.profile.partnerOrg}, 
                         roles: { $all: ['user'] }, deleteInd: false});
   } else { //restrict for a user
     selector = _.extend(selector,  {_id: user._id, deleteInd: false});
