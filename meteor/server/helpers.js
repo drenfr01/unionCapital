@@ -21,7 +21,7 @@ ServerHelpers = (function() {
       var partnerAdmin = Meteor.users.findOne({_id: userId});
       
       //TODO: This will perform horribly at scale. Please refactor....
-      var users = Meteor.users.find({"profile.partnerOrg": {$in: {partnerAdmin.primaryPartnerOrg()}}}, 
+      var users = Meteor.users.find({"profile.partnerOrg": {$in: partnerAdmin.primaryPartnerOrg()}}, 
                                     {fields: {_id: 1}}).fetch();
       var usersArray = _.map(users, function(user) {
         return user._id;
