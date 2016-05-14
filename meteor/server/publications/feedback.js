@@ -3,7 +3,7 @@ function buildFeedbackSelector(userId, institution) {
   var selector = {deleteInd: false};
   
   if (Roles.userIsInRole(userId, 'partnerAdmin')) {
-    selector.eventInstitution = Meteor.users.findOne(userId).profile.partnerOrg;
+    selector.eventInstitution = Meteor.users.findOne(userId).primaryPartnerOrg();
   } else {
     //TODO: make All a config value
     if(institution && institution !== "All") {

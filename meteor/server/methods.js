@@ -205,7 +205,7 @@ Meteor.methods({
     if (Roles.userIsInRole(Meteor.userId(), 'admin')) {
       partnerOrg = 'super_admin';
     } else {
-      partnerOrg = Meteor.user().profile.partnerOrg;
+      partnerOrg = Meteor.user().primaryPartnerOrg();
     }
 
     var eventAttributes = {

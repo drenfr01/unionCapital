@@ -59,7 +59,7 @@ Template.editEvent.helpers({
         return {label: institution.name, value: institution.name};
       });
     } else {
-      var institution = Meteor.user().profile.partnerOrg;
+      var institution = Meteor.user().primaryPartnerOrg();
       return [{label: institution, value: institution}];
     }
   },

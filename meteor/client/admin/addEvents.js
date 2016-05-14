@@ -49,7 +49,8 @@ Template.addEvents.helpers({
         return {label: institution.name, value: institution.name};
       });
     } else {
-      var institution = Meteor.user().profile.partnerOrg;
+      //partner admins can only have 1 partner org affiliation
+      var institution = Meteor.user().primaryPartnerOrg();
       return [{label: institution, value: institution}];
     }
   },
