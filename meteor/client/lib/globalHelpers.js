@@ -28,7 +28,7 @@ Template.registerHelper("nextPageClass", function() {
 
 Template.registerHelper("institutions", function() {
   if (Roles.userIsInRole(Meteor.userId(), 'partnerAdmin')) {
-    return [{ name: Meteor.user().profile.partnerOrg }];
+    return [{ name: Meteor.user().primaryPartnerOrg() }];
   } else {
     var orgs = PartnerOrgs.find().fetch();
     orgs.push({ name: 'All' });

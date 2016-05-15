@@ -1,5 +1,6 @@
 //Used to hold organizations user wants to follow
 FollowingOrganizations = new Meteor.Collection(null);
+PartnerOrganizations = new Meteor.Collection(null);
 
 Template.collectUserDemographics.onCreated(function() {
   this.subscribe('eventCategories');
@@ -25,6 +26,9 @@ Template.collectUserDemographics.helpers({
   races: function() {
     return Races.find();
   },
+  partnerOrgs: function(e) {
+    return PartnerOrganizations.find(); 
+  },
   followingOrgs: function() {
     return FollowingOrganizations.find();
   },
@@ -34,6 +38,15 @@ Template.collectUserDemographics.helpers({
 });
 
 Template.collectUserDemographics.events({
+  'change #organizations': function(e) {
+    var partnerOrgDoc = PartnerOrgs.findOne({name: e.target.value});
+    PartnerOrganizations.insert(partnerOrgDoc);
+  },
+
+  'click .removePartnerOrg': function(e) {
+    PartnerOrganizations.remove(this._id); 
+  },
+
   'change #followingOrgs': function(e) {
     FollowingOrganizations.upsert({description: e.target.value}, {description: e.target.value, 
         name: $("#followingOrgs option:selected").text()
@@ -55,7 +68,7 @@ Template.collectUserDemographics.events({
     userAttributes.profile.city = $('#locality').val();
     userAttributes.profile.state = $('#administrative_area_level_1').val();
     userAttributes.profile.zip = $('#postal_code').val();
-    userAttributes.profile.partnerOrg = $('#organizations').val();
+    userAttributes.profile.partnerOrg = R.pluck('name', PartnerOrganizations.find().fetch());
     userAttributes.profile.race = $("#races").val();
     userAttributes.profile.role = 'user';
     userAttributes.profile.followingOrgs = FollowingOrganizations.find().fetch();

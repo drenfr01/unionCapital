@@ -39,7 +39,7 @@ Meteor.methods({
         city: String,
         state: String,
         zip: String,
-        partnerOrg: String,
+        partnerOrg: [String],
         numberOfKids: Match.Optional(String),
         race: Match.Optional(String),
         //TODO: the IDs attached here do not correspond
@@ -205,7 +205,7 @@ Meteor.methods({
     if (Roles.userIsInRole(Meteor.userId(), 'admin')) {
       partnerOrg = 'super_admin';
     } else {
-      partnerOrg = Meteor.user().profile.partnerOrg;
+      partnerOrg = Meteor.user().primaryPartnerOrg();
     }
 
     var eventAttributes = {

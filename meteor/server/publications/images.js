@@ -8,7 +8,7 @@ Meteor.publish('images', function() {
 
   } else if(Roles.userIsInRole(this.userId, 'partnerAdmin')) {
 
-    var users = Meteor.users.find({ 'profile.partnerOrg': user.profile.partnerOrg }).fetch();
+    var users = Meteor.users.find({ 'profile.partnerOrg': {$in: user.profile.partnerOrg }}).fetch();
     return Images.find({ 'metadata.userId': { $in: users }});
 
   } else if(this.userId) {

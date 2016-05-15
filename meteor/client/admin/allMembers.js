@@ -121,7 +121,7 @@ function getMembersData(sortOn, sortOrder) {
   // Restrict to only user-level accounts from own org if partner admin
   // Should be restricted in pub as well, this is just a safety net
   if(Roles.userIsInRole(Meteor.userId(), 'partnerAdmin')) {
-    selector['profile.partnerOrg'] = currentUser.profile.partnerOrg;
+    selector = _.extend(selector, {'profile.partnerOrg': currentUser.primaryPartnerOrg()});
     selector.roles = { $all: ['user'] };
   }
 

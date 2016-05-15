@@ -50,7 +50,7 @@ Meteor.methods({
         userLng: attributes.userLng,
         imageId: attributes.imageId
       };
-      attributes.partnerOrg = currentUser.profile.partnerOrg;
+      attributes.partnerOrg = currentUser.primaryPartnerOrg();
     }
 
     var duplicateTransaction = Transactions.findOne({
