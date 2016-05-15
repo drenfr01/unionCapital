@@ -11,7 +11,7 @@ Meteor.publish('transactions', function(selector) {
   } else if (Roles.userIsInRole(this.userId, 'partnerAdmin')) {
 
     var org = Meteor.users.findOne({ _id: this.userId }).primaryPartnerOrg();
-    selector = _.extend(selector, {partnerOrg: {$in: org}});
+    selector = _.extend(selector, {partnerOrg: org});
     return Transactions.find(selector, {sort: {transactionDate: -1}});
 
   } else {
