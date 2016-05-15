@@ -20,7 +20,7 @@ Template.editEvent.onRendered(function() {
   }
 
   whitelist.remove({});
-  var whitelistData = this.data.privateWhitelist;
+  var whitelistData = this.data.privateWhitelist || [];
   var template = this;
   this.subscribe('partnerOrganizations');
   this.subscribe('allUsers');
@@ -28,7 +28,6 @@ Template.editEvent.onRendered(function() {
 
   template.autorun(function() {
     if(Template.instance().subscriptionsReady()) {
-      console.log(UCBMembers.find().count());
 
       var insertData = function(docId) {
         const partnerOrg = PartnerOrgs.findOne({_id: docId});
