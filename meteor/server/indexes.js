@@ -9,6 +9,8 @@ Meteor.startup(function() {
   Events._ensureIndex({"institution": 1});
   Events._ensureIndex({"category": 1});
   Events._ensureIndex({"eventDate": 1});
+  //range of points descending
+  PointLevels._ensureIndex({"end": -1});
 
   console.log("Ending indexing");
 });

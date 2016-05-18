@@ -393,4 +393,35 @@ Meteor.startup(function () {
       Addons.insert(addon);
     });
   }
+
+  var pointLevels = [
+    {
+      level: 'Member',
+      start: 0,
+      end: 9999,
+      color: '#000000'
+    },
+    {
+      level: 'Silver',
+      start: 10000,
+      end: 49999,
+      color: '#c0c0c0'
+    },
+    {
+      level: 'Gold',
+      start: '50000',
+      end: 99999,
+      color: '#FFD700'
+    },
+    {
+      level: 'Platinum',
+      start: 100000,
+      end: 1000000, //this is really just infinity
+      color: '#e5e4e2'
+    }
+  ];
+
+  if(PointLevels.find().count() === 0) {
+    R.map((pointLevel) => PointLevels.insert(pointLevel), pointLevels); 
+  }
 });

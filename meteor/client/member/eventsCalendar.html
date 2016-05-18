@@ -14,12 +14,7 @@
       </div>
     </div>
     {{#if hasFutureEvents}}
-      {{> eventHeader 'Future Events' }}
       {{> eventPanel type='future' }}
-    {{/if}}
-    {{#if hasPastEvents}}
-      {{> eventHeader 'Past Events' }}
-      {{> eventPanel type='past' }}
     {{/if}}
     {{#if hasNoEvents}}
       {{> eventHeader 'There are no events that meet your criteria' }}
