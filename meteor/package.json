@@ -8,6 +8,7 @@
     "test": "tests"
   },
   "dependencies": {
+    "d3": "^3.5.17",
     "rd3": "^0.6.3",
     "react": "^15.0.2",
     "react-addons-pure-render-mixin": "^15.0.2",

@@ -3,6 +3,7 @@
 
 import React, { PropTypes } from 'react';
 import { VictoryBar, VictoryAxis, VictoryChart } from 'victory';
+import { BarChart } from 'rd3';
 
 const availableGroupings = {
   'gender': 'Gender',
@@ -70,7 +71,8 @@ const MemberEngagementChart = React.createClass({
 
     const selectedData = R.compose(
       R.values,
-      R.mapObjIndexed((val, key) => ({ x: key, y: val })),
+      //R.mapObjIndexed((val, key) => ({ x: key, y: val })),
+      R.mapObjIndexed((val, key) => ({ name: key, values: [{ x: key, y: val }] })),
       R.propOr({}, 'chartData'),
       R.propOr({}, field),
       R.tap(console.log.bind(console)),
@@ -90,6 +92,8 @@ const MemberEngagementChart = React.createClass({
       })
     )(availableGroupings);
 
+    console.log(selectedData);
+
     return (
       <div>
         <select onChange={ this.updateField }>
@@ -98,24 +102,17 @@ const MemberEngagementChart = React.createClass({
         <select onChange={ this.updateParterOrg }>
           <option>Nurtury</option>
         </select>
-        <VictoryChart
-          animate={{ velocity: 0.02 }}
-          width={ 300 }
-          domainPadding={{ x: 100, y: 0 }}
-        >
-          { bar }
-          <VictoryAxis dependentAxis />
-          <VictoryAxis
-            style={{
-              axis: { stroke: 'black' },
-              grid: { strokeWidth: 2 },
-              ticks: { stroke: 'red' },
-              tickLabels: { fontSize: 8 },
-              axisLabel: { fontsize: 16 },
-            }}
-            label={ getDisplayLabelForGroupingId(field) }
+        { selectedData.length &&
+          <BarChart
+            data={ selectedData }
+            width={ 500 }
+            height={ 200 }
+            fill={'#3182bd'}
+            title='Bar Chart'
+            yAxisLabel='Label'
+            xAxisLabel='Value'
           />
-        </VictoryChart>
+        }
       </div>
     );
   },
