@@ -3,6 +3,7 @@ Template.pointsCircle.onCreated(function() {
   self.subscribe('pointlevels');
   self.currentLevel = new ReactiveVar(null)
   self.nextLevel = new ReactiveVar(null);
+  self.pointsToNextLevel = new ReactiveVar(null);
   self.autorun(function() {
 
     self.currentLevel.set(PointLevels.returnLevel(
@@ -10,7 +11,10 @@ Template.pointsCircle.onCreated(function() {
 
     self.nextLevel.set(PointLevels.nextLevel(
       Meteor.user().profile.points));
-    console.log(self.nextLevel.get());
+
+    self.pointsToNextLevel.set(PointLevels.pointsToNextLevel(
+      Meteor.user().profile.points));
+
   });
 });
 
@@ -40,6 +44,6 @@ Template.pointsCircle.helpers({
       Template.instance().currentLevel.get().level;
   },
   pointsToNextLevel: function() {
-    return '10000'; 
+    return Template.instance().pointsToNextLevel.get();
   }
 });
