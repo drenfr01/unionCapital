@@ -72,23 +72,6 @@ Template.pointTemplate.helpers({
   rowBackgroundClass: function() {
     return adhocStatus(this.event) ? "selfie-event" : "member-event";
   },
-  eventPoints: function(){
-
-    const sum = R.compose(
-        R.reduce((acc, value) => acc + value, 0),
-        R.map(R.prop('points')),
-        R.defaultTo([])
-      )(this.addons);
-
-    var event = this.event;
-    if(event && event.isPointsPerHour) {
-      return sum + Math.round(event.pointsPerHour * this.hoursSpent) || '?';
-    } else if (event && event.points){
-      return sum + event.points;
-    } else {
-      return 'TBD'; 
-    }
-  },
 
   isUCBEvent: function() {
     return !adhocStatus(this.event);

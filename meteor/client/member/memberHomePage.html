@@ -7,7 +7,12 @@
     </div>
     <div class="row text-center" id="totalPointsDiv">
       <div class="col-xs-6 page-panel panel-link points-panel">
-        <a href="{{ pathFor 'checkPoints' }}">{{totalPoints}} POINTS</a>
+        <u>{{totalPoints}} POINTS</u>
+        <p>Recent Transactions</p>
+        {{#each approvedPoints}}
+          {{event.name}} - {{eventPoints}}
+          <br>
+        {{/each}}
       </div>
       <div class="col-xs-6 page-panel">
         {{> pointsCircle}}

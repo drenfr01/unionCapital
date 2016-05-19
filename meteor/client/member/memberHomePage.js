@@ -1,10 +1,6 @@
-Template.memberHomePage.rendered = function() {
-
-  //Loads the FB plugin
-  _.defer(function() {
-    FB.XFBML.parse();
-  });
-};
+Template.memberHomePage.onCreated(function() {
+  this.subscribe('transactions', {deleteInd: false, approved: true}, {limit: 5});
+});
 
 Template.memberHomePage.helpers({
 
@@ -21,5 +17,9 @@ Template.memberHomePage.helpers({
       return Meteor.user().profile.points || 0;
     else
       return 'Loading...';
-  }
+  },
+
+  'approvedPoints': function() {
+    return Transactions.find();  
+  },
 });

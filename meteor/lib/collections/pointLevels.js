@@ -22,11 +22,15 @@ PointLevels.attachSchema(new SimpleSchema({
 PointLevels.returnLevel = function(userPoints) {
   //start with lowest level
   var currentLevel = PointLevels.findOne({start: 0});
-  PointLevels.find().forEach(function(level) {
-    if(userPoints > level.end) {
-      currentLevel = level; 
-    }
-  });
+  //note: this relies on a sorted index on points
+  var pointLevels = PointLevels.find().fetch();
+  return R.head(R.filter(x => userPoints <= x.end, pointLevels));
+}
 
-  return currentLevel;
+PointLevels.nextLevel = function(userPoints) {
+  var currentLevel = PointLevels.returnLevel(userPoints);
+  
+  //note: this relies on a sorted index on points
+  var pointLevels = PointLevels.find().fetch();
+  return R.head(R.filter(x => x.end > currentLevel.end, pointLevels));
 }
