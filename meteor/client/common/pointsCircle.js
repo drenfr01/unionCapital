@@ -1,3 +1,5 @@
+import {Circles} from "/client/lib/circles.js";
+
 Template.pointsCircle.onCreated(function() {
   var self = this;
   self.subscribe('pointlevels');
@@ -25,14 +27,7 @@ Template.pointsCircle.onRendered(function() {
     var pointLevel = self.currentLevel.get();
     var nextLevel = self.nextLevel.get();
     if(nextLevel) {
-      $('#pointsCircle').circliful({
-        animationStep: 10,
-        percent: 75,
-        percentageTextSize: 16,
-        text: "to " + nextLevel.level,
-        textColor: nextLevel.color,
-        textStyle: "font-size: 12px" 
-      });
+      console.log(window.Circles);
     }
   });
 
@@ -40,6 +35,7 @@ Template.pointsCircle.onRendered(function() {
 
 Template.pointsCircle.helpers({
   currentLevel: function() {
+    console.log(Circles);
     return Template.instance().currentLevel.get() && 
       Template.instance().currentLevel.get().level;
   },
