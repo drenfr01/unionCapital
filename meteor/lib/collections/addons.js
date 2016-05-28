@@ -8,5 +8,9 @@ Addons.attachSchema(new SimpleSchema({
   points: {
     type: Number,
     label: 'points per add-on'
+  },
+  display: {
+    type: Boolean,
+    label: 'Should I display?'
   }
 }));

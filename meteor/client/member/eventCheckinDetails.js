@@ -35,7 +35,7 @@ Template.eventCheckinDetails.helpers({
   },
 
   addons: function() {
-    return Addons.find(); 
+    return Addons.find({display: true}); 
   }
 });
 
