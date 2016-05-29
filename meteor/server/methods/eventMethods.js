@@ -24,12 +24,14 @@ Meteor.methods({
     //assume user can only check into an event once
     //make sure that for this transaction they have not left feedback before
     //e.g. they left a rating before and now they're leaving a comment
-    var containsFeedback = x => x.name === "Left Feedback"; 
+    var feedbackAddonName = "Left Feedback";
+    var containsFeedback = x => x.name === feedbackAddonName; 
     var feedback = R.filter(containsFeedback, trans.addons || [])
     if(R.isEmpty(feedback)) {
     
-      var addOn = AddOns.findOne({name: 'Left Feedback'});
-      DB.transactions.update(trans._id, {$push: addOn});
+      var addOn = Addons.findOne({name: feedbackAddonName});
+      //note: this db layer auto-recalculates points
+      DB.transactions.update(trans._id, {$push: {addons: addOn}});
     }
 
     Events.update(event._id, {$push: {feedback: feedbackObject} });
