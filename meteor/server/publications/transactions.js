@@ -3,7 +3,7 @@
 Meteor.publish('transactions', function(selector) {
   //check(selector, {approved: Match.Optional(Boolean)});
   var partnerAdmin = Meteor.users.findOne({_id: this.userId});
-  var selector = selector;
+  var selector = _.extend(selector, {deleteInd: false});
   if (Roles.userIsInRole(this.userId, 'admin')) {
 
     return Transactions.find(selector, {sort: {transactionDate: -1}});

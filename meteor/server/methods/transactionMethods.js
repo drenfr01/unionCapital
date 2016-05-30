@@ -126,9 +126,9 @@ Meteor.methods({
     var user = Meteor.users.findOne(transaction.userId);
     emailHelper(user.emails[0].address,
                 AppConfig.adminEmail,
-                'Your Event has been approved',
-                'Thanks for attending ' + transaction.event.name +  "!" +
-                  "You have earned " + points + " points for your service!"
+                "You've earned points!",
+                'Thank you for attending ' + transaction.event.name +  ". " +
+                  "You have earned " + points + " points for your community engagement!"
                );
   },
 });
