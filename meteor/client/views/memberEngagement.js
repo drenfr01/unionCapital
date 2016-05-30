@@ -1,14 +1,22 @@
 /* global MemberEngagementData */
 /* global R */
 
+/*
+ * event category
+ * by org checkbox
+ */
+
 import React, { PropTypes } from 'react';
-import { VictoryBar, VictoryAxis, VictoryChart } from 'victory';
+import Chart from './Chart';
 import { BarChart } from 'rd3';
 
 const availableGroupings = {
   'gender': 'Gender',
   'zip': 'Zip',
   'race': 'Race',
+  'partnerOrg': 'Partner Org',
+  'approvalType': 'Approval Type',
+  'category': 'Category',
 };
 
 function getAvailableGroupingIds() {
@@ -26,6 +34,27 @@ function getDefaultPartnerOrg() {
 
 function getDisplayLabelForGroupingId(groupingId) {
   return availableGroupings[groupingId];
+}
+
+function getSelectedData(chartData, field, partnerOrg) {
+  return R.compose(
+    R.values,
+    R.mapObjIndexed((val, key) => ({ x: key, y: val, label: key })),
+    R.propOr({}, 'chartData'),
+    R.propOr({}, field),
+    R.find(R.propEq('_id', partnerOrg))
+  )(chartData);
+}
+
+function getOptionFragment(displayName, groupingId) {
+  return <option key={ groupingId } value={ groupingId }>{ displayName }</option>;
+}
+
+function getFieldOptions(groupings) {
+  return R.compose(
+    R.values,
+    R.mapObjIndexed(getOptionFragment)
+  )(groupings);
 }
 
 const MemberEngagementChart = React.createClass({
@@ -53,7 +82,6 @@ const MemberEngagementChart = React.createClass({
   updateField: function(event) {
     const { partnerOrg } = this.state;
     const field = event.target.value;
-    console.log(field);
     this.setState({ field });
     this.props.refreshChartData(field, partnerOrg);
   },
@@ -69,55 +97,36 @@ const MemberEngagementChart = React.createClass({
     const { field, partnerOrg } = this.state;
     const { chartData } = this.props;
 
-    const selectedData = R.compose(
-      R.values,
-      //R.mapObjIndexed((val, key) => ({ x: key, y: val })),
-      R.mapObjIndexed((val, key) => ({ name: key, values: [{ x: key, y: val }] })),
-      R.propOr({}, 'chartData'),
-      R.propOr({}, field),
-      R.tap(console.log.bind(console)),
-      R.find(R.propEq('_id', partnerOrg))
-    )(chartData);
-
-    const bar = selectedData.length
-      ? <VictoryBar data={ selectedData } />
-      : null;
-
-    const fieldOptions = R.compose(
-      R.values,
-      R.mapObjIndexed(function(displayName, groupingId) {
-        return (
-          <option key={ groupingId } value={ groupingId }>{ displayName }</option>
-        );
-      })
-    )(availableGroupings);
-
-    console.log(selectedData);
+    const selectedData = getSelectedData(chartData, field, partnerOrg);
+    const fieldOptions = getFieldOptions(availableGroupings);
 
     return (
-      <div>
-        <select onChange={ this.updateField }>
-          { fieldOptions }
-        </select>
-        <select onChange={ this.updateParterOrg }>
-          <option>Nurtury</option>
-        </select>
-        { selectedData.length &&
-          <BarChart
-            data={ selectedData }
-            width={ 500 }
-            height={ 200 }
-            fill={'#3182bd'}
-            title='Bar Chart'
-            yAxisLabel='Label'
-            xAxisLabel='Value'
-          />
-        }
+      <div className="engagement-container">
+        <div className="row">
+          <div className="col-xs-4 col-xs-offset-2">
+            <select className="form-control" onChange={ this.updateField }>
+              { fieldOptions }
+            </select>
+          </div>
+          <div className="col-xs-4">
+            <select className="form-control" onChange={ this.updateParterOrg }>
+              <option>Nurtury</option>
+            </select>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-xs-8 col-xs-offset-2">
+            <Chart
+              chartData={ selectedData }
+              xAxisLabel={ field }
+              yAxisLabel={ '' }
+            />
+          </div>
+        </div>
       </div>
     );
   },
 });
-
 
 Template.memberEngagement.onCreated(function() {
   this.subscribe('memberEngagementData');

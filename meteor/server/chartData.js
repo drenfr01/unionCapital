@@ -50,7 +50,6 @@ const joinUserToTransaction = R.curry(function(allUsersDict, transaction) {
 });
 
 function getPointDataForPartnerOrg(field, transactionsForPartnerOrg, allUsersDict) {
-  console.log(field);
   return R.compose(
     R.map(sumPointsForUser(allUsersDict)),
     R.groupBy(R.prop(field)),
@@ -64,19 +63,30 @@ const getUsersDict = R.compose(
   R.indexBy(R.prop('_id'))
 );
 
-function getChartData(field, partnerOrg) {
-  const options = {
+function getTransactionsForPartnerOrg(partnerOrg) {
+  // project the fields for performance
+  const transactionsOptions = {
     fields: {
       userId: 1,
       timeSpent: 1,
+      category: 1,
+      approvalType: 1,
       'event.isPointsPerHour': 1,
       'event.pointsPerHour': 1,
       'event.points': 1,
     },
   };
 
-  const transactionsForPartnerOrg = Transactions.find({ partnerOrg: partnerOrg }, options).fetch();
-  const allUsersDict = getUsersDict(Meteor.users.find({}).fetch());
+  return Transactions.find({ partnerOrg: partnerOrg }, transactionsOptions).fetch();
+}
+
+function getAllUsers() {
+  return Meteor.users.find({}).fetch();
+}
+
+function getChartData(field, partnerOrg) {
+  const transactionsForPartnerOrg = getTransactionsForPartnerOrg(partnerOrg);
+  const allUsersDict = getUsersDict(getAllUsers());
   return getPointDataForPartnerOrg(field, transactionsForPartnerOrg, allUsersDict);
 }
 
@@ -92,7 +102,7 @@ Meteor.methods({
     check(field, String);
     check(partnerOrg, String);
 
-    console.log(field);
+    this.unblock();
 
     if (!userHasPermissionToAccessMemberDataForPartnerOrg(this.userId, partnerOrg)) {
       throw new Meteor.Error('INVALID_PERMISSONS');
