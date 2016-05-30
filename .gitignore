@@ -9,3 +9,4 @@ meteor/maintainers
 screenshots/
 *meteorup.sh
 *.swo
+mongorestore.sh
