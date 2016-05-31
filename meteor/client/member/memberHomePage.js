@@ -3,23 +3,10 @@ Template.memberHomePage.onCreated(function() {
 });
 
 Template.memberHomePage.helpers({
-
   'currentMemberName': function() {
     if(Meteor.user() && Meteor.user().profile) {
-      return Meteor.user().profile.firstName || "";
-    } else {
-      return "";
+      return Meteor.user().profile.firstName || '';
     }
-  },
-
-  totalPoints: function() {
-    if (Meteor.user())
-      return Meteor.user().profile.points || 0;
-    else
-      return 'Loading...';
-  },
-
-  'approvedPoints': function() {
-    return Transactions.find();  
+    return '';
   },
 });
