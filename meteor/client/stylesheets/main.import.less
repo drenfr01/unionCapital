@@ -32,7 +32,7 @@
 html { height: 100%; }
 body { height: 100%;
     margin: 0 ;
-    background-color: #F9F9F9;
+    background-color: #F5F5F5;
 }
 
 nav {
@@ -140,11 +140,26 @@ h3 small {
 }
 
 /*nav bar*/
-.navbar-default{
-  background-color: #bddc6f;
-  color: #255f8a !important;
+.navbar-default {
+  background-color: #313452;
+  color: white !important;
+  /*background-color: #bddc6f;*/
+  /*color: #255f8a !important;*/
   border: 0px;
+}
 
+.navbar-default .navbar-nav {
+  > .open {
+    a, a:hover, a:active {
+      background-color: transparent;
+    }
+  }
+
+  li {
+    a:hover {
+      background-color: transparent;
+    }
+  }
 }
 
 #logo-home{
@@ -154,7 +169,8 @@ h3 small {
 }
 
 .navbar-toggle .icon-bar{
-  background-color: #979797 !important;
+  background-color: #FFFFFF !important;
+  /*background-color: #979797 !important;*/
 
 }
 
@@ -166,25 +182,25 @@ h3 small {
 }
 
 .navbar-toggle {
-
-  background-color: #f8f8f8 !important;
-  border-color: #dddddd !important;
-
+  background-color: #4F537B !important;
+  border: none;
+  /*background-color: #f8f8f8 !important;*/
+  /*border-color: #dddddd !important;*/
 }
 
 .navbar-brand , .navbar-default .navbar-nav > li > a {
-    color: #255f8a !important;
-
+  /*color: #255f8a !important;*/
+  color: #DAEFFF !important;
 }
 
- .navbar-default .navbar-nav > li > a:hover {
-    background-color: #75c2e7;
-    color: white !important;
+.navbar-default .navbar-nav > li > a:hover {
+  /*background-color: #75c2e7;*/
+  color: white !important;
 }
 
 
 .navbar-default .navbar-nav > li > a:active {
-    background-color: #75c2e7;
+    /*background-color: #75c2e7;*/
     color: white !important;
 }
 
@@ -863,7 +879,15 @@ button > #addMember {
 
 .navbar {
   font-family: @font-family-serif;
-  font-weight: bold;
+  /*font-weight: bold;*/
+}
+
+.navbar-collapse {
+  border-top: none;
+}
+
+.nav-collapse-item {
+  margin-left: 10px;
 }
 
 .attendingHeader {
