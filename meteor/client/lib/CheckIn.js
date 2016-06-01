@@ -2,6 +2,24 @@
 /* global UserPhoto */
 /* global ReactiveVar */
 
+CheckInExistingEvent = function(eventId) {
+  check(eventId, String);
+  this.eventId = eventId;
+};
+
+CheckInNewEvent = function(eventName, eventDescription, category, eventDate) {
+  check(eventName, String);
+  check(eventDescription, String);
+  check(category, String);
+  check(eventDate, Date);
+
+  this.eventId = 'new'
+  this.eventName = eventName;
+  this.eventDescription = eventDescription;
+  this.category = category;
+  this.eventDate = eventDate;
+};
+
 CheckIn = function(defaultHours) {
   var self = this;
 
@@ -13,22 +31,15 @@ CheckIn = function(defaultHours) {
   self.eventDate = null;
   self.category = null;
 
-  // Calls insertTransaction and routes the user
-  // Private function
   function callInsert(attributes, callback) {
     Meteor.call( 'insertTransaction', attributes, callback );
   }
 
   // Sets the attributes prior to calling the insert function
-  // Semiprivate function - should not be called directly
   self._insertTransaction = function(eventId, addons, imageId, callback) {
+    const attributes = self._getValidatedAttributes();
 
     try {
-      const attributes = {
-        userId: Meteor.userId(),
-        hoursSpent: parseFloat(self.hours.get()) || 0,
-      };
-
       // If new, then don't set the eventId to avoid check() errors
       if (eventId === 'new' && self.eventName && self.eventDescription && self.eventDate) {
         attributes.eventName = self.eventName;
@@ -89,6 +100,37 @@ CheckIn = function(defaultHours) {
       }
     }
   };
+};
+
+CheckIn.prototype._getValidatedAttributes = function _getValidatedAttributes() {
+  const { imageId, addons, eventId, event } = this;
+  const hoursSpent = parseFloat(this.hours.get()) || 0;
+  const userId = Meteor.userId();
+
+  const attributes = {
+    ...event,
+    imageId,
+    addons,
+    eventId,
+    hoursSpent,
+    userId,
+  };
+
+  check(attributes, {
+    imageId: Match.Maybe(String),
+    userId: String,
+    hoursSpent: Number,
+    eventId: String,
+    eventName: Match.Maybe(String),
+    eventDescription: Match.Maybe(String),
+    eventDate: Match.Maybe(Date),
+    category: Match.Maybe(String),
+    userLat: Match.Maybe(Number),
+    userLng: Match.Maybe(Number),
+    addons: Match.Maybe([Object]),
+  });
+
+  return attributes;
 };
 
 //------------- Public functions -------------//

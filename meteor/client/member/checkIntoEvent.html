@@ -1,9 +1,6 @@
 <template name="checkIntoEvent">
   <div class="col-xs-12 col-md-4 col-md-offset-4">
     <div class="row">
-      <div id="map-canvas" class="checkin-map"></div>
-    </div>
-    <div class="row">
       <div class="col-xs-12 page-panel page-panel-flush radio-button" id="pastOrCurrentRdoDiv">
         <input type="radio" id="rdoCurrentEvents" name="pastOrCurrentRdo" value="current" checked="checked">
         <label for="rdoCurrentEvents">Current</label>
@@ -22,44 +19,54 @@
       </div>
       <div class="row">
         <div class="panel-group checkInGroup" id="accordion" role="tablist" aria-multiselectable="true">
-          {{#each getEvents}}
-            <div class="panel panel-default">
-              <div class="panel-heading" role="tab" id="heading{{_id}}">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#accordion" href="#panel{{_id}}"
-                    aria-expanded="true" aria-controls="panel{{_id}}">
-                    {{{name}}}
-                  </a>
-                </h4>
-              </div>
-              <div id="panel{{_id}}" class="panel-collapse collapse" role="tabpanel"
-                aria-labelledby="heading{{_id}}">
-                <div class="panel-body">
-                  <table>
-                    <tr>
-                      <td><i>{{{description}}}</i></td>
-                    </tr>
-                    <tr>
-                      <td><b>{{formattedDateRange eventDate duration}}</b></td>
-                    </tr>
-                  </table>
-                  <button type="button" class="btn check-in-button btn-block accordion-button btn-primary" id="{{_id}}">Check In</button>
-                </div>
-              </div>
+          {{ #each getEvents }}
+            {{> eventListPanel }}
+          {{ else }}
+            <div class="col-xs-12 no-events-found">
+              <p>There are no events that meet your filter criteria nearby.</p>
             </div>
-          {{else}}
-            <p>There are no events that meet your filter criteria nearby.</p>
-          {{/each}}
+          {{ /each }}
         </div>
       </div>
-      <div class="row">
-        <div class="col-xs-12 page-panel panel-link ad-hoc-panel text-center">
-          <a href="{{pathFor 'eventCheckinDetails' id='new'}}">
-            Submit Selfie Event
-          </a>
-        </div>
-        <em>Use this option to submit an event not listed above</em>
+      {{> selfieEventPanel }}
+    </div>
+  </div>
+</template>
+
+<template name="eventListPanel">
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="heading{{_id}}">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#panel{{_id}}"
+          aria-expanded="true" aria-controls="panel{{_id}}">
+          {{{ name }}}
+        </a>
+      </h4>
+    </div>
+    <div id="panel{{_id}}" class="panel-collapse collapse" role="tabpanel"
+      aria-labelledby="heading{{_id}}">
+      <div class="panel-body">
+        <table>
+          <tr>
+            <td><i>{{{ description }}}</i></td>
+          </tr>
+          <tr>
+            <td><b>{{ formattedDateRange eventDate duration }}</b></td>
+          </tr>
+        </table>
+        <button type="button" class="btn check-in-button btn-block accordion-button btn-primary" id="{{_id}}">Check In</button>
       </div>
     </div>
+  </div>
+</template>
+
+<template name="selfieEventPanel">
+  <div class="row selfie-button">
+    <div class="col-xs-12 page-panel panel-link ad-hoc-panel text-center">
+      <a href="{{ pathFor 'eventCheckinDetails' id='new' }}">
+        Submit Selfie Event<span class="glyphicon glyphicon-camera"></span>
+      </a>
+    </div>
+    <em>Use this option to submit an event not listed above</em>
   </div>
 </template>

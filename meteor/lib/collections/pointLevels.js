@@ -39,5 +39,5 @@ PointLevels.nextLevel = function(userPoints) {
 
 PointLevels.pointsToNextLevel = function(userPoints) {
   const nextLevel = PointLevels.nextLevel(userPoints);
-  return (nextLevel ? nextLevel.start : 0) - userPoints;
+  return nextLevel ? nextLevel.start - userPoints : 0;
 };
