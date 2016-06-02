@@ -1,22 +1,41 @@
 <template name="eventCheckinDetails">
   <div class="col-xs-12 col-md-4 col-md-offset-4">
-    {{ #if chooseSupercategory }}
-      {{> checkinChooseSupercategory }}
-    {{ else }}
-      {{ #if checkingIn }}
-        {{> checkingInNow }}
-      {{ /if }}
-      <div style="display: {{ checkingIn }}">
-        {{#if recognized}}
-          {{> recongnizedEventInfo }}
-        {{else}}
-          {{> selfieEventInfo }}
-        {{/if}}
-        {{> generalCheckinInfo }}
-        {{> bottomNav buttonType="cancel" }}
-      </div>
+    {{ #if checkingIn }}
+      {{> checkingInNow }}
     {{ /if }}
+    <div style="display: {{ checkingIn }}">
+      {{ #if recognized }}
+        {{> recongnizedEventPanel }}
+      {{else}}
+        {{> selfieEventPanel }}
+      {{/if}}
+      {{> bottomNav buttonType="cancel" }}
+    </div>
   </div>
+</template>
+
+<template name="recongnizedEventPanel">
+  {{> recongnizedEventInfo }}
+  {{> generalCheckinInfo }}
+</template>
+
+<template name="selfieEventPanel">
+  {{ #if chooseSupercategory }}
+    {{> checkinChooseSupercategory }}
+  {{ else }}
+    {{> selfieEventInfo }}
+    {{> generalCheckinInfo }}
+  {{ /if }}
+</template>
+
+<template name="generalCheckinInfo">
+  {{> timeAttendingPanel }}
+  {{> addonCheckboxPanel }}
+  {{ #if hasPhoto }}
+    {{> hasPhotoReadyForCheckin }}
+  {{else}}
+    {{> noPhotoReadyForCheckin }}
+  {{/if}}
 </template>
 
 <template name="checkingInNow">
@@ -67,16 +86,6 @@
   </div>
 </template>
 
-<template name="generalCheckinInfo">
-  {{> timeAttendingPanel }}
-  {{> addonCheckboxPanel }}
-  {{ #if hasPhoto }}
-    {{> hasPhotoReadyForCheckin }}
-  {{else}}
-    {{> noPhotoReadyForCheckin }}
-  {{/if}}
-</template>
-
 <template name="timeAttendingPanel">
   <div class="row">
     <div class="col-xs-12 page-panel text-center time-attending-panel">
@@ -99,12 +108,17 @@
 
 <template name="checkinChooseSupercategory">
   <div class="row">
-    <div class="col-xs-6 page-panel text-center">
-      test
+    <div class="col-xs-12 text-center">
+      <h4>Choose Selfie Category</h4>
     </div>
-    <div class="col-xs-6 page-panel text-center">
-      hello
-    </div>
+  </div>
+  <div class="row choose-super">
+    {{ #each supercategories }}
+      <div class="col-xs-6 page-panel text-center">
+        <p>{{ name }}</p>
+        <div class="glyphicon {{ icon }}"></div>
+      </div>
+    {{ /each }}
   </div>
 </template>
 
