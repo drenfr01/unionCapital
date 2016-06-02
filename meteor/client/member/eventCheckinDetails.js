@@ -66,14 +66,33 @@ Template.eventCheckinDetails.rendered = function() {
   addPlugins();
 };
 
-Template.eventCheckinDetails.helpers({
+Template.selfieEventInfo.helpers({
+  categories: function() {
+    return EventCategories.find();
+  },
+});
 
-  'timeAttending': function() {
+Template.timeAttendingPanel.helpers({
+  timeAttending: function() {
     return checkIn ? checkIn.hours.get() : defaultHours;
   },
+});
 
-  'hasPhoto': function() {
+Template.addonCheckboxPanel.helpers({
+  addons: function() {
+    return Addons.find(); 
+  },
+});
+
+Template.generalCheckinInfo.helpers({
+  hasPhoto: function() {
     return checkIn ? checkIn.getPhoto() : false;
+  },
+});
+
+Template.eventCheckinDetails.helpers({
+  chooseSupercategory: function() {
+    return false;
   },
 
   checkingIn: function() {
@@ -86,18 +105,9 @@ Template.eventCheckinDetails.helpers({
   recognized: function() {
     return !(Router.current().params.id === 'new');
   },
-
-  categories: function() {
-    return EventCategories.find();
-  },
-
-  addons: function() {
-    return Addons.find(); 
-  },
 });
 
 Template.eventCheckinDetails.events({
-
   'change #durationSlider': function() {
     checkIn.hours.set($('#durationSlider').val());
   },
@@ -177,6 +187,6 @@ Template.eventCheckinDetails.events({
 });
 
 Template.eventCheckinDetails.destroyed = function () {
-  // make sure to free the memory?
+  // make sure to free the memory since this is in the closure, not the template
   checkIn = {};
 };

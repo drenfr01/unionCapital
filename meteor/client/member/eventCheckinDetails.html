@@ -1,98 +1,148 @@
 <template name="eventCheckinDetails">
   <div class="col-xs-12 col-md-4 col-md-offset-4">
-    {{#if checkingIn}}
-      <h1>Checking in...</h1>
-      {{>loading}}
-    {{/if}}
-    <div style="display: {{ checkingIn }}">
-      {{#if recognized}}
-        <div class="row">
-          <div class="col-xs-12 page-panel">
-            <h3>{{name}}</h3>
-            <hr class="panel-divider">
-            <p>{{description}}</p>
-          </div>
+    {{ #if chooseSupercategory }}
+      {{> checkinChooseSupercategory }}
+    {{ else }}
+      {{ #if checkingIn }}
+        {{> checkingInNow }}
+      {{ /if }}
+      <div style="display: {{ checkingIn }}">
+        {{#if recognized}}
+          {{> recongnizedEventInfo }}
+        {{else}}
+          {{> selfieEventInfo }}
+        {{/if}}
+        {{> generalCheckinInfo }}
+        {{> bottomNav buttonType="cancel" }}
+      </div>
+    {{ /if }}
+  </div>
+</template>
+
+<template name="checkingInNow">
+  <h2>Checking in...</h2>
+  {{> loading }}
+</template>
+
+<template name="recongnizedEventInfo">
+  <div class="row">
+    <div class="col-xs-12 page-panel">
+      <h3>{{name}}</h3>
+      <hr class="panel-divider">
+      <p>{{description}}</p>
+    </div>
+  </div>
+</template>
+
+<template name="selfieEventInfo">
+  <div class="row">
+    <div class="col-xs-12 page-panel text-center">
+      <h3>Selfie Event Details</h3>
+      <form role="form" id="eventDescForm">
+        <div class="form-group">
+          <input type="text" class="form-control" id="eventName" placeholder="Event Name" required>
         </div>
-      {{else}}
-        <div class="row">
-          <div class="col-xs-12 page-panel text-center">
-            <h3>Selfie Event Details</h3>
-            <form role="form" id="eventDescForm">
-              <div class="form-group">
-                <input type="text" class="form-control" id="eventName" placeholder="Event Name" required>
-              </div>
-              <div class="form-group">
-                <textarea maxlength="140" rows="2" class="form-control" id="eventDescription" placeholder="Event Description" required></textarea>
-              </div>
-            </form>
-            <form role="form" id="organizationForm">
-              <div class="form-group">
-                <label for="categories">Event Category</label>
-                <select class="form-control" id="categories" required>
-                  <option value="" selected="selected">Select Option Below</option>
-                  {{#each categories}}
-                  <option>{{name}}</option>
-                  {{/each}}
-                </select>
-              </div>
-            </form>
-            <form id="eventDate">
-              <label for="adHocEventDate">Event Date</label>
-              <div class="input-group date">
-                <input type="text" class="form-control" id="adHocEventDate" required><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-              </div>
-            </form>
-          </div>
+        <div class="form-group">
+          <textarea maxlength="140" rows="2" class="form-control" id="eventDescription" placeholder="Event Description" required></textarea>
         </div>
-      {{/if}}
-        <div class="row">
-          <div class="col-xs-12 page-panel text-center time-attending-panel">
-            <p>I was here for <span class="time-attending">{{timeAttending}}</span> hours!</p>
-            <div id="durationSlider" class="no-ui-slider"></div>
-          </div>
+      </form>
+      <form role="form" id="organizationForm">
+        <div class="form-group">
+          <label for="categories">Event Category</label>
+          <select class="form-control" id="categories" required>
+            <option value="" selected="selected">Select Option Below</option>
+            {{ #each categories }}
+              <option>{{ name }}</option>
+            {{ /each }}
+          </select>
         </div>
-        <div class="row">
-          <div class="col-xs-12 page-panel text-center" id="checkboxes">
-            <p><i>Select all that apply</i></p>
-            {{#each addons}}
-              <label class="checkbox-inline">
-                <input type="checkbox" id="{{_id}}" name="{{name}}" value="{{points}}"
-                class="addons">
-                  {{name}}
-              </label>
-            {{/each}}
-          </div>
+      </form>
+      <form id="eventDate">
+        <label for="adHocEventDate">Event Date</label>
+        <div class="input-group date">
+          <input type="text" class="form-control" id="adHocEventDate" required><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
         </div>
-        {{#if hasPhoto}}
-        <div class="row">
-          <div class="col-xs-12 page-panel page-panel-flush photo-panel panel-link" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url({{hasPhoto}});" id="photoPanel">
-            <div class="flush-panel-text">
-              <span class="glyphicon glyphicon-remove pull-left" id="removePhoto"></span><span class="text">Click To Remove Photo</span>
-              <!-- <span class="glyphicon glyphicon-chevron-right pull-right" id="viewPhoto"></span> -->
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12 page-panel panel-link text-center check-in check-in-confirm">
-            <a href="#">Confirm<br>Check-In</a>
-          </div>
-        </div>
-      {{else}}
-        <form class="hidden-input">
-          <input type="file" name="photo" accept="image/*" capture="camera" id="upPhoto">
-        </form>
-        <div class="row">
-          <div class="col-xs-12 page-panel panel-link photo-checkin text-center" id="addPhoto">
-            <a href="#">Add Photo <span class="glyphicon glyphicon-camera icon-btn"></span></a>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12 page-panel panel-link no-photo-checkin text-center check-in">
-            <a href="#">Check in Without Photo</a>
-          </div>
-        </div>
-      {{/if}}
-      {{> bottomNav buttonType="cancel" }}
+      </form>
+    </div>
+  </div>
+</template>
+
+<template name="generalCheckinInfo">
+  {{> timeAttendingPanel }}
+  {{> addonCheckboxPanel }}
+  {{ #if hasPhoto }}
+    {{> hasPhotoReadyForCheckin }}
+  {{else}}
+    {{> noPhotoReadyForCheckin }}
+  {{/if}}
+</template>
+
+<template name="timeAttendingPanel">
+  <div class="row">
+    <div class="col-xs-12 page-panel text-center time-attending-panel">
+      <p>I was here for <span class="time-attending">{{ timeAttending }}</span> hours!</p>
+      <div id="durationSlider" class="no-ui-slider"></div>
+    </div>
+  </div>
+</template>
+
+<template name="addonCheckboxPanel">
+  <div class="row">
+    <div class="col-xs-12 page-panel text-center" id="checkboxes">
+      <p><i>Select all that apply</i></p>
+      {{ #each addons }}
+        {{> addonCheckbox }}
+      {{ /each }}
+    </div>
+  </div>
+</template>
+
+<template name="checkinChooseSupercategory">
+  <div class="row">
+    <div class="col-xs-6 page-panel text-center">
+      test
+    </div>
+    <div class="col-xs-6 page-panel text-center">
+      hello
+    </div>
+  </div>
+</template>
+
+<template name="addonCheckbox">
+  <label class="checkbox-inline">
+    <input type="checkbox" id="{{_id}}" name="{{name}}" value="{{points}}" class="addons">
+    {{ name }}
+  </label>
+</template>
+
+<template name="noPhotoReadyForCheckin">
+  <form class="hidden-input">
+    <input type="file" name="photo" accept="image/*" capture="camera" id="upPhoto">
+  </form>
+  <div class="row">
+    <div class="col-xs-12 page-panel panel-link photo-checkin text-center" id="addPhoto">
+      <a href="#">Add Photo <span class="glyphicon glyphicon-camera icon-btn"></span></a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 page-panel panel-link no-photo-checkin text-center check-in">
+      <a href="#">Check in Without Photo</a>
+    </div>
+  </div>
+</template>
+
+<template name="hasPhotoReadyForCheckin">
+  <div class="row">
+    <div class="col-xs-12 page-panel page-panel-flush photo-panel panel-link" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url({{hasPhoto}});" id="photoPanel">
+      <div class="flush-panel-text">
+        <span class="glyphicon glyphicon-remove pull-left" id="removePhoto"></span><span class="text">Click To Remove Photo</span>
+        <!-- <span class="glyphicon glyphicon-chevron-right pull-right" id="viewPhoto"></span> -->
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 page-panel panel-link text-center check-in check-in-confirm">
+      <a href="#">Confirm<br>Check-In</a>
     </div>
   </div>
 </template>
