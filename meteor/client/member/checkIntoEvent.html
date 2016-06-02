@@ -28,7 +28,7 @@
           {{ /each }}
         </div>
       </div>
-      {{> selfieEventPanel }}
+      {{> selfieEventCheckinButton }}
     </div>
   </div>
 </template>
@@ -60,7 +60,7 @@
   </div>
 </template>
 
-<template name="selfieEventPanel">
+<template name="selfieEventCheckinButton">
   <div class="row selfie-button">
     <div class="col-xs-12 page-panel panel-link ad-hoc-panel text-center">
       <a href="{{ pathFor 'eventCheckinDetails' id='new' }}">

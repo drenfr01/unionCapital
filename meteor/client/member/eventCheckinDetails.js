@@ -90,11 +90,31 @@ Template.generalCheckinInfo.helpers({
   },
 });
 
-Template.eventCheckinDetails.helpers({
-  chooseSupercategory: function() {
-    return false;
+Template.checkinChooseSupercategory.helpers({
+  supercategories: function() {
+    return [{
+      name: 'Healthcare',
+      icon: 'glyphicon-ok',
+    }, {
+      name: 'smiles',
+      icon: 'glyphicon-heart',
+    }, {
+      name: 'lumpy',
+      icon: 'glyphicon glyphicon-star',
+    }, {
+      name: 'friend',
+      icon: 'glyphicon glyphicon-user',
+    }];
   },
+});
 
+Template.selfieEventPanel.helpers({
+  chooseSupercategory: function() {
+    return true;
+  },
+});
+
+Template.eventCheckinDetails.helpers({
   checkingIn: function() {
     if (checkIn && checkIn.checkingIn.get()) {
       return 'none';

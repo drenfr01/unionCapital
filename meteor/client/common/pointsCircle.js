@@ -18,12 +18,13 @@ Template.pointsCircle.onCreated(function() {
 Template.pointsCircle.onRendered(function() {
   var self = this;
 
+  console.warn('make this percent real...');
   self.autorun(function() {
     var nextLevel = self.nextLevel.get();
     if(nextLevel) {
       $('.pointsCircle').empty();
       $('.pointsCircle').circliful({
-        animationStep: 10,
+        animationStep: 20,
         percent: 75,
         percentageTextSize: 16,
         text: 'to ' + nextLevel.level,
