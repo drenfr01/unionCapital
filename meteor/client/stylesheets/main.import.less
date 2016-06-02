@@ -512,6 +512,10 @@ button > #addMember {
     margin-bottom: 0;
     margin-top: 0;
   }
+
+  &.panel-link {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.07),0 2px 10px 0 rgba(0, 0, 0, 0.05);
+  }
 }
 
 .title-panel h3 {
@@ -711,23 +715,24 @@ button > #addMember {
 
 .photo-checkin {
   font-size: 180%;
-  background-color: blue;
-  color: white;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  background-color: white;
+  color: #9DC530;
 }
 
 .no-photo-checkin {
   font-size: 120%;
-  background-color: green;
-  color: white;
+  background-color: #696C8E;
+  color: #E0E0E0;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .check-in-confirm {
   height: 300%;
-  font-size: 250%;
-  background-color: green;
+  font-size: 150%;
+  background-color: #2F2F38;
   color: white;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.95), 0 2px 10px 0 rgba(0, 0, 0, 0.05);
 }
 
 .no-ui-slider {
@@ -740,11 +745,10 @@ button > #addMember {
 }
 
 .photo-panel {
-  /*height: 50px;*/
   background-size: 100%;
   background-position-y: -300px;
   font-size: 130%;
-  color: white;
+  /*color: white;*/
   margin-top: 5px;
   margin-bottom: 5px;
 }
@@ -1108,7 +1112,15 @@ button > #addMember {
     pointer-events: none;
 }
 
+.event-history-page {
+  .row + .row > .event-history {
+    border-top: 1px solid @background-color;
+  }
+}
+
 .event-history {
+  padding-bottom: 10px;
+
   .panel {
     border: none;
   }

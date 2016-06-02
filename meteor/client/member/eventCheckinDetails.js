@@ -1,13 +1,23 @@
 /* global wNumb */
 /* global CheckIn */
+/* global CheckInExistingEvent */
+/* global CheckInNewEvent */
 /* global EventCategories */
 /* global Addons */
+/* global addErrorMessage */
+/* global addSuccessMessage */
 
 const defaultHours = 1;
 let checkIn = {};
 
 function validateFields() {
   return $('#eventName').val() && $('#eventDescription').val();
+}
+
+function validateNewEventForms() {
+  const forms = ['#eventDescForm', '#organizationForm', '#adHocEventDate'];
+  forms.forEach(selector => $(selector).validate());
+  return forms.every(selector => $(selector).valid());
 }
 
 function addPlugins() {
@@ -111,36 +121,33 @@ Template.eventCheckinDetails.events({
   // Async, pass the checkin
   'click .check-in': function(e) {
     e.preventDefault();
+    const eventId = Router.current().params.id;
 
-    //defaults to true b/c only ad-hoc events need checking
-    var isValid = true;
-    var eventId = Router.current().params.id;
-    var addons = getAddOns('.addons:checkbox:checked');
+    let event = null;
+    let isValid = true;
 
-    // Set the event name if it is an ad hoc transaction
     if (eventId === 'new') {
       const eventName = $('#eventName').val();
       const eventDescription = $('#eventDescription').val();
       const category = $('#categories').val();
       const eventDate = new Date($('#adHocEventDate').val());
 
-      const event = new CheckInNewEvent(eventName, eventDescription, category, eventDate);
+      event = new CheckInNewEvent(eventName, eventDescription, category, eventDate);
 
-      //Validate form
-      $('#eventDescForm').validate();
-      $('#organizationForm').validate();
-      $('#adHocEventDate').validate();
-
-      isValid = $('#eventDescForm').valid() && $('#organizationForm').valid() && $('#adHocEventDate').valid();
+      isValid = validateNewEventForms();
+    } else {
+      event = new CheckInExistingEvent(eventId);
     }
 
-    // Do the form validation here, then call the submit function
+    checkIn.setEvent(event);
+
+    const addons = getAddOns('.addons:checkbox:checked');
+    checkIn.setAddons(addons);
+
     if(isValid) {
-      checkIn.submitCheckIn(eventId, addons, function(error, result) {
-        if(error) {
-          addErrorMessage(error.reason);
-        } else {
-          if (result  === 'not_allowed') {
+      checkIn.submitCheckIn()
+        .then(function(result) {
+          if (result === 'not_allowed') {
             addErrorMessage('This type of check-in is not allowed');
           } else if (result === 'auto') {
             addSuccessMessage('Sucessfully checked in!');
@@ -149,8 +156,12 @@ Template.eventCheckinDetails.events({
             addSuccessMessage('Check-in submitted for approval');
             Router.go('memberHomePage');
           }
-        }
-      });
+        })
+        .catch(function(err) {
+          addErrorMessage(err.reason || err.message);
+        });
+    } else {
+      addErrorMessage('Please fill out all fields');
     }
     return false;
   },
