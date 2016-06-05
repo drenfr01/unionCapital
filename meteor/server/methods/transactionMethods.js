@@ -13,6 +13,7 @@ Meteor.methods({
       userLng: Match.Optional(Number),
       addons: Match.Optional([Object])
     });
+
     var currentUser = Meteor.user();
     // Determines whether this transaction requires approval
     attributes.approvalType = CheckInRules.run(attributes);
@@ -70,11 +71,10 @@ Meteor.methods({
     }
 
     // Check for duplicate submissions
-    if(attributes.eventId && 
-       Transactions.findOne({userId: currentUser._id, eventId: attributes.eventId})) {
+    if(attributes.eventId !== 'new' && Transactions.findOne({userId: currentUser._id, eventId: attributes.eventId})) {
       throw new Meteor.Error(400, "You have already checked into this event");
     } else if (duplicateTransaction){
-     throw new Meteor.Error(400, "This may be a duplicate submission");
+      throw new Meteor.Error(400, "This may be a duplicate submission");
     } else {
 
       // Only insert if allowed approval type - 

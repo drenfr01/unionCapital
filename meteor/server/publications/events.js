@@ -1,26 +1,37 @@
+/* global AppConfig */
+/* global PartnerOrgs */
+/* global Roles */
+/* global Counts */
+/* global Transactions */
+/* global Events */
+/* global R */
+
+function getPrimaryPartnerOrgName(user) {
+  return R.head(user.profile.partnerOrg);
+}
+
 Meteor.publish("events", function(start, end) {
-  var selector = {};
-  selector.deleteInd = false;
-  selector.adHoc = false;
-  selector.eventDate = { $gte: start, $lte: end };
+  const user = Meteor.users.findOne(this.userId);
+  const partnerOrg = PartnerOrgs.findOne({ name: getPrimaryPartnerOrgName(user) });
 
-  var user = Meteor.users.findOne(this.userId);
-  var partnerOrg = PartnerOrgs.findOne({name: R.head(user.profile.partnerOrg)});
-  
-  selector = _.extend(selector, {$or: [
-    {privateEvent: false},
-    {privateWhitelist: this.userId},
-    {privateWhitelist: partnerOrg._id}
-  ]});
-
+  const selector = {
+    deleteInd: false,
+    adHoc: false,
+    eventDate: { $gte: start, $lte: end },
+    $or: [
+      { privateEvent: false },
+      { privateWhitelist: this.userId },
+      { privateWhitelist: partnerOrg._id },
+    ],
+  };
 
   return Events.find(selector);
-
 });
 
 Meteor.publish("singleEvent", function(id) {
-  if (!id)
+  if (!id) {
     throw new Error('Bad event id in subscription');
+  }
 
   return Events.find({ _id: id });
 });
@@ -105,7 +116,7 @@ function buildManageEventsSelector(userId, range, institution, category, searchT
 
   if(searchText) {
     selector = _.extend(selector, {name: {$regex: searchText, $options: "i"}});
-  };
+  }
 
   return selector;
 }
@@ -123,9 +134,7 @@ Meteor.publish('manageEvents', function(range, institution, category,
   var selector = buildManageEventsSelector(this.userId, range, institution,
                                            category, searchText);
 
-  Counts.publish(this, 'eventsCount', Events.find(selector), {
-    noReady: true
-  });
+  Counts.publish(this, 'eventsCount', Events.find(selector), { noReady: true });
 
   var eventOptions = {limit: AppConfig.public.recordsPerPage, skip: skipCount};
   return Events.find(selector, eventOptions);

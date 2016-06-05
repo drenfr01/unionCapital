@@ -1,11 +1,29 @@
 <template name="pointsCircle">
-  <div class="row">
-    <div class="col-xs-8 col-xs-offset-2 text-left">
-      <p>Current Level: {{currentLevel}}</p>
-      <p>Points to next level: {{pointsToNextLevel}}</p>
+  <div class="row text-center homepage-points-panel">
+    <div class="col-xs-12 page-panel panel-link">
+      <a href="{{ pathFor 'checkPoints' }}">
+        <div class="grid">
+          <div class="col">
+            <h3 class="data-point" style="color: {{ currentLevelColor }};">{{ currentLevel }}</h3>
+            <p class="subtitle">current level</p>
+          </div>
+          <div class="col">
+            <h3 class="data-point">{{ formatNumber totalPoints }}</h3>
+            <p class="subtitle">points</p>
+          </div>
+        </div>
+      </a>
     </div>
-    <div class="col-xs-12">
-      <div class="circle" id="circle-1">
+    <div class="col-xs-12 page-panel panel-link">
+      <div class="grid">
+        <div class="col circle">
+          <div class="pointsCircle">
+          </div>
+        </div>
+        <div class="col">
+          <h3 class="data-point">{{ formatNumber pointsToNextLevel }}</h3>
+          <p class="subtitle">points to next level</p>
+        </div>
       </div>
     </div>
   </div>

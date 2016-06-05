@@ -105,6 +105,10 @@ Template.registerHelper('ifNotEmpty', function(item, options) {
 	}
 });
 
+Template.registerHelper('formatNumber', function(number) {
+  return number ? Number(number).toLocaleString() : 0;
+});
+
 Template.registerHelper('eventPoints', function() {
     const sum = R.compose(
         R.reduce((acc, value) => acc + value, 0),

@@ -9,32 +9,36 @@
         <span class="icon-bar"></span>
       </button>
       <a href="{{pathFor 'memberHomePage'}}">
-        <img class="UCB-nav-logo" border="0" src="/images/UCB-Logo-Acronym.png"
+        <img class="UCB-nav-logo" border="0" src="/images/UCB-Logo-Acronym-Light.png"
         alt="UCB Logo"  height="40">
       </a>
     </div>
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="nav navbar-nav">
-        <li><a href="{{pathFor 'checkin'}}" id="navCheckIn">
+        <li>
+          <a href="{{pathFor 'checkin'}}" id="navCheckIn">
             <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-            Check In
+            <span class="nav-collapse-item">Check In</span>
           </a>
         </li>
-        <li><a href="{{pathFor 'eventsCalendar'}}" id="navMemberEvents">
+        <li>
+          <a href="{{pathFor 'eventsCalendar'}}" id="navMemberEvents">
             <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-            Calendar
+            <span class="nav-collapse-item">Calendar</span>
           </a>
         </li>
         {{#with currentUser}}
-          <li><a href="{{pathFor 'checkPoints'}}" id="navMemberPoints">
+          <li>
+            <a href="{{pathFor 'checkPoints'}}" id="navMemberPoints">
               <span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span>
-              History
+              <span class="nav-collapse-item">History</span>
             </a>
           </li>
         {{/with}}
-        <li><a href="{{pathFor 'contactUs'}}" id="navMemberContact">
+        <li>
+          <a href="{{pathFor 'contactUs'}}" id="navMemberContact">
             <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-            Contact
+            <span class="nav-collapse-item">Contact</span>
           </a>
         </li>
         {{#if isImpersonating}}

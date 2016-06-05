@@ -1,3 +1,7 @@
+/* global R */
+/* global PointLevels:true */
+/* global SimpleSchema */
+
 PointLevels = new Mongo.Collection('pointlevels');
 
 PointLevels.attachSchema(new SimpleSchema({
@@ -7,25 +11,23 @@ PointLevels.attachSchema(new SimpleSchema({
   },
   start: {
     type: Number,
-    label: 'Low end of point range'
+    label: 'Low end of point range',
   },
   end: {
     type: Number,
-    label: 'High end of point range'
+    label: 'High end of point range',
   },
   color: {
     type: String,
-    label: 'color of point level'
-  }
+    label: 'color of point level',
+  },
 }));
 
 PointLevels.returnLevel = function(userPoints) {
-  //start with lowest level
-  const currentLevel = PointLevels.findOne({start: 0});
   //note: this relies on a sorted index on points
   const pointLevels = PointLevels.find().fetch();
   return R.head(R.filter(x => userPoints <= x.end, pointLevels));
-}
+};
 
 PointLevels.nextLevel = function(userPoints) {
   const currentLevel = PointLevels.returnLevel(userPoints);
@@ -33,11 +35,9 @@ PointLevels.nextLevel = function(userPoints) {
   //note: this relies on a sorted index on points
   const pointLevels = PointLevels.find().fetch();
   return R.head(R.filter(x => x.end > currentLevel.end, pointLevels));
-}
+};
 
 PointLevels.pointsToNextLevel = function(userPoints) {
-  var nextLevel = PointLevels.nextLevel(userPoints);
-  console.log(PointLevels.nextLevel(userPoints));
-  return 0;
-  //return nextLevel.start - userPoints;
-}
+  const nextLevel = PointLevels.nextLevel(userPoints);
+  return nextLevel ? nextLevel.start - userPoints : 0;
+};
