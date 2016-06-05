@@ -13,9 +13,11 @@
 }
 
 input[type=checkbox].add-to-calendar-checkbox {
+  /*
   position: absolute;
   top: -9999px;
   left: -9999px;
+  */
 }
 
 .add-to-calendar-checkbox ~ a:before {

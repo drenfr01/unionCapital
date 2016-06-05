@@ -59,17 +59,14 @@
                       {{justTime endTime}}</li>
                   </ul>
                   <div class="row">
-                    <div class="col-xs-12 text-center" id="calendar{{_id}}">
+                    <div class="col-xs-12 text-center">
+                      <button class="btn btn-default">
+                        <div id="calendar{{_id}}">
+                        </div>
+                      </button>
                     </div>
                   </div>
 
-                  <div class="row">
-                    <div class="col-xs-12 text-center more-event-info-div">
-                      <a href="{{pathFor 'singleEvent'}}">More Info 
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                      </a>
-                    </div>
-                  </div>
                   {{#if isFuture ../../..}}
                     {{#if hasReservation}}
                       <div class="row">
@@ -103,6 +100,13 @@
                   {{else}}
                     <button class="btn btn-primary btn-block calCheckIn">Check In</button>
                   {{/if}}
+                  <div class="row">
+                    <div class="col-xs-12 text-center more-event-info-div">
+                      <a href="{{pathFor 'singleEvent'}}">More Info 
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
