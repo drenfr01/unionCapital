@@ -4,38 +4,40 @@ Template.addToCalendar.onRendered(function() {
 });
 
 Template.addToCalendar.events({
-  'click #authorize-button': function(e) {
-    GoogleCalendar.setEvent(event);
-    GoogleCalendar.handleAuthClick(e);
+  'click .addToCalendar': function(e) {
+    console.log('testing');
+    var myCalendar = createCalendar({
+      options: {
+	class: 'my-class',
+
+	// You can pass an ID. If you don't, one will be generated for you
+	id: 'my-id'
+      },
+      data: {
+	// Event title
+	title: 'Get on the front page of HN',
+
+	// Event start date
+	start: new Date('June 15, 2013 19:00'),
+
+	// Event duration (IN MINUTES)
+	duration: 120,
+
+	// You can also choose to set an end time
+	// If an end time is set, this will take precedence over duration
+	end: new Date('June 15, 2013 23:00'),     
+
+	// Event Address
+	address: 'The internet',
+
+	// Event Description
+	description: 'Get on the front page of HN, then prepare for world domination.'
+      }
+    });
+
+    document.querySelector('.eventTime').appendChild(
+      myCalendar);
   },
 
 });
-
-var event = {
-  'summary': 'Google I/O 2015',
-  'location': '800 Howard St., San Francisco, CA 94103',
-  'description': 'A chance to hear more about Google\'s developer products.',
-  'start': {
-    'dateTime': '2015-05-28T09:00:00-07:00',
-    'timeZone': 'America/Los_Angeles'
-  },
-  'end': {
-    'dateTime': '2015-05-28T17:00:00-07:00',
-    'timeZone': 'America/Los_Angeles'
-  },
-  'recurrence': [
-    'RRULE:FREQ=DAILY;COUNT=2'
-  ],
-  'attendees': [
-    {'email': 'lpage@example.com'},
-    {'email': 'sbrin@example.com'}
-  ],
-  'reminders': {
-    'useDefault': false,
-    'overrides': [
-      {'method': 'email', 'minutes': 24 * 60},
-      {'method': 'popup', 'minutes': 10}
-    ]
-  }
-};
 
