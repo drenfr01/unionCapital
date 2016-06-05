@@ -1,17 +1,18 @@
 //given a datetime, returns a moment time adjusted for DST
-var DSTCorrectedTime = function(datetime) {
+var DSTCorrectedTime = function(datetime, duration) {
   var isDSTNow = moment().isDST();
+  var newMoment = moment(datetime).add(duration, "hours");
   if(isDSTNow) {
-    if(moment(datetime).isDST()) {
-      return moment(datetime);
+    if(newMoment.isDST()) {
+      return newMoment;
     } else {
-      return moment(datetime).subtract(-1, "hours");
+      return newMoment.subtract(-1, "hours");
     }
   } else {
-    if(moment(datetime).isDST()) {
-      return moment(datetime).add(1, "hours");
+    if(newMoment.isDST()) {
+      return newMoment.add(1, "hours");
     } else {
-      return moment(datetime);
+      return newMoment;
     }
 
   }
@@ -32,6 +33,14 @@ UI.registerHelper('formatPrettyDate', function(unformattedDate) {
     } else {
       return "Invalid Date";
     }
+});
+
+UI.registerHelper('endTime', function(unformattedDate, duration) {
+  
+    var duration = duration || 0;
+    var test = DSTCorrectedTime(unformattedDate, duration).format('h:mm A');
+    console.log(test + " " + duration);
+    return test;
 });
 
 UI.registerHelper('justTime', function(unformattedDate) {
