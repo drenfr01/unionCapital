@@ -7,6 +7,10 @@ Meteor.publish("events", function(start, end) {
   var user = Meteor.users.findOne(this.userId);
   var partnerOrg = PartnerOrgs.findOne({name: R.head(user.profile.partnerOrg)});
   
+  if(R.isNil(partnerOrg)) {
+    console.log("partnerOrg undefined");
+  };
+
   selector = _.extend(selector, {$or: [
     {privateEvent: false},
     {privateWhitelist: this.userId},
