@@ -67,11 +67,11 @@
       </form>
       <form role="form" id="organizationForm">
         <div class="form-group">
-          <label for="categories">Event Category</label>
+          <label for="categories">Category for {{ selectedSuperCategory }}</label>
           <select class="form-control" id="categories" required>
             <option value="" selected="selected">Select Option Below</option>
             {{ #each categories }}
-              <option>{{ name }}</option>
+              <option>{{ this }}</option>
             {{ /each }}
           </select>
         </div>
@@ -99,9 +99,13 @@
   <div class="row">
     <div class="col-xs-12 page-panel text-center" id="checkboxes">
       <p><i>Select all that apply</i></p>
-      {{ #each addons }}
-        {{> addonCheckbox }}
-      {{ /each }}
+      <form role="form" id="addonForm">
+        <div class="form-group">
+          {{ #each addons }}
+            {{> addonCheckbox }}
+          {{ /each }}
+        </div>
+      </form>
     </div>
   </div>
 </template>
@@ -114,9 +118,11 @@
   </div>
   <div class="row choose-super">
     {{ #each supercategories }}
-      <div class="col-xs-6 page-panel text-center">
-        <p>{{ name }}</p>
-        <div class="glyphicon {{ icon }}"></div>
+      <div class="col-xs-6 page-panel panel-link-flat text-center">
+        <a href="#!" class="choose-supercategory-link">
+          <p>{{ name }}</p>
+          <div class="glyphicon {{ icon }}"></div>
+        </a>
       </div>
     {{ /each }}
   </div>

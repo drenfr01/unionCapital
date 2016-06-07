@@ -16,64 +16,52 @@
     <div class="row">
       <div class="col-xs-12 col-md-10 col-md-offset-1 page-panel options-panel">
         <form>
-          <div class="col-xs-12 col-md-4">
-            <div class="form-group>">
-              <label for="institutions" class="label-like-thing">Institution</label>
-              <select class="form-control" id="institutions">
-                {{#each institutions}}
-                  <option>{{name}}</option>
-                {{/each}}
-              </select>
+          <div class="row">
+            <div class="col-xs-12 col-md-4">
+              <div class="form-group>">
+                <label for="institutions" class="label-like-thing">Institution</label>
+                <select class="form-control" id="institutions">
+                  {{#each institutions}}
+                    <option>{{name}}</option>
+                  {{/each}}
+                </select>
+              </div>
             </div>
-          </div>
-          <div class="col-xs-12 col-md-4">
-            <div class="form-group>">
-              <label for="categories" class="label-like-thing">Category</label>
-              <select class="form-control" id="categories">
-                {{#each categories}}
-                  <option>{{name}}</option>
-                {{/each}}
-              </select>
+            <div class="col-xs-12 col-md-4">
+              <div class="form-group>">
+                <label for="supercategories" class="label-like-thing">Supercategory</label>
+                <select class="form-control" id="supercategories">
+                  {{ #each superCategories }}
+                    <option>{{ this }}</option>
+                  {{ /each }}
+                </select>
+              </div>
             </div>
-          </div>
-          <div class="col-xs-12 col-md-4 radio-button" id="pastOrCurrentRdoDiv">
-            <p class="label-like-thing">Timeframe</p>
-            <input type="radio" id="current" name="inlineRadioOptions" value="current" checked="checked">
-            <label for="current">Current</label>
-            <input type="radio" id="past" name="inlineRadioOptions" value="past">
-            <label for="past">Past</label>
+            <div class="col-xs-12 col-md-4">
+              <div class="form-group>">
+                <label for="categories" class="label-like-thing">Category</label>
+                <select class="form-control" id="categories">
+                  {{#each categories}}
+                    <option>{{ this }}</option>
+                  {{/each}}
+                </select>
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-4 radio-button" id="pastOrCurrentRdoDiv">
+              <p class="label-like-thing">Timeframe</p>
+              <input type="radio" id="current" name="inlineRadioOptions" value="current" checked="checked">
+              <label for="current">Current</label>
+              <input type="radio" id="past" name="inlineRadioOptions" value="past">
+              <label for="past">Past</label>
+            </div>
+            <div class="col-xs-12 col-md-8">
+              <div class="form-group text-center">
+                <label for="search-box"> </label>
+                <input type='text' class="form-control" placeholder="Search Events" id="search-box" />
+              </div>
+            </div>
           </div>
         </form>
-        <div class="row">
-          <div class="col-xs-12 col-md-6 col-md-offset-3">
-            <div class="input-group">
-              <input type='text' class="form-control" placeholder='Search Events'
-                                 id='search-box'/>
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default btn-large" 
-                                      id="clearBtn">
-                  &times;
-                </button>
-              </span>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <nav>
-            <ul class="pager">
-              <li class="{{prevPageClass}}">
-                <a id="prevPage" href="{{prevPage}}">
-                  <span aria-hidden="true">&larr;</span> Previous
-                </a>
-              </li>
-              <li class="{{nextPageClass}}">
-                <a id="nextPage" href="{{nextPage}}">
-                  Next <span aria-hidden="true">&rarr;</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
       </div>
     </div>
     {{#if Template.subscriptionsReady}}
@@ -122,38 +110,62 @@
                   </td>
                 </tr>
               {{/each}}
+            {{ else }}
+              <tr><td colspan="9" class="text-center">No events found.</td></tr>
             {{/each}}
           {{else}}
             {{#each events}}
-            <tr>
-              <td class="eventView"><a href="{{pathFor 'singleEvent'}}">
-                  {{name}}</a></td>
-              <td>{{formattedDateRange eventDate duration}}</td>
-              <td>{{numberRSVPs}}</td>
-              <td>{{institution}}</td>
-              <td>{{category}}</td>
-              <td>{{numOfComments}}</td>
-              <td>{{avgRating}}</td>
-              <td>
-                <button type="button" class="btn btn-warning btn-sm editEvent">
-                  Edit
-                </button>
-              </td>
-              <td>
-                <button type="button" class="btn btn-danger btn-sm deleteEvent">
-                  Delete
-                </button>
-              </td>
-            </tr>
+              <tr>
+                <td class="eventView"><a href="{{pathFor 'singleEvent'}}">
+                    {{name}}</a></td>
+                <td>{{formattedDateRange eventDate duration}}</td>
+                <td>{{numberRSVPs}}</td>
+                <td>{{institution}}</td>
+                <td>{{category}}</td>
+                <td>{{numOfComments}}</td>
+                <td>{{avgRating}}</td>
+                <td>
+                  <button type="button" class="btn btn-warning btn-sm editEvent">
+                    Edit
+                  </button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-danger btn-sm deleteEvent">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            {{ else }}
+              <tr><td colspan="9" class="text-center">No events found.</td></tr>
             {{/each}}
           {{/if}}
           </tbody>
         </table>
+        <div class="row">
+          <nav>
+            <ul class="pager">
+              <li class="{{prevPageClass}}">
+                <a id="prevPage" href="{{prevPage}}">
+                  <span aria-hidden="true">&larr;</span> Previous
+                </a>
+              </li>
+              <li class="{{nextPageClass}}">
+                <a id="nextPage" href="{{nextPage}}">
+                  Next <span aria-hidden="true">&rarr;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
         {{/if}}
       </div>
     </div>
-    {{else}}
-      {{> spinner}}
+    {{ else }}
+      <div class="row">
+        <div class="col-xs-12 logging-in-spinner">
+          {{> spinner}}
+        </div>
+      </div>
     {{/if}}
   </div>
 </template>

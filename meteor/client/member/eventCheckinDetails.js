@@ -20,9 +20,9 @@ function validateNewEventForms() {
   return forms.every(selector => $(selector).valid());
 }
 
-function addPlugins() {
+function addPlugins(hours) {
   $('#durationSlider').noUiSlider({
-    start: [defaultHours],
+    start: [hours],
     range: {
       min: [0],
       max: [8],
@@ -60,21 +60,32 @@ Template.eventCheckinDetails.onCreated(function() {
   this.subscribe('eventCategories');
   this.subscribe('addons');
   checkIn = new CheckIn(defaultHours);
+
+  // TODO: remove this
+  window.test = checkIn;
 });
 
 Template.eventCheckinDetails.rendered = function() {
   addPlugins();
 };
 
+Template.selfieEventInfo.onRendered(function() {
+  addPlugins(checkIn.getHoursSpent());
+});
+
 Template.selfieEventInfo.helpers({
+  selectedSuperCategory: function() {
+    return checkIn.getSuperCategory();
+  },
+
   categories: function() {
-    return EventCategories.find();
+    return checkIn.getAvailableCategories();
   },
 });
 
 Template.timeAttendingPanel.helpers({
   timeAttending: function() {
-    return checkIn ? checkIn.hours.get() : defaultHours;
+    return checkIn ? checkIn.getHoursSpent() : defaultHours;
   },
 });
 
@@ -92,25 +103,13 @@ Template.generalCheckinInfo.helpers({
 
 Template.checkinChooseSupercategory.helpers({
   supercategories: function() {
-    return [{
-      name: 'Healthcare',
-      icon: 'glyphicon-ok',
-    }, {
-      name: 'smiles',
-      icon: 'glyphicon-heart',
-    }, {
-      name: 'lumpy',
-      icon: 'glyphicon glyphicon-star',
-    }, {
-      name: 'friend',
-      icon: 'glyphicon glyphicon-user',
-    }];
+    return checkIn.getAvailableSuperCategories();
   },
 });
 
 Template.selfieEventPanel.helpers({
   chooseSupercategory: function() {
-    return true;
+    return !checkIn.getSuperCategory();
   },
 });
 
@@ -129,7 +128,12 @@ Template.eventCheckinDetails.helpers({
 
 Template.eventCheckinDetails.events({
   'change #durationSlider': function() {
-    checkIn.hours.set($('#durationSlider').val());
+    checkIn.setHoursSpent($('#durationSlider').val());
+  },
+
+  'click .choose-supercategory-link': function(e) {
+    e.preventDefault();
+    checkIn.setSuperCategory(this.name);
   },
 
   'click #addPhoto': function(e) {
@@ -171,9 +175,6 @@ Template.eventCheckinDetails.events({
 
     checkIn.setEvent(event);
 
-    const addons = getAddOns('.addons:checkbox:checked');
-    checkIn.setAddons(addons);
-
     if(isValid) {
       checkIn.submitCheckIn()
         .then(function(result) {
@@ -203,6 +204,11 @@ Template.eventCheckinDetails.events({
 
   'click #photoPanel': function() {
     checkIn.removePhoto();
+  },
+
+  'change #addonForm': function() {
+    const addons = getAddOns('.addons:checkbox:checked');
+    checkIn.setAddons(addons);
   },
 });
 

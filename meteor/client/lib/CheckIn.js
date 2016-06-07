@@ -3,6 +3,7 @@
 /* global Promise */
 /* global Geolocation */
 /* global R */
+/* global EventCategories */
 
 /* global CheckIn:true */
 /* global CheckInExistingEvent:true */
@@ -100,7 +101,9 @@ CheckIn = function(defaultHours) {
   this.checkingIn = new ReactiveVar(false);
   this.userPhoto = new UserPhoto();
   this.geolocation = new Geolocation();
+  this.superCategory = new ReactiveVar(null);
   this.event = null;
+  this.addons = [];
 };
 
 // Checks the user in
@@ -162,4 +165,32 @@ CheckIn.prototype.setPhoto = function(inputElement) {
 // Removes the photo
 CheckIn.prototype.removePhoto = function() {
   this.userPhoto.remove();
+};
+
+CheckIn.prototype.getAvailableSuperCategories = function getAvailableSuperCategories() {
+  return EventCategories.getSuperCategories();
+};
+
+CheckIn.prototype.setSuperCategory = function setSuperCategory(val) {
+  this.superCategory.set(val);
+};
+
+CheckIn.prototype.getSuperCategory = function getSuperCategory() {
+  return this.superCategory.get();
+};
+
+CheckIn.prototype.getCategory = function getCategory() {
+  return this.category.get();
+};
+
+CheckIn.prototype.getAvailableCategories = function getAvailableCategories() {
+  return EventCategories.getCategoriesForSuperCategory(this.superCategory.get());
+};
+
+CheckIn.prototype.setHoursSpent = function getCategory(val) {
+  return this.hours.set(val);
+};
+
+CheckIn.prototype.getHoursSpent = function getCategory() {
+  return this.hours.get();
 };

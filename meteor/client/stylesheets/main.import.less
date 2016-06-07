@@ -512,10 +512,6 @@ button > #addMember {
     margin-bottom: 0;
     margin-top: 0;
   }
-
-  &.panel-link {
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.07),0 2px 10px 0 rgba(0, 0, 0, 0.05);
-  }
 }
 
 .title-panel h3 {
@@ -631,13 +627,23 @@ button > #addMember {
 .panel-link {
   padding: 0px;
   cursor: pointer;
+  /*box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.07),0 2px 10px 0 rgba(0, 0, 0, 0.05);*/
+
+  a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    padding: .5em 1em;
+  }
 }
 
-.panel-link a {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-  padding: .5em 1em;
+.panel-link-flat {
+  .panel-link();
+
+  box-shadow: none;
+  a {
+    padding: 15px;
+  }
 }
 
 .top-level-row {
@@ -732,7 +738,7 @@ button > #addMember {
   font-size: 150%;
   background-color: #2F2F38;
   color: white;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.95), 0 2px 10px 0 rgba(0, 0, 0, 0.05);
+  /*box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.95), 0 2px 10px 0 rgba(0, 0, 0, 0.05);*/
 }
 
 .no-ui-slider {
@@ -748,9 +754,10 @@ button > #addMember {
   background-size: 100%;
   background-position-y: -300px;
   font-size: 130%;
-  /*color: white;*/
+  color: white;
   margin-top: 5px;
   margin-bottom: 5px;
+  text-align: center;
 }
 
 .photo-panel .text {

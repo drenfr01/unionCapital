@@ -1,14 +1,22 @@
+/* global CheckInRules:true */
+/* global DecisionTree */
+/* global AppConfig */
+/* global Events */
+/* global HelperFunctions */
+/* global Images */
+/* global Transactions */
+/* global moment */
 
 // Defines the check-in rules for an event
 // It follows the decision tree defined in setTree when run() is called
 // When debugging, log the path variable to see where the function is by passing 1
 // in the constructor instead of 0
 
-var options = {
+const options = {
   // Max distance for ad hoc event in km
   maxAdHocDistance: AppConfig.checkIn.maxAdHocDistance,
   // Max distance for recognized event in km
-  maxEventDistance: AppConfig.checkIn.maxEventDistance
+  maxEventDistance: AppConfig.checkIn.maxEventDistance,
 };
 
 CheckInRules = new DecisionTree(1);
@@ -24,25 +32,25 @@ CheckInRules.setTree({
         isTrue: {
           func: 'hasPhoto',
           isTrue: 'auto',
-          isFalse: 'auto'
+          isFalse: 'auto',
         },
         isFalse: {
           func: 'hasPhoto',
           isTrue: 'partner_admin',
-          isFalse: 'partner_admin'
-        }
+          isFalse: 'partner_admin',
+        },
       },
       isFalse: {
         func: 'hasPhoto',
         isTrue: 'partner_admin',
-        isFalse: 'partner_admin'
-      }
+        isFalse: 'partner_admin',
+      },
     },
     isFalse: {
       func: 'hasPhoto',
       isTrue: 'partner_admin',
-      isFalse: 'partner_admin'
-    }
+      isFalse: 'partner_admin',
+    },
   },
   isFalse: {
     func: 'geolocSuccess',
@@ -51,20 +59,20 @@ CheckInRules.setTree({
       isTrue: {
         func: 'hasPhoto',
         isTrue: 'partner_admin',
-        isFalse: 'partner_admin'
+        isFalse: 'partner_admin',
       },
       isFalse: {
         func: 'hasPhoto',
         isTrue: 'super_admin',
-        isFalse: 'not_allowed'
-      }
+        isFalse: 'not_allowed',
+      },
     },
     isFalse: {
       func: 'hasPhoto',
       isTrue: 'super_admin',
-      isFalse: 'not_allowed'
-    }
-  }
+      isFalse: 'not_allowed',
+    },
+  },
 });
 
 CheckInRules.setFunctions({
@@ -94,10 +102,10 @@ CheckInRules.setFunctions({
 
   // Returns true if the user's geolocation is functioning
   geolocSuccess: function(attributes) {
-    if (attributes.userLat && attributes.userLng)
+    if (attributes.userLat && attributes.userLng) {
       return true;
-    else
-      return false;
+    }
+    return false;
   },
 
   // Returns true if the user is within maxEventDistance of the event
@@ -115,9 +123,8 @@ CheckInRules.setFunctions({
     // Check to see if it is in range
     if(distance <= options.maxEventDistance) {
       return true;
-    } else {
-      return false;
     }
+    return false;
   },
 
   // Determines if the member is trying to check into a current event or a past event
@@ -131,8 +138,7 @@ CheckInRules.setFunctions({
       var maxEndDate = moment().add(AppConfig.checkIn.today.hoursAhead, 'h');
 
       return thisEventMoment.isBetween(minStartDate, maxEndDate, 'second');
-    } else {
-      return 'NO_EVENT_FOUND';
     }
-  }
+    return 'NO_EVENT_FOUND';
+  },
 });
