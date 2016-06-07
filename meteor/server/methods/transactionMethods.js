@@ -1,5 +1,6 @@
 Meteor.methods({
   insertTransaction: function(attributes) {
+    console.log(attributes);
     check(attributes, {
       userId: String,
       hoursSpent: Number,

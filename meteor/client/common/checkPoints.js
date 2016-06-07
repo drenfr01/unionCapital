@@ -79,7 +79,12 @@ Template.pointTemplate.helpers({
 
   isUCBEvent: function() {
     return !adhocStatus(this.event);
-  }
+  },
+
+  hasImage: function() {
+    return this.imageId ? true : false;
+  },
+
 });
 
 //some selfies don't have the adhoc flag for some reason... 
