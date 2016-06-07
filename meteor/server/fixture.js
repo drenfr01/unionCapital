@@ -379,11 +379,13 @@ Meteor.startup(function () {
     var addons = [
       {
         name: 'UCB Button',
-        points: 50
+        points: 50,
+        display: true
       },
       {
-        name: 'Test Addon',
-        points: 100
+        name: 'Left Feedback',
+        points: 25,
+        display: false
       }
     ];
 

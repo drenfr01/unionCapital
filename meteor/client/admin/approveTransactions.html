@@ -14,6 +14,13 @@
         </div>
       </div>
     {{/if}}
+    <div class="row">
+      <div class="col-xs-12 col-md-4 col-md-offset-4 page-panel text-center">
+        <button type="button" id="sendApproval" class="btn btn-success btn-xs">
+          Approve Selected
+        </button>
+        </div>
+    </div>
     {{#with modalData}}
       <div class="modal fade" id="showImageModal">
         <div class="modal-dialog">
@@ -42,30 +49,23 @@
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
     {{/with}}
-    {{#with approvalModalData}}
-      <div class="modal fade" id="showApprovalModal">
+    {{#with descriptionModalData}}
+      <div class="modal fade" id="descriptionModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                &times;</button>
+              <button type="button" class="close" data-dismiss="modal" 
+                aria-hidden="true"> &times;
+              </button>
               <h4 class="modal-title text-center">{{event.name}}</h4>
             </div>
-            <div class="modal-body text-center">
-              {{#if eventId}}
-              <p>This event has a fixed number of points. Change it on the
-              edit events page</p>
-              <input type="number" class="form-control"
-              id="pointsInput" value="{{getPoints eventId}}" readonly>
-              {{else}}
-              <p>This is a DIY event. You can award any amount of points</p>
-                <input type="number" class="form-control"
-                  id="pointsInput" placeholder="Enter Points">
-              {{/if}}
+            <div class="modal-body text-left">
+              <b>Description:</b> {{transactionDescription}}
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default"
-                id="sendApproval" data-dismiss="modal">Approve</button>
+              <button type="button" class="btn btn-default close" 
+                data-dismiss="modal">Close
+              </button>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -79,14 +79,14 @@
             <table class="table table-hover">
             <thead>
               <tr>
+                <th><input type="checkbox" id="checkAll"></th>
+                <th>Points</th>
                 <th>User Name</th>
                 <th>Event Name</th>
-                <th>Event Description</th>
                 <th>Event Date</th>
                 <th>Event Submission Date</th>
                 <th>Time Spent (hours)</th>
                 <th>Addons</th>
-                <th></th>
                 <th></th>
                 <th></th>
               </tr>
@@ -94,9 +94,18 @@
             <tbody>
             {{#each pendingTransaction}}
               <tr>
+                <td><input type="checkbox" class="{{_id}}"
+                   {{isCheckboxDisabled}}>
+                </td>
+                <td><input type="number" class="pointInput {{_id}}"  
+                        value="{{getPoints}}" {{isDisabled}}>
+                </td>
                 <td>{{firstName}} {{lastName}}</td>
-                <td>{{event.name}}</td>
-                <td>{{transactionDescription}}</td>
+                <td><a class="eventName" data-toggle="modal" 
+                    data-target="#descriptionModal">
+                    {{event.name}}
+                  </a>
+                </td>
                 <td>{{formatDate eventDate}}</td>
                 <td>{{formatDate transactionDate}} </td>
                 <td>{{hoursSpent}}</td>
@@ -112,12 +121,6 @@
                   <button type="button" class="btn btn-warning btn-xs showImage"
                     data-toggle="modal" data-target="#showImageModal">
                     Show Image</button>
-                </td>
-                <td>
-                  <button type="button" class="btn btn-success btn-xs approveEvent"
-                    data-toggle="modal" data-target="#showApprovalModal">
-                    Approve
-                  </button>
                 </td>
                 <td>
                   <button type="button" class="btn btn-danger btn-xs rejectEvent">Reject</button>

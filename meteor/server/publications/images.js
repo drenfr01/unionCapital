@@ -31,3 +31,11 @@ Meteor.publish('singleImage', function(userId) {
   }
 
 });
+
+Meteor.publish('myImages', function() {
+  return Images.find({'metadata.userId': this.userId});
+});
+
+Meteor.publish('memberImage', function(imageId) {
+  return Images.find({_id: imageId});
+});

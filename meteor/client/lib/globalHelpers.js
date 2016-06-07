@@ -50,6 +50,30 @@ GlobalHelpers = (function() {
       var totalEvents = Counts.get('eventsCount');
       return currentPage() * parseInt(AppConfig.public.recordsPerPage) < totalEvents;
     },
+
+    eventPoints: function(trans) {
+      const sum = R.compose(
+        R.reduce((acc, value) => acc + value, 0),
+        R.map(R.prop('points')),
+        R.defaultTo([])
+      )(trans.addons);
+
+      var event = trans.event;
+      if(event && event.isPointsPerHour) {
+        return sum + Math.round(event.pointsPerHour * trans.hoursSpent) || '?';
+      } else if (event && event.points){
+        return sum + event.points;
+      } else {
+        return 'TBD'; 
+      }
+    },
+
+    //return true if selfie event, false if  
+    //pre-scheduled event
+    isSelfieEvent: function(trans) {
+      return R.isNil(trans.eventId) ? true : false;
+    },
+
   }
 })();
 

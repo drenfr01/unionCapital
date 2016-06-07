@@ -375,6 +375,13 @@ Router.map(function() {
     }
   });
 
+  this.route('singleImage', {
+    path: '/image/:_id',
+    data: function() {
+      return this.params._id; 
+    }
+  });
+
   //TODO: I don't know how to do polymorphic routes yet,
   //but ideally the below two routes would be combined
   //into one

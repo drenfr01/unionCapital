@@ -1,14 +1,18 @@
 CalendarEventsSearch = new CalendarEvents();
 var searchString = new ReactiveVar();
+//contains a list of event Ids, used to 
+//avoid re-creating add to calendar links
+Session.set('calendarEventsCreated', []);
 
-Template.eventsCalendar.rendered = function() {
+Template.eventsCalendar.onRendered(function() {
   // CalendarEventsSearch.search("");
   searchString.set('');
-};
+});
 
 Template.eventsCalendar.onCreated(function() {
   this.subscribe('reservations');
   this.subscribe('numberOfPeople');
+  this.subscribe('myImages');
 });
 
 Template.eventsCalendar.helpers({
@@ -108,11 +112,52 @@ Template.eventPanel.helpers({
 
   isFuture: function(thisType) {
     return thisType.type === 'future';
-  }
+  },
+
 });
 
 Template.eventsCalendar.events({
   'click .calCheckIn': function() {
     Router.go('eventCheckinDetails', {id: this._id});
-  }
+  },
+
+  'click .panel-heading': function() {
+    let eventsInSession = Session.get('calendarEventsCreated');
+
+    if(!R.contains(this._id, eventsInSession)) {
+      var myCalendar = createCalendar({
+        options: {
+          class: 'add-calendar-link',
+
+          // You can pass an ID. If you don't, one will be generated for you
+          id: 'addCal'+this._id
+        },
+        data: {
+          // Event title
+          title: this.name,
+
+          // Event start date
+          start: this.eventDate,
+
+          // Event duration (IN MINUTES)
+          duration: this.duration * 60, //duration is in hours on event doc
+
+          // You can also choose to set an end time
+          // If an end time is set, this will take precedence over duration
+          //end: new Date('June 15, 2013 23:00'),     
+
+          // Event Address
+          address: this.address,
+
+          // Event Description
+          description: this.description
+        }
+      });
+
+      document.querySelector("#calendar" + this._id).appendChild(
+        myCalendar);
+
+        Session.set('calendarEventsCreated', R.append(this._id,eventsInSession));
+    }
+  },
 });

@@ -10,10 +10,6 @@
 const defaultHours = 1;
 let checkIn = {};
 
-function validateFields() {
-  return $('#eventName').val() && $('#eventDescription').val();
-}
-
 function validateNewEventForms() {
   const forms = ['#eventDescForm', '#organizationForm', '#adHocEventDate'];
   forms.forEach(selector => $(selector).validate());
@@ -60,9 +56,6 @@ Template.eventCheckinDetails.onCreated(function() {
   this.subscribe('eventCategories');
   this.subscribe('addons');
   checkIn = new CheckIn(defaultHours);
-
-  // TODO: remove this
-  window.test = checkIn;
 });
 
 Template.eventCheckinDetails.rendered = function() {
@@ -91,7 +84,7 @@ Template.timeAttendingPanel.helpers({
 
 Template.addonCheckboxPanel.helpers({
   addons: function() {
-    return Addons.find(); 
+    return Addons.find({display: true}); 
   },
 });
 

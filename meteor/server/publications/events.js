@@ -61,9 +61,7 @@ Meteor.publish("eventsForUser", function(userId) {
 });
 
 Meteor.publish('eventHistoryForUser', function() {
-  //TODO: when we redo UCB button events we should get rid of this
-  return Transactions.find({userId: this.userId, 
-                           'event.name': {$ne: AppConfig.ucbButtonEvent} });
+  return Transactions.find({ userId: this.userId });
 });
 
 Meteor.publish("eventsForTransactions", function() {

@@ -3,20 +3,23 @@
 /* global addSuccessMessage */
 /* global addErrorMessage */
 /* global AutoForm */
+/* global PartnerOrgs */
+/* global Roles */
 
 AutoForm.hooks({
-    onSuccess: function(formType, result) {
+    onSuccess: function(formType) {
       addSuccessMessage("Event Successfully Changed!");
     },
 
     onError: function(formType, error) {
       addErrorMessage(error);
-    }
+    },
 });
 
 function insertData(docId) {
   const partnerOrg = PartnerOrgs.findOne({_id: docId});
   const user = UCBMembers.findOne({_id: docId});
+
   if(!R.isNil(partnerOrg)) {
     whitelist.insert(partnerOrg);  
   } else if(!R.isNil(user)) {
@@ -77,7 +80,7 @@ Template.editEvent.helpers({
 
   isPointsPerHour: function() {
     return Session.equals("displayPointsPerHour", "true");
-  }
+  },
 });
 
 Template.editEvent.events({

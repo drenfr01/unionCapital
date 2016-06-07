@@ -40,7 +40,7 @@ Template.checkPoints.helpers({
 
 Template.pointTemplate.events({
   'click .acidjs-rating-stars input': function(e) {
-    Meteor.call('postFeedback', this.event, parseInt(e.target.value), AppConfig.feedbackType.rating,
+    Meteor.call('postFeedback', this, parseInt(e.target.value), AppConfig.feedbackType.rating,
       function(err, result) {
         if(err) {
           console.log(err)
@@ -53,7 +53,7 @@ Template.pointTemplate.events({
   },
 
   'click .post': function(e) {
-    Meteor.call('postFeedback', this.event, $(e.target).parent().siblings().val(), 
+    Meteor.call('postFeedback', this, $(e.target).parent().siblings().val(), 
       AppConfig.feedbackType.comment, function(err, result) {
         if(err) {
           console.log(err);
@@ -73,9 +73,18 @@ Template.pointTemplate.helpers({
     return adhocStatus(this.event) ? "selfie-event" : "member-event";
   },
 
+  eventPoints: function(){
+    return GlobalHelpers.eventPoints(this);
+  },
+
   isUCBEvent: function() {
     return !adhocStatus(this.event);
-  }
+  },
+
+  hasImage: function() {
+    return this.imageId ? true : false;
+  },
+
 });
 
 //some selfies don't have the adhoc flag for some reason... 
