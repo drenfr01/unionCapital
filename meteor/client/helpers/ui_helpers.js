@@ -39,7 +39,6 @@ UI.registerHelper('endTime', function(unformattedDate, duration) {
   
     var duration = duration || 0;
     var test = DSTCorrectedTime(unformattedDate, duration).format('h:mm A');
-    console.log(test + " " + duration);
     return test;
 });
 
