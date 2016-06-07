@@ -111,7 +111,7 @@ CheckIn.prototype.submitCheckIn = function(eventId, addons, callback) {
       if ( err ) {
         newCallback(err, null);
       } else {
-        self.insertTransaction(eventId, fileObj._id, newCallback);
+        self.insertTransaction(eventId, addons, fileObj._id, newCallback);
       }
     });
   } else {

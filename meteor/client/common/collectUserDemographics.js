@@ -75,6 +75,40 @@ Template.collectUserDemographics.events({
     userAttributes.profile.gender = $("#genderForm input[type='radio']:checked").val();
     userAttributes.profile.UCBAppAccess = $('#device').val();
 
-    Session.set('signupPage', 'eula');
+    $("#userAddressForm").validate({
+      highlight: function(element, errorClass) {
+        $(element).fadeOut(function() {
+          $(element).fadeIn();
+        });
+      },
+      rules: {
+        street_number: {
+          required: true,
+          digits: true
+        },
+        street: {
+          required: true
+        },
+        city: {
+          required: true
+        },
+        state: {
+          required: true,
+          rangelength: [2,2] //only accept two digit state abbreviations
+        },
+        postal_code: {
+          required: true,
+          digits: true,
+          rangelength: [5,5]
+        },
+      }
+    });
+    var isValid = $('#userAddressForm').valid();
+
+    if(isValid) {
+      Session.set('signupPage', 'eula');
+    } else {
+      addErrorMessage('Please correct fields');
+    }
   }
 });

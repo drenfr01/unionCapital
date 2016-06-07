@@ -12,6 +12,7 @@ Template.eventsCalendar.onRendered(function() {
 Template.eventsCalendar.onCreated(function() {
   this.subscribe('reservations');
   this.subscribe('numberOfPeople');
+  this.subscribe('myImages');
 });
 
 Template.eventsCalendar.helpers({
