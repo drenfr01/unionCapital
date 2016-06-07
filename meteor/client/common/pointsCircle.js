@@ -37,7 +37,6 @@ Template.pointsCircle.onRendered(function() {
 
 Template.pointsCircle.helpers({
   currentLevel: function() {
-    console.log(Circles);
     return Template.instance().currentLevel.get() && 
       Template.instance().currentLevel.get().level;
   },
