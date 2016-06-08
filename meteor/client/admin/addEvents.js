@@ -1,17 +1,23 @@
-var whitelist = new Mongo.Collection(null);
+/* global Roles */
+/* global PartnerOrgs */
+/* global addSuccessMessage */
+/* global addErrorMessage */
+/* global EventCategories */
+
+const whitelist = new Mongo.Collection(null);
 
 AutoForm.hooks({
   insertEventsForm: {
     before: {
       insert: function(doc, template) {
-        doc.adHoc = false;
-        doc.latitude = Session.get('latitude');
-        doc.longitude = Session.get('longitude');
-        doc.endTime = addHours(moment(doc.eventDate).toDate(), doc.duration);
-        console.log(R.pluck('_id',whitelist.find({}, {fields: {_id: 1}}).fetch()));
-        doc.privateWhitelist = R.pluck('_id', whitelist.find({}, 
-          {fields: {_id: 1}}).fetch());
-        return doc;
+        return {
+          ...doc,
+          adHoc: false,
+          latitude: Session.get('latitude'),
+          longitude: Session.get('longitude'),
+          endTime: addHours(moment(doc.eventDate).toDate(), doc.duration),
+          privateWhitelist: R.pluck('_id', whitelist.find({}, { fields: { _id: 1 } }).fetch()),
+        };
       }
     },
     onSuccess: function() {
@@ -20,7 +26,7 @@ AutoForm.hooks({
     },
     onError: function(formType, error) {
       addErrorMessage(error);
-    }
+    },
   }
 });
 
@@ -30,6 +36,7 @@ Template.addEvents.onCreated(function() {
   this.subscribe('eventCategories');
   this.subscribe('partnerOrganizations');
   this.subscribe('allUsers');
+  this.superCategory = new ReactiveVar(null);
 });
 
 Template.addEvents.onRendered(function() {
@@ -43,6 +50,7 @@ Template.addEvents.helpers({
   'geocodeResultsReturned': function() {
     return Session.get('latitude');
   },
+
   institutions: function() {
     if(Roles.userIsInRole(Meteor.userId(), "admin")) {
       return PartnerOrgs.find().map(function(institution) {
@@ -55,9 +63,15 @@ Template.addEvents.helpers({
     }
   },
 
+  superCategories: function() {
+    return EventCategories.getSuperCategories();
+  },
+
   categories: function() {
+    const template = Template.instance();
+    console.log(template.superCategory.get());
     return EventCategories
-      .getAllCategories()
+      .getCategoriesForSuperCategory(template.superCategory.get())
       .map(category => ({ label: category, value: category }));
   },
 
@@ -68,9 +82,8 @@ Template.addEvents.helpers({
   isPrivateEvent: function() {
     if(isPrivateEvent.get() === 'true') {
       return true;
-    } else {
-      return false 
     }
+    return false 
   },
 
   //TODO: note to make this server side you have
@@ -165,7 +178,11 @@ Template.addEvents.events({
 
   'click .glyphicon-remove': function(e) {
     whitelist.remove(this._id);
-  }
+  },
+
+  'change #super-cat-select': function(e, template) {
+    template.superCategory.set(e.target.value);
+  },
 });
 
 Template.userTemplate.helpers({

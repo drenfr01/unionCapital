@@ -237,10 +237,15 @@ function getCategories(legacy) {
 EventCategories.getSuperCategories = function getSuperCategories(legacy = false) {
   const categories = getCategories(legacy);
   return R.compose(
-    R.map(name => ({ name, icon: categoriesBySuperCategory[name].icon })),
     R.uniq,
     R.pluck('superCategoryName'),
   )(categories);
+};
+
+EventCategories.getSuperCategoriesWithIcons = function getSuperCategories(legacy = false) {
+  return EventCategories
+    .getSuperCategories(legacy)
+    .map(name => ({ name, icon: categoriesBySuperCategory[name].icon }));
 };
 
 EventCategories.getAllCategories = function getAllCategories(legacy = false) {
@@ -250,7 +255,7 @@ EventCategories.getAllCategories = function getAllCategories(legacy = false) {
 
 EventCategories.getCategoriesForSuperCategory = function getCategoriesForSuperCategory(superCategoryName) {
   if (!superCategoryName) {
-    return [];
+    return EventCategories.getAllCategories();
   }
 
   const categories = EventCategories.find({ superCategoryName, deleteInd: { $ne: true } }).fetch();

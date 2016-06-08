@@ -167,8 +167,8 @@ CheckIn.prototype.removePhoto = function() {
   this.userPhoto.remove();
 };
 
-CheckIn.prototype.getAvailableSuperCategories = function getAvailableSuperCategories() {
-  return EventCategories.getSuperCategories();
+CheckIn.prototype.getAvailableSuperCategoriesWithIcons = function getAvailableSuperCategories() {
+  return EventCategories.getSuperCategoriesWithIcons();
 };
 
 CheckIn.prototype.setSuperCategory = function setSuperCategory(val) {
