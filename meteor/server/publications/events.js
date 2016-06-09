@@ -6,7 +6,6 @@ Meteor.publish("events", function(start, end) {
 
   var user = Meteor.users.findOne(this.userId);
   var listOfPartnerOrgs = PartnerOrgs.find({name: {$in: user.profile.partnerOrg}}).fetch();
-  console.log(listOfPartnerOrgs);
   
   if(R.isNil(listOfPartnerOrgs)) {
     console.log("partnerOrg undefined");
@@ -19,7 +18,6 @@ Meteor.publish("events", function(start, end) {
   ]});
 
 
-  console.log(selector);
   return Events.find(selector);
 
 });
