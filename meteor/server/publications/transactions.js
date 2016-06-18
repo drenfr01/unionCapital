@@ -1,21 +1,28 @@
+/* global Transactions */
+/* global Roles */
+
 //A partner should get access to all transactions for
 //their members only
-Meteor.publish('transactions', function(selector) {
-  //check(selector, {approved: Match.Optional(Boolean)});
-  var partnerAdmin = Meteor.users.findOne({_id: this.userId});
-  var selector = _.extend(selector, {deleteInd: false});
-  if (Roles.userIsInRole(this.userId, 'admin')) {
+Meteor.publish('transactions', function(selector, options) {
+  const { userId } = this;
 
-    return Transactions.find(selector, {sort: {transactionDate: -1}});
+  const extendedSelector = {
+    deleteInd: false,
+    ...selector,
+  };
 
-  } else if (Roles.userIsInRole(this.userId, 'partnerAdmin')) {
+  const extendedOptions = {
+    sort: {
+      transactionDate: -1,
+    },
+    ...options,
+  };
 
-    var org = Meteor.users.findOne({ _id: this.userId }).primaryPartnerOrg();
-    selector = _.extend(selector, {partnerOrg: org});
-    return Transactions.find(selector, {sort: {transactionDate: -1}});
-
-  } else {
-    selector = _.extend(selector, {userId: this.userId});
-    return Transactions.find(selector, {sort: {transactionDate: -1}});
+  if (Roles.userIsInRole(userId, 'admin')) {
+    return Transactions.find(extendedSelector, extendedOptions);
+  } else if (Roles.userIsInRole(userId, 'partnerAdmin')) {
+    const partnerOrg = Meteor.users.findOne({ _id: userId }).primaryPartnerOrg();
+    return Transactions.find({ ...extendedSelector, partnerOrg }, extendedOptions);
   }
+  return Transactions.find({ ...extendedSelector, userId }, extendedOptions);
 });

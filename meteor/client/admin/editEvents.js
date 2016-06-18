@@ -1,12 +1,33 @@
+/* global EventCategories */
+/* global AutoForm */
+/* global addSuccessMessage */
+/* global addErrorMessage */
+/* global AutoForm */
+/* global PartnerOrgs */
+/* global Roles */
+
 AutoForm.hooks({
-    onSuccess: function(formType, result) {
+    onSuccess: function(formType) {
       addSuccessMessage("Event Successfully Changed!");
     },
 
     onError: function(formType, error) {
       addErrorMessage(error);
-    }
+    },
 });
+
+function insertData(docId) {
+  const partnerOrg = PartnerOrgs.findOne({_id: docId});
+  const user = UCBMembers.findOne({_id: docId});
+
+  if(!R.isNil(partnerOrg)) {
+    whitelist.insert(partnerOrg);  
+  } else if(!R.isNil(user)) {
+    whitelist.insert(user);
+  } else {
+    console.log("No match found for id: " + docId);
+  }
+}
 
 Template.editEvent.onRendered(function() {
   //TODO: this is because the radio button values
@@ -26,22 +47,11 @@ Template.editEvent.onRendered(function() {
   this.subscribe('allUsers');
   this.subscribe('eventCategories');
 
+  this.superCategory = new ReactiveVar(null);
+
   template.autorun(function() {
     if(Template.instance().subscriptionsReady()) {
-
-      var insertData = function(docId) {
-        const partnerOrg = PartnerOrgs.findOne({_id: docId});
-        const user = UCBMembers.findOne({_id: docId});
-        if(!R.isNil(partnerOrg)) {
-          whitelist.insert(partnerOrg);  
-        } else if(!R.isNil(user)) {
-          whitelist.insert(user);
-        } else {
-          console.log("No match found for id: " + docId);
-        }
-      }
-
-      R.map(insertData, whitelistData);
+      whitelistData.forEach(insertData);
     }
   
   });
@@ -57,19 +67,20 @@ Template.editEvent.helpers({
       return PartnerOrgs.find().map(function(institution) {
         return {label: institution.name, value: institution.name};
       });
-    } else {
-      var institution = Meteor.user().primaryPartnerOrg();
-      return [{label: institution, value: institution}];
     }
+    const institution = Meteor.user().primaryPartnerOrg();
+    return [{ label: institution, value: institution }];
   },
+
   categories: function() {
-    return EventCategories.find().map(function(category) {
-      return {label: category.name, value: category.name};
-    });
+    return EventCategories
+      .getAllCategories()
+      .map(category => ({ label: category, value: category }));
   },
+
   isPointsPerHour: function() {
     return Session.equals("displayPointsPerHour", "true");
-  }
+  },
 });
 
 Template.editEvent.events({
@@ -81,8 +92,7 @@ Template.editEvent.events({
     //Note: ideally this would be in an Autoform hook,
     //but I had issues getting it to work (it wouldn't accept
     //any return value I tried in the return of before.update
-    const whitelistArray = R.pluck('_id', 
-      whitelist.find({}, {fields: {_id: 1}}).fetch());
+    const whitelistArray = R.pluck('_id', whitelist.find({}, {fields: {_id: 1}}).fetch());
     Events.update({_id: this._id}, {$set: {privateWhitelist: whitelistArray}});
     Router.go('manageEvents');
   },

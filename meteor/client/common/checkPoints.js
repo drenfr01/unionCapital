@@ -72,8 +72,8 @@ Template.pointTemplate.helpers({
   rowBackgroundClass: function() {
     return adhocStatus(this.event) ? "selfie-event" : "member-event";
   },
-  eventPoints: function(){
 
+  eventPoints: function(){
     return GlobalHelpers.eventPoints(this);
   },
 

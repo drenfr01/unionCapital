@@ -54,14 +54,17 @@ Template.addEvents.helpers({
       return [{label: institution, value: institution}];
     }
   },
+
   categories: function() {
-    return EventCategories.find().map(function(category) {
-      return {label: category.name, value: category.name};
-    });
+    return EventCategories
+      .getAllCategories()
+      .map(category => ({ label: category, value: category }));
   },
+
   isPointsPerHour: function() {
     return Session.equals("displayPointsPerHour", "true");
   },
+
   isPrivateEvent: function() {
     if(isPrivateEvent.get() === 'true') {
       return true;

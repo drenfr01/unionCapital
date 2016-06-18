@@ -1,34 +1,28 @@
 <template name="memberHomePage">
   <div class="col-xs-12 col-md-6 col-md-offset-3 text-center">
-    <div class="row text-center" id="totalPointsDiv">
-      <div class="col-xs-12 page-panel panel-link points-panel">
-        <a href="{{ pathFor 'checkPoints' }}">{{totalPoints}} POINTS</a>
-      </div>
-    </div>
-    <div class="row text-center">
-      <div class="col-xs-12 page-panel panel-link" id="checkInDiv">
-        <a href="{{ pathFor 'checkin' }}">
-          <img src="images/UCBbutton.png" alt="Check Into Event" height="200" width="200">
-          <br>Check In
-        </a>
-      </div>
-    </div>
-    <div class="row text-center">
-      <div class="col-xs-12 page-panel today-panel panel-link" id="eventsCalendarDiv">
-          <a href="{{ pathFor 'eventsCalendar' }}">What's Happening in Boston</a>
-      </div>
-    </div>
-    <div class="row">
-      {{> bmcLogo}}
-    </div>
-    <div class="row text-center">
-      <div class="col-xs-12 page-panel" id="fbLikeBoxDiv">
-        <div id="fb-root"></div>
-        <div class="fb-like-box" data-href="https://www.facebook.com/unioncapitalboston"
-          data-colorscheme="light" data-show-faces="false" data-header="false"
-          data-stream="true" data-show-border="false" style="width=100%;">
-        </div>
-      </div>
+    {{> pointsCircle }}
+    {{> homepageCheckInPanel }}
+    {{> homepageRecentTransactionsPanel }}
+  </div>
+</template>
+
+<template name="homepageCheckInPanel">
+  <div class="row text-center homepage-check-in-panel">
+    <div class="col-xs-12 page-panel panel-link">
+      <a href="{{ pathFor 'checkin' }}">Check In &nbsp;&nbsp;<span class="glyphicon glyphicon-time" aria-hidden="true"></span></a>
     </div>
   </div>
+</template>
+
+<template name="homepageRecentTransactionsPanel">
+  {{ #if approvedPoints }}
+    <div class="row text-center">
+      <div class="col-xs-12 page-panel panel-link points-panel">
+        <p>Recent Transactions</p>
+        {{ #each approvedPoints }}
+          <div>{{ event.name }} - {{ eventPoints }}</div>
+        {{ /each }}
+      </div>
+    </div>
+  {{ /if }}
 </template>

@@ -1,17 +1,3 @@
-EventCategories = new Meteor.Collection('eventCategories');
-
-
-EventCategories.attachSchema({
-  name: {
-    type: String,
-    label: 'Category Name'
-  },
-  deleteInd: {
-    type: Boolean,
-    label: 'Logical Deletion'
-  }
-});
-
 EventOrgs = new Meteor.Collection('eventOrgs');
 Feedback = new Mongo.Collection('feedback');
 

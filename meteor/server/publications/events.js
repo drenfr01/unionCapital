@@ -1,3 +1,19 @@
+/* global AppConfig */
+/* global PartnerOrgs */
+/* global Roles */
+/* global Counts */
+/* global Transactions */
+/* global Events */
+/* global R */
+/* global EventCategories */
+
+const ALL_CATEGORIES = 'All';
+const ALL_SUPER_CATEGORIES = 'All';
+
+function getPrimaryPartnerOrgName(user) {
+  return R.head(user.profile.partnerOrg);
+}
+
 Meteor.publish("events", function(start, end) {
   var selector = {};
   selector.deleteInd = false;
@@ -19,12 +35,12 @@ Meteor.publish("events", function(start, end) {
 
 
   return Events.find(selector);
-
 });
 
 Meteor.publish("singleEvent", function(id) {
-  if (!id)
+  if (!id) {
     throw new Error('Bad event id in subscription');
+  }
 
   return Events.find({ _id: id });
 });
@@ -72,63 +88,52 @@ Meteor.publish("eventsForTransactions", function() {
 });
 
 
-function buildManageEventsSelector(userId, range, institution, category, searchText) 
-{
-
-  var selector = {deleteInd: false};
-  var currentDate = new Date();
+function buildManageEventsSelector(userId, range, institution, category, superCategory, searchText) {
+  let selector = { deleteInd: false };
+  const currentDate = new Date();
 
   //double check to make sure admin users can't manage other events
   if (Roles.userIsInRole(userId, 'partnerAdmin')) {
     selector.institution = Meteor.users.findOne(userId).primaryPartnerOrg();
   } else {
-    //TODO: make All a config value
-    if(institution && institution !== "All") {
+    if(institution && institution !== ALL_CATEGORIES) {
       selector.institution = institution;
     }
   }
 
-  //TODO: make All a config value
-  if(category && category !== "All") {
+  if(category && category !== ALL_CATEGORIES) {
     selector.category = category;
+  } else if (!category && superCategory && superCategory !== ALL_SUPER_CATEGORIES) {
+    const catsInSuper = EventCategories.getCategoriesForSuperCategory(superCategory);
+    selector.category = { $in: catsInSuper };
   }
 
   if(range === AppConfig.eventRange.current) {
     selector.eventDate = {'$gte': currentDate}
-
   } else if (range === AppConfig.eventRange.past) {
     selector.eventDate = {'$lt': currentDate};
-    
-  } else {
-    //TODO: throwing an error doesn't work here, for some reason it gets
-    //silenced..
-    return new Meteor.Error("INCORRECT_PARAMETER","parameter should be either current or past");
   }
 
   if(searchText) {
     selector = _.extend(selector, {name: {$regex: searchText, $options: "i"}});
-  };
+  }
 
   return selector;
 }
 
-Meteor.publish('manageEvents', function(range, institution, category, 
-                                        searchText, skipCount) {
+Meteor.publish('manageEvents', function(range, institution, category, superCategory, searchText, skipCount) {
   check(range, String);
   check(skipCount, Number);
-  //TODO there is a known bug with Match.Optional where it doesn't work with
-  //nulls, and DDP coerces undefineds to null. Uncomment & switch to Match.Maybe
-  //when we bump to 1.3
-  //check(institution, Match.Optional(String));
-  //check(category, Match.Optional(String));
+  check(institution, Match.Maybe(String));
+  check(superCategory, Match.Maybe(String));
+  check(category, Match.Maybe(String));
 
-  var selector = buildManageEventsSelector(this.userId, range, institution,
-                                           category, searchText);
+  const selector = buildManageEventsSelector(this.userId, range, institution, category, superCategory, searchText);
+  const eventOptions = {
+    limit: AppConfig.public.recordsPerPage,
+    skip: skipCount,
+  };
 
-  Counts.publish(this, 'eventsCount', Events.find(selector), {
-    noReady: true
-  });
-
-  var eventOptions = {limit: AppConfig.public.recordsPerPage, skip: skipCount};
+  Counts.publish(this, 'eventsCount', Events.find(selector), { noReady: true });
   return Events.find(selector, eventOptions);
 });

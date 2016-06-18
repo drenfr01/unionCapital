@@ -30,5 +30,4 @@ Meteor.publish("ucbappaccess", function() {
   return UCBAppAccess.find();
 });
 
-
-
+Meteor.publish('pointlevels', () => PointLevels.find());
