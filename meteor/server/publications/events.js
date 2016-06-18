@@ -5,16 +5,16 @@ Meteor.publish("events", function(start, end) {
   selector.eventDate = { $gte: start, $lte: end };
 
   var user = Meteor.users.findOne(this.userId);
-  var partnerOrg = PartnerOrgs.findOne({name: R.head(user.profile.partnerOrg)});
+  var listOfPartnerOrgs = PartnerOrgs.find({name: {$in: user.profile.partnerOrg}}).fetch();
   
-  if(R.isNil(partnerOrg)) {
+  if(R.isNil(listOfPartnerOrgs)) {
     console.log("partnerOrg undefined");
   };
 
   selector = _.extend(selector, {$or: [
     {privateEvent: false},
     {privateWhitelist: this.userId},
-    {privateWhitelist: partnerOrg._id}
+    {privateWhitelist: {$in: R.pluck('_id', listOfPartnerOrgs)}}
   ]});
 
 
