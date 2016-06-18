@@ -54,77 +54,45 @@
   </div>
   <div class="row">
     <div class="col-xs-12 page-panel page-panel-form">
+        <form role="form" id="organizationForm">
+          <div class="form-group">
+            <label for="organizations">Partner Affiliation(s)</label>
+            <select class="form-control" id="organizations">
+              <option value="" selected="selected">Select Option Below</option>
+              {{#each organizations}}
+                <option>{{name}}</option>
+              {{/each}}
+            </select>
+          </div>
+        </form>
+        {{#each partnerOrgs}}
+        <b>{{name}}:</b> {{description}} 
+          <span class="glyphicon glyphicon-remove removePartnerOrg" 
+            area-hidden="true"></span>
+          <br>
+        {{/each}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 page-panel page-panel-form">
       <label>Gender</label>
       <form role="form" id="genderForm">
         <div class="form-group">
           <label class="radio-inline">
-            <input type="radio" name="inlineRadioOptions" id="male" value="male">Male
+            <input type="radio" name="inlineRadioOptions" id="male" value="male">
+            Male
           </label>
           <label class="radio-inline">
-            <input type="radio" name="inlineRadioOptions" id="female" value="female">Female
+            <input type="radio" name="inlineRadioOptions" id="female" 
+            value="female">
+            Female
           </label>
           <label class="radio-inline">
-            <input type="radio" name="inlineRadioOptions" id="noresponse" value="noresponse">Prefer not to respond
+            <input type="radio" name="inlineRadioOptions" id="noresponse" 
+            value="noresponse">Prefer not to respond
           </label>
         </div>
       </form>
-      <form role="form" id="organizationForm">
-        <div class="form-group">
-          <label for="organizations">Partner Affiliation</label>
-          <select class="form-control" id="organizations">
-            {{#each organizations}}
-            <option>{{name}}</option>
-            {{/each}}
-          </select>
-        </div>
-      </form>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 page-panel page-panel-form">
-      <form role="form" id="numberOfKidsForm">
-        <div class="form-group">
-          <label for="numberOfKids">Number of Kids</label>
-          <select class="form-control" id="numberOfKids">
-            {{#each kids}}
-            <option>{{number}}</option>
-            {{/each}}
-          </select>
-        </div>
-      </form>
-      <label>
-        Do your children qualify for the Free or Reduced Price Lunch Progam?
-      </label>
-      <form role="form" id="reducedLunchForm">
-        <div class="form-group">
-          <label class="radio-inline">
-            <input type="radio" name="inlineRadioOptions" id="noKids" value="noKids">No kids in school
-          </label>
-          <label class="radio-inline">
-            <input type="radio" name="inlineRadioOptions" id="yes" value="yes">Yes
-          </label>
-          <label class="radio-inline">
-            <input type="radio" name="inlineRadioOptions" id="no" value="no">No
-          </label>
-        </div>
-      </form>
-      <label>
-        Are you enrolled in Medicaid?
-      </label>
-      <form role="form" id="medicaid">
-        <div class="form-group">
-          <label class="radio-inline">
-            <input type="radio" name="inlineRadioOptions" id="yes" value="yes">Yes
-          </label>
-          <label class="radio-inline">
-            <input type="radio" name="inlineRadioOptions" id="no" value="no">No
-          </label>
-        </div>
-      </form>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 page-panel page-panel-form">
       <form role="form" id="raceForm">
         <div class="form-group">
           <label for="races">Race</label>
@@ -137,21 +105,9 @@
       </form>
     </div>
   </div>
-  <div class="row">
-    <div class="col-xs-12 page-panel page-panel-form">
-      <form role="form" id="deviceForm">
-        <div class="form-group">
-          <label for="device">Primary way you will use UCB App</label>
-          <select class="form-control" id="device">
-            <option value="" selected="selected">Select Option Below</option>
-            {{#each UCBAppAccess}}
-            <option>{{device}}</option>
-            {{/each}}
-          </select>
-        </div>
-      </form>
-    </div>
-  </div>
+  <!-- TODO: remove unnessary info and consolidate panes. My thought here is to
+  have partners be a list with a search bar, exactly the same as private events
+  then people can just add / subtract as necessary. I'm thinking read in partners into a local collection and then add / subtract to it for reactivity-->
 </div>
     {{>bottomNav buttonType="submit"}}
 {{/with}}

@@ -15,19 +15,24 @@ function getPrimaryPartnerOrgName(user) {
 }
 
 Meteor.publish("events", function(start, end) {
-  const user = Meteor.users.findOne(this.userId);
-  const partnerOrg = PartnerOrgs.findOne({ name: getPrimaryPartnerOrgName(user) });
+  var selector = {};
+  selector.deleteInd = false;
+  selector.adHoc = false;
+  selector.eventDate = { $gte: start, $lte: end };
 
-  const selector = {
-    deleteInd: false,
-    adHoc: false,
-    eventDate: { $gte: start, $lte: end },
-    $or: [
-      { privateEvent: false },
-      { privateWhitelist: this.userId },
-      { privateWhitelist: partnerOrg._id },
-    ],
+  var user = Meteor.users.findOne(this.userId);
+  var listOfPartnerOrgs = PartnerOrgs.find({name: {$in: user.profile.partnerOrg}}).fetch();
+  
+  if(R.isNil(listOfPartnerOrgs)) {
+    console.log("partnerOrg undefined");
   };
+
+  selector = _.extend(selector, {$or: [
+    {privateEvent: false},
+    {privateWhitelist: this.userId},
+    {privateWhitelist: {$in: R.pluck('_id', listOfPartnerOrgs)}}
+  ]});
+
 
   return Events.find(selector);
 });
