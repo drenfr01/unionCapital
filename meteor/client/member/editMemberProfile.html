@@ -54,16 +54,23 @@
   </div>
   <div class="row">
     <div class="col-xs-12 page-panel page-panel-form">
-      <form role="form" id="organizationForm">
-        <div class="form-group">
-          <label for="organizations">Partner Affiliation</label>
-          <select class="form-control" id="organizations">
-            {{#each organizations}}
-            <option>{{name}}</option>
-            {{/each}}
-          </select>
-        </div>
-      </form>
+        <form role="form" id="organizationForm">
+          <div class="form-group">
+            <label for="organizations">Partner Affiliation(s)</label>
+            <select class="form-control" id="organizations">
+              <option value="" selected="selected">Select Option Below</option>
+              {{#each organizations}}
+                <option>{{name}}</option>
+              {{/each}}
+            </select>
+          </div>
+        </form>
+        {{#each partnerOrgs}}
+        <b>{{name}}:</b> {{description}} 
+          <span class="glyphicon glyphicon-remove removePartnerOrg" 
+            area-hidden="true"></span>
+          <br>
+        {{/each}}
     </div>
   </div>
   <div class="row">

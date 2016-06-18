@@ -1,7 +1,8 @@
 //Used to hold organizations user wants to follow
-PartnerOrganizations = new Meteor.Collection(null);
+var PartnerOrganizations = new Meteor.Collection(null);
 
 Template.collectUserDemographics.onCreated(function() {
+  PartnerOrganizations.remove({});
   this.subscribe('eventCategories');
   this.subscribe('eventOrgs');
   this.subscribe('partnerOrganizations');

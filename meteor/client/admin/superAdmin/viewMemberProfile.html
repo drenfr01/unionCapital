@@ -3,19 +3,7 @@
   {{#with member}}
   <div class="col-xs-12 col-md-6 col-md-offset-3">
     <div class="col-xs-12 page-panel">
-      <h1 class="text-center">
-        {{profile.firstName}} {{profile.lastName}}
-        {{#if isArchived }}
-        <span class="text-warning">(Archived)</span>
-        {{/if}}
-      </h1>
-      <table class="table">
-        <tr><td>Partner Organization</td><td>{{profile.partnerOrg}}</td></tr>
-        <tr><td>Address</td><td>{{profile.street1}} {{profile.street2}} {{profile.city}} {{profile.state}}</td></tr>
-        <tr><td>Zip</td><td>{{profile.zip}}</td></tr>
-        <tr><td>Ethnicity</td><td>{{profile.race}}</td></tr>
-        <tr><td>Email</td><td>{{emails.[0].address}}</td></tr>
-      </table>
+      {{> memberProfilePartial}}
     </div>
     {{#if isArchived }}
     <div class="col-xs-12 page-panel">
