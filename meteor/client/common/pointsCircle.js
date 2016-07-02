@@ -18,19 +18,40 @@ Template.pointsCircle.onCreated(function() {
 Template.pointsCircle.onRendered(function() {
   var self = this;
 
-  console.warn('make this percent real...');
   self.autorun(function() {
     var nextLevel = self.nextLevel.get();
+    var currentLevel = self.currentLevel.get();
     if(nextLevel) {
+      var totalPoints = Meteor.user() ? Meteor.user().profile.points || 0 : 0;
+      var percentage = (totalPoints / nextLevel.start) * 100;
       $('.pointsCircle').empty();
       $('.pointsCircle').circliful({
         animationStep: 20,
-        percent: 75,
+        percent: percentage,
         percentageTextSize: 16,
         text: 'to ' + nextLevel.level,
         textColor: nextLevel.color,
         textStyle: 'font-size: 12px',
+        foregroundColor: nextLevel.color,
+        backgroundColor: currentLevel.color
       });
+    } else if(currentLevel) {
+
+      var totalPoints = Meteor.user() ? Meteor.user().profile.points || 0 : 0;
+      var percentage = (totalPoints / currentLevel.end) * 100;
+      $('.pointsCircle').empty();
+      $('.pointsCircle').circliful({
+        animationStep: 20,
+        percent: percentage,
+        percentageTextSize: 16,
+        text: 'to max points!',
+        textColor: currentLevel.color,
+        textStyle: 'font-size: 12px',
+        foregroundColor: currentLevel.color,
+        backgroundColor: '#000000' //black
+      });
+    } else {
+      //loading 
     }
   });
 });

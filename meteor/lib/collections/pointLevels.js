@@ -24,20 +24,21 @@ PointLevels.attachSchema(new SimpleSchema({
 }));
 
 PointLevels.returnLevel = function(userPoints) {
-  //note: this relies on a sorted index on points
-  const pointLevels = PointLevels.find().fetch();
+  const pointLevels = PointLevels.find({}, {sort: {end: 1}}).fetch();
   return R.head(R.filter(x => userPoints <= x.end, pointLevels));
 };
 
 PointLevels.nextLevel = function(userPoints) {
   const currentLevel = PointLevels.returnLevel(userPoints);
   
-  //note: this relies on a sorted index on points
-  const pointLevels = PointLevels.find().fetch();
-  return R.head(R.filter(x => x.end > currentLevel.end, pointLevels));
+  if(currentLevel) { 
+    const pointLevels = PointLevels.find({}, {sort: {end: 1}}).fetch();
+    return R.head(R.filter(x => x.end > currentLevel.end, pointLevels));
+  }
 };
 
 PointLevels.pointsToNextLevel = function(userPoints) {
   const nextLevel = PointLevels.nextLevel(userPoints);
-  return nextLevel ? nextLevel.start - userPoints : 0;
+  const currentLevel = PointLevels.returnLevel(userPoints) || {end: 0};
+  return nextLevel ? nextLevel.start - userPoints : currentLevel.end - userPoints;
 };
