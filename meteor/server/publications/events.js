@@ -34,7 +34,6 @@ Meteor.publish("events", function(start, end) {
   ]});
 
 
-  console.log(selector);
   return Events.find(selector);
 });
 

@@ -19,18 +19,11 @@
               {{> spinner }}
             </div>
           {{ else }}
-            <div class="btn-group btn-group-justified" role="group">
-              <div class="btn-group">
-                <button type="button" class="btn btn-default btn-lg login-left-button" id="facebook">
-                  <img src="images/FB-f-Logo__blue_29.png">
-                </button>
-              </div>
-              <div class="btn-group">
-                <button type="submit" class="btn btn-default btn-lg login-right-button" id="loginSubmit">
-                  Log In <span class="glyphicon glyphicon-chevron-right"></span>
-                </button>
-              </div>
-            </div>
+            <button type="submit" 
+              class="btn btn-default btn-lg login-right-button" id="loginSubmit">
+                Log In 
+              <span class="glyphicon glyphicon-chevron-right"></span>
+            </button>
           {{ /if }}
         </form>
       </div>
