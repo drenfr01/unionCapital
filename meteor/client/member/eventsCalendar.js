@@ -103,7 +103,7 @@ Template.eventPanel.helpers({
   },
 
   people: function() {
-    return NumberOfPeople.find();
+    return NumberOfPeople.find({}, {sort: {number: 1}});
   },
 
   hasMembers: function() {
