@@ -71,7 +71,11 @@ GlobalHelpers = (function() {
     //return true if selfie event, false if  
     //pre-scheduled event
     isSelfieEvent: function(trans) {
-      return R.isNil(trans.eventId) ? true : false;
+      //note: new selfie events have an eventId of 'new' rather
+      //than the legacy selfie events which have no eventId (i.e. no key)
+      var newSelfieEventId = 'new';
+      return R.isNil(trans.eventId) || trans.eventId === newSelfieEventId  ? 
+        true : false;
     },
 
   }
