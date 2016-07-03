@@ -51,7 +51,6 @@ Meteor.publish("calendarEvents", function(selector, options, searchText, skipCou
     {name: {$in: user.profile.partnerOrg}}).fetch();
   
   if(searchText) {
-    console.log(searchText);
     selector = _.extend(selector, 
       {name: {$regex: searchText, $options: "i"}}
     );
@@ -69,8 +68,7 @@ Meteor.publish("calendarEvents", function(selector, options, searchText, skipCou
 
   const eventOptions = {
     limit: AppConfig.public.recordsPerPage,
-    skip: skipCount,
-    sort: {eventDate: 1}
+    skip: skipCount
   };
 
   Counts.publish(this, 'calendarCount', Events.find(selector), {
