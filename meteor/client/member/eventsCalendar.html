@@ -13,12 +13,7 @@
         </div>
       </div>
     </div>
-    {{#if hasFutureEvents}}
-      {{> eventPanel type='future' }}
-    {{/if}}
-    {{#if hasNoEvents}}
-      {{> eventHeader 'There are no events that meet your criteria' }}
-    {{/if}}
+    {{> eventPanel type='future' }}
   </div>
 </template>
 
@@ -31,6 +26,7 @@
 </template>
 
 <template name="eventPanel">
+  {{#if Template.subscriptionsReady}}
   {{#with getEvents}}
     <div class="row">
       <div class="col-xs-12 page-panel">
@@ -118,4 +114,27 @@
       </div>
     </div>
   {{/with}}
+  <div class="row">
+    <nav>
+      <ul class="pager">
+        <li class="{{prevPageClass}}">
+          <a id="prevPage" href="{{prevPage}}">
+            <span aria-hidden="true">&larr;</span> Previous
+          </a>
+        </li>
+        <li class="{{nextPageClass}}">
+          <a id="nextPage" href="{{nextPage}}">
+            Next <span aria-hidden="true">&rarr;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  {{else}}
+    <div class="row">
+      <div class="col-xs-12 logging-in-spinner">
+        {{> spinner}}
+      </div>
+    </div>
+  {{/if}}
 </template>

@@ -1,11 +1,9 @@
-CalendarEventsSearch = new CalendarEvents();
 var searchString = new ReactiveVar();
 //contains a list of event Ids, used to 
 //avoid re-creating add to calendar links
 Session.set('calendarEventsCreated', []);
 
 Template.eventsCalendar.onRendered(function() {
-  // CalendarEventsSearch.search("");
   searchString.set('');
 });
 
@@ -13,28 +11,33 @@ Template.eventsCalendar.onCreated(function() {
   this.subscribe('reservations');
   this.subscribe('numberOfPeople');
   this.subscribe('myImages');
-});
+  var timeframe = 'future';
+  var start = moment().add(
+    AppConfig.eventCalendar[timeframe].hoursBehind, 'h').toDate();
+  var end = moment().add(
+    AppConfig.eventCalendar[timeframe].hoursAhead, 'h').toDate();
+  var selector = {
+    eventDate: {
+      $gte: start,
+      $lte: end
+    }
+  };
 
-Template.eventsCalendar.helpers({
+  var options = {
+    sort: { eventDate: 1 }
+  };
 
-  hasPastEvents: function() {
-    return !_.isEmpty(CalendarEventsSearch.getPastEvents(searchString.get()));
-  },
-
-  hasFutureEvents: function() {
-    return !_.isEmpty(CalendarEventsSearch.getFutureEvents(searchString.get()));
-  },
-
-  hasNoEvents: function() {
-    return _.isEmpty(CalendarEventsSearch.getPastEvents(searchString.get())) && _.isEmpty(CalendarEventsSearch.getFutureEvents(searchString.get()));
-  }
+  var template = this;
+  template.autorun(function() {
+    var skipCount = (currentPage() - 1) * AppConfig.public.recordsPerPage;
+    template.subscribe('calendarEvents', selector, options, searchString.get(), skipCount);
+  });
 });
 
 Template.eventsCalendar.events({
 
   'keyup #search-box': _.throttle(function(e) {
     var text = $(e.target).val().trim();
-    // CalendarEventsSearch.search(text);
     searchString.set(text);
   }, 200),
 
@@ -70,7 +73,6 @@ Template.eventsCalendar.events({
 
   'click #clearBtn': function() {
     searchString.set('');
-    // CalendarEventsSearch.search('');
     $('#search-box').val('');
     $('#search-box').focus();
   },
@@ -89,10 +91,14 @@ Template.eventsCalendar.events({
 // eventPanel
 Template.eventPanel.helpers({
   getEvents: function() {
-    if (this.type === 'past')
-      return CalendarEventsSearch.getPastEvents(searchString.get());
-    else if (this.type === 'future')
-      return CalendarEventsSearch.getFutureEvents(searchString.get());
+    if (this.type === 'future') {
+      return _.groupBy(Events.find({}, {sort: {eventDate: 1}}).fetch(), 
+                       function(doc) {
+                         return moment(doc.eventDate).format("MM/DD/YYYY");
+      });
+    } else {
+      console.log("Error! Should always have future above");
+    }
   },
 
   hasReservation: function() {
@@ -113,6 +119,21 @@ Template.eventPanel.helpers({
   isFuture: function(thisType) {
     return thisType.type === 'future';
   },
+
+  prevPage: function() {
+    var previousPage = currentPage() === 1 ? 1 : currentPage() - 1;
+    return Router.routes.eventsCalendar.path({page: previousPage});
+  },
+  nextPage: function() {
+    var nextPage = hasMorePages() ? currentPage() + 1 : currentPage();
+    return Router.routes.eventsCalendar.path({page: nextPage});
+  },
+  prevPageClass: function() {
+    return currentPage() <= 1 ? "disabled" : "";
+  },
+  nextPageClass: function() {
+    return hasMorePages() ? "" : "disabled";
+  }
 
 });
 
@@ -161,3 +182,12 @@ Template.eventsCalendar.events({
     }
   },
 });
+
+var hasMorePages = function() {
+  var totalEvents = Counts.get('calendarCount');
+  return currentPage() * parseInt(AppConfig.public.recordsPerPage) < totalEvents;
+}
+
+var currentPage = function() {
+  return parseInt(Router.current().params.page) || 1;
+}

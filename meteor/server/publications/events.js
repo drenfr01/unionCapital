@@ -37,6 +37,49 @@ Meteor.publish("events", function(start, end) {
   return Events.find(selector);
 });
 
+
+Meteor.publish("calendarEvents", function(selector, options, searchText, skipCount) {
+  check(skipCount, Match.Maybe(Number));
+  var selector = selector || {};
+  var options = options || {};
+
+  selector.deleteInd = false;
+  selector.adHoc = false;
+
+  var user = Meteor.users.findOne(this.userId);
+  var listOfPartnerOrgs = PartnerOrgs.find(
+    {name: {$in: user.profile.partnerOrg}}).fetch();
+  
+  if(searchText) {
+    console.log(searchText);
+    selector = _.extend(selector, 
+      {name: {$regex: searchText, $options: "i"}}
+    );
+  }
+
+  if(R.isNil(listOfPartnerOrgs)) {
+    console.log("partnerOrg undefined");
+  };
+
+  selector = _.extend(selector, {$or: [
+    {privateEvent: false},
+    {privateWhitelist: this.userId},
+    {privateWhitelist: {$in: R.pluck('_id', listOfPartnerOrgs)}}
+  ]});
+
+  const eventOptions = {
+    limit: AppConfig.public.recordsPerPage,
+    skip: skipCount,
+    sort: {eventDate: 1}
+  };
+
+  Counts.publish(this, 'calendarCount', Events.find(selector), {
+    noReady: true
+  });
+
+  return Events.find(selector, eventOptions);
+});
+
 Meteor.publish("singleEvent", function(id) {
   if (!id) {
     throw new Error('Bad event id in subscription');
@@ -128,7 +171,8 @@ Meteor.publish('manageEvents', function(range, institution, category, superCateg
   check(superCategory, Match.Maybe(String));
   check(category, Match.Maybe(String));
 
-  const selector = buildManageEventsSelector(this.userId, range, institution, category, superCategory, searchText);
+  const selector = buildManageEventsSelector(this.userId, range, institution, 
+                                             category, superCategory, searchText);
   const eventOptions = {
     limit: AppConfig.public.recordsPerPage,
     skip: skipCount,
