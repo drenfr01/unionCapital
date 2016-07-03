@@ -21,6 +21,7 @@ Meteor.methods({
     };
 
     const feedbackId = Feedback.insert(feedbackObject);
+    console.log(feedbackId);
     //assume user can only check into an event once
     //make sure that for this transaction they have not left feedback before
     //e.g. they left a rating before and now they're leaving a comment
@@ -30,8 +31,13 @@ Meteor.methods({
     if(R.isEmpty(feedback)) {
     
       var addOn = Addons.findOne({name: feedbackAddonName});
-      //note: this db layer auto-recalculates points
-      DB.transactions.update(trans._id, {$push: {addons: addOn}});
+      if(addOn) { 
+        //note: this db layer auto-recalculates points
+        DB.transactions.update(trans._id, {$push: {addons: addOn}});
+      } else {
+        throw new Meteor.Error('Addon_Not_Found', 
+          'This addon was not found, make sure fixture data is present?');
+      }
     }
 
     Events.update(event._id, {$push: {feedback: feedbackObject} });
