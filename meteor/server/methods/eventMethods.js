@@ -1,4 +1,15 @@
 Meteor.methods({
+  getWhitelistMembers: function(eventId) {
+    //note: whitelist can contain IDs of either 
+    //UCB members or partner orgs
+    const getWhitelistMember = function(memberId) {
+      const user = Meteor.users.findOne(memberId) 
+      const partnerOrg = PartnerOrgs.findOne(memberId);
+      return R.is(Object, user) ? user.profile.firstName + " " + user.profile.lastName : partnerOrg.name;
+    }
+    return R.map(getWhitelistMember, Events.findOne(eventId).privateWhitelist);
+  },
+
   postFeedback: function(trans, feedbackContent, feedbackType) {
     check(trans, Object);
     check(feedbackContent, Match.OneOf(String, Number));
