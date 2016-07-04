@@ -23,7 +23,7 @@ Template.eventsCalendar.onCreated(function() {
   this.subscribe('numberOfPeople');
   this.subscribe('myImages');
   this.subscribe('eventCategories');
-  this.superCategoryName = new ReactiveVar('-- Category --');
+  this.superCategoryName = new ReactiveVar('default');
   var start = moment().add(
     AppConfig.eventCalendar[timeframe].hoursBehind, 'h').toDate();
   var end = moment().add(
