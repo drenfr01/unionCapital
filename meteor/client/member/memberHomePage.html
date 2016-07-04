@@ -3,6 +3,7 @@
     {{> pointsCircle }}
     {{> homepageCheckInPanel }}
     {{> homepageRecentTransactionsPanel }}
+    {{> facebookPlugin }}
   </div>
 </template>
 
@@ -25,4 +26,16 @@
       </div>
     </div>
   {{ /if }}
+</template>
+
+<template name="facebookPlugin">
+  <div class="row text-center">
+    <div class="col-xs-12 page-panel" id="fbLikeBoxDiv">
+      <div id="fb-root"></div>
+      <div class="fb-like-box" data-href="https://www.facebook.com/unioncapitalboston"
+                               data-colorscheme="light" data-show-faces="false" data-header="false"
+                                                                               data-stream="true" data-show-border="false" style="width=100%;">
+      </div>
+    </div>
+  </div>
 </template>

@@ -315,13 +315,7 @@ Router.map(function() {
   });
 
   this.route('eventsCalendar', {
-    path: '/calendar',
-    subscriptions: function() {
-      var start = moment().add(AppConfig.eventCalendar.past.hoursBehind, 'h').toDate();
-      var end = moment().add(AppConfig.eventCalendar.future.hoursAhead, 'h').toDate();
-      Meteor.subscribe('events', start, end);
-    }
-    // no need to wait on subs here, the search function handles that
+    path: '/calendar/:page?',
   });
 
   this.route('memberHomePage', {path: '/memberhome'});

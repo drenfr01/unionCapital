@@ -11,6 +11,9 @@ AutoForm.hooks({
         console.log(R.pluck('_id',whitelist.find({}, {fields: {_id: 1}}).fetch()));
         doc.privateWhitelist = R.pluck('_id', whitelist.find({}, 
           {fields: {_id: 1}}).fetch());
+
+        var eventCategory = EventCategories.findOne({name: doc.category})
+        doc.superCategoryName = eventCategory ? eventCategory.superCategoryName : 'Unknown';
         return doc;
       }
     },
@@ -49,22 +52,18 @@ Template.addEvents.helpers({
         return {label: institution.name, value: institution.name};
       });
     } else {
-      //partner admins can only have 1 partner org affiliation
-      var institution = Meteor.user().primaryPartnerOrg();
+      var institution = Meteor.user().profile.partnerOrg;
       return [{label: institution, value: institution}];
     }
   },
-
   categories: function() {
-    return EventCategories
-      .getAllCategories()
-      .map(category => ({ label: category, value: category }));
+    return EventCategories.find().map(function(category) {
+      return {label: category.name, value: category.name};
+    });
   },
-
   isPointsPerHour: function() {
     return Session.equals("displayPointsPerHour", "true");
   },
-
   isPrivateEvent: function() {
     if(isPrivateEvent.get() === 'true') {
       return true;
