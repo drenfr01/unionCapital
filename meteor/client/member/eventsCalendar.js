@@ -1,4 +1,5 @@
 var searchString = new ReactiveVar();
+var timeframe = 'future';
 //contains a list of event Ids, used to 
 //avoid re-creating add to calendar links
 Session.set('calendarEventsCreated', []);
@@ -11,6 +12,10 @@ Template.eventsCalendar.onRendered(function() {
     autoclose: true,
     clearBtn: true
   });
+
+  $('#startDate').val(moment().format('MM/DD/YYYY'));
+  $('#endDate').val(moment().add(
+      AppConfig.eventCalendar[timeframe].hoursAhead, 'h').format('MM/DD/YYYY'));
 });
 
 Template.eventsCalendar.onCreated(function() {
@@ -18,26 +23,26 @@ Template.eventsCalendar.onCreated(function() {
   this.subscribe('numberOfPeople');
   this.subscribe('myImages');
   this.subscribe('eventCategories');
-  var timeframe = 'future';
+  this.superCategoryName = new ReactiveVar('-- Category --');
   var start = moment().add(
     AppConfig.eventCalendar[timeframe].hoursBehind, 'h').toDate();
   var end = moment().add(
     AppConfig.eventCalendar[timeframe].hoursAhead, 'h').toDate();
-  var selector = {
+  var attributes = {
     eventDate: {
       $gte: start,
       $lte: end
     }
   };
 
-  var options = {
-    sort: { eventDate: 1 }
-  };
 
   var template = this;
   template.autorun(function() {
+    attributes = _.extend(attributes, 
+                          {superCategoryName: template.superCategoryName.get()});
     var skipCount = (currentPage() - 1) * AppConfig.public.recordsPerPage;
-    template.subscribe('calendarEvents', selector, options, searchString.get(), skipCount);
+    template.subscribe('calendarEvents', attributes, 
+                       searchString.get(), skipCount);
   });
 });
 
@@ -101,6 +106,10 @@ Template.eventsCalendar.events({
     thisId = $(e.target).attr('aria-controls');
     if ( !($(e.target).attr('id') === thisId) )
       $('.panel-collapse.in').not(" [id='" + thisId + "'] ").collapse("hide");
+  },
+
+  'change #eventCategory': function(e) {
+    Template.instance().superCategoryName.set($('#eventCategory').val());
   }
 });
 

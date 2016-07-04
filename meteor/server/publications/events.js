@@ -38,13 +38,22 @@ Meteor.publish("events", function(start, end) {
 });
 
 
-Meteor.publish("calendarEvents", function(selector, options, searchText, skipCount) {
+Meteor.publish("calendarEvents", function(attributes, searchText, skipCount) {
   check(skipCount, Match.Maybe(Number));
-  var selector = selector || {};
-  var options = options || {};
+  var selector = {};
 
+  selector.eventDate = attributes.eventDate;
   selector.deleteInd = false;
   selector.adHoc = false;
+
+  if(attributes.superCategoryName && attributes.superCategoryName !== 'default') {
+    selector.superCategoryName = attributes.superCategoryName;
+  }
+
+  var options = {
+    sort: { eventDate: 1 }
+  };
+
 
   var user = Meteor.users.findOne(this.userId);
   var listOfPartnerOrgs = PartnerOrgs.find(

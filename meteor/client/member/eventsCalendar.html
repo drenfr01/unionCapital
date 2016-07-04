@@ -30,15 +30,17 @@
         </div>
         <hr>
 	<div class="input-daterange input-group" id="datepicker">
-	  <input type="text" class="input-sm form-control" name="start" />
+	  <input type="text" class="input-sm form-control" id="startDate" 
+            name="start" />
 	  <span class="input-group-addon">to</span>
-	  <input type="text" class="input-sm form-control" name="end" />
+	  <input type="text" class="input-sm form-control" id="endDate" 
+            name="end" />
 	</div>
         <hr>
         <div class="row">
           <div class="col-xs-7">
-            <select class="form-control">
-              <option>-- Category --</option>
+            <select class="form-control" id="eventCategory">
+              <option value="default">-- All --</option>
               {{#each category}}
               <option value="{{this}}">{{this}}</option>
               {{/each}}

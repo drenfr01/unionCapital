@@ -34,6 +34,11 @@ Events.attachSchema(new SimpleSchema({
     type: String,
     label: 'Category of Event'
   },
+  superCategoryName: {
+    type: String,
+    label: 'Super category of event',
+    optional: true
+  },
   deleteInd: {
     type: Boolean,
     label: 'Logical Deletion',
