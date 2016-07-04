@@ -1,7 +1,7 @@
 <template name="eventsCalendar">
   <div class="col-xs-12 col-md-6 col-md-offset-3">
     <div class="row">
-      <div class="col-xs-12 page-panel">
+      <div class="col-xs-12 page-panel text-center">
         <div class="input-group">
           <input type='text' class="form-control" placeholder='Search Event Name, Partner Org Name, or Event Category'
           id='search-box'/>
@@ -11,6 +11,47 @@
             </button>
           </span>
         </div>
+        <hr>
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+		Filters
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+        <div class="btn-group-sm" role="group">
+          <button type="button" class="btn btn-default">Morning</button>
+          <button type="button" class="btn btn-default">Afternoon</button>
+          <button type="button" class="btn btn-default">Evening</button>
+        </div>
+        <hr>
+	<div class="input-daterange input-group" id="datepicker">
+	  <input type="text" class="input-sm form-control" name="start" />
+	  <span class="input-group-addon">to</span>
+	  <input type="text" class="input-sm form-control" name="end" />
+	</div>
+        <hr>
+        <div class="row">
+          <div class="col-xs-7">
+            <select class="form-control">
+              <option>-- Category --</option>
+              {{#each category}}
+              <option value="{{this}}">{{this}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div class="col-xs-5">
+            <input type="number" class="form-control" placeholder="Zip">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
       </div>
     </div>
     {{> eventPanel type='future' }}

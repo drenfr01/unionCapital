@@ -5,12 +5,19 @@ Session.set('calendarEventsCreated', []);
 
 Template.eventsCalendar.onRendered(function() {
   searchString.set('');
+  $('.input-daterange').datepicker({ 
+    orientation: "bottom auto",
+    startDate: moment().format('MM/DD/YYYY'),
+    autoclose: true,
+    clearBtn: true
+  });
 });
 
 Template.eventsCalendar.onCreated(function() {
   this.subscribe('reservations');
   this.subscribe('numberOfPeople');
   this.subscribe('myImages');
+  this.subscribe('eventCategories');
   var timeframe = 'future';
   var start = moment().add(
     AppConfig.eventCalendar[timeframe].hoursBehind, 'h').toDate();
@@ -32,6 +39,15 @@ Template.eventsCalendar.onCreated(function() {
     var skipCount = (currentPage() - 1) * AppConfig.public.recordsPerPage;
     template.subscribe('calendarEvents', selector, options, searchString.get(), skipCount);
   });
+});
+
+Template.eventsCalendar.helpers({
+
+  category: function() {
+    var superCategories = R.pluck('superCategoryName',
+                                  EventCategories.find().fetch());
+    return R.uniq(superCategories.sort());
+  }
 });
 
 Template.eventsCalendar.events({
@@ -100,6 +116,7 @@ Template.eventPanel.helpers({
       console.log("Error! Should always have future above");
     }
   },
+
 
   hasReservation: function() {
     return Reservations.findOne({
