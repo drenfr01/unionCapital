@@ -1,6 +1,13 @@
+/* global EventCategories */
+/* global getApprovalType */
+/* global Transactions */
+
+function getTransactionCountForUserAndCategoryToday(category, userId) {
+  return Transactions.find({ userId, 'event.category': category }).count();
+}
+
 Meteor.methods({
   insertTransaction: function(attributes) {
-    console.log(attributes);
     check(attributes, {
       userId: String,
       hoursSpent: Number,
@@ -12,27 +19,27 @@ Meteor.methods({
       category: Match.Optional(String),
       userLat: Match.Optional(Number),
       userLng: Match.Optional(Number),
-      addons: Match.Optional([Object])
+      addons: Match.Optional([Object]),
     });
 
-    var currentUser = Meteor.user();
+    const currentUser = Meteor.user();
+
     // Determines whether this transaction requires approval
-    attributes.approvalType = CheckInRules.run(attributes);
+    attributes.rules = EventCategories.findOne({ name: attributes.category }).rules;
+    attributes.approvalType = getApprovalType(attributes);
 
     // Only set it to approved if it is auto
-    if (attributes.approvalType === 'auto')
-      attributes.approved = true;
-    else
-      attributes.approved = false;
+    attributes.approved = (attributes.approvalType === 'auto');
 
     // If the user isn't logging an action from the past,
     // we use the server's time as the source of truth
     // We should probably figure out a better way to do this
-    if (!attributes.transactionDate)
+    if (!attributes.transactionDate) {
       attributes.transactionDate = new Date();
+    }
 
     //check to see if this is ad-hoc event
-    var thisEvent = Events.findOne({ _id: attributes.eventId });
+    const thisEvent = Events.findOne({ _id: attributes.eventId });
     if (attributes.eventId && thisEvent) {
       // Check against max possible hours
       if (attributes.hoursSpent > thisEvent.duration)
