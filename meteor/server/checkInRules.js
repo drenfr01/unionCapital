@@ -34,8 +34,18 @@ const CATEGORY_RULES_FUNCTIONS = {
     return hoursSpent <= 4;
   },
 
-  ONE_MAX_ENTRY_PER_DAY: function({ userId, category }) {
-    const count = Transactions.find({ userId, 'event.category': category }).count();
+  ONE_MAX_ENTRY_PER_DAY: function({ userId, category, transactionDate }) {
+    const earliestDate = moment(transactionDate).startOf('day').toDate();
+    const latestDate = moment(transactionDate).endOf('day').toDate();
+    const count = Transactions.find({
+      userId,
+      'event.category': category,
+      transactionDate: {
+        $gte: earliestDate,
+        $lt: latestDate,
+      },
+    }).count();
+
     return count === 0;
   },
 

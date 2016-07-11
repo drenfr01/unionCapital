@@ -1,10 +1,8 @@
 /* global EventCategories */
 /* global getApprovalType */
 /* global Transactions */
-
-function getTransactionCountForUserAndCategoryToday(category, userId) {
-  return Transactions.find({ userId, 'event.category': category }).count();
-}
+/* global R */
+/* global Events */
 
 Meteor.methods({
   insertTransaction: function(attributes) {
@@ -42,8 +40,9 @@ Meteor.methods({
     const thisEvent = Events.findOne({ _id: attributes.eventId });
     if (attributes.eventId && thisEvent) {
       // Check against max possible hours
-      if (attributes.hoursSpent > thisEvent.duration)
+      if (attributes.hoursSpent > thisEvent.duration) {
         attributes.hoursSpent = thisEvent.duration;
+      }
 
       //denormalize existing event into transaction
       attributes.event = thisEvent;
@@ -57,9 +56,25 @@ Meteor.methods({
         eventDate: attributes.eventDate,
         userLat: attributes.userLat,
         userLng: attributes.userLng,
-        imageId: attributes.imageId
+        imageId: attributes.imageId,
       };
       attributes.partnerOrg = currentUser.primaryPartnerOrg();
+
+      // handle 1 hour max
+      const oneHourMaxCategories = [
+        'Reading/In-home learning with child',
+        'Walking/In-home Exercise',
+        'Running, Biking, Team Sport',
+        'Gym/Fitness Center Exercise',
+        'Health Center Appointment',
+        'Hospital Visit',
+        'Opening New Bank Account',
+        'Cooking for an Event',
+        'Donating clothing/goods',
+      ];
+      if (R.contains(attributes.category, oneHourMaxCategories)) {
+        attributes.hoursSpent = Math.min(attributes.hoursSpent, 1);
+      }
     }
 
     var duplicateTransaction = Transactions.findOne({
