@@ -141,6 +141,7 @@ Template.approveTransactions.events({
           if(error) {
             sAlert.error(error.reason);
           } else {
+            console.log('approving!');
             sAlert.success('Event submission approved');
           }
         });

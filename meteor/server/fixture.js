@@ -76,8 +76,7 @@ Meteor.startup(function () {
       '6',
       '7',
       '8',
-      '9',
-      '10+'
+      '9'
     ];
 
     _.each(people, function(person) {

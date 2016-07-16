@@ -6,6 +6,7 @@ Meteor.startup(function() {
       spacing: 10,
       limit: 3
     },
-    onRouteClose: false
+    onRouteClose: false,
+    position: 'bottom',
   });
 });
