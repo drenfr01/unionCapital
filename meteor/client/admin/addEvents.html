@@ -9,6 +9,7 @@
       {{> afQuickField name="url"}}
       {{> afQuickField name="description"}}
       {{> afQuickField name="institution" options=institutions}}
+      {{> superCategoryFormField superCategories=superCategories }}
       {{> afQuickField name="category" options=categories}}
       <!-- adding timezoneId="America/New_York" caused a number of problems, assuming that everyone is on the east coast for now -->
       {{> afQuickField name="eventDate" type="datetime-local"}}
@@ -41,3 +42,15 @@
   </div>
 </template>
 
+<template name="superCategoryFormField">
+  <div class="form-group">
+    <label class="control-label">Category Group</label>
+    <select name="supercategory" required autocomplete="off" class="form-control" id="super-cat-select">
+      <option value="">(Select One)</option>
+      {{ #each superCategories }}
+        <option value="{{ this }}">{{ this }}</option>
+      {{ /each }}
+      <span class="help-block"></span>
+    </select>
+  </div>
+</template>

@@ -1,21 +1,32 @@
-var whitelist = new Mongo.Collection(null);
+/* global Roles */
+/* global PartnerOrgs */
+/* global addSuccessMessage */
+/* global addErrorMessage */
+/* global EventCategories */
+/* global addHours */
+/* global R */
+/* global AutoForm */
+
+const whitelist = new Mongo.Collection(null);
+
+function getWhitelistIds(wl) {
+  const options = { fields: { _id: 1 } };
+  return R.pluck('_id', wl.find({}, options).fetch());
+}
 
 AutoForm.hooks({
   insertEventsForm: {
     before: {
-      insert: function(doc, template) {
-        doc.adHoc = false;
-        doc.latitude = Session.get('latitude');
-        doc.longitude = Session.get('longitude');
-        doc.endTime = addHours(moment(doc.eventDate).toDate(), doc.duration);
-        console.log(R.pluck('_id',whitelist.find({}, {fields: {_id: 1}}).fetch()));
-        doc.privateWhitelist = R.pluck('_id', whitelist.find({}, 
-          {fields: {_id: 1}}).fetch());
-
-        var eventCategory = EventCategories.findOne({name: doc.category})
-        doc.superCategoryName = eventCategory ? eventCategory.superCategoryName : 'Unknown';
-        return doc;
-      }
+      insert: function(doc) {
+        return {
+          ...doc,
+          adHoc: false,
+          latitude: Session.get('latitude'),
+          longitude: Session.get('longitude'),
+          endTime: addHours(moment(doc.eventDate).toDate(), doc.duration),
+          privateWhitelist: getWhitelistIds(whitelist),
+        };
+      },
     },
     onSuccess: function() {
       addSuccessMessage('Event successfully added!');
@@ -23,8 +34,8 @@ AutoForm.hooks({
     },
     onError: function(formType, error) {
       addErrorMessage(error);
-    }
-  }
+    },
+  },
 });
 
 var isPrivateEvent = new ReactiveVar(false);
@@ -33,6 +44,7 @@ Template.addEvents.onCreated(function() {
   this.subscribe('eventCategories');
   this.subscribe('partnerOrganizations');
   this.subscribe('allUsers');
+  this.superCategory = new ReactiveVar(null);
 });
 
 Template.addEvents.onRendered(function() {
@@ -46,20 +58,30 @@ Template.addEvents.helpers({
   'geocodeResultsReturned': function() {
     return Session.get('latitude');
   },
+
   institutions: function() {
     if(Roles.userIsInRole(Meteor.userId(), "admin")) {
       return PartnerOrgs.find().map(function(institution) {
         return {label: institution.name, value: institution.name};
       });
-    } else {
-      var institution = Meteor.user().profile.partnerOrg;
-      return [{label: institution, value: institution}];
     }
+
+    //partner admins can only have 1 partner org affiliation
+    const institution = Meteor.user().primaryPartnerOrg();
+    return [{
+      label: institution,
+      value: institution
+    }];
+  },
+
+  superCategories: function() {
+    return EventCategories.getSuperCategories();
   },
   categories: function() {
-    return EventCategories.find().map(function(category) {
-      return {label: category.name, value: category.name};
-    });
+    const template = Template.instance();
+    return EventCategories
+      .getCategoriesForSuperCategory(template.superCategory.get())
+      .map(category => ({ label: category, value: category }));
   },
   isPointsPerHour: function() {
     return Session.equals("displayPointsPerHour", "true");
@@ -67,9 +89,8 @@ Template.addEvents.helpers({
   isPrivateEvent: function() {
     if(isPrivateEvent.get() === 'true') {
       return true;
-    } else {
-      return false 
     }
+    return false 
   },
 
   //TODO: note to make this server side you have
@@ -80,22 +101,19 @@ Template.addEvents.helpers({
     return {
       position: "bottom",
       limit: 5,
-      rules: [
-        {
+      rules: [{
         token: '@',
         collection: UCBMembers,
         field: "profile.firstName",
         template: Template.userTemplate,
-      },
-      {
+      }, {
         token: '!',
         collection: PartnerOrgs,
         field: "name",
         options: '',
-        template: Template.partnerOrgTemplate
-      }
-      ]
-    };  
+        template: Template.partnerOrgTemplate,
+      }],
+    };
   },
 
   currentWhitelist: function() {
@@ -107,9 +125,8 @@ Template.addEvents.helpers({
       return this.profile.firstName + " " + this.profile.lastName;
     } else if (this.name) { //Partner Orgs
       return this.name; 
-    } else {
-      return "Unknown type of whitelist";
     }
+    return "Unknown type of whitelist";
   }
   
 });
@@ -154,6 +171,11 @@ Template.addEvents.events({
       return false;
     }
 
+    if (!$('#super-cat-select').val()) {
+      addErrorMessage('You must add an event category');
+      return false;
+    }
+
     return true;
   },
 
@@ -164,7 +186,11 @@ Template.addEvents.events({
 
   'click .glyphicon-remove': function(e) {
     whitelist.remove(this._id);
-  }
+  },
+
+  'change #super-cat-select': function(e, template) {
+    template.superCategory.set(e.target.value);
+  },
 });
 
 Template.userTemplate.helpers({

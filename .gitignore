@@ -10,3 +10,4 @@ screenshots/
 *meteorup.sh
 *.swo
 mongorestore.sh
+node_modules/

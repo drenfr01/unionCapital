@@ -96,7 +96,7 @@ Template.generalCheckinInfo.helpers({
 
 Template.checkinChooseSupercategory.helpers({
   supercategories: function() {
-    return checkIn.getAvailableSuperCategories();
+    return checkIn.getAvailableSuperCategoriesWithIcons();
   },
 });
 
