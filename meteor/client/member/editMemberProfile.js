@@ -19,7 +19,7 @@ Template.editMemberProfile.onRendered(function() {
   };
   R.map(insertPartner, memberProfile.partnerOrg);
   $('#numberOfKids').val(memberProfile.numberOfKids);
-  $('#races').val(memberProfile.race);
+
   $("#device").val(memberProfile.UCBAppAccess);
   $("#genderForm input[id='" + memberProfile.gender+ "']").prop('checked', true);
   $("#medicaid input[id='" + memberProfile.medicaid+ "']").prop('checked', true);
@@ -51,6 +51,9 @@ Template.editMemberProfile.helpers({
   },
   partnerOrgs: function() {
     return PartnerOrganizations.find(); 
+  },
+  selectedRace: function(race) {
+    return race === Meteor.user().profile.race ? 'selected' : '';
   }
 });
 

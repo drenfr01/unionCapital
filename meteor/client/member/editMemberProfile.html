@@ -97,8 +97,9 @@
         <div class="form-group">
           <label for="races">Race</label>
           <select class="form-control" id="races">
+            <option value="Not Selected">Not Selected</option>
             {{#each races}}
-            <option>{{name}}</option>
+            <option value={{name}} {{selectedRace name}}>{{name}}</option>
             {{/each}}
           </select>
         </div>
