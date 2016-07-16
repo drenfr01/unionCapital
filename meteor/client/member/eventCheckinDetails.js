@@ -59,7 +59,7 @@ Template.eventCheckinDetails.onCreated(function() {
 });
 
 Template.eventCheckinDetails.rendered = function() {
-  addPlugins();
+  addPlugins(defaultHours);
 };
 
 Template.selfieEventInfo.onRendered(function() {
