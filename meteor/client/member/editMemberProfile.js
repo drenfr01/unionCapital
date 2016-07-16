@@ -94,9 +94,9 @@ Template.editMemberProfile.events({
 
     Meteor.call('updateUser', attributes, function(error) {
       if(error) {
-        addErrorMessage(error.reason);
+        sAlert.error(error.reason);
       } else {
-        addSuccessMessage("Successfully Updated Account");
+        sAlert.success("Successfully Updated Account");
         Router.go('memberProfile');
       }
     });

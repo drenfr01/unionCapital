@@ -3,6 +3,7 @@
 /* global getInitialCategoryData */
 
 Meteor.startup(function () {
+
   //Seeding Partner Org Sectors
   if(PartnerOrgSectors.find().count() === 0) {
     var sectors = [

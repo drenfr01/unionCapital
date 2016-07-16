@@ -4,8 +4,6 @@
 /* global CheckInNewEvent */
 /* global EventCategories */
 /* global Addons */
-/* global addErrorMessage */
-/* global addSuccessMessage */
 
 const defaultHours = 1;
 let checkIn = {};
@@ -172,20 +170,20 @@ Template.eventCheckinDetails.events({
       checkIn.submitCheckIn()
         .then(function(result) {
           if (result === 'not_allowed') {
-            addErrorMessage('This type of check-in is not allowed');
+            sAlert.error('This type of check-in is not allowed');
           } else if (result === 'auto') {
-            addSuccessMessage('Sucessfully checked in!');
+            sAlert.success('Sucessfully checked in!');
             Router.go('memberHomePage');
           } else {
-            addSuccessMessage('Check-in submitted for approval');
+            sAlert.success('Check-in submitted for approval');
             Router.go('memberHomePage');
           }
         })
         .catch(function(err) {
-          addErrorMessage(err.reason || err.message);
+          sAlert.error(err.reason || err.message);
         });
     } else {
-      addErrorMessage('Please fill out all fields');
+      sAlert.error('Please fill out all fields');
     }
     return false;
   },

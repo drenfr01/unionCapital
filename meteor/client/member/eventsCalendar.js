@@ -73,7 +73,7 @@ Template.eventsCalendar.events({
 
     Meteor.call('insertReservations', attributes, function(error) {
       if(error)
-        addErrorMessage(error.reason);
+        sAlert.error(error.reason);
     });
   },
 
@@ -83,7 +83,7 @@ Template.eventsCalendar.events({
 
     Meteor.call('removeReservation', eventId, function(error) {
       if(error)
-        addErrorMessage(error.reason);
+        sAlert.error(error.reason);
     });
   },
 

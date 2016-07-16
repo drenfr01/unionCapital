@@ -26,7 +26,7 @@ GoogleCalendar = (function () {
 
       request.execute(function(event) {
         console.log(event);
-        addSuccessMessage(event.htmlLink);
+        sAlert.success(event.htmlLink);
       });
     });
   }

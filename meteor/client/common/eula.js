@@ -14,7 +14,7 @@ Template.eula.events({
 
       Meteor.call('createNewUser', userAttributes, function(error) {
         if(error) {
-          addErrorMessage(error.reason);
+          sAlert.error(error.reason);
         } else {
           if(Meteor.userId()) {
             Router.go('memberHomePage');
@@ -22,7 +22,7 @@ Template.eula.events({
             Meteor.loginWithPassword(userAttributes.email, userAttributes.password, 
                                      function(error) {
                                        if(error) {
-                                         addErrorMessage(error.reason);
+                                         sAlert.error(error.reason);
                                          Router.go('landing');
                                        } else {
                                          Router.go('memberHomePage');
@@ -37,7 +37,7 @@ Template.eula.events({
       });
     } else {
 
-      addErrorMessage('Please check the box if you agree to the terms');
+      sAlert.error('Please check the box if you agree to the terms');
 
     }
   },

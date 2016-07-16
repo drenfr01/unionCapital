@@ -27,9 +27,9 @@ Template.viewMemberProfile.events({
     Meteor.call('addPointsToUser', attributes, function(error) {
       if(error) {
         console.log(error.reason);
-        addErrorMessage(error.reason);
+        sAlert.error(error.reason);
       } else {
-        addSuccessMessage("Added " + points + " points to user!");
+        sAlert.success("Added " + points + " points to user!");
         $('#pointsToAdd').val('');
         $('#pointsDescription').val('');
       }
@@ -38,9 +38,9 @@ Template.viewMemberProfile.events({
   'click #archiveMember': function(e) {
     Meteor.call('archiveMember',this._id, function(error) {
       if(error) {
-        addErrorMessage(error.reason);
+        sAlert.error(error.reason);
       } else {
-        addSuccessMessage("Archived member");
+        sAlert.success("Archived member");
       }
     });
   },
@@ -48,9 +48,9 @@ Template.viewMemberProfile.events({
     e.preventDefault();
     Meteor.call('unarchiveMember',this._id, function(error) {
       if(error) {
-        addErrorMessage(error.reason);
+        sAlert.error(error.reason);
       } else {
-        addSuccessMessage("Unarchived member");
+        sAlert.success("Unarchived member");
       }
     });
   }

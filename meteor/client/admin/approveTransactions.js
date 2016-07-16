@@ -118,9 +118,9 @@ Template.approveTransactions.events({
 
     Meteor.call('rejectTransaction', attributes, function(error) {
       if(error) {
-        addErrorMessage(error.reason);
+        sAlert.error(error.reason);
       } else {
-        addSuccessMessage('Rejected event'); 
+        sAlert.success('Rejected event'); 
       }
     });
   },
@@ -139,9 +139,9 @@ Template.approveTransactions.events({
         let points = parseInt($(".pointInput." + transactionId).val());
         Meteor.call('approveTransaction', transactionId, points, function(error) {
           if(error) {
-            addErrorMessage(error.reason);
+            sAlert.error(error.reason);
           } else {
-            addSuccessMessage('Event submission approved');
+            sAlert.success('Event submission approved');
           }
         });
       }
@@ -173,7 +173,7 @@ Template.approveTransactions.events({
       let reactiveDict = template.transactionInstances.get();
       reactiveDict[this._id].canApprove = false;
       template.transactionInstances.set(reactiveDict);
-      addErrorMessage('You must enter a valid, positive number');
+      sAlert.error('You must enter a valid, positive number');
     }
   }, 100),
 

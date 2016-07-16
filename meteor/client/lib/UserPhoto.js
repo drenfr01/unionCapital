@@ -56,7 +56,7 @@ _.extend(UserPhoto.prototype, {
       if (err) {
 
         self.takePhotoFailed.set(true);
-        addErrorMessage(err.reason);
+        sAlert.error(err.reason);
 
       } else {
 
@@ -73,7 +73,7 @@ _.extend(UserPhoto.prototype, {
 
     reader.onerror = function(res) {
       self.takePhotoFailed.set(true);
-      addErrorMessage('Unable to save your photo. Please try again.');
+      sAlert.error('Unable to save your photo. Please try again.');
     };
 
     reader.onload = function(res) {
