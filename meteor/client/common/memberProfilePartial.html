@@ -6,6 +6,7 @@
       <span class="text-warning">(Archived)</span>
       {{/if}}
     </h1>
+    <hr>
     <table class="table">
       <tr><td>Partner Organization</td><td>{{partnerOrg}}</td></tr>
       <tr><td>Email</td><td>{{emailAddress}}</td></tr>
@@ -15,9 +16,15 @@
       <tr><td>Zip</td><td>{{zip}}</td></tr>
       <hr>
       <tr><td>Gender</td><td>{{gender}}</td></tr>
-      <tr><td>Race / Ethnicity</td><td>{{race}}</td></tr>
-      <tr><td>Number of kids</td><td>{{ numberOfKids }}</td></tr>
-      <tr><td>Device with UCB App</td><td>{{UCBAppAccess}}</td></tr>
+      <tr><td>Race / Ethnicity:</td><td>{{race}}</td></tr>
     </table>
+    <hr>  
+    <b>Partner Orgs:</b>
+    <ol>
+    {{#each partnerOrg}}
+      <br>
+      <li>{{this}}</li>
+    {{/each}}
+    </ol>
 {{/with}}
 </template>

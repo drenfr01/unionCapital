@@ -77,18 +77,15 @@ Template.addEvents.helpers({
   superCategories: function() {
     return EventCategories.getSuperCategories();
   },
-
   categories: function() {
     const template = Template.instance();
     return EventCategories
       .getCategoriesForSuperCategory(template.superCategory.get())
       .map(category => ({ label: category, value: category }));
   },
-
   isPointsPerHour: function() {
     return Session.equals("displayPointsPerHour", "true");
   },
-
   isPrivateEvent: function() {
     if(isPrivateEvent.get() === 'true') {
       return true;

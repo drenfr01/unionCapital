@@ -120,6 +120,7 @@ npm-mongo@1.4.43
 oauth@1.1.10
 oauth2@1.1.9
 observe-sequence@1.0.11
+okgrow:analytics@1.0.9
 ordered-dict@1.0.7
 percolate:migrations@0.9.8
 pfafman:filesaver@0.2.3_2

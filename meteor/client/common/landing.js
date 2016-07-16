@@ -9,22 +9,6 @@ Template.landing.helpers({
 
 Template.landing.events({
 
-  'click #facebook': function(e) {
-    e.preventDefault();
-    Meteor.loginWithFacebook(function(error) {
-      if(error) {
-        addErrorMessage(error.reason || 'Unknown Error');
-      } else {
-        //Facebook logins populate profile.name
-        if(_.isUndefined(Meteor.user().profile.name)) {
-          Router.go('memberHomePage');
-        } else {
-          Router.go('signup', {template: 'createNewUser'});
-        }
-      }
-    });
-  },
-
   'submit #loginForm': function(e) {
     e.preventDefault();
 

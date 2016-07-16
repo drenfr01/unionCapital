@@ -1,7 +1,11 @@
 deleteUCBButtons = function() {
   Events.remove({name: AppConfig.ucbButtonEvent})
   Transactions.update({}, {$unset: {hasUCBButton: ""}}, {multi: true});
-  Transactions.find({'event.name': AppConfig.ucbButtonEvent}).forEach(
+  //find all UCB button transactions
+  //use the imageId as the link between a UCB button transaction and the main one
+  //update the main transaction to have UCB addon
+  //delete all UCB button events
+  Transactions.find({'event.name': AppConfig.ucbButtonEvent, deleteInd: false}).forEach(
     function(trans){
     //TODO: need to find transaction it's linked to...via event?
     //use imageId?, ignore events that don't have an imageId

@@ -25,6 +25,15 @@
       <p> <b>Event website:</b> <a href={{url}} > {{url}} </a></p>
       <p> <b>Description:</b> {{description}}</p>
       <p> <b>Affiliated Institution:</b> {{institution}}</p>
+      <p> <b>Private Event:</b> {{privateEvent}}</p>
+      <p>
+      <b>Private Event Members: </b>
+      {{#if privateEvent}}
+        {{#each whitelistMembers}}
+          {{this}},
+        {{/each}}
+      {{/if}}
+      </p>
       <p> <b>Category:</b> {{category}}</p>
       {{#if isPointsPerHour}}
         <p> <b>Points Per Hour:</b> {{pointsPerHour}}</p>
