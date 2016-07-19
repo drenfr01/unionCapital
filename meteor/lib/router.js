@@ -18,25 +18,21 @@ Router.onAfterAction(function() {
 //General Security for non-logged in users. May eventually
 //want a few screens that "guests" can browse
 Router.onBeforeAction(function() {
-  if(Meteor.loggingIn()) {
-    return; //wait
-  } else if (!Meteor.user()) {
-    this.redirect('/');
+  if (!Meteor.user()) {
+    this.render('landing');
   } else {
     this.next();
   }
 },
-  {except: ['login', 'signup', 'collectUserDemographics', 'forgot']}
+  {except: ['landing', 'signup', 'collectUserDemographics', 'forgot']}
 );
 
 //Members
 Router.onBeforeAction(function() {
-  if(Meteor.loggingIn()) {
-    return; //wait
-  } else if (Roles.userIsInRole(Meteor.userId(), ['user'])) {
+  if (Roles.userIsInRole(Meteor.userId(), ['user'])) {
     this.next();
   } else {
-    this.redirect('/');
+    this.render('/');
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for members
@@ -45,13 +41,10 @@ Router.onBeforeAction(function() {
 
 //Both Admins
 Router.onBeforeAction(function() {
-  if(Meteor.loggingIn()) {
-    return; //wait
-  } else if (Roles.userIsInRole(Meteor.userId(), ['partnerAdmin']) ||
-           Roles.userIsInRole(Meteor.userId(), ['admin'])) {
+  if (Roles.userIsInRole(Meteor.userId(), ['partnerAdmin', 'admin'])) {
     this.next();
   } else {
-    this.redirect('/');
+    this.render('/');
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for members
@@ -65,12 +58,10 @@ Router.onBeforeAction(function() {
 
 //Partner Admins
 Router.onBeforeAction(function() {
-  if(Meteor.loggingIn()) {
-    return; //wait
-  } else if (Roles.userIsInRole(Meteor.userId(), ['partnerAdmin'])) {
+  if (Roles.userIsInRole(Meteor.userId(), ['partnerAdmin'])) {
     this.next();
   } else {
-    this.redirect('/');
+    this.render('/');
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for members
@@ -79,12 +70,10 @@ Router.onBeforeAction(function() {
 
 //Super Admins
 Router.onBeforeAction(function() {
-  if(Meteor.loggingIn()) {
-    return; //wait
-  } else if (Roles.userIsInRole(Meteor.userId(), ['admin'])) {
+  if (Roles.userIsInRole(Meteor.userId(), ['admin'])) {
     this.next();
   } else {
-    this.redirect('/');
+    this.render('/');
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for superAdmins
@@ -290,19 +279,13 @@ Router.map(function() {
       this.render('partnerAdminHomePage');
     } else if (Roles.userIsInRole(Meteor.userId(), ['admin'])) {
       this.render('adminHomePage');
+    } else {
+      console.log('here');
     }
   });
 
   this.route('/eventSearch', function() {
     this.render('eventsHomeScreen');
-  });
-
-  this.route('/login', function() {
-    if (Meteor.user()) {
-      this.redirect('/');
-    } else {
-      this.render('landing');
-    }
   });
 
   this.route('/forgot', function() {

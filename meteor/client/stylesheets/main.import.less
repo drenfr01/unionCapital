@@ -3,6 +3,7 @@
 @import "vendor/custom.bootstrap.import.less";
 
 /*general styling */
+@main-color: #313452;
 
 .error {
   color: red;
@@ -143,7 +144,7 @@ h3 small {
 
 /*nav bar*/
 .navbar-default {
-  background-color: #313452;
+  background-color: @main-color;
   color: white !important;
   /*background-color: #bddc6f;*/
   /*color: #255f8a !important;*/
@@ -541,7 +542,6 @@ button > #addMember {
 
 /* Custom page panel links */
 .signup-panel {
-  font-size: 200%;
   background-color: #B4E874;
   color: white;
 }
@@ -1150,5 +1150,20 @@ button > #addMember {
   margin-top: 10px;
   .page-panel {
     margin-top: -5px;
+  }
+}
+
+.login-btn-panel {
+  button {
+    color: white;
+    font-size: 200%;
+    border: none;
+    height: 100px;
+    background-color: @main-color;
+    width: 100%;
+
+    &:hover {
+      color: #ececec;
+    }
   }
 }

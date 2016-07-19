@@ -1,10 +1,10 @@
 <template name="landing">
+<form id="loginForm">
   <div class="col-xs-12 col-md-6 col-md-offset-3 text-center">
     <div class="row">
       <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel">
         <div>Existing Users</div>
         <hr class="panel-divider">
-        <form id="loginForm">
           <div class="form-group">
             <label for="userEmail" class="sr-only">User Email</label>
             <input type="email" class="form-control" id="userEmail" placeholder="Enter Email">
@@ -14,20 +14,22 @@
             <input type="password" class="form-control" id="userPassword"
             placeholder="Enter Password">
           </div>
-          {{ #if loggingIn }}
-            <div class="logging-in-spinner">
-              {{> spinner }}
-            </div>
-          {{ else }}
-            <button type="submit" 
-              class="btn btn-default btn-lg login-right-button" id="loginSubmit">
-                Log In 
-              <span class="glyphicon glyphicon-chevron-right"></span>
-            </button>
-          {{ /if }}
-        </form>
       </div>
     </div>
+    {{ #if loggingIn }}
+      <div class="logging-in-spinner">
+        {{> spinner }}
+      </div>
+    {{ else }}
+      <div class="row">
+        <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel panel-link login-btn-panel">
+          <button type="submit" class="btn" id="loginSubmit">
+            Log In 
+            <span class="glyphicon glyphicon-chevron-right"></span>
+          </button>
+        </div>
+      </div>
+    {{ /if }}
     {{ #unless loggingIn }}
       <div class="row">
         <div class="col-xs-12 col-md-6 col-md-offset-3 page-panel panel-link signup-panel">
@@ -40,8 +42,6 @@
         </div>
       </div>
     {{ /unless }}
-    <div class="row">
-      {{> bmcLogo}}
-    </div>
   </div>
+</form>
 </template>
