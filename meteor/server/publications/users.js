@@ -15,3 +15,10 @@ Meteor.publish('memberEngagementData', function() {
   return this.ready();
 });
 
+Meteor.publish('allUsers', function() {
+  if (Roles.userIsInRole(this.userId, 'admin')) {
+    return UCBMembers.find();
+  } else {
+    this.ready(); 
+  }
+});

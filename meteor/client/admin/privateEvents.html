@@ -1,0 +1,17 @@
+<template name="privateEvents">
+  {{> afQuickField name="privateEvent" trueLabel="Yes" falseLabel="No"
+  value=false type="boolean-radios" id="privateEvent"}}
+  {{#if isPrivateEvent}}
+    {{> inputAutocomplete settings=settings id="msg" class="col-xs-12" 
+    placeholder="Enter @userfirstname or !partnerOrg to search"
+    autocomplete="false"}}
+    <br>
+    <br> 
+    {{#each currentWhitelist}}
+      {{whitelistIdentifier}} 
+      <span class="glyphicon glyphicon-remove" aria-hidden="true">
+      </span>
+      <br>
+    {{/each}}
+  {{/if}}
+</template>

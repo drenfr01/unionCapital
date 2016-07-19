@@ -8,7 +8,7 @@ Meteor.publish('images', function() {
 
   } else if(Roles.userIsInRole(this.userId, 'partnerAdmin')) {
 
-    var users = Meteor.users.find({ 'profile.partnerOrg': user.profile.partnerOrg }).fetch();
+    var users = Meteor.users.find({ 'profile.partnerOrg': {$in: user.profile.partnerOrg }}).fetch();
     return Images.find({ 'metadata.userId': { $in: users }});
 
   } else if(this.userId) {
@@ -30,4 +30,12 @@ Meteor.publish('singleImage', function(userId) {
     this.ready();
   }
 
+});
+
+Meteor.publish('myImages', function() {
+  return Images.find({'metadata.userId': this.userId});
+});
+
+Meteor.publish('memberImage', function(imageId) {
+  return Images.find({_id: imageId});
 });

@@ -14,22 +14,6 @@
       </div>
     </div>
     <div class="row">
-      <nav>
-        <ul class="pager">
-          <li class="{{prevPageClass}}">
-            <a id="prevPage" href="{{prevPage}}">
-              <span aria-hidden="true">&larr;</span> Previous
-            </a>
-          </li>
-          <li class="{{nextPageClass}}">
-            <a id="nextPage" href="{{nextPage}}">
-              Next <span aria-hidden="true">&rarr;</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-    <div class="row">
       <div class="col-xs-12 col-md-10 col-md-offset-1 page-panel">
         <div class="text-center">
           <label class="radio-inline">
@@ -51,6 +35,7 @@
             <th id="lastTransDate" class="tableSort">Last Event Date</th>
             <th id="transCount" class="tableSort"># Transactions</th>
             <th id="points" class="tableSort"># Points</th>
+            <th></th>
           </thead>
           <tbody>
           {{#if Template.subscriptionsReady}}
@@ -62,6 +47,10 @@
                 <td>{{formatDate lastEventDate}}</td>
                 <td>{{numberOfTransactions}}</td>
                 <td>{{totalPoints}}</td>
+                <td><button class="btn btn-warning btn-sm" 
+                    data-impersonate={{memberId}}>
+                    Impersonate
+                  </button></td>
               </tr>
             {{else}}
               <tr><td colspan="6">There are no members to display</td></tr>
@@ -71,6 +60,22 @@
           {{/if}}
           </tbody>
         </table>
+        <div class="row">
+          <nav>
+            <ul class="pager">
+              <li class="{{prevPageClass}}">
+                <a id="prevPage" href="{{prevPage}}">
+                  <span aria-hidden="true">&larr;</span> Previous
+                </a>
+              </li>
+              <li class="{{nextPageClass}}">
+                <a id="nextPage" href="{{nextPage}}">
+                  Next <span aria-hidden="true">&rarr;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </div>
     </div>
   </div>

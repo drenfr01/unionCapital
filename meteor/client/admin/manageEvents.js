@@ -1,46 +1,85 @@
-Session.set('eventTypeSelected', "current");
-Session.set("category", null);
-Session.set("institution", null);
-Session.set("eventTypeSelected", AppConfig.eventRange.current);
+/* global R */
+/* global EventCategories */
+/* global GlobalHelpers */
+/* global AppConfig */
+/* global Events */
+/* global addErrorMessage */
+/* global Roles */
+
+Session.set('category', null);
+Session.set('superCategory', null);
+Session.set('institution', null);
+Session.set('eventTypeSelected', AppConfig.eventRange.current);
 var searchText = new ReactiveVar(null);
 
-Template.manageEvents.onCreated(function() {
+function getSkipCount() {
+  return (GlobalHelpers.currentPage() - 1) * AppConfig.public.recordsPerPage;
+}
 
-  //this.subscribe('reservations'); 
+Template.manageEvents.onCreated(function() {
+  const template = this;
+
   this.subscribe('eventCategories');
   this.subscribe('eventOrgs');
   this.subscribe('partnerOrganizations');
   this.subscribe('partnerOrgSectors');
 
-  var template = this;
   template.autorun(function() {
-    var skipCount = (currentPage() - 1) * AppConfig.public.recordsPerPage;
-    template.subscribe('manageEvents', 
-                   Session.get('eventTypeSelected'),
-                   Session.get('institution'),
-                   Session.get('category'),
-                   searchText.get(),
-                   skipCount
-                  );
+    template.subscribe(
+      'manageEvents', 
+      Session.get('eventTypeSelected'),
+      Session.get('institution'),
+      Session.get('category'),
+      Session.get('superCategory'),
+      searchText.get(),
+      getSkipCount()
+    );
   });
 });
 
-Template.manageEvents.helpers({
+function isComment(feedbackItem) {
+  return feedbackItem.feedbackType === AppConfig.feedbackType.comment;
+}
 
-  institutions: function() {
-    if (Roles.userIsInRole(Meteor.userId(), 'partnerAdmin')) {
-      return [{ name: Meteor.user().profile.partnerOrg }];
-    } else {
-      var orgs = PartnerOrgs.find().fetch();
-      orgs.push({ name: 'All' });
-      return _.sortBy(orgs, "name");
-    }
+function isRating(feedbackItem) {
+  return feedbackItem.feedbackType === AppConfig.feedbackType.rating;
+} 
+
+function calculateAverageFromArray(list) {
+  return R.converge(
+    R.divide,
+    [R.sum, R.length]
+  )(list);
+}
+
+function getAverageRating(feedback) {
+  return R.compose(
+    calculateAverageFromArray,
+    R.pluck('feedbackContent'),
+    R.filter(isRating)
+  )(feedback);
+}
+
+Template.manageEvents.helpers({
+  superCategories: function() {
+    const eventCategories = EventCategories.getSuperCategories(true);
+    return R.compose(
+      R.sortBy(R.identity),
+      R.append('All'),
+      R.pluck('name')
+    )(eventCategories);
   },
 
   categories: function() {
-    var eventCategories = EventCategories.find().fetch();
-    eventCategories.push({name: 'All'});
-    return _.sortBy(eventCategories, "name");
+    const superCategory = Session.get('superCategory');
+    const eventCategories = (!superCategory || superCategory === 'All')
+      ? EventCategories.getAllCategories(true)
+      : EventCategories.getCategoriesForSuperCategory(superCategory);
+
+    return R.compose(
+      R.sortBy(R.prop('name')),
+      R.append('All')
+    )(eventCategories);
   },
 
   events: function() {
@@ -51,35 +90,36 @@ Template.manageEvents.helpers({
     return Session.equals("eventTypeSelected", eventType);
   },
 
-  prevPage: function() {
-    var previousPage = currentPage() === 1 ? 1 : currentPage() - 1;
-    return Router.routes.manageEvents.path({page: previousPage});
+  numOfComments: function() {
+    if(this.feedback) {
+      return R.filter(isComment, this.feedback).length || 0;
+    }
+    return 0; 
   },
 
-  nextPage: function() {
-    var nextPage = hasMorePages() ? currentPage() + 1 : currentPage();
-    return Router.routes.manageEvents.path({page: nextPage});
+  avgRating: function() {
+    if(this.feedback) {
+      return getAverageRating(this.feedback);
+    }
+    return 'None' 
   },
-  prevPageClass: function() {
-    return currentPage() <= 1 ? "disabled" : "";
-  },
-  nextPageClass: function() {
-    return hasMorePages() ? "" : "disabled";
-  }
 });
 
 Template.manageEvents.events({
-
   'change .radio-button': function(e) {
     Session.set('eventTypeSelected', e.target.value);
     $("#search-box").val("");
   },
 
-  'change #institutions': function(e) {
+  'change #institutions': function() {
     Session.set("institution", $("#institutions").val());
   },
 
-  'change #categories': function(e) {
+  'change #supercategories': function() {
+    Session.set('superCategory', $("#supercategories").val());
+  },
+
+  'change #categories': function() {
     Session.set("category", $("#categories").val());
   },
 
@@ -98,12 +138,11 @@ Template.manageEvents.events({
        Meteor.user().profile.partnerOrg === this.institution) {
       Router.go('editEvent', {_id: this._id});
     } else {
-      console.log('Permission Denied: You do not own this event');
       addErrorMessage('Permission Denied: You do not own this event');
     }
   },
 
-  'click .deleteEvent': function(e) {
+  'click .deleteEvent': function() {
     if(Roles.userIsInRole(Meteor.userId(), ['admin']) ||
        Meteor.user().profile.partnerOrg === this.institution) {
       Meteor.call('deleteEvent', this._id, function(error) {
@@ -127,13 +166,4 @@ Template.manageEvents.events({
     $('#search-box').focus();
   },
 });
-
-var currentPage = function() {
-  return parseInt(Router.current().params.page) || 1;
-}
-
-var hasMorePages = function() {
-  var totalEvents = Counts.get('eventsCount');
-  return currentPage() * parseInt(AppConfig.public.recordsPerPage) < totalEvents;
-}
 

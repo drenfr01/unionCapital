@@ -90,7 +90,7 @@ function getChartData(field, partnerOrg) {
   return getPointDataForPartnerOrg(field, transactionsForPartnerOrg, allUsersDict);
 }
 
-function getDataForPartnerOrg(field, partnerOrg) {
+export function getDataForPartnerOrg(field, partnerOrg) {
   return {
     timeCaculatedAt: moment(),
     chartData: getChartData(field, partnerOrg),

@@ -1,3 +1,7 @@
+/* global R */
+/* global Events */
+/* global getInitialCategoryData */
+
 Meteor.startup(function () {
   //Seeding Partner Org Sectors
   if(PartnerOrgSectors.find().count() === 0) {
@@ -97,16 +101,10 @@ Meteor.startup(function () {
   }
 
   //Seeding event categories
-  if( EventCategories.find().count() === 0 ) {
-    var eventCategories =
-      ['Education (Child/Adult)',
-        'Health (Physical & Mental)',
-        'Finances/Employment',
-        'Community & Service',
-        'Other'
-    ];
+  if(EventCategories.find().count() === 0) {
+    const eventCategories = getInitialCategoryData();
     _.each(eventCategories, function(category) {
-      EventCategories.insert({name: category, deleteInd: false});
+      EventCategories.insert(category);
     });
   }
 
@@ -137,7 +135,7 @@ Meteor.startup(function () {
       'Mobile phone',
       'iPad/Tablet',
       'Computer or laptop',
-      'UCB Paper App'
+      'UCB Paper App',
     ];
 
     _.each(devices, function(device) {
@@ -352,23 +350,6 @@ Meteor.startup(function () {
         pointsPerHour: 100,
         adHoc: true,
         deleteInd: true
-      },
-      //Hacks love company. This allows users to receive 50 bonus points  
-      //if they wear a ucb button and submit a photo
-      {
-        name: AppConfig.ucbButtonEvent,
-        address: 'Boston, MA',
-        url: 'unioncapitalboston.com',
-        description: 'The UCB member wore a UCB button to an event',
-        active: 0,
-        eventDate: new Date(),
-        duration: 0,
-        institution: "Other",
-        category: "Other",
-        isPointsPerHour: false,
-        points: 50,
-        adHoc: true,
-        deleteInd: true
       }
     ];
 
@@ -392,5 +373,55 @@ Meteor.startup(function () {
         pointsPerHour: event.pointsPerHour
       });
     });
+  }
+
+  if(Addons.find().count() === 0) {
+    var addons = [
+      {
+        name: 'UCB Button',
+        points: 50,
+        display: true
+      },
+      {
+        name: 'Left Feedback',
+        points: 25,
+        display: false
+      }
+    ];
+
+    _.each(addons, function(addon) {
+      Addons.insert(addon);
+    });
+  }
+
+  var pointLevels = [
+    {
+      level: 'Member',
+      start: 0,
+      end: 9999,
+      color: '#000000'
+    },
+    {
+      level: 'Silver',
+      start: 10000,
+      end: 49999,
+      color: '#c0c0c0'
+    },
+    {
+      level: 'Gold',
+      start: '50000',
+      end: 99999,
+      color: '#FFD700'
+    },
+    {
+      level: 'Platinum',
+      start: 100000,
+      end: 1000000, //this is really just infinity
+      color: '#e5e4e2'
+    }
+  ];
+
+  if(PointLevels.find().count() === 0) {
+    R.map((pointLevel) => PointLevels.insert(pointLevel), pointLevels); 
   }
 });

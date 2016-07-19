@@ -1,25 +1,20 @@
-Template.memberHomePage.rendered = function() {
+Template.memberHomePage.onRendered(function() {
 
   //Loads the FB plugin
   _.defer(function() {
     FB.XFBML.parse();
   });
-};
+});
+
+Template.memberHomePage.onCreated(function() {
+  this.subscribe('transactions', {deleteInd: false, approved: true}, {limit: 5});
+});
 
 Template.memberHomePage.helpers({
-
   'currentMemberName': function() {
     if(Meteor.user() && Meteor.user().profile) {
-      return Meteor.user().profile.firstName || "";
-    } else {
-      return "";
+      return Meteor.user().profile.firstName || '';
     }
+    return '';
   },
-
-  totalPoints: function() {
-    if (Meteor.user())
-      return Meteor.user().profile.points || 0;
-    else
-      return 'Loading...';
-  }
 });

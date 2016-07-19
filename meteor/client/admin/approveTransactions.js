@@ -2,11 +2,25 @@ var selector = { approved: false, deleteInd: false };
 
 Template.approveTransactions.rendered = function() {
   Session.setDefault('selectedPartnerOrg', 'admin_only');
+  var self = this;
+
+  self.autorun(function() {
+    if(self.subscriptionsReady()) {
+      var listTransactions = {};
+      Transactions.find().forEach(function(trans) {
+        //all UCB events can be approved, selfie events need points
+        var canApprove = !GlobalHelpers.isSelfieEvent(trans);
+        listTransactions[trans._id] = {canApprove: canApprove};
+      });
+      self.transactionInstances.set(listTransactions);
+    }   
+  });
 };
 
 Template.approveTransactions.onCreated(function() {
   this.subscribe('transactions', {approved: false});
   this.subscribe('partnerOrganizations');
+  this.transactionInstances = new ReactiveVar({});
 
     var self = this;
     self.autorun(function() {
@@ -39,7 +53,7 @@ Template.approveTransactions.helpers({
     } else if (Roles.userIsInRole(Meteor.userId(), 'partnerAdmin')) {
       // Uses the partner admin's org to filter if not superadmin
       selector.approvalType = 'partner_admin';
-      selector.partnerOrg = Meteor.user().profile.partnerOrg;
+      selector.partnerOrg = Meteor.user().primaryPartnerOrg();
     }
 
     return Transactions.find(selector);
@@ -55,8 +69,8 @@ Template.approveTransactions.helpers({
     return Session.get('modalDataContext');
   },
 
-  'approvalModalData': function() {
-    return Session.get('approvalModalDataContext');
+  'descriptionModalData': function() {
+    return Session.get('descriptionModalContext'); 
   },
 
   'imageUrl': function(imageId) {
@@ -65,26 +79,27 @@ Template.approveTransactions.helpers({
     }
   },
 
-  'getPoints': function(eventId) {
-    var event = this.event;
-    if(event.isPointsPerHour) {
-      return event.pointsPerHour * this.hoursSpent;
-    } else {
-      return event.points;
-    }
+  'getPoints': function() {
+    return GlobalHelpers.eventPoints(this);
   },
 
   isAdmin: function() {
     return Roles.userIsInRole(Meteor.userId(), 'admin');
   },
-  ucbButtonEvent: function() {
-    var buttonEvent = Events.findOne({ name: AppConfig.ucbButtonEvent })._id;
-    if (this.eventId === buttonEvent) {
-      return 'Y';
-    } else {
-      return 'N';
-    }
+  
+  transactionDescription: function() {
+    return this.event.description.substr(0,50);
+  },
+
+  isDisabled: function() {
+    return GlobalHelpers.isSelfieEvent(this) ? "" : "disabled";
+  },
+
+  isCheckboxDisabled: function() {
+    return Template.instance().transactionInstances.get()[this._id].canApprove ? 
+        "" : "disabled";
   }
+
 });
 
 Template.approveTransactions.events({
@@ -104,33 +119,39 @@ Template.approveTransactions.events({
     Meteor.call('rejectTransaction', attributes, function(error) {
       if(error) {
         addErrorMessage(error.reason);
+      } else {
+        addSuccessMessage('Rejected event'); 
       }
-      Router.go('approveTransactions');
     });
   },
 
-  'click .approveEvent': function(e) {
-    Session.set('approvalModalDataContext', this);
+  'click .eventName': function(e) {
+    Session.set('descriptionModalContext', this); 
   },
 
   'click #sendApproval': function(e) {
-    var points = parseInt($("#pointsInput").val());
-
-    if(_.isNaN(points) || _.isNull(points)) {
-        addErrorMessage("Please enter points into the box");
-    } else {
-      Meteor.call('approveTransaction', this._id, points, function(error) {
-        if(error) {
-          addErrorMessage(error.reason);
-        } else {
-          addSuccessMessage('Event submission approved');
-        }
-      });
-    }
+    //for each checked checkbox, send approvals
+    //note: checkbox can only be checked if valid
+    //number entered and we check server side as well
+    $('input[type="checkbox"]:checked').each(function() {
+      if($(this).attr('id') !== 'checkAll') {
+        let transactionId = $(this).attr('class');
+        let points = parseInt($(".pointInput." + transactionId).val());
+        Meteor.call('approveTransaction', transactionId, points, function(error) {
+          if(error) {
+            addErrorMessage(error.reason);
+          } else {
+            addSuccessMessage('Event submission approved');
+          }
+        });
+      }
+    });
+    $('#checkAll').prop('checked', false);
   },
 
   'change #superAdminFilter': function(event) {
     Session.set('selectedPartnerOrg', $(event.target).val());
+    $('#checkAll').prop('checked', false);
   },
 
   'click .close': function(e) {
@@ -138,5 +159,31 @@ Template.approveTransactions.events({
     $('#showImageModal').modal('hide');
     $('.body').removeClass('modal-open');
     $('.modal-backdrop').remove();
-  }
+  },
+
+  'change .pointInput': _.debounce(function(e, template) {
+    var points = parseInt($(e.target).val());
+    //annoyingly NaN is a number, but it's not a
+    //finite number
+    if(_.isFinite(points)) {
+      let reactiveDict = template.transactionInstances.get();
+      reactiveDict[this._id].canApprove = true;
+      template.transactionInstances.set(reactiveDict);
+    } else {
+      let reactiveDict = template.transactionInstances.get();
+      reactiveDict[this._id].canApprove = false;
+      template.transactionInstances.set(reactiveDict);
+      addErrorMessage('You must enter a valid, positive number');
+    }
+  }, 100),
+
+  'click #checkAll': function(e) {
+    //if checkbox is checked, check all non-disabled checkboxes on page
+    if($(e.target).is(':checked')) {
+      $('input[type="checkbox"]:enabled').prop('checked', true);
+    } else {
+      $('input[type="checkbox"]:enabled').prop('checked', false);
+    }
+  },
+
 });

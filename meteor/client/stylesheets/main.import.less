@@ -3,6 +3,7 @@
 @import "vendor/custom.bootstrap.import.less";
 
 /*general styling */
+@main-color: #313452;
 
 .error {
   color: red;
@@ -29,10 +30,12 @@
   padding-top: 7px;
 }
 
+@background-color: #F5F5F5;
+
 html { height: 100%; }
 body { height: 100%;
     margin: 0 ;
-    background-color: #e3e3e3;
+    background-color: @background-color;
 }
 
 nav {
@@ -125,17 +128,41 @@ h3 small {
   border-radius: 1px !important;
 }
 
+.panel-heading {
+  padding: 0;
+
+  .panel-title a {
+    display: block;
+    padding: 10px 15px;
+  }
+}
+
 .btn-file {
   position: relative;
   overflow: hidden;
 }
 
 /*nav bar*/
-.navbar-default{
-  background-color: #bddc6f;
-  color: #255f8a !important;
+.navbar-default {
+  background-color: @main-color;
+  color: white !important;
+  /*background-color: #bddc6f;*/
+  /*color: #255f8a !important;*/
   border: 0px;
+}
 
+.navbar-default .navbar-nav {
+  > .open {
+    a, a:hover, a:active {
+      background-color: transparent;
+    }
+  }
+
+  li {
+    a:hover {
+      background-color: transparent;
+    }
+  }
 }
 
 #logo-home{
@@ -145,7 +172,8 @@ h3 small {
 }
 
 .navbar-toggle .icon-bar{
-  background-color: #979797 !important;
+  background-color: #FFFFFF !important;
+  /*background-color: #979797 !important;*/
 
 }
 
@@ -157,25 +185,25 @@ h3 small {
 }
 
 .navbar-toggle {
-
-  background-color: #f8f8f8 !important;
-  border-color: #dddddd !important;
-
+  background-color: #4F537B !important;
+  border: none;
+  /*background-color: #f8f8f8 !important;*/
+  /*border-color: #dddddd !important;*/
 }
 
 .navbar-brand , .navbar-default .navbar-nav > li > a {
-    color: #255f8a !important;
-
+  /*color: #255f8a !important;*/
+  color: #DAEFFF !important;
 }
 
- .navbar-default .navbar-nav > li > a:hover {
-    background-color: #75c2e7;
-    color: white !important;
+.navbar-default .navbar-nav > li > a:hover {
+  /*background-color: #75c2e7;*/
+  color: white !important;
 }
 
 
 .navbar-default .navbar-nav > li > a:active {
-    background-color: #75c2e7;
+    /*background-color: #75c2e7;*/
     color: white !important;
 }
 
@@ -217,8 +245,7 @@ caption .pointstable {
 
 .ptheader {
   width: 100%;
-  background-color: #f0f0f0;
-  padding:12px;
+  padding: 0 12px 0 12px;
   font-size: 1.2em;
   font-weight: bold;
 }
@@ -423,8 +450,8 @@ button > #addMember {
 
 .list-group {
   width: 80%;
-margin-left: auto;
-margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* CODE I INSERTED FOR THE "OR" ON checkIntoEvent.html */
@@ -466,8 +493,10 @@ margin-right: auto;
   margin-top: 5px;
   padding-top: 15px;
   padding-bottom: 15px;
-  border: 1px solid transparent;
-  box-shadow: 0px 0px 10px #c8c8c8;
+  /*border: 1px solid transparent;*/
+  border: #EFEFEF 1px solid;
+  box-shadow: none;
+  /*box-shadow: 0px 0px 10px #c8c8c8;*/
   // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
   h3 {
     text-align: center;
@@ -513,7 +542,6 @@ margin-right: auto;
 
 /* Custom page panel links */
 .signup-panel {
-  font-size: 200%;
   background-color: #B4E874;
   color: white;
 }
@@ -543,8 +571,49 @@ margin-right: auto;
   font-size: 130%;
 }
 
-.points-panel {
-  font-size: 200%;
+.grid {
+  display: table;
+  width: 100%;
+  border-spacing:.5em;
+
+  .col {
+    padding: 1em;
+    width: 50%;
+    display: table-cell;
+    vertical-align: middle;
+  }
+}
+
+.homepage-points-panel {
+  .subtitle {
+    font-size: 12px;
+    color: #C5C5C5;
+    margin-bottom: 0;
+  }
+
+  .data-point {
+    font-size: 30px;
+    color: #495B6B;
+  }
+
+  .circle {
+    padding: 0;
+
+    // give it predefined height to prevent the screen from jumping
+    height: 141px;
+  }
+}
+
+.homepage-check-in-panel {
+  .page-panel {
+    color: #2C305A;
+    font-size: 30px;
+  }
+
+  .glyphicon {
+    top: 5px;
+    color: #3498DB;
+  }
 }
 
 .page-panel-spacer {
@@ -558,13 +627,23 @@ margin-right: auto;
 .panel-link {
   padding: 0px;
   cursor: pointer;
+  /*box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.07),0 2px 10px 0 rgba(0, 0, 0, 0.05);*/
+
+  a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    padding: .5em 1em;
+  }
 }
 
-.panel-link a {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-  padding: .5em 1em;
+.panel-link-flat {
+  .panel-link();
+
+  box-shadow: none;
+  a {
+    padding: 15px;
+  }
 }
 
 .top-level-row {
@@ -592,10 +671,7 @@ margin-right: auto;
 }
 
 .login-right-button {
-  border-right-style: none;
-  border-bottom-style: none;
-  border-top-style: none;
-  line-height: 100%;
+  border-style: none;
 }
 
 .checkin-map {
@@ -642,23 +718,24 @@ margin-right: auto;
 
 .photo-checkin {
   font-size: 180%;
-  background-color: blue;
-  color: white;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  background-color: white;
+  color: #9DC530;
 }
 
 .no-photo-checkin {
   font-size: 120%;
-  background-color: green;
-  color: white;
+  background-color: #696C8E;
+  color: #E0E0E0;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .check-in-confirm {
   height: 300%;
-  font-size: 250%;
-  background-color: green;
+  font-size: 150%;
+  background-color: #2F2F38;
   color: white;
+  /*box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.95), 0 2px 10px 0 rgba(0, 0, 0, 0.05);*/
 }
 
 .no-ui-slider {
@@ -671,13 +748,13 @@ margin-right: auto;
 }
 
 .photo-panel {
-  /*height: 50px;*/
   background-size: 100%;
   background-position-y: -300px;
   font-size: 130%;
   color: white;
   margin-top: 5px;
   margin-bottom: 5px;
+  text-align: center;
 }
 
 .photo-panel .text {
@@ -723,9 +800,21 @@ margin-right: auto;
   vertical-align: middle;
 }
 
-.ad-hoc-panel {
-  background-color: #f0efa7;
-  font-weight: bold;
+.selfie-button {
+  .ad-hoc-panel {
+    /*background-color: #f0efa7;*/
+    border-color: rgba(64, 91, 105, 0.26);
+
+    .glyphicon {
+      color: #405B69;
+      margin-left: 2em;
+    }
+  }
+
+  em {
+    font-size: 12px;
+    padding-left: 20px;
+  }
 }
 
 .accept-terms {
@@ -757,7 +846,7 @@ margin-right: auto;
   width: 50%;
   font-family: @font-family-sans-serif;
   text-align: center;
-  font-weight: bold;
+  font-weight: normal;
   color: @gray-light;
   cursor: pointer;
 }
@@ -812,7 +901,15 @@ margin-right: auto;
 
 .navbar {
   font-family: @font-family-serif;
-  font-weight: bold;
+  /*font-weight: bold;*/
+}
+
+.navbar-collapse {
+  border-top: none;
+}
+
+.nav-collapse-item {
+  margin-left: 10px;
 }
 
 .attendingHeader {
@@ -904,6 +1001,31 @@ margin-right: auto;
   -webkit-transform: translate3d(0, 0, 0);
   // -moz-transform: translate3d(0, 0, 0);
   // -ms-transform: translate3d(0, 0, 0); /*only in IE10*/
+
+  .panel {
+    border: none;
+  }
+
+  .panel-body {
+    border-top-color: @background-color !important;
+    border-top-width: 3px !important;
+  }
+
+  .panel-heading {
+    background-color: white;
+
+    a {
+      color: #1A3543;
+
+      &.collapsed {
+        color: #5D7582;
+      }
+    }
+  }
+
+  .no-events-found {
+    font-size: 12px;
+  }
 }
 
 .logging-in-spinner {
@@ -911,5 +1033,137 @@ margin-right: auto;
   height: 70px;
 }
 
-.engagement-container {
+.member-event {
+  background-color: rgba(166, 204, 56,0.3) !important;
+}
+
+.selfie-event {
+  background-color: rgba(0, 209, 254, 0.3) !important;
+}
+
+/*
+ * Selectable CSS3 Rating Stars by Martin Ivanov (@wemakesitesnet)
+ * @version 1.0
+ * @author Martin Ivanov
+ * @url portfolio http://wemakesites.net/
+ * @url twitter https://twitter.com/wemakesitesnet
+ * @url blog http://acidmartin.wordpress.com/
+ **/
+ 
+/*
+ * Do you like this solution? Please, donate:
+ * https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QFUHPWJB2JDBS
+ * 
+ * If you are looking for a feature-complete rating system http://acidjs.wemakesites.net/rating.html 
+ *
+ **/
+ 
+.acidjs-rating-stars,
+.acidjs-rating-stars label::before
+{
+    display: inline-block;
+}
+ 
+.acidjs-rating-stars label:hover,
+.acidjs-rating-stars label:hover ~ label
+{
+    color: #189800;
+}
+ 
+.acidjs-rating-stars *
+{
+    margin: 0;
+    padding: 0;
+}
+ 
+.acidjs-rating-stars input
+{
+    display: none;
+}
+ 
+.acidjs-rating-stars
+{
+    unicode-bidi: bidi-override;
+    direction: rtl;
+}
+ 
+.acidjs-rating-stars label
+{
+    color: #ccc;
+}
+ 
+.acidjs-rating-stars label::before
+{
+    content: "\2605";
+    width: 18px;
+    line-height: 18px;
+    text-align: center;
+    font-size: 18px;
+    cursor: pointer;
+}
+ 
+.acidjs-rating-stars input:checked ~ label
+{
+    color: #f5b301;
+}
+ 
+.acidjs-rating-disabled
+{
+    opacity: .50;
+     
+    -webkit-pointer-events: none;
+    -moz-pointer-events: none;
+    pointer-events: none;
+}
+
+.event-history-page {
+  .row + .row > .event-history {
+    border-top: 1px solid @background-color;
+  }
+}
+
+.event-history {
+  padding-bottom: 10px;
+
+  .panel {
+    border: none;
+  }
+
+  .panel-group {
+    margin-bottom: 0;
+    margin-top: 10px;
+  }
+
+  .panel-body {
+    border: none !important;
+    padding-top: 30px !important;
+  }
+}
+
+.no-transactions {
+  color: #255f8a;
+  text-align: center;
+  margin: 10px 0 30px 0;
+}
+
+.choose-super {
+  margin-top: 10px;
+  .page-panel {
+    margin-top: -5px;
+  }
+}
+
+.login-btn-panel {
+  button {
+    color: white;
+    font-size: 200%;
+    border: none;
+    height: 100px;
+    background-color: @main-color;
+    width: 100%;
+
+    &:hover {
+      color: #ececec;
+    }
+  }
 }

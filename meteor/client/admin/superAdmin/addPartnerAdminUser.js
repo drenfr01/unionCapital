@@ -1,3 +1,8 @@
+Template.addPartnerAdminUser.onRendered(function() {
+  this.subscribe('partnerOrganizations');
+  
+});
+
 Template.addPartnerAdminUser.helpers({
   organizations: function() {
     return PartnerOrgs.find();
@@ -25,7 +30,7 @@ Template.addPartnerAdminUser.events({
         city: $('#locality').val(),
         state: $('#administrative_area_level_1').val(),
         zip: $('#postal_code').val(),
-        partnerOrg: $('#organizations').val(),
+        partnerOrg: R.prepend($('#organizations').val(), []),
         role: 'partnerAdmin'
       }
     };

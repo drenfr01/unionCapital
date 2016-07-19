@@ -1,13 +1,30 @@
-Template.editMemberProfile.rendered = function() {
+var PartnerOrganizations = new Meteor.Collection(null);
+
+Template.editMemberProfile.onCreated(function() {
+  this.subscribe('eventCategories');
+  this.subscribe('eventOrgs');
+  this.subscribe('partnerOrganizations');
+  this.subscribe('kids');
+  this.subscribe('races');
+  this.subscribe('ucbappaccess');
+  this.subscribe('numberOfPeople');
+  this.subscribe('partnerOrgSectors');
+});
+
+Template.editMemberProfile.onRendered(function() {
+  PartnerOrganizations.remove({});
   var memberProfile = Meteor.user().profile;
-  $('#organizations').val(memberProfile.partnerOrg);
+  var insertPartner = function(partner) {
+    PartnerOrganizations.insert({name: partner});
+  };
+  R.map(insertPartner, memberProfile.partnerOrg);
   $('#numberOfKids').val(memberProfile.numberOfKids);
   $('#races').val(memberProfile.race);
   $("#device").val(memberProfile.UCBAppAccess);
   $("#genderForm input[id='" + memberProfile.gender+ "']").prop('checked', true);
   $("#medicaid input[id='" + memberProfile.medicaid+ "']").prop('checked', true);
   $("#reducedLunchForm input[id='" + memberProfile.reducedLunch + "']").prop('checked', true);
-};
+});
 
 
 Template.editMemberProfile.helpers({
@@ -27,14 +44,26 @@ Template.editMemberProfile.helpers({
     return Meteor.user();
   },
   memberEmail: function() {
-    return Meteor.user().emails[0];
+    return Meteor.user().emails[0].address;
   },
   UCBAppAccess: function() {
     return UCBAppAccess.find();
+  },
+  partnerOrgs: function() {
+    return PartnerOrganizations.find(); 
   }
 });
 
 Template.editMemberProfile.events({
+  'change #organizations': function(e) {
+    var partnerOrgDoc = PartnerOrgs.findOne({name: e.target.value});
+    PartnerOrganizations.insert(partnerOrgDoc);
+  },
+
+  'click .removePartnerOrg': function(e) {
+    PartnerOrganizations.remove(this._id); 
+  },
+
   'click #submit': function(e) {
     e.preventDefault();
     var attributes = {
@@ -47,7 +76,8 @@ Template.editMemberProfile.events({
         city: $('#city').val(),
         state: $('#state').val(),
         zip: $('#zip').val(),
-        partnerOrg: $('#organizations').val()
+        partnerOrg: R.pluck('name', PartnerOrganizations.find().fetch())
+
       }
     };
 

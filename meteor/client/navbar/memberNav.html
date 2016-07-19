@@ -9,18 +9,43 @@
         <span class="icon-bar"></span>
       </button>
       <a href="{{pathFor 'memberHomePage'}}">
-        <img class="UCB-nav-logo" border="0" src="/images/UCB-Logo-Acronym.png"
+        <img class="UCB-nav-logo" border="0" src="/images/UCB-Logo-Acronym-Light.png"
         alt="UCB Logo"  height="40">
       </a>
     </div>
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="nav navbar-nav">
-        <li><a href="{{pathFor 'eventsCalendar'}}" id="navMemberEvents">Events</a></li>
-        <li><a href="{{pathFor 'checkin'}}" id="navCheckIn">Check In</a></li>
+        <li>
+          <a href="{{pathFor 'checkin'}}" id="navCheckIn">
+            <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+            <span class="nav-collapse-item">Check In</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{pathFor 'eventsCalendar'}}" id="navMemberEvents">
+            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+            <span class="nav-collapse-item">Calendar</span>
+          </a>
+        </li>
         {{#with currentUser}}
-          <li><a href="{{pathFor 'checkPoints'}}" id="navMemberPoints">Points</a></li>
+          <li>
+            <a href="{{pathFor 'checkPoints'}}" id="navMemberPoints">
+              <span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span>
+              <span class="nav-collapse-item">History</span>
+            </a>
+          </li>
         {{/with}}
-        <li><a href="{{pathFor 'contactUs'}}" id="navMemberContact">Contact</a></li>
+        <li>
+          <a href="{{pathFor 'contactUs'}}" id="navMemberContact">
+            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+            <span class="nav-collapse-item">Contact</span>
+          </a>
+        </li>
+        {{#if isImpersonating}}
+          <li><button class="btn btn-danger btn-lg" data-unimpersonate>
+              Stop Impersonating
+            </button></li>
+        {{/if}}
       </ul>
       <ul class="nav navbar-nav navbar-right">
         {{> loginButtons}}

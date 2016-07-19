@@ -30,4 +30,6 @@ if (Meteor.settings.env !== 'dev') {
       return true;
     },
   });
+} else { //is dev
+  Images = new Mongo.Collection('testimages'); 
 }

@@ -1,3 +1,6 @@
+import { userHasPermissionToAccessMemberDataForPartnerOrg } from './imports/permissions';
+import { getDataForPartnerOrg } from './chartData';
+
 var jsZip = Meteor.npmRequire('jszip');
 var fastCsv = Meteor.npmRequire('fast-csv');
 
@@ -97,6 +100,19 @@ Meteor.methods({
 
     // TODO, throw error if csv is empty so that we can catch if the csv export breaks
     return zip.generate({type: "base64"});
-  }
+  },
+
+  exportMemberCsvData: function(field, partnerOrg) {
+    check(field, String);
+    check(partnerOrg, String);
+
+    this.unblock();
+
+    if (!userHasPermissionToAccessMemberDataForPartnerOrg(this.userId, partnerOrg)) {
+      throw new Meteor.Error('INVALID_PERMISSONS');
+    }
+
+    return getDataForPartnerOrg(field, partnerOrg);
+  },
 });
 
