@@ -1,17 +1,20 @@
-Template.eula.helpers({
-});
+/* global addErrorMessage */
+/* global userAttributes */
+
+function signup(error) {
+  if(error) {
+    addErrorMessage(error.reason);
+    Router.go('landing');
+  } else {
+    Router.go('memberHomePage');
+  }
+}
 
 Template.eula.events({
   'click #next': function(e) {
     e.preventDefault();
 
     if ($('#accept-eula').prop('checked')) {
-
-      //if the user is signing in through facebook
-      if(Meteor.userId()) {
-        userAttributes.userId = Meteor.userId();
-      } 
-
       Meteor.call('createNewUser', userAttributes, function(error) {
         if(error) {
           addErrorMessage(error.reason);
@@ -19,16 +22,7 @@ Template.eula.events({
           if(Meteor.userId()) {
             Router.go('memberHomePage');
           } else {
-            Meteor.loginWithPassword(userAttributes.email, userAttributes.password, 
-                                     function(error) {
-                                       if(error) {
-                                         addErrorMessage(error.reason);
-                                         Router.go('landing');
-                                       } else {
-                                         Router.go('memberHomePage');
-                                       }
-                                     });
-
+            Meteor.loginWithPassword(userAttributes.email, userAttributes.password, signup);
           }
           // Let's delete this so the pw is not 
           // sitting around in plaintext
@@ -36,13 +30,12 @@ Template.eula.events({
         }
       });
     } else {
-
       addErrorMessage('Please check the box if you agree to the terms');
-
     }
   },
+
   'click #back': function(e) {
     e.preventDefault();
     Session.set('signupPage', 'collectUserDemographics');
-  }
+  },
 });

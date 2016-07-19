@@ -3,6 +3,7 @@ userAttributes = {
 };
 
 Template.signup.rendered = function() {
+  Meteor.logout();
   Session.set('signupPage', this.data);
 };
 
