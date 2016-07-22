@@ -8,10 +8,13 @@ Template.pointsCircle.onCreated(function() {
   self.nextLevel = new ReactiveVar(null);
   self.pointsToNextLevel = new ReactiveVar(null);
   self.autorun(function() {
-    const points = Meteor.user().profile.points;
-    self.currentLevel.set(PointLevels.returnLevel(points));
-    self.nextLevel.set(PointLevels.nextLevel(points));
-    self.pointsToNextLevel.set(PointLevels.pointsToNextLevel(points));
+    const user = Meteor.user();
+    if (user) {
+      const points = user.profile.points;
+      self.currentLevel.set(PointLevels.returnLevel(points));
+      self.nextLevel.set(PointLevels.nextLevel(points));
+      self.pointsToNextLevel.set(PointLevels.pointsToNextLevel(points));
+    }
   });
 });
 
