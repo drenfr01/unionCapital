@@ -31,7 +31,7 @@ Template.uploadEvents.events({
         }
       },
       error: function(err, file, inputElem, reason) {
-        addErrorMessage(err);
+        sAlert.error(err);
         console.log(err, file, inputElem, reason);
       },
       complete: function() {

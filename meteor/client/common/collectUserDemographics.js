@@ -92,7 +92,7 @@ Template.collectUserDemographics.events({
     if(isValid) {
       Session.set('signupPage', 'eula');
     } else {
-      addErrorMessage('Please correct fields');
+      sAlert.error('Please correct fields');
     }
   }
 });

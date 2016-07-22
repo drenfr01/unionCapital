@@ -55,17 +55,17 @@ Template.communityNeeds.rendered = function() {
               infowindow.open(map,marker);
             });
         } else {
-          addErrorMEssage('Geocode was not successful for the following reason ' +
+          sAlert.error('Geocode was not successful for the following reason ' +
             status);
         }
       });
     });
 
     }, function(error) {
-      addErrorMessage(error.message);
+      sAlert.error(error.message);
     }, geoOptions);
   } else {
-    addErrorMessage('Geolocation not supported, could not center map');
+    sAlert.error('Geolocation not supported, could not center map');
   }
 };
 

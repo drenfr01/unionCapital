@@ -1,18 +1,16 @@
 /* global EventCategories */
 /* global AutoForm */
-/* global addSuccessMessage */
-/* global addErrorMessage */
 /* global AutoForm */
 /* global PartnerOrgs */
 /* global Roles */
 
 AutoForm.hooks({
     onSuccess: function(formType) {
-      addSuccessMessage("Event Successfully Changed!");
+      sAlert.success("Event Successfully Changed!");
     },
 
     onError: function(formType, error) {
-      addErrorMessage(error);
+      sAlert.error(error);
     },
 });
 
@@ -85,7 +83,7 @@ Template.editEvent.helpers({
 
 Template.editEvent.events({
   'click #back': function(e) {
-    addSuccessMessage("Event Successfully Changed!");
+    sAlert.success("Event Successfully Changed!");
     Router.go('manageEvents');
   },
   'click #submit': function(e) {

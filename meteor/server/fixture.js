@@ -3,6 +3,7 @@
 /* global getInitialCategoryData */
 
 Meteor.startup(function () {
+
   //Seeding Partner Org Sectors
   if(PartnerOrgSectors.find().count() === 0) {
     var sectors = [
@@ -75,8 +76,7 @@ Meteor.startup(function () {
       '6',
       '7',
       '8',
-      '9',
-      '10+'
+      '9'
     ];
 
     _.each(people, function(person) {

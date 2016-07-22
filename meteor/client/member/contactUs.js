@@ -9,10 +9,10 @@ Template.contactUs.events({
     
     Meteor.call('sendEmail', attributes, function(error) {
       if(error) {
-        addErrorMessage(error.reason);
+        sAlert.error(error.reason);
         Router.go('memberHomePage');
       } else {
-        addSuccessMessage("Your comment is on the way! We'll get back to you shortly!");
+        sAlert.success("Your comment is on the way! We'll get back to you shortly!");
         Router.go('memberHomePage');
       } 
     });

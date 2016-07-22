@@ -36,14 +36,14 @@ _.extend(CSVUpload.prototype, {
   },
   _clean: function(data) {
     if(data.length === 1) {
-      addErrorMessage('CSV with no events in it');
+      sAlert.error('CSV with no events in it');
       return []
     } else if (!_.isEqual(_.map(
       data[0],
       function(elem) {
         return $.trim(elem);
       }), this.columnHeaders)) {
-      addErrorMessage('Column Header Mismatch')
+      sAlert.error('Column Header Mismatch')
       return []
     } else {
       return _.map(data.slice(1), function(row) {
@@ -59,7 +59,7 @@ _.extend(CSVUpload.prototype, {
       thisRowEvent = new NewEvent();
       thisRowEvent.eventData = eventData;
       if(rowArr.length !== this.columnHeaders.length){
-        addErrorMessage('Event ' + (rowNum + 1) + ' has the wrong columns.')
+        sAlert.error('Event ' + (rowNum + 1) + ' has the wrong columns.')
         thisRowEvent.statusClass = "bg-danger";
         thisRowEvent.statusMsg = "Bad data";
       } else {
@@ -108,7 +108,7 @@ _.extend(NewEvent.prototype, {
                     self.eventData.longitude = result.location.lng;
                     self.locationFound.set(true);
                     // good for debugging
-                    // addSuccessMessage('lat long success' + result.location.lat + ':' + result.location.lng);
+                    // sAlert.success('lat long success' + result.location.lat + ':' + result.location.lng);
                   }
                 })
   },

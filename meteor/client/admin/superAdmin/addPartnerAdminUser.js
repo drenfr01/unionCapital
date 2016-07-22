@@ -36,9 +36,9 @@ Template.addPartnerAdminUser.events({
     };
     Meteor.call('createNewUser', attributes, function(error) {
       if(error) {
-        addErrorMessage(error.reason);
+        sAlert.error(error.reason);
       } else {
-        addSuccessMessage("Successfully Created User");
+        sAlert.success("Successfully Created User");
         Router.go('partnerAdminView');
       }
     });

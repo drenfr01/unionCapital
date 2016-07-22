@@ -1,7 +1,5 @@
 /* global Roles */
 /* global PartnerOrgs */
-/* global addSuccessMessage */
-/* global addErrorMessage */
 /* global EventCategories */
 /* global addHours */
 /* global R */
@@ -29,11 +27,11 @@ AutoForm.hooks({
       },
     },
     onSuccess: function() {
-      addSuccessMessage('Event successfully added!');
+      sAlert.success('Event successfully added!');
       Router.go('manageEvents')
     },
     onError: function(formType, error) {
-      addErrorMessage(error);
+      sAlert.error(error);
     },
   },
 });
@@ -136,15 +134,15 @@ Template.addEvents.events({
     e.preventDefault();
     eventAddress = $('#eventAddress').val();
     if (eventAddress === '') {
-      addErrorMessage('Please specify an Event Address');
+      sAlert.error('Please specify an Event Address');
     } else {
       Meteor.call('geocodeAddress', eventAddress,
                   function(error, result) {
                     if(error) {
-                      addErrorMessage(error.reason);
+                      sAlert.error(error.reason);
                       Router.go('addEvents');
                     } else {
-                      addSuccessMessage("Geocoding complete: Lat = " + result.location.lat + ", Long = " + result.location.lng);
+                      sAlert.success("Geocoding complete: Lat = " + result.location.lat + ", Long = " + result.location.lng);
                       Session.set('latitude', result.location.lat);
                       Session.set('longitude', result.location.lng);
                     }
@@ -167,12 +165,12 @@ Template.addEvents.events({
     var isPph = $("input[type='radio'][name='isPointsPerHour']:checked").val();
     var pph = $('#insertEventsForm input[name="pointsPerHour"]').val();
     if (isPph === "true" && !pph) {
-      addErrorMessage('You must add the number of points per hour');
+      sAlert.error('You must add the number of points per hour');
       return false;
     }
 
     if (!$('#super-cat-select').val()) {
-      addErrorMessage('You must add an event category');
+      sAlert.error('You must add an event category');
       return false;
     }
 

@@ -83,6 +83,7 @@ iron:router@1.0.12
 iron:url@1.0.11
 jquery@1.11.8
 jsx@0.2.4
+juliancwirko:s-alert@3.1.4
 lai:collection-extensions@0.2.1_1
 launch-screen@1.0.11
 less@2.6.0

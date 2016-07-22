@@ -4,7 +4,7 @@ var numberOfTopEarners = 10;
 Template.topPointsList.rendered = function() {
   Meteor.call('getTopEarners', numberOfTopEarners, function(error, data) {
     if(error) {
-      addErrorMessage(error.reason);
+      sAlert.error(error.reason);
     } else {
       Session.set('topEarners', data);
     }

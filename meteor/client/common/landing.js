@@ -1,4 +1,3 @@
-/* global addErrorMessage */
 /* global Roles */
 
 Template.landing.helpers({
@@ -31,7 +30,7 @@ Template.landing.events({
     var isValid = $('#loginForm').valid();
 
     if(!isValid) {
-      addErrorMessage('Invalid entry');
+      sAlert.error('Invalid entry');
     }
 
     var email =  $('#userEmail').val().toLowerCase();
@@ -39,7 +38,7 @@ Template.landing.events({
 
     Meteor.loginWithPassword(email, password, function(error) {
       if(error) {
-        addErrorMessage(error.reason);
+        sAlert.error(error.reason);
       } else {
         if(Roles.userIsInRole(Meteor.userId(), 'admin')) {
           return Router.go('adminHomePage');

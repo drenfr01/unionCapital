@@ -47,7 +47,7 @@ Template.pointTemplate.events({
         } else {
           //TODO: disable the stars in a persistent way
           $(e.target).siblings().prop('disabled', 'disabled');
-          addSuccessMessage('Rated!');
+          sAlert.success('Rated!');
         }
       });
   },
@@ -58,7 +58,7 @@ Template.pointTemplate.events({
         if(err) {
           console.log(err);
         } else {
-          addSuccessMessage('Posted!');
+          sAlert.success('Posted!');
         }   
     });
   },

@@ -3,7 +3,6 @@
 /* global GlobalHelpers */
 /* global AppConfig */
 /* global Events */
-/* global addErrorMessage */
 /* global Roles */
 
 Session.set('category', null);
@@ -138,7 +137,7 @@ Template.manageEvents.events({
        Meteor.user().profile.partnerOrg === this.institution) {
       Router.go('editEvent', {_id: this._id});
     } else {
-      addErrorMessage('Permission Denied: You do not own this event');
+      sAlert.error('Permission Denied: You do not own this event');
     }
   },
 
@@ -147,11 +146,11 @@ Template.manageEvents.events({
        Meteor.user().profile.partnerOrg === this.institution) {
       Meteor.call('deleteEvent', this._id, function(error) {
         if(error) {
-          addErrorMessage(error.reason);
+          sAlert.error(error.reason);
         }
       });
     } else {
-      addErrorMessage('Permission Denied: You do not own this event');
+      sAlert.error('Permission Denied: You do not own this event');
     }
   },
 
