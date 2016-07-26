@@ -77,10 +77,15 @@ function uploadUserPhotoIfExists(userPhoto) {
   });
 }
 
-
 CheckInExistingEvent = function(eventId) {
   check(eventId, String);
+
+  const { name, description, category, eventDate } = Events.findOne(eventId);
   this.eventId = eventId;
+  this.eventName = name;
+  this.eventDescription = description;
+  this.category = category;
+  this.eventDate = eventDate;
 };
 
 CheckInNewEvent = function(eventName, eventDescription, category, eventDate) {
