@@ -1,6 +1,7 @@
 Template.uploadEvents.created = function () {
   //This is the template instance here
   this.fileNotUploaded = new ReactiveVar(true);
+  this.subscribe('eventCategories');
   this.csvUpload = new CSVUpload()
 }
 

@@ -242,6 +242,14 @@ EventCategories.getSuperCategories = function getSuperCategories(legacy = false)
   )(categories);
 };
 
+EventCategories.getSuperCategoryForCategory = function getSuperCategoryForCategory(categoryName) {
+  const categories = getCategories(false);
+  return R.compose(
+    R.prop('superCategoryName'),
+    R.find(R.propEq('name', categoryName))
+  )(categories);
+};
+
 EventCategories.getSuperCategoriesWithIcons = function getSuperCategories(legacy = false) {
   return EventCategories
     .getSuperCategories(legacy)
