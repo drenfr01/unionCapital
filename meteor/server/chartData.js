@@ -9,6 +9,7 @@ const getPoints = R.compose(
 
 function getPointDataForPartnerOrg(field, transactionsForPartnerOrg, allUsersDict) {
   return R.compose(
+    R.values,
     R.map(sumPointsForUser(allUsersDict)),
     R.groupBy(R.prop('_id'))
   )(transactionsForPartnerOrg);
@@ -27,7 +28,7 @@ const sumPointsForUser = R.curry(function(allUsersDict, userTransactions) {
   return R.reduce(addPointsAndUserData, allUsersDict[userTransactions[0].userId])(userTransactions);
 });
 
-function getChartData(field) {
+getChartData = function getChartData(field) {
   const partnerOrg = 'Family Independence Initiative';
   const transactionsForPartnerOrg = Transactions.find({ partnerOrg: partnerOrg }).fetch();
   const allUsersDict = toDict(Meteor.users.find({}).fetch());
