@@ -6,6 +6,11 @@
           <span class="glyphicon glyphicon-download"></span>
           Export Partner Member Data
         </button>
+        <select id="org-select">
+          {{ #each partnerOrgs }}
+            <option value="{{ name }}">{{ name }}</option>
+          {{ /each }}
+        </select>
         <br>
         <button type="button" class="button-landing" id="exportMembers">
           <span class="glyphicon glyphicon-download"></span>

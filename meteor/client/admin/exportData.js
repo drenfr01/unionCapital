@@ -13,16 +13,26 @@ var base64ToBlob = function(base64String) {
   });
 };
 
+Template.exportData.onRendered(function() {
+  this.subscribe('partnerOrganizations');
+});
+
+Template.exportData.helpers({
+  partnerOrgs: function() {
+    return PartnerOrgs.find({});
+  },
+});
+
 Template.exportData.events({
   'click #exportUserData': function(e) {
     e.preventDefault();
-    var userId = Meteor.userId();
-    Meteor.call('exportUserData', function(error, response) {
+    const partnerOrg = $('#org-select').val();
+    Meteor.call('exportUserData', partnerOrg, function(error, response) {
       if(error) {
         console.log(error.reason);
       } else {
         var blob = base64ToBlob(response);
-        saveAs(blob, 'members.zip');
+        saveAs(blob, 'user_data.zip');
       }
     });
   },

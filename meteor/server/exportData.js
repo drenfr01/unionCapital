@@ -99,7 +99,7 @@ Meteor.methods({
     return zip.generate({type: "base64"});
   },
 
-  exportUserData: function(institution) {
+  exportUserData: function(partnerOrg) {
     //check(userId, String);
     const user = Meteor.users.findOne(this.userId);
 
@@ -108,7 +108,7 @@ Meteor.methods({
       throw new Meteor.Error('INSUFFICIENT_PERMISSIONS', 'Insufficient permissions to export data');
     }
 
-    const userData = getChartData('?', 'Family Independence Initiative');
+    const userData = getChartData(partnerOrg);
 
     var zip = new jsZip();
     var response = Async.runSync(function(done) {
