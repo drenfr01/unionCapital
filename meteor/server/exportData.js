@@ -44,7 +44,7 @@ Meteor.methods({
     
     //Note: can also implement export as HTML, JSON, & XML
     var response = Async.runSync(function(done) {
-        exportAsCSV(zip, memberProfiles, 'members.csv', done);
+      exportAsCSV(zip, memberProfiles, 'members.csv', done);
     });
 
     // TODO, throw error if csv is empty so that we can catch if the csv export breaks
@@ -97,6 +97,26 @@ Meteor.methods({
 
     // TODO, throw error if csv is empty so that we can catch if the csv export breaks
     return zip.generate({type: "base64"});
+  },
+
+  exportUserData: function(partnerOrg) {
+    //check(userId, String);
+    const user = Meteor.users.findOne(this.userId);
+
+    // make sure only superAdmin can export unrestricted data 
+    if (!_.contains(user.roles, 'admin')) {
+      throw new Meteor.Error('INSUFFICIENT_PERMISSIONS', 'Insufficient permissions to export data');
+    }
+
+    const userData = getChartData(partnerOrg);
+
+    var zip = new jsZip();
+    var response = Async.runSync(function(done) {
+      exportAsCSV(zip, userData, 'user_data.csv', done);
+    });
+
+    // TODO, throw error if csv is empty so that we can catch if the csv export breaks
+    return zip.generate({ type: 'base64' });
   }
 });
 

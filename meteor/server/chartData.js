@@ -1,3 +1,7 @@
+/* global R */
+/* global getChartData:true  */
+/* global Transactions  */
+
 const getPoints = R.compose(
   R.defaultTo(0),
   R.ifElse(
@@ -7,8 +11,9 @@ const getPoints = R.compose(
   )
 );
 
-function getPointDataForPartnerOrg(field, transactionsForPartnerOrg, allUsersDict) {
+function getPointDataForPartnerOrg(transactionsForPartnerOrg, allUsersDict) {
   return R.compose(
+    R.values,
     R.map(sumPointsForUser(allUsersDict)),
     R.groupBy(R.prop('_id'))
   )(transactionsForPartnerOrg);
@@ -21,22 +26,14 @@ function addPointsAndUserData(acc, trans) {
   };
 }
 
-const toDict = R.reduce((acc, val) => ({ ...acc, [val._id]: val.profile }), {});
+const toDict = R.reduce((acc, val) => ({ ...acc, [val._id]: { ...val.profile, userId: val._id } }), {});
 
 const sumPointsForUser = R.curry(function(allUsersDict, userTransactions) {
   return R.reduce(addPointsAndUserData, allUsersDict[userTransactions[0].userId])(userTransactions);
 });
 
-function getChartData(field) {
-  const partnerOrg = 'Family Independence Initiative';
+getChartData = function getChartData(partnerOrg) {
   const transactionsForPartnerOrg = Transactions.find({ partnerOrg: partnerOrg }).fetch();
   const allUsersDict = toDict(Meteor.users.find({}).fetch());
-  return getPointDataForPartnerOrg(field, transactionsForPartnerOrg, allUsersDict);
+  return getPointDataForPartnerOrg(transactionsForPartnerOrg, allUsersDict);
 }
-
-Meteor.methods({
-  getChartData: function(field) {
-    const pointDataForPartnerOrg = getChartData(field);
-    return pointDataForPartnerOrg;
-  },
-});

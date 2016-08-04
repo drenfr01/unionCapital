@@ -3,10 +3,10 @@ CSVUpload = function() {
   var self = this;
   self.data = [];
   self.events = new ReactiveVar([]);
-
-}
+};
 
 _.extend(CSVUpload.prototype, {
+
   // TODO: Ideally this would pull from the schema for events
   // But for now we can edit this
   columnHeaders: [
@@ -20,12 +20,17 @@ _.extend(CSVUpload.prototype, {
     'duration',
     'isPointsPerHour',
     'pointsPerHour',
+    'privateEvent',
     'points',
+    'adHoc',
+    'privateWhitelist',
   ],
+
   addData: function(incomingData) {
     this.data = this._clean(incomingData);
     this._parseRows(this.data)
   },
+
   submit: function() {
     _.each(this.events.get(), function(newEvent, num, list) {
       if(newEvent.statusClass === 'bg-success') {
@@ -34,6 +39,7 @@ _.extend(CSVUpload.prototype, {
     }, this);
     Router.go('manageEvents');
   },
+
   _clean: function(data) {
     if(data.length === 1) {
       sAlert.error('CSV with no events in it');
@@ -53,6 +59,7 @@ _.extend(CSVUpload.prototype, {
       });
     }
   },
+
   _parseRows: function(data) {
     _.each(data, function(rowArr, rowNum, list) {
       eventData = _.object(this.columnHeaders, rowArr);
@@ -70,13 +77,14 @@ _.extend(CSVUpload.prototype, {
         }, thisRowEvent);
 
         thisRowEvent.addLocationData();
+        thisRowEvent.addSuperCategory(thisRowEvent.category);
       }
       curr = this.events.get();
       curr.push(thisRowEvent)
       this.events.set(curr);
     }, this)//The 'this' pulls the class context into the map function, very necessary...
   }
-})
+});
 
 NewEvent = function() {
   var self = this;
@@ -96,22 +104,27 @@ _.extend(NewEvent.prototype, {
       this._addWarning("Duplicate");
     }
   },
+
   addLocationData: function(){
     var self = this
-    Meteor.call('geocodeAddress', self.eventData.address,
-                function(error, result) {
-                  if(error) {
-                    self._addWarning("Bad Location");
-                    console.log(error.reason)
-                  } else {
-                    self.eventData.latitude = result.location.lat;
-                    self.eventData.longitude = result.location.lng;
-                    self.locationFound.set(true);
-                    // good for debugging
-                    // sAlert.success('lat long success' + result.location.lat + ':' + result.location.lng);
-                  }
-                })
+    Meteor.call('geocodeAddress', self.eventData.address, function(error, result) {
+      if(error) {
+        self._addWarning("Bad Location");
+        console.log(error.reason)
+      } else {
+        self.eventData.latitude = result.location.lat;
+        self.eventData.longitude = result.location.lng;
+        self.locationFound.set(true);
+        // good for debugging
+        // sAlert.success('lat long success' + result.location.lat + ':' + result.location.lng);
+      }
+    });
   },
+
+  addSuperCategory: function() {
+    this.eventData.superCategoryName = EventCategories.getSuperCategoryForCategory(this.eventData.category);
+  },
+
   insertEvent: function(){
     Events.insert({
       name: this.eventData.name,
@@ -129,10 +142,13 @@ _.extend(NewEvent.prototype, {
       pointsPerHour: this.eventData.pointsPerHour,
       duration: this.eventData.duration,
       adHoc: false,
-    })
+      privateEvent: this.eventData.privateEvent === 'true',
+      privateWhitelist: this.eventData.privateWhitelist,
+    });
   },
+
   _addWarning: function(msg){
     this.statusClass = "bg-warning";
     this.statusMsg = msg;
-  }
-})
+  },
+});
