@@ -45,9 +45,14 @@ Meteor.publish("calendarEvents", function(attributes, searchText, skipCount) {
   selector.eventDate = attributes.eventDate;
   selector.deleteInd = false;
   selector.adHoc = false;
+  console.log(selector);
 
   if(attributes.superCategoryName && attributes.superCategoryName !== 'default') {
     selector.superCategoryName = attributes.superCategoryName;
+  }
+
+  //filter events based on their starttime
+  if(attributes.timeOfDay !== 'Any') {
   }
 
   var options = {

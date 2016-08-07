@@ -35,6 +35,15 @@
                                                             aria-labelledby="heading{{_id}}">
             <div class="panel-body">
               <p><b>Description: </b>{{event.description}}</p>
+              <p>
+              <b>Addons:</b><br>
+                  {{#each addons}}
+                    {{name}} - <b>{{points}}</b>
+                    <br>
+                  {{else}}
+                    None
+                  {{/each}}
+              </p>
               {{#if isUCBEvent}}
               <p><b>How would you rate this event?</b></p>
               <div class="acidjs-rating-stars">

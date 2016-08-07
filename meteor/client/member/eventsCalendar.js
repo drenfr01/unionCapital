@@ -28,6 +28,9 @@ Template.eventsCalendar.onCreated(function() {
     AppConfig.eventCalendar[timeframe].hoursBehind, 'h').toDate();
   var end = moment().add(
     AppConfig.eventCalendar[timeframe].hoursAhead, 'h').toDate();
+  this.startDate = new ReactiveVar(start);
+  this.endDate = new ReactiveVar(end);
+  this.timeOfDay = new ReactiveVar('Any');
   var attributes = {
     eventDate: {
       $gte: start,
@@ -40,6 +43,12 @@ Template.eventsCalendar.onCreated(function() {
   template.autorun(function() {
     attributes = _.extend(attributes, 
                           {superCategoryName: template.superCategoryName.get()});
+    attributes.eventDate = {
+      $gte: moment(template.startDate.get()).toDate(),
+      $lte: moment(template.endDate.get()).toDate()
+    };
+    attributes.timeOfDay = tempate.timeOfDay.get();
+
     var skipCount = (currentPage() - 1) * AppConfig.public.recordsPerPage;
     template.subscribe('calendarEvents', attributes, 
                        searchString.get(), skipCount);
@@ -110,7 +119,29 @@ Template.eventsCalendar.events({
 
   'change #eventCategory': function(e) {
     Template.instance().superCategoryName.set($('#eventCategory').val());
-  }
+  },
+
+  'change #startDate': function(e) {
+    console.log($('#startDate').val());
+    const startDate = $('#startDate').val()
+    if(startDate) {
+      Template.instance().startDate.set(startDate); 
+    }
+  },
+
+  'change #endDate': function(e) {
+    const endDate = $('#endDate').val()
+    if(endDate) {
+      Template.instance().endDate.set(endDate); 
+    }
+  },
+
+  'click .btn-group-sm > .btn': function(e) {
+    const timeOfDay = e.target.innerHTML;
+    if(timeOfDay) {
+      Template.instance().timeOfDay.set(timeOfDay);
+    }
+  },
 });
 
 // eventPanel

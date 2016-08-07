@@ -229,7 +229,8 @@ function getMaxVersionNumber(categories) {
 }
 
 function getCategories(legacy) {
-  const categories = EventCategories.find({ deleteInd: { $ne: true } }).fetch();
+  const categories = EventCategories.find({ deleteInd: { $ne: true }} , 
+                                          {sort: {name: 1}}).fetch();
   const minVersionNumber = legacy ? 0 : getMaxVersionNumber(categories);
   return categories.filter(cat => cat.version >= minVersionNumber);
 }
@@ -266,7 +267,7 @@ EventCategories.getCategoriesForSuperCategory = function getCategoriesForSuperCa
     return EventCategories.getAllCategories();
   }
 
-  const categories = EventCategories.find({ superCategoryName, deleteInd: { $ne: true } }).fetch();
+  const categories = EventCategories.find({ superCategoryName, deleteInd: { $ne: true } }, {sort: {name: 1}}).fetch();
   return R.compose(
     R.uniq,
     R.pluck('name')
