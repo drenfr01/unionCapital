@@ -5,7 +5,7 @@
 /* global EventCategories */
 /* global Addons */
 
-const defaultHours = 1;
+const defaultHours = 0.5;
 let checkIn = {};
 
 function validateNewEventForms() {
