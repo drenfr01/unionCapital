@@ -47,7 +47,7 @@ Template.eventsCalendar.onCreated(function() {
       $gte: moment(template.startDate.get()).toDate(),
       $lte: moment(template.endDate.get()).toDate()
     };
-    attributes.timeOfDay = tempate.timeOfDay.get();
+    attributes.timeOfDay = template.timeOfDay.get();
 
     var skipCount = (currentPage() - 1) * AppConfig.public.recordsPerPage;
     template.subscribe('calendarEvents', attributes, 

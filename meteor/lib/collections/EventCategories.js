@@ -34,35 +34,35 @@ const categoriesBySuperCategory = {
     categories: [
       {
         name: 'Reading/In-home learning with child',
-        rules: [],
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS','ONE_MAX_ENTRY_PER_DAY'],
       },
       {
         name: 'In-school Meeting',
-        rules: [],
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
         name: 'In-school Event',
-        rules: [],
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
         name: 'In-school Volunteer',
-        rules: [],
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
         name: 'Chaperone Field Trip/Sport Activity',
-        rules: [],
+        rules: ['LESS_THAN_OR_EQUAL_4_HOURS'],
       },
       {
         name: 'Adult Education Class',
-        rules: [],
+        rules: ['LESS_THAN_OR_EQUAL_4_HOURS'],
       },
       {
         name: 'Library/Education Center',
-        rules: [],
+        rules: ['LESS_THAN_OR_EQUAL_4_HOURS'],
       },
       {
         name: 'Early Childhood Playgroup',
-        rules: [],
+        rules: ['LESS_THAN_OR_EQUAL_4_HOURS'],
       },
     ],
   },
@@ -72,35 +72,35 @@ const categoriesBySuperCategory = {
     categories: [
       {
         name: 'Walking/In-home Exercise',
-        rules: [],
+        rules: ['ONE_MAX_ENTRY_PER_DAY'],
       },
       {
         name: 'Running, Biking, Team Sport',
-        rules: [],
+        rules: ['ONE_MAX_ENTRY_PER_DAY'],
       },
       {
         name: 'Gym/Fitness Center Exercise',
-        rules: [],
+        rules: ['ONE_MAX_ENTRY_PER_DAY'],
       },
       {
         name: 'Health Center Appointment',
-        rules: [],
+        rules: ['ONE_MAX_ENTRY_PER_DAY'],
       },
       {
         name: 'Hospital Visit',
-        rules: [],
+        rules: ['ONE_MAX_ENTRY_PER_DAY'],
       },
       {
         name: 'Fitness Class',
-        rules: [],
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
         name: 'Health Workshop',
-        rules: [],
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
         name: 'Farmers Market',
-        rules: [],
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
     ],
   },
@@ -110,23 +110,23 @@ const categoriesBySuperCategory = {
     categories: [
       {
         name: 'FII Monthly Meeting',
-        rules: [],
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
         name: 'Lending Circles Meeting',
-        rules: [],
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
         name: 'Financial Workshop',
-        rules: [],
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
         name: 'Home Buying Workshop/Class',
-        rules: [],
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
         name: 'Financial Advisor Meeting',
-        rules: [],
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
         name: 'Opening New Bank Account',
@@ -134,7 +134,7 @@ const categoriesBySuperCategory = {
       },
       {
         name: 'Tax Services',
-        rules: [],
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
     ],
   },
@@ -144,51 +144,51 @@ const categoriesBySuperCategory = {
     categories: [
       {
         name: 'Volunteer: Organization',
-        rules: [],
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
         name: 'Volunteer: Event',
-        rules: [],
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
         name: 'Volunteer: Helping Others',
-        rules: [],
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
         name: 'Performance/Festival',
-        rules: [],
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
         name: 'Workshop/Info Session',
-        rules: [],
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
         name: 'Community Meeting',
-        rules: [],
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
         name: 'Leading/Teaching an Event/Workshop',
-        rules: [],
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
         name: 'Voter Registration/Engagement',
-        rules: [],
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
         name: 'Advocacy Event/Rally',
-        rules: [],
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
         name: 'Political Activity',
-        rules: [],
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
         name: 'Cooking for an Event',
-        rules: [],
+        rules: ['ONE_MAX_ENTRY_PER_DAY:'],
       },
       {
         name: 'Donating clothing/goods',
-        rules: [],
+        rules: ['ONE_MAX_ENTRY_PER_DAY:'],
       },
       {
         name: 'OTHER: Type in Description',
