@@ -30,6 +30,7 @@ Template.eventsCalendar.onCreated(function() {
     AppConfig.eventCalendar[timeframe].hoursAhead, 'h').toDate();
   this.startDate = new ReactiveVar(start);
   this.endDate = new ReactiveVar(end);
+  this.timeOfDay = new ReactiveVar('Any');
   var attributes = {
     eventDate: {
       $gte: start,
@@ -42,12 +43,11 @@ Template.eventsCalendar.onCreated(function() {
   template.autorun(function() {
     attributes = _.extend(attributes, 
                           {superCategoryName: template.superCategoryName.get()});
-
-    console.log(template);
     attributes.eventDate = {
       $gte: moment(template.startDate.get()).toDate(),
       $lte: moment(template.endDate.get()).toDate()
     };
+    attributes.timeOfDay = tempate.timeOfDay.get();
 
     var skipCount = (currentPage() - 1) * AppConfig.public.recordsPerPage;
     template.subscribe('calendarEvents', attributes, 
@@ -132,7 +132,14 @@ Template.eventsCalendar.events({
   'change #endDate': function(e) {
     const endDate = $('#endDate').val()
     if(endDate) {
-      Template.instance().endDate.set($('#endDate').val()); 
+      Template.instance().endDate.set(endDate); 
+    }
+  },
+
+  'click .btn-group-sm > .btn': function(e) {
+    const timeOfDay = e.target.innerHTML;
+    if(timeOfDay) {
+      Template.instance().timeOfDay.set(timeOfDay);
     }
   },
 });

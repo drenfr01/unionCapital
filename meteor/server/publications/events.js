@@ -51,6 +51,10 @@ Meteor.publish("calendarEvents", function(attributes, searchText, skipCount) {
     selector.superCategoryName = attributes.superCategoryName;
   }
 
+  //filter events based on their starttime
+  if(attributes.timeOfDay !== 'Any') {
+  }
+
   var options = {
     sort: { eventDate: 1 }
   };
