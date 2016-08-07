@@ -90,7 +90,7 @@ CheckInExistingEvent = function(eventId) {
 
 CheckInNewEvent = function(eventName, eventDescription, category, eventDate) {
   check(eventName, String);
-  check(eventDescription, String);
+  check(eventDescription, Match.Maybe(String));
   check(category, String);
   check(eventDate, Date);
 

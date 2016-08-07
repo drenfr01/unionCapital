@@ -386,6 +386,11 @@ Meteor.startup(function () {
         name: 'Left Feedback',
         points: 25,
         display: false
+      },
+      {
+        name: 'Partner Organization Event',
+        points: 200,
+        display: true
       }
     ];
 
