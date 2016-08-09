@@ -58,7 +58,7 @@ Meteor.methods({
         userLng: attributes.userLng,
         imageId: attributes.imageId,
         hoursSpent: attributes.hoursSpent,
-        pointsPerHour: 200,
+        pointsPerHour: 100,
         isPointsPerHour: true,
       };
       attributes.partnerOrg = currentUser.primaryPartnerOrg();
