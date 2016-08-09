@@ -1,5 +1,11 @@
-Meteor.methods({
+/* global Future */
+/* global Roles */
+/* global googlemaps */
+/* global Images */
+/* global Images */
+/* global emailHelper */
 
+Meteor.methods({
   removeImage: function(imageId) {
     return Images.remove(imageId);
   },
@@ -132,27 +138,35 @@ Meteor.methods({
 
     attributes.email = attributes.email.toLowerCase();
 
-    Meteor.users.update(this.userId, {
-      $set: {
-        'emails.0.address': attributes.email,
-        'profile.firstName': attributes.profile.firstName,
-        'profile.lastName': attributes.profile.lastName,
-        'profile.street1': attributes.profile.street1,
-        'profile.street2': attributes.profile.street2,
-        'profile.city': attributes.profile.city,
-        'profile.state': attributes.profile.state,
-        'profile.zip': attributes.profile.zip,
-        'profile.partnerOrg': attributes.profile.partnerOrg,
-        'profile.numberOfKids': attributes.profile.numberOfKids,
-        'profile.race': attributes.profile.race,
-        'profile.followingOrgs': attributes.profile.followingOrgs,
-        'profile.role': attributes.profile.role,
-        'profile.gender': attributes.profile.gender,
-        'profile.medicaid': attributes.profile.medicaid,
-        'profile.reducedLunch': attributes.profile.reducedLunch,
-        'profile.UCBAppAccess': attributes.profile.UCBAppAccess
+    try {
+      Meteor.users.update(this.userId, {
+        $set: {
+          'emails.0.address': attributes.email,
+          'profile.firstName': attributes.profile.firstName,
+          'profile.lastName': attributes.profile.lastName,
+          'profile.street1': attributes.profile.street1,
+          'profile.street2': attributes.profile.street2,
+          'profile.city': attributes.profile.city,
+          'profile.state': attributes.profile.state,
+          'profile.zip': attributes.profile.zip,
+          'profile.partnerOrg': attributes.profile.partnerOrg,
+          'profile.numberOfKids': attributes.profile.numberOfKids,
+          'profile.race': attributes.profile.race,
+          'profile.followingOrgs': attributes.profile.followingOrgs,
+          'profile.role': attributes.profile.role,
+          'profile.gender': attributes.profile.gender,
+          'profile.medicaid': attributes.profile.medicaid,
+          'profile.reducedLunch': attributes.profile.reducedLunch,
+          'profile.UCBAppAccess': attributes.profile.UCBAppAccess,
+        },
+      });
+    } catch (err) {
+      if (err.code === 11000) {
+        console.log(err);
+        throw new Meteor.Error('DUPLICATE_EMAIL', 'A user is already registered with this email');
       }
-    });
+      throw err;
+    }
   },
 
   geocodeAddress: function(address) {
@@ -170,7 +184,7 @@ Meteor.methods({
   sendEmail: function(attributes) {
     check(attributes, {
       userId: String,
-      comment: String
+      comment: String,
     });
 
     var currentUser = Meteor.users.findOne(attributes.userId);
