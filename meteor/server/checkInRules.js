@@ -72,6 +72,7 @@ const PERMISSION_RULES = {
         HAS_DESCRIPTION: true,
       }],
     }],
+    IS_RECENT: true,
   },
   PARTNER_ADMIN: {
     $or: [{
@@ -80,6 +81,7 @@ const PERMISSION_RULES = {
       HAS_GEOLOCATION: true,
       IS_RECOGNIZED_LOCATION: true,
     }],
+    IS_RECENT: true,
   },
   SUPER_ADMIN: {
     SATISFIES_ADMIN_SELFIE_RULES: true,
@@ -168,6 +170,10 @@ const REQUREMENTS_FUNCTIONS = {
       return thisEventMoment.isBetween(minStartDate, maxEndDate, 'second');
     }
     return false
+  },
+
+  IS_RECENT: function({ eventDate }) {
+    return !!eventDate && moment(new Date()).add(-1, 'weeks').isBefore(moment(new Date(eventDate)));
   },
 };
 

@@ -153,7 +153,7 @@ Template.eventCheckinDetails.events({
 
     if (eventId === 'new') {
       const eventName = $('#eventName').val();
-      const eventDescription = $('#eventDescription').val();
+      const eventDescription = $('#eventName').val();
       const category = $('#categories').val();
       const eventDate = new Date($('#adHocEventDate').val());
 
