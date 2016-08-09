@@ -25,6 +25,10 @@ Geolocation.prototype.getCurrentLocation = function getCurrentLocation() {
 
     function error(err) {
       console.log(err);
+      resolve({
+        userLat: null,
+        userLng: null,
+      });
     }
 
     if (navigator.geolocation) {
