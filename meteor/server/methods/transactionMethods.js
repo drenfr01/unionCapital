@@ -57,6 +57,9 @@ Meteor.methods({
         userLat: attributes.userLat,
         userLng: attributes.userLng,
         imageId: attributes.imageId,
+        hoursSpent: attributes.hoursSpent,
+        pointsPerHour: 200,
+        isPointsPerHour: true,
       };
       attributes.partnerOrg = currentUser.primaryPartnerOrg();
 
@@ -72,6 +75,7 @@ Meteor.methods({
         'Cooking for an Event',
         'Donating clothing/goods',
       ];
+
       if (R.contains(attributes.category, oneHourMaxCategories)) {
         attributes.hoursSpent = Math.min(attributes.hoursSpent, 1);
       }
