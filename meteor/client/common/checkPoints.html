@@ -36,6 +36,14 @@
             <div class="panel-body">
               <p><b>Description: </b>{{event.description}}</p>
               <p>
+i	      <p>
+	      <b>Image:</b>
+                {{#if hasImage}} 
+		  <a href="image/{{imageId}}">View Image</a>
+                {{else}}
+                  No Image
+                {{/if}}
+              </p>
               <b>Addons:</b><br>
                   {{#each addons}}
                     {{name}} - <b>{{points}}</b>
