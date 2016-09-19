@@ -82,7 +82,17 @@ Template.timeAttendingPanel.helpers({
 
 Template.addonCheckboxPanel.helpers({
   addons: function() {
-    return Addons.find({display: true}); 
+    console.log(this);
+    //pre-listed event
+    let query = "";
+    if(this.category) {
+      query = {display: true, categoryWhitelist: { $in:[this.category] } }
+      return Addons.find(query); 
+    
+    } else { //selfie event
+      query = {display: true, categoryWhitelist: { $in:[AppConfig.selfieEvent] } }
+      return Addons.find(query); 
+    }
   },
 });
 

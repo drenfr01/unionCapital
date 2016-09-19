@@ -54,5 +54,7 @@ AppConfig = {
   feedbackType: {
     rating: "rating",
     comment: "comment"
-  }
+  },
+  selfieEvent: "Selfie",
+  prelistedEvent: "Prelisted"
 };
