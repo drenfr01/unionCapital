@@ -15,7 +15,7 @@ Template.createNewUser.helpers({
 Template.createNewUser.events({
   'click #back': function(e) {
     e.preventDefault();
-    Router.go('login');
+    Router.go('/');
   },
   'click #submit': function(e) {
     e.preventDefault();

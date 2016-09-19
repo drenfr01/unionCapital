@@ -27,7 +27,7 @@ Router.onBeforeAction(function() {
   if (Roles.userIsInRole(Meteor.userId(), ['user'])) {
     this.next();
   } else {
-    this.render('/');
+    this.redirect('/');
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for members
@@ -39,7 +39,7 @@ Router.onBeforeAction(function() {
   if (Roles.userIsInRole(Meteor.userId(), ['partnerAdmin', 'admin'])) {
     this.next();
   } else {
-    this.render('/');
+    this.redirect('/');
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for members
@@ -56,7 +56,7 @@ Router.onBeforeAction(function() {
   if (Roles.userIsInRole(Meteor.userId(), ['partnerAdmin'])) {
     this.next();
   } else {
-    this.render('/');
+    this.redirect('/');
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for members
@@ -68,7 +68,7 @@ Router.onBeforeAction(function() {
   if (Roles.userIsInRole(Meteor.userId(), ['admin'])) {
     this.next();
   } else {
-    this.render('/');
+    this.redirect('/');
   }
 },
   //NOTE: whitelist routes here, i.e. if you add a new route for superAdmins
@@ -275,7 +275,7 @@ Router.map(function() {
     } else if (Roles.userIsInRole(Meteor.userId(), ['admin'])) {
       this.render('adminHomePage');
     } else {
-      console.log('here');
+      this.render('landing');
     }
   });
 
