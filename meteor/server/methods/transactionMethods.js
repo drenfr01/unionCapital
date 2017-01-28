@@ -74,6 +74,9 @@ Meteor.methods({
         'Opening New Bank Account',
         'Cooking for an Event',
         'Donating clothing/goods',
+
+        // to cap points at 100 + partner event 100 = 200 total
+        'FII Monthly Meeting',
       ];
 
       if (R.contains(attributes.category, oneHourMaxCategories)) {
