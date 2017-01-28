@@ -77,7 +77,6 @@ const PERMISSION_RULES = {
   PARTNER_ADMIN: {
     $or: [{
       IS_RECOGNIZED_EVENT: true,
-      HAS_PHOTO: false,
     }, {
       IS_RECOGNIZED_EVENT: false,
       HAS_GEOLOCATION: true,
