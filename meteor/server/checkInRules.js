@@ -75,15 +75,13 @@ const PERMISSION_RULES = {
     IS_RECENT: true,
   },
   PARTNER_ADMIN: {
-    // never partner admin approve
-    TRUE: false,
     $or: [{
       IS_RECOGNIZED_EVENT: true,
+      HAS_PHOTO: false,
     }, {
       IS_RECOGNIZED_EVENT: false,
       HAS_GEOLOCATION: true,
       IS_RECOGNIZED_LOCATION: true,
-      SATISFIES_AUTO_SELFIE_RULES: true,
     }],
     IS_RECENT: true,
   },
