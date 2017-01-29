@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* global CheckInRules:true */
 /* global getApprovalType:true */
 /* global DecisionTree */
@@ -8,6 +9,7 @@
 /* global Transactions */
 /* global moment */
 /* global R */
+/* global testCheckIn:true */
 
 const options = {
   // Max distance for ad hoc event in km
@@ -62,9 +64,7 @@ const PERMISSION_RULES = {
       HAS_GEOLOCATION: true,
       IN_RANGE: true,
     }, {
-      IS_RECOGNIZED_EVENT: true,
-      HAS_PHOTO: true,
-    }, {
+      IS_RECOGNIZED_EVENT: false,
       SATISFIES_AUTO_SELFIE_RULES: true,
       $or: [{
         HAS_PHOTO: true,
@@ -78,13 +78,19 @@ const PERMISSION_RULES = {
     $or: [{
       IS_RECOGNIZED_EVENT: true,
     }, {
+      IS_RECOGNIZED_EVENT: false,
       HAS_GEOLOCATION: true,
       IS_RECOGNIZED_LOCATION: true,
     }],
     IS_RECENT: true,
   },
   SUPER_ADMIN: {
-    SATISFIES_ADMIN_SELFIE_RULES: true,
+    $or: [{
+      IS_RECOGNIZED_EVENT: false,
+      SATISFIES_ADMIN_SELFIE_RULES: true,
+    }, {
+      IS_RECOGNIZED_EVENT: true,
+    }],
   },
   NOT_ALLOWED: {
     TRUE: true,
@@ -202,6 +208,7 @@ const areAllRequirementsMetForDict = R.curry(function(attributes, requirementFun
 
 const chooseMostPermissive = R.curry(function(orderedPermissionLevels, permissionOutput) {
   return R.compose(
+    R.invoker(0, 'toLowerCase'),
     R.head,
     R.sortBy(permissionLevel => orderedPermissionLevels.indexOf(permissionLevel)),
     R.keys,
@@ -216,11 +223,12 @@ const checkForAnyValidPath = function(attributes, requirementFunctions, val) {
   )(val);
 };
 
+const getPermissionMap = (attributes, requirementFunctions) => R.map(areAllRequirementsMetForDict(attributes, requirementFunctions));
+
 function resolveCheckIn(attributes, orderedPermissionLevels, requirementFunctions, rules) {
   return R.compose(
-    R.invoker(0, 'toLowerCase'),
     chooseMostPermissive(orderedPermissionLevels),
-    R.map(areAllRequirementsMetForDict(attributes, requirementFunctions))
+    getPermissionMap(attributes, requirementFunctions)
   )(rules);
 }
 
@@ -243,28 +251,62 @@ getApprovalType = function getApprovalType(attributes) {
   return resolveCheckIn(attributes, ORDERED_PERMISSION_LEVELS, REQUREMENTS_FUNCTIONS, PERMISSION_RULES);
 };
 
-testCheckIn = function() {
-  //const attributes = {
-    //imageId: 'XrErBLNcYCb5bm3cB',
-    //eventId: 'jh4v9GAhvuBYvWGJ3',
-    //rules: ['OTHER'],
-  //};
+// auto approved for any successful geolocation
+function test1() {
   const attributes = {
     eventDescription: 'hello',
     hoursSpent: 1,
     eventId: 'jh4v9GAhvuBYvWGJ1',
-    rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
+    rules: ['LESS_THAN_OR_EQUAL_2_HOURS', 'ONE_MAX_ENTRY_PER_DAY', 'LESS_THAN_OR_EQUAL_4_HOURS'],
   };
-  //const testFuncs = {
-    //SATISFIES_RULES: () => false,
-    //HAS_PHOTO: () => true,
-    //IS_RECOGNIZED_EVENT: () => true,
-    //HAS_GEOLOCATION: () => false,
-    //IS_RECOGNIZED_LOCATION: () => true,
-    //IN_RANGE: () => true,
-    //IS_CURRENT_EVENT: () => true,
-    //TRUE: () => true,
-  //};
 
-  return resolveCheckIn(attributes, ORDERED_PERMISSION_LEVELS, REQUREMENTS_FUNCTIONS, PERMISSION_RULES);
+  const testFuncs = {
+    HAS_PHOTO: () => false,
+    IS_RECOGNIZED_EVENT: () => true,
+    IS_CURRENT_EVENT: () => true,
+    HAS_GEOLOCATION: () => true,
+    IS_RECOGNIZED_LOCATION: () => true,
+    IN_RANGE: () => true,
+    IS_RECENT: () => true,
+    SATISFIES_AUTO_SELFIE_RULES: () => false,
+    SATISFIES_ADMIN_SELFIE_RULES: () => false,
+    HAS_DESCRIPTION: () => true,
+    TRUE: () => true,
+  };
+  const result = resolveCheckIn(attributes, ORDERED_PERMISSION_LEVELS, testFuncs, PERMISSION_RULES);
+
+  console.log(result === 'auto' ? 'pass' : 'fail');
+}
+
+// admin approved for no geolocation
+function test2() {
+  const attributes = {
+    eventDescription: 'hello',
+    hoursSpent: 1,
+    eventId: 'jh4v9GAhvuBYvWGJ1',
+    rules: ['LESS_THAN_OR_EQUAL_2_HOURS', 'ONE_MAX_ENTRY_PER_DAY', 'LESS_THAN_OR_EQUAL_4_HOURS'],
+  };
+
+  const testFuncs = {
+    HAS_PHOTO: () => false,
+    IS_RECOGNIZED_EVENT: () => true,
+    IS_CURRENT_EVENT: () => true,
+    HAS_GEOLOCATION: () => false,
+    IS_RECOGNIZED_LOCATION: () => true,
+    IN_RANGE: () => true,
+    IS_RECENT: () => true,
+    SATISFIES_AUTO_SELFIE_RULES: () => false,
+    SATISFIES_ADMIN_SELFIE_RULES: () => true,
+    HAS_DESCRIPTION: () => true,
+    TRUE: () => true,
+  };
+  const result = resolveCheckIn(attributes, ORDERED_PERMISSION_LEVELS, testFuncs, PERMISSION_RULES);
+
+  console.log(result);
+  console.log(result === 'super_admin' ? 'pass' : 'fail');
+}
+
+testCheckIn = function() {
+  test1();
+  test2();
 };
