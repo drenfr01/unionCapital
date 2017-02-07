@@ -102,6 +102,10 @@ const categoriesBySuperCategory = {
         name: 'Farmers Market',
         rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
+      {
+        name: 'EBNHC - Asthma Management',
+        rules: ['SUPER_ADMIN_ONLY'],
+      },
     ],
   },
   'Finance': {
@@ -110,7 +114,7 @@ const categoriesBySuperCategory = {
     categories: [
       {
         name: 'FII Monthly Meeting',
-        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
+        rules: ['SUPER_ADMIN_ONLY'],
       },
       {
         name: 'Lending Circles Meeting',
@@ -192,7 +196,7 @@ const categoriesBySuperCategory = {
       },
       {
         name: 'OTHER: Type in Description',
-        rules: [],
+        rules: ['SUPER_ADMIN_ONLY'],
       },
     ],
   },

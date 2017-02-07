@@ -51,8 +51,8 @@ const CATEGORY_RULES_FUNCTIONS = {
     return count === 0;
   },
 
-  OTHER: function() {
-    return true;
+  SUPER_ADMIN_ONLY: function() {
+    return false
   },
 };
 
@@ -79,6 +79,7 @@ const PERMISSION_RULES = {
       IS_RECOGNIZED_EVENT: true,
     }, {
       IS_RECOGNIZED_EVENT: false,
+      SATISFIES_AUTO_SELFIE_RULES: true,
       HAS_GEOLOCATION: true,
       IS_RECOGNIZED_LOCATION: true,
     }],
@@ -109,14 +110,13 @@ const REQUREMENTS_FUNCTIONS = {
   TRUE: () => true,
 
   SATISFIES_AUTO_SELFIE_RULES: function(attributes) {
-    const autoRulesTrue = ['ONE_MAX_ENTRY_PER_DAY', 'LESS_THAN_OR_EQUAL_2_HOURS', 'LESS_THAN_OR_EQUAL_4_HOURS'];
+    const autoRulesTrue = ['ONE_MAX_ENTRY_PER_DAY', 'LESS_THAN_OR_EQUAL_2_HOURS', 'LESS_THAN_OR_EQUAL_4_HOURS', 'SUPER_ADMIN_ONLY'];
     return areSelfieRulesMet(autoRulesTrue, true, attributes);
   },
 
   SATISFIES_ADMIN_SELFIE_RULES: function(attributes) {
-    const adminRulesFalse = ['LESS_THAN_OR_EQUAL_2_HOURS', 'LESS_THAN_OR_EQUAL_4_HOURS'];
-    const adminRulesTrue = ['OTHER_CATEGORY'];
-    return areSelfieRulesMet(adminRulesFalse, false, attributes) && areSelfieRulesMet(adminRulesTrue, true, attributes);
+    const adminRulesFalse = ['LESS_THAN_OR_EQUAL_2_HOURS', 'LESS_THAN_OR_EQUAL_4_HOURS', 'SUPER_ADMIN_ONLY'];
+    return areSelfieRulesMet(adminRulesFalse, false, attributes);
   },
 
   HAS_PHOTO: function({ imageId }) {
@@ -128,7 +128,7 @@ const REQUREMENTS_FUNCTIONS = {
   },
 
   IS_RECOGNIZED_EVENT: function({ eventId }) {
-    return !!Events.findOne({ _id: eventId });
+    return eventId !== 'new' && !!Events.findOne({ _id: eventId });
   },
 
   HAS_GEOLOCATION: function({ userLat, userLng }) {
@@ -287,26 +287,26 @@ function test2() {
     rules: ['LESS_THAN_OR_EQUAL_2_HOURS', 'ONE_MAX_ENTRY_PER_DAY', 'LESS_THAN_OR_EQUAL_4_HOURS'],
   };
 
-  const testFuncs = {
-    HAS_PHOTO: () => false,
-    IS_RECOGNIZED_EVENT: () => true,
-    IS_CURRENT_EVENT: () => true,
-    HAS_GEOLOCATION: () => false,
-    IS_RECOGNIZED_LOCATION: () => true,
-    IN_RANGE: () => true,
-    IS_RECENT: () => true,
-    SATISFIES_AUTO_SELFIE_RULES: () => false,
-    SATISFIES_ADMIN_SELFIE_RULES: () => true,
-    HAS_DESCRIPTION: () => true,
-    TRUE: () => true,
-  };
-  const result = resolveCheckIn(attributes, ORDERED_PERMISSION_LEVELS, testFuncs, PERMISSION_RULES);
+  //const testFuncs = {
+    //HAS_PHOTO: () => false,
+    //IS_RECOGNIZED_EVENT: () => false,
+    //IS_CURRENT_EVENT: () => true,
+    //HAS_GEOLOCATION: () => false,
+    //IS_RECOGNIZED_LOCATION: () => false,
+    //IN_RANGE: () => false,
+    //IS_RECENT: () => true,
+    //SATISFIES_AUTO_SELFIE_RULES: () => false,
+    //SATISFIES_ADMIN_SELFIE_RULES: () => true,
+    //HAS_DESCRIPTION: () => false,
+    //TRUE: () => true,
+  //};
+  const result = resolveCheckIn(attributes, ORDERED_PERMISSION_LEVELS, REQUREMENTS_FUNCTIONS, PERMISSION_RULES);
 
   console.log(result);
-  console.log(result === 'super_admin' ? 'pass' : 'fail');
+  return result;
 }
 
 testCheckIn = function() {
-  test1();
+  //test1();
   test2();
 };
