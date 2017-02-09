@@ -52,11 +52,7 @@ GlobalHelpers = (function() {
     },
 
     eventPoints: function(trans) {
-      const sum = R.compose(
-        R.reduce((acc, value) => acc + value, 0),
-        R.map(R.prop('points')),
-        R.defaultTo([])
-      )(trans.addons);
+      const sum = 0;
 
       var event = trans.event;
       if(event && event.isPointsPerHour) {
