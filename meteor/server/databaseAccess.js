@@ -78,7 +78,8 @@ DB = {
 
       // Update the transaction to show approved
       // Adds the event id if non existed before
-      var setDoc = { $set: { approved: true, approvalDate: Date(),'event.points': points} };
+      var setDoc = { $set: { approved: true, approvalDate: Date(),
+        'event.points': points, 'event.isPointsPerHour': false} };
       DB.transactions.update(transactionId, setDoc);
     }
   },
