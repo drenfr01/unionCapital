@@ -94,11 +94,11 @@
             <tbody>
             {{#each pendingTransaction}}
               <tr>
-                <td><input type="checkbox" class="{{_id}}"
-                   {{isCheckboxDisabled}}>
+                <td>
+                  <input type="checkbox" class="{{_id}}" >
                 </td>
-                <td><input type="number" class="pointInput {{_id}}"  
-                        value="{{getPoints}}" {{isDisabled}}>
+                <td>
+                  <input type="number" class="pointInput {{_id}}" value="{{getPoints}}">
                 </td>
                 <td>{{firstName}} {{lastName}}</td>
                 <td><a class="eventName" data-toggle="modal" 

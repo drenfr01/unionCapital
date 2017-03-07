@@ -390,7 +390,8 @@ Meteor.startup(function () {
           'Financial Advisor Meeting','Opening New Bak Account','Tax Services','Volunteer: Organization',
           'Volunteer: Event','Volunteer: Helping Others','Performance/Festival','Workshop/Info Session',
           'Community Meeting','Leading/Teaching an Event/Workshop','Voter Registration/Engagement',
-          'Advocacy Event/Rally', 'Political Activity','Donating clothing/goods','OTHER: Type in Description'
+          'Advocacy Event/Rally', 'Political Activity','Donating clothing/goods','OTHER: Type in Description',
+          AppConfig.selfieEvent,
         ]
       },
       {
