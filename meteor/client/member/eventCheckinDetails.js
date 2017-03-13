@@ -82,7 +82,7 @@ Template.timeAttendingPanel.helpers({
 
 Template.addonCheckboxPanel.helpers({
   addons: function() {
-    //pre-listed event
+    //pre-listed eve
     if(this.category) {
       return Addons.find({
         display: true,
@@ -93,12 +93,10 @@ Template.addonCheckboxPanel.helpers({
       }); 
     }
       
-    //selfie event
+    //selfie eve
     return Addons.find({
       display: true,
-      categoryWhitelist: {
-        $in: [AppConfig.selfieEvent],
-      },
+      categoryWhitelist: AppConfig.selfieEvent,
     }); 
   },
 });
@@ -160,7 +158,7 @@ Template.eventCheckinDetails.events({
     }
   },
 
-  // Async, pass the checkin
+  // Async, pass the check
   'click .check-in': function(e) {
     e.preventDefault();
     const eventId = Router.current().params.id;

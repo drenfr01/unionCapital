@@ -2,31 +2,47 @@
   "dependencies": {
     "fast-csv": {
       "version": "0.5.3",
+      "resolved": "https://registry.npmjs.org/fast-csv/-/fast-csv-0.5.3.tgz",
+      "from": "fast-csv@0.5.3",
       "dependencies": {
-        "is-extended": {
-          "version": "0.0.10"
-        },
-        "object-extended": {
-          "version": "0.0.7",
+        "extended": {
+          "version": "0.0.6",
+          "resolved": "https://registry.npmjs.org/extended/-/extended-0.0.6.tgz",
+          "from": "extended@0.0.6",
           "dependencies": {
-            "array-extended": {
-              "version": "0.0.11",
+            "extender": {
+              "version": "0.0.10",
+              "resolved": "https://registry.npmjs.org/extender/-/extender-0.0.10.tgz",
+              "from": "extender@0.0.10",
               "dependencies": {
-                "arguments-extended": {
-                  "version": "0.0.3"
+                "declare.js": {
+                  "version": "0.0.8",
+                  "resolved": "https://registry.npmjs.org/declare.js/-/declare.js-0.0.8.tgz",
+                  "from": "declare.js@0.0.8"
                 }
               }
             }
           }
         },
-        "extended": {
-          "version": "0.0.6",
+        "is-extended": {
+          "version": "0.0.10",
+          "resolved": "https://registry.npmjs.org/is-extended/-/is-extended-0.0.10.tgz",
+          "from": "is-extended@0.0.10"
+        },
+        "object-extended": {
+          "version": "0.0.7",
+          "resolved": "https://registry.npmjs.org/object-extended/-/object-extended-0.0.7.tgz",
+          "from": "object-extended@0.0.7",
           "dependencies": {
-            "extender": {
-              "version": "0.0.10",
+            "array-extended": {
+              "version": "0.0.11",
+              "resolved": "https://registry.npmjs.org/array-extended/-/array-extended-0.0.11.tgz",
+              "from": "array-extended@0.0.11",
               "dependencies": {
-                "declare.js": {
-                  "version": "0.0.8"
+                "arguments-extended": {
+                  "version": "0.0.3",
+                  "resolved": "https://registry.npmjs.org/arguments-extended/-/arguments-extended-0.0.3.tgz",
+                  "from": "arguments-extended@0.0.3"
                 }
               }
             }
@@ -34,17 +50,25 @@
         },
         "string-extended": {
           "version": "0.0.8",
+          "resolved": "https://registry.npmjs.org/string-extended/-/string-extended-0.0.8.tgz",
+          "from": "string-extended@0.0.8",
           "dependencies": {
-            "date-extended": {
-              "version": "0.0.6"
-            },
             "array-extended": {
               "version": "0.0.11",
+              "resolved": "https://registry.npmjs.org/array-extended/-/array-extended-0.0.11.tgz",
+              "from": "array-extended@0.0.11",
               "dependencies": {
                 "arguments-extended": {
-                  "version": "0.0.3"
+                  "version": "0.0.3",
+                  "resolved": "https://registry.npmjs.org/arguments-extended/-/arguments-extended-0.0.3.tgz",
+                  "from": "arguments-extended@0.0.3"
                 }
               }
+            },
+            "date-extended": {
+              "version": "0.0.6",
+              "resolved": "https://registry.npmjs.org/date-extended/-/date-extended-0.0.6.tgz",
+              "from": "date-extended@0.0.6"
             }
           }
         }
@@ -52,17 +76,25 @@
     },
     "jszip": {
       "version": "2.4.0",
+      "resolved": "https://registry.npmjs.org/jszip/-/jszip-2.4.0.tgz",
+      "from": "jszip@2.4.0",
       "dependencies": {
         "pako": {
-          "version": "0.2.8"
+          "version": "0.2.8",
+          "resolved": "https://registry.npmjs.org/pako/-/pako-0.2.8.tgz",
+          "from": "pako@0.2.8"
         }
       }
     },
     "xmlbuilder": {
       "version": "2.4.4",
+      "resolved": "https://registry.npmjs.org/xmlbuilder/-/xmlbuilder-2.4.4.tgz",
+      "from": "xmlbuilder@2.4.4",
       "dependencies": {
         "lodash-node": {
-          "version": "2.4.1"
+          "version": "2.4.1",
+          "resolved": "https://registry.npmjs.org/lodash-node/-/lodash-node-2.4.1.tgz",
+          "from": "lodash-node@2.4.1"
         }
       }
     }

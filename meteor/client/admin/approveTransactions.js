@@ -1,26 +1,39 @@
 var selector = { approved: false, deleteInd: false };
 
+const approveTransaction = (transactionId, points) => {
+  return new Promise((resolve, reject) => {
+    Meteor.call('approveTransaction', transactionId, points, function(error) {
+      if(error) {
+        sAlert.error(`Unable to add ${transactionId} for ${points}: ${error.reason}`);
+        reject(error);
+      } else {
+        resolve();
+      }
+    });
+  });
+};
+
 Template.approveTransactions.rendered = function() {
   Session.setDefault('selectedPartnerOrg', 'admin_only');
   var self = this;
 
-  self.autorun(function() {
-    if(self.subscriptionsReady()) {
-      var listTransactions = {};
-      Transactions.find().forEach(function(trans) {
-        //all UCB events can be approved, selfie events need points
-        var canApprove = !GlobalHelpers.isSelfieEvent(trans);
-        listTransactions[trans._id] = {canApprove: canApprove};
-      });
-      self.transactionInstances.set(listTransactions);
-    }   
-  });
+  //self.autorun(function() {
+    //if(self.subscriptionsReady()) {
+      //var listTransactions = {};
+      //Transactions.find().forEach(function(trans) {
+        ////all UCB events can be approved, selfie events need points
+        //var canApprove = !GlobalHelpers.isSelfieEvent(trans);
+        //listTransactions[trans._id] = {canApprove: canApprove};
+      //});
+      //self.transactionInstances.set(listTransactions);
+    //}   
+  //});
 };
 
 Template.approveTransactions.onCreated(function() {
   this.subscribe('transactions', {approved: false});
   this.subscribe('partnerOrganizations');
-  this.transactionInstances = new ReactiveVar({});
+  //this.transactionInstances = new ReactiveVar({});
 
     var self = this;
     self.autorun(function() {
@@ -91,14 +104,10 @@ Template.approveTransactions.helpers({
     return this.event.description.substr(0,50);
   },
 
-  isDisabled: function() {
-    return GlobalHelpers.isSelfieEvent(this) ? "" : "disabled";
-  },
-
-  isCheckboxDisabled: function() {
-    return Template.instance().transactionInstances.get()[this._id].canApprove ? 
-        "" : "disabled";
-  }
+  //isCheckboxDisabled: function() {
+    //return Template.instance().transactionInstances.get()[this._id].canApprove ? 
+        //"" : "disabled";
+  //}
 
 });
 
@@ -133,20 +142,17 @@ Template.approveTransactions.events({
     //for each checked checkbox, send approvals
     //note: checkbox can only be checked if valid
     //number entered and we check server side as well
-    $('input[type="checkbox"]:checked').each(function() {
+    Promise.all($('input[type="checkbox"]:checked').map(function() {
       if($(this).attr('id') !== 'checkAll') {
-        let transactionId = $(this).attr('class');
-        let points = parseInt($(".pointInput." + transactionId).val());
-        Meteor.call('approveTransaction', transactionId, points, function(error) {
-          if(error) {
-            sAlert.error(error.reason);
-          } else {
-            console.log('approving!');
-            sAlert.success('Event submission approved');
-          }
-        });
+        const transactionId = $(this).attr('class');
+        const points = parseInt($(".pointInput." + transactionId).val());
+        return approveTransaction(transactionId, points);
       }
+      return Promise.resolve();
+    }).get()).then(() => {
+      sAlert.success('Event submissions approved');
     });
+
     $('#checkAll').prop('checked', false);
   },
 
@@ -162,21 +168,21 @@ Template.approveTransactions.events({
     $('.modal-backdrop').remove();
   },
 
-  'change .pointInput': _.debounce(function(e, template) {
-    var points = parseInt($(e.target).val());
-    //annoyingly NaN is a number, but it's not a
-    //finite number
-    if(_.isFinite(points)) {
-      let reactiveDict = template.transactionInstances.get();
-      reactiveDict[this._id].canApprove = true;
-      template.transactionInstances.set(reactiveDict);
-    } else {
-      let reactiveDict = template.transactionInstances.get();
-      reactiveDict[this._id].canApprove = false;
-      template.transactionInstances.set(reactiveDict);
-      sAlert.error('You must enter a valid, positive number');
-    }
-  }, 100),
+  //'change .pointInput': _.debounce(function(e, template) {
+    //var points = parseInt($(e.target).val());
+    ////annoyingly NaN is a number, but it's not a
+    ////finite number
+    //if(_.isFinite(points)) {
+      //let reactiveDict = template.transactionInstances.get();
+      //reactiveDict[this._id].canApprove = true;
+      //template.transactionInstances.set(reactiveDict);
+    //} else {
+      //let reactiveDict = template.transactionInstances.get();
+      //reactiveDict[this._id].canApprove = false;
+      //template.transactionInstances.set(reactiveDict);
+      //sAlert.error('You must enter a valid, positive number');
+    //}
+  //}, 100),
 
   'click #checkAll': function(e) {
     //if checkbox is checked, check all non-disabled checkboxes on page

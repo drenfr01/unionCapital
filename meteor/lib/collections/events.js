@@ -100,12 +100,13 @@ Events.attachSchema(new SimpleSchema({
   },
   privateEvent: {
     type: Boolean,
-    label:'Private Event?'
+    label:'Private Event?',
+    optional: true,
   },
   privateWhitelist: {
     type: [String],
     label: 'Who can see this event? Specify a user or Partner Org(s)',
-    optional: true
+    optional: true,
   },
 }));
 
