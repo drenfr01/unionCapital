@@ -24,6 +24,8 @@ Meteor.methods({
 
     // Determines whether this transaction requires approval
     attributes.rules = EventCategories.findOne({ name: attributes.category }).rules;
+    attributes.eventType = EventCategories.findOne(
+      { name: attributes.category }).eventType;
     attributes.approvalType = getApprovalType(attributes);
 
     // Only set it to approved if it is auto
@@ -60,6 +62,7 @@ Meteor.methods({
         hoursSpent: attributes.hoursSpent,
         pointsPerHour: 100,
         isPointsPerHour: true,
+        eventType: attributes.eventType
       };
       attributes.partnerOrg = currentUser.primaryPartnerOrg();
 

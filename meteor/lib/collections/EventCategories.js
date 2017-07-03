@@ -4,6 +4,9 @@
 
 EventCategories = new Meteor.Collection('eventCategories');
 
+//note: this is a re-used global, should re-factor it. 
+AppConfig = {selfieEvent: "Selfie"}
+
 EventCategories.attachSchema({
   name: {
     type: String,
@@ -33,36 +36,44 @@ const categoriesBySuperCategory = {
     version: 2,
     categories: [
       {
-        name: 'Reading/In-home learning with child',
-        rules: ['LESS_THAN_OR_EQUAL_2_HOURS','ONE_MAX_ENTRY_PER_DAY'],
-      },
-      {
-        name: 'In-school Meeting',
+        name: 'In-school Meeting, Event',
         rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
-        name: 'In-school Event',
+        name: 'In-school Volunteer, Chaperone',
         rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
-        name: 'In-school Volunteer',
+        name: 'Adult Education Class, Workshop',
         rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
-        name: 'Chaperone Field Trip/Sport Activity',
-        rules: ['LESS_THAN_OR_EQUAL_4_HOURS'],
-      },
-      {
-        name: 'Adult Education Class',
-        rules: ['LESS_THAN_OR_EQUAL_4_HOURS'],
-      },
-      {
-        name: 'Library/Education Center',
-        rules: ['LESS_THAN_OR_EQUAL_4_HOURS'],
+        name: 'Program at Library, Museum,Education Center',
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
         name: 'Early Childhood Playgroup',
-        rules: ['LESS_THAN_OR_EQUAL_4_HOURS'],
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
+      },
+      {
+        name: 'Reading/In-home learning with child',
+        eventType: AppConfig.selfieEvent,
+        rules: [],
+      },
+      {
+        name: 'Visiting Library, Museum (non-program)',
+        eventType: AppConfig.selfieEvent,
+        rules: [],
+      },
+      {
+        name: "Attending children's Sport Game, Activity",
+        eventType: AppConfig.selfieEvent,
+        rules: [],
+      },
+      {
+        name: 'Helping care for other children',
+        eventType: AppConfig.selfieEvent,
+        rules: [],
       },
     ],
   },
@@ -71,40 +82,36 @@ const categoriesBySuperCategory = {
     version: 2,
     categories: [
       {
-        name: 'Walking/In-home Exercise',
-        rules: ['ONE_MAX_ENTRY_PER_DAY'],
-      },
-      {
-        name: 'Running, Biking, Team Sport',
-        rules: ['ONE_MAX_ENTRY_PER_DAY'],
-      },
-      {
-        name: 'Gym/Fitness Center Exercise',
-        rules: ['ONE_MAX_ENTRY_PER_DAY'],
-      },
-      {
-        name: 'Health Center Appointment',
-        rules: ['ONE_MAX_ENTRY_PER_DAY'],
-      },
-      {
-        name: 'Hospital Visit',
-        rules: ['ONE_MAX_ENTRY_PER_DAY'],
+        name: 'Exercise program, event',
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS', 'ONE_MAX_ENTRY_PER_DAY'],
       },
       {
         name: 'Fitness Class',
-        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS', 'ONE_MAX_ENTRY_PER_DAY'],
       },
       {
         name: 'Health Workshop',
-        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS', 'ONE_MAX_ENTRY_PER_DAY'],
       },
       {
-        name: 'Farmers Market',
-        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
+        name: 'Walking, Running, Biking',
+        eventType: AppConfig.selfieEvent,
+        rules: [],
       },
       {
-        name: 'EBNHC - Asthma Management',
-        rules: ['SUPER_ADMIN_ONLY'],
+        name: 'Fitness Center Exercise',
+        eventType: AppConfig.selfieEvent,
+        rules: [],
+      },
+      {
+        name: 'Health Center Appointment',
+        eventType: AppConfig.selfieEvent,
+        rules: [],
+      },
+      {
+        name: 'Farmers Market, Food Cares, Fair Foods, Food Bank',
+        eventType: AppConfig.selfieEvent,
+        rules: [],
       },
     ],
   },
@@ -113,19 +120,15 @@ const categoriesBySuperCategory = {
     version: 2,
     categories: [
       {
-        name: 'FII Monthly Meeting',
+        name: 'Lending Circles, FII Meetings',
         rules: ['SUPER_ADMIN_ONLY'],
       },
       {
-        name: 'Lending Circles Meeting',
+        name: 'Financial Employment Workshops',
         rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
-        name: 'Financial Workshop',
-        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
-      },
-      {
-        name: 'Home Buying Workshop/Class',
+        name: 'Job Fairs',
         rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
@@ -134,11 +137,18 @@ const categoriesBySuperCategory = {
       },
       {
         name: 'Opening New Bank Account',
+        eventType: AppConfig.selfieEvent,
         rules: [],
       },
       {
         name: 'Tax Services',
-        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
+        eventType: AppConfig.selfieEvent,
+        rules: [],
+      },
+      {
+        name: 'FII Monthly Reports',
+        eventType: AppConfig.selfieEvent,
+        rules: [],
       },
     ],
   },
@@ -147,56 +157,47 @@ const categoriesBySuperCategory = {
     version: 2,
     categories: [
       {
-        name: 'Volunteer: Organization',
+        name: 'Volunteer: Organization, Event',
         rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
-        name: 'Volunteer: Event',
+        name: 'Volunteer: Helping Others (non-family)',
         rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
-        name: 'Volunteer: Helping Others',
+        name: 'Workshop, Info Session, Meeting',
         rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
-        name: 'Performance/Festival',
+        name: 'Voter Engagement, Registration',
         rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
-        name: 'Workshop/Info Session',
+        name: 'Political Activity: rally, advocacy, event',
         rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
-        name: 'Community Meeting',
-        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
+        name: 'Donating clothing, goods, food (100 points)',
+        rules: ['ONE_MAX_ENTRY_PER_DAY', 'LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
-        name: 'Leading/Teaching an Event/Workshop',
-        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
+        name: 'Attending a Performance, Festival',
+        rules: ['ONE_MAX_ENTRY_PER_DAY', 'LESS_THAN_OR_EQUAL_4_HOURS'],
       },
       {
-        name: 'Voter Registration/Engagement',
-        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
+        name: 'Attending extended-family celebrations',
+        eventType: AppConfig.selfieEvent,
+        rules: [],
       },
       {
-        name: 'Advocacy Event/Rally',
-        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
+        name: 'Service projects done in the home',
+        eventType: AppConfig.selfieEvent,
+        rules: [],
       },
       {
-        name: 'Political Activity',
-        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
-      },
-      {
-        name: 'Cooking for an Event',
-        rules: ['ONE_MAX_ENTRY_PER_DAY:'],
-      },
-      {
-        name: 'Donating clothing/goods',
-        rules: ['ONE_MAX_ENTRY_PER_DAY:'],
-      },
-      {
-        name: 'OTHER: Type in Description',
-        rules: ['SUPER_ADMIN_ONLY'],
+        name: 'Giving a ride to someone in need',
+        eventType: AppConfig.selfieEvent,
+        rules: [],
       },
     ],
   },

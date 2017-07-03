@@ -379,7 +379,7 @@ Meteor.startup(function () {
     var addons = [
       {
         name: 'UCB Button',
-        points: 50,
+        points: 0,
         display: true,
         categoryWhitelist: [
           'In-school Meeting','In-school Event','In-school Volunteer', 
