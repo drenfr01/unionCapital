@@ -120,7 +120,7 @@ const REQUREMENTS_FUNCTIONS = {
   },
 
   HAS_PHOTO: function({ imageId }) {
-    return !!Images.findOne({ _id: imageId });
+    return null;
   },
 
   HAS_DESCRIPTION: function({ eventDescription }) {

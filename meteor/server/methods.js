@@ -7,29 +7,13 @@
 
 Meteor.methods({
   removeImage: function(imageId) {
-    return Images.remove(imageId);
+    return null;
   },
   removeImagesByDate: function(imageDate) {
-    if (Roles.userIsInRole(this.userId, 'admin')) {
-      console.log("removing images");
-      Images.find().forEach(function(image) {
-        if(image.metadata.submissionTime < imageDate) {
-          console.log("Removed: " + image.metadata.submissionTime);
-          Images.remove(image._id, function() { console.log("removed"); });
-        } else {
-          console.log("Skipped: " + image.metadata.submissionTime);
-        }
-      });
-    } else {
-      throw new Meteor.Error("SECURITY_ERROR", "not allowed");
-    }
+    return null
   },
   removeAllImages: function() {
-    if (Roles.userIsInRole(this.userId, 'admin')) {
-      return Images.files.remove({});
-    } else {
-      throw new Meteor.Error("SECURITY_ERROR", "not allowed");
-    }
+    return null
   },
 
   createNewUser: function(attributes) {
@@ -338,3 +322,5 @@ Meteor.methods({
     return DB.calcPointsForUser(userId);
   }
 });
+
+console.log('method');
