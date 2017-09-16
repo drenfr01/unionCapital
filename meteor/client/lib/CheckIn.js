@@ -58,22 +58,21 @@ async function getValidatedAttributes(addons, event, hours, userId, geolocation,
 
 // -> Promise -> ?imageId
 function uploadUserPhotoIfExists(userPhoto) {
-  if (userPhoto.constructor !== UserPhoto) {
-    throw new Error('Invalid user photo object');
-  }
-
-  return new Promise(function(resolve, reject) {
-    if(userPhoto.photoURI.get()) {
-      userPhoto.insert(function(err, fileObj) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(fileObj._id);
-        }
-      });
-    } else {
-      resolve(null);
-    }
+  return new Promise(function (resolve, reject) {
+    var uploader = new Slingshot.Upload("unioncapitalprod");
+    uploader.send(userPhoto, function (error, downloadUrl) {
+      if (error) {
+        // Log service detailed response.
+        reject(err);
+      }
+      else {
+        resolve(Images.insert({
+          url: downloadUrl,
+          inserted: moment(),
+          userId: Meteor.userId()
+        }));
+      }
+    });
   });
 }
 
