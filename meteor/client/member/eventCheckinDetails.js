@@ -94,6 +94,7 @@ Template.addonCheckboxPanel.helpers({
     }
       
     //selfie eve
+    console.log(this);
     return Addons.find({
       display: true,
       categoryWhitelist: AppConfig.selfieEvent,
@@ -171,10 +172,13 @@ Template.eventCheckinDetails.events({
       const eventDescription = $('#eventName').val();
       const category = $('#categories').val();
       const eventDate = new Date($('#adHocEventDate').val());
+      const eventType = EventCategories.findOne({name: category}).eventType
 
-      event = new CheckInNewEvent(eventName, eventDescription, category, eventDate);
+      event = new CheckInNewEvent(
+        eventName, eventDescription, category, eventDate, eventType);
 
       isValid = validateNewEventForms();
+      debugger
     } else {
       event = new CheckInExistingEvent(eventId);
     }

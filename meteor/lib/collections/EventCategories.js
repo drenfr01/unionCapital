@@ -20,6 +20,11 @@ EventCategories.attachSchema({
     type: [String],
     label: 'Rules',
   },
+  eventType: {
+    type: String,
+    label: 'Whether it is a selfie event or not',
+    optional: true
+  },
   version: {
     type: Number,
     label: 'Version',
@@ -283,6 +288,7 @@ getInitialCategoryData = function getInitialCategoryData() {
   return R.compose(
     R.flatten,
     R.values,
-    R.mapObjIndexed(({ version, categories }, superCategoryName) => R.map(cat => ({ superCategoryName, version, ...cat, deleteInd: false }), categories))
+    R.mapObjIndexed(({ version, categories }, superCategoryName) => R.map(cat => ({ superCategoryName, version, ...cat, 
+                                                                                  eventType: cat.eventType,deleteInd: false }), categories))
   )(categoriesBySuperCategory);
 };

@@ -24,14 +24,6 @@ Template.checkPoints.helpers({
     title: 'Events waiting for approval'
     };
   },
-  eventName: function(){
-    var event = this.event;
-    if(event) {
-      return event.name;
-    } else {
-      return "";
-    }
-  },
   totalPoints: function() {
     return Meteor.users.totalPointsFor(this._id);
   },
@@ -85,9 +77,20 @@ Template.pointTemplate.helpers({
     return this.imageId ? true : false;
   },
 
+  eventName: function(){
+    var event = this.event;
+    console.log(event);
+    if(event._id) {
+      return "You earned points for: " + event.name;
+    } else if (event.eventType == AppConfig.selfieEvent){
+      return "You earned a selfie star for: " + event.category;
+    } else {
+      return "You earned points for: "  + event.category;
+    }
+  },
 });
 
-//some selfies don't have the adhoc flag for some reason... 
+//TODO: selfies do not have an adhoc flag, only pre-listed events
 function adhocStatus(event) {
   return _.isBoolean(event.adHoc) ? this.event.adHoc : true;
 }

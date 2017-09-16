@@ -14,6 +14,7 @@ Meteor.methods({
       eventName: Match.Optional(String),
       eventDescription: Match.Optional(String),
       eventDate: Match.Optional(Date),
+      eventType: Match.Optional(String),
       category: Match.Optional(String),
       userLat: Match.Optional(Number),
       userLng: Match.Optional(Number),
@@ -21,11 +22,10 @@ Meteor.methods({
     });
 
     const currentUser = Meteor.user();
+    console.log(attributes);
 
     // Determines whether this transaction requires approval
     attributes.rules = EventCategories.findOne({ name: attributes.category }).rules;
-    attributes.eventType = EventCategories.findOne(
-      { name: attributes.category }).eventType;
     attributes.approvalType = getApprovalType(attributes);
 
     // Only set it to approved if it is auto
