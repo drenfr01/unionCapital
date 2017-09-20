@@ -382,15 +382,6 @@ Meteor.startup(function () {
         points: 0,
         display: true,
         categoryWhitelist: [
-          'In-school Meeting','In-school Event','In-school Volunteer', 
-          'Chaperone Field Trip/Sport Activity', 'Adult Education Class', 'Library/Education Center',
-          'Early Childhood Playgroup', 'Running, Biking, Team Sport', 'Gym/Fitness Center Exercise',
-          'Health Center Appointment','Hospital Visit','Fitness Class','Health Workshop','Farmers Market',
-          'FII Monthly Meeting','Lending Circles Meeting','Financial Workshop','Home Buying Workshop/Class',
-          'Financial Advisor Meeting','Opening New Bak Account','Tax Services','Volunteer: Organization',
-          'Volunteer: Event','Volunteer: Helping Others','Performance/Festival','Workshop/Info Session',
-          'Community Meeting','Leading/Teaching an Event/Workshop','Voter Registration/Engagement',
-          'Advocacy Event/Rally', 'Political Activity','Donating clothing/goods','OTHER: Type in Description',
           AppConfig.selfieEvent,
         ]
       },
@@ -402,7 +393,7 @@ Meteor.startup(function () {
       {
         name: 'Partner Organization Event',
         points: 200,
-        display: true
+        display: false
       }
     ];
 

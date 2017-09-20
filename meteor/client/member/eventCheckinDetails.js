@@ -86,15 +86,11 @@ Template.addonCheckboxPanel.helpers({
     if(this.category) {
       return Addons.find({
         display: true,
-        categoryWhitelist: {
-          $in:[this.category],
-        },
         name: { $ne: 'Partner Organization Event' },
       }); 
     }
       
     //selfie eve
-    console.log(this);
     return Addons.find({
       display: true,
       categoryWhitelist: AppConfig.selfieEvent,
