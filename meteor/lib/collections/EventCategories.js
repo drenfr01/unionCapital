@@ -61,7 +61,7 @@ const categoriesBySuperCategory = {
         rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
-        name: 'Reading/In-home learning with child',
+        name: 'Reading with child',
         eventType: AppConfig.selfieEvent,
         rules: [],
       },

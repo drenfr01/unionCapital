@@ -66,25 +66,6 @@ Meteor.methods({
       };
       attributes.partnerOrg = currentUser.primaryPartnerOrg();
 
-      // handle 1 hour max
-      const oneHourMaxCategories = [
-        'Reading/In-home learning with child',
-        'Walking/In-home Exercise',
-        'Running, Biking, Team Sport',
-        'Gym/Fitness Center Exercise',
-        'Health Center Appointment',
-        'Hospital Visit',
-        'Opening New Bank Account',
-        'Cooking for an Event',
-        'Donating clothing/goods',
-
-        // to cap points at 100 + partner event 100 = 200 total
-        'FII Monthly Meeting',
-      ];
-
-      if (R.contains(attributes.category, oneHourMaxCategories)) {
-        attributes.hoursSpent = Math.min(attributes.hoursSpent, 1);
-      }
     }
 
     var duplicateTransaction = Transactions.findOne({
