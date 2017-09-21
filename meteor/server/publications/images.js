@@ -1,4 +1,4 @@
-Slingshot.createDirective("myFileUploads", Slingshot.S3Storage, {
+Slingshot.createDirective("uploadUserPhoto", Slingshot.S3Storage, {
   bucket: "unioncapitalprod",
 
   acl: "public-read",
@@ -14,6 +14,10 @@ Slingshot.createDirective("myFileUploads", Slingshot.S3Storage, {
   },
 
   key: function (file) {
-    return Meteor.settings.zcenv + "/" + file.name;
+    return Meteor.settings.env + "/" + file.name;
   }
+});
+
+Meteor.publish("images", function() {
+  return Images.find();
 });

@@ -59,20 +59,36 @@ async function getValidatedAttributes(addons, event, hours, userId, geolocation,
 // -> Promise -> ?imageId
 function uploadUserPhotoIfExists(userPhoto) {
   return new Promise(function (resolve, reject) {
-    var uploader = new Slingshot.Upload("unioncapitalprod");
-    uploader.send(userPhoto, function (error, downloadUrl) {
-      if (error) {
-        // Log service detailed response.
-        reject(err);
+    if(userPhoto) {
+      attributes = {
+        inserted: moment().format(),
+        userId: Meteor.userId()
       }
-      else {
-        resolve(Images.insert({
-          url: downloadUrl,
-          inserted: moment(),
-          userId: Meteor.userId()
-        }));
-      }
-    });
+
+      imageId = null;
+
+      Meteor.call( 'insertImage', attributes, function(err, id) {
+        if (err) {
+          reject(err);
+        } else {
+console.log(userPhoto)
+          userPhoto = new File([userPhoto], id, { type: userPhoto.type });
+console.log(userPhoto)
+          var uploader = new Slingshot.Upload("uploadUserPhoto");
+          uploader.send(userPhoto, function (error, downloadUrl) {
+            if (error) {
+              reject(err);
+            }
+            else {
+              Meteor.call('updateImageWithUrl', {imageId: id, imageUrl: downloadUrl});
+              resolve();
+            }
+          });
+        }
+      });
+    }
+    // No photo, just resolve
+    resolve();
   });
 }
 
@@ -103,7 +119,7 @@ CheckInNewEvent = function(eventName, eventDescription, category, eventDate) {
 CheckIn = function(defaultHours) {
   this.hours = new ReactiveVar(defaultHours);
   this.checkingIn = new ReactiveVar(false);
-  this.userPhoto = new UserPhoto();
+  this.userPhoto = null;
   this.geolocation = new Geolocation();
   this.superCategory = new ReactiveVar(null);
   this.event = null;
@@ -153,22 +169,22 @@ CheckIn.prototype.setEvent = function(event) {
 
 // Gets the base64 photo URI
 CheckIn.prototype.getPhoto = function() {
-  return this.userPhoto.photoURI.get();
+  return this.userPhoto;
 };
 
 // Pops up the takephoto modal
-CheckIn.prototype.takePhoto = function() {
-  return this.userPhoto.takePhoto();
-};
+// CheckIn.prototype.takePhoto = function() {
+//   return this.userPhoto.takePhoto();
+// };
 
 // Manually set the photo URI
-CheckIn.prototype.setPhoto = function(inputElement) {
-  return this.userPhoto.setPhotoURI(inputElement);
-};
+// CheckIn.prototype.setPhoto = function(inputElement) {
+//   return this.userPhoto.setPhotoURI(inputElement);
+// };
 
 // Removes the photo
 CheckIn.prototype.removePhoto = function() {
-  this.userPhoto.remove();
+  this.userPhoto = null;
 };
 
 CheckIn.prototype.getAvailableSuperCategoriesWithIcons = function getAvailableSuperCategories() {
