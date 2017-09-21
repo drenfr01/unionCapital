@@ -432,4 +432,10 @@ Meteor.startup(function () {
   if(PointLevels.find().count() === 0) {
     R.map((pointLevel) => PointLevels.insert(pointLevel), pointLevels); 
   }
+  //Hide collections from Houston
+  Houston.hide_collection(Feedback);
+  Houston.hide_collection(Events);
+  Houston.hide_collection(Transactions);
+  Houston.hide_collection(Reservations);
+  Houston.hide_collection("cfs._tempstore.chunks");
 });
