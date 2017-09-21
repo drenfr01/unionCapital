@@ -48,10 +48,13 @@
       <div class="panel-body">
         <table>
           <tr>
-            <td><i>{{{ description }}}</i></td>
+            <td><b>Event Description: </b>{{{ description }}}</td>
           </tr>
           <tr>
-            <td><b>{{ formattedDateRange eventDate duration }}</b></td>
+            <td><b>Event Date: </b>{{ formattedDateRange eventDate duration }}</td>
+          </tr>
+          <tr>
+            <td><b>Address: </b>{{ address }}</td>
           </tr>
         </table>
         <button type="button" class="btn check-in-button btn-block accordion-button btn-primary" id="{{_id}}">Check In</button>
