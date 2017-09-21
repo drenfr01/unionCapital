@@ -84,7 +84,7 @@
                 <th>User Name</th>
                 <th>Event Name</th>
                 <th>Event Date</th>
-                <th>Event Submission Date</th>
+                <th>Category</th>
                 <th>Time Spent (hours)</th>
                 <th>Addons</th>
                 <th></th>
@@ -107,7 +107,7 @@
                   </a>
                 </td>
                 <td>{{formatDate eventDate}}</td>
-                <td>{{formatDate transactionDate}} </td>
+                <td>{{event.category}}</td>
                 <td>{{hoursSpent}}</td>
                 <td>
                   {{#each addons}}

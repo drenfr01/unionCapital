@@ -59,8 +59,9 @@ Template.addEvents.helpers({
 
   institutions: function() {
     if(Roles.userIsInRole(Meteor.userId(), "admin")) {
-      return PartnerOrgs.find().map(function(institution) {
-        return {label: institution.name, value: institution.name};
+      return PartnerOrgs.find({}, {sort: {name: 1}}).map(
+        function(institution) {
+          return {label: institution.name, value: institution.name};
       });
     }
 

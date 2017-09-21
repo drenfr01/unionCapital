@@ -55,7 +55,9 @@ GlobalHelpers = (function() {
       const sum = 0;
 
       var event = trans.event;
-      if(event && event.isPointsPerHour) {
+      if(event && event.eventType == AppConfig.selfieEvent) {
+        return sum;
+      } else if(event && event.isPointsPerHour) {
         return sum + Math.round(event.pointsPerHour * trans.hoursSpent) || '?';
       } else if (event && event.points){
         return sum + event.points;

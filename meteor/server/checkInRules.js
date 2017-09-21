@@ -241,6 +241,7 @@ getApprovalType = function getApprovalType(attributes) {
     eventName: Match.Optional(String),
     eventDescription: Match.Optional(String),
     eventDate: Match.Optional(Date),
+    eventType: Match.Optional(String),
     category: Match.Optional(String),
     userLat: Match.Optional(Number),
     userLng: Match.Optional(Number),

@@ -44,6 +44,7 @@ async function getValidatedAttributes(addons, event, hours, userId, geolocation,
       eventName: Match.Maybe(String),
       eventDescription: Match.Maybe(String),
       eventDate: Match.Maybe(Date),
+      eventType: Match.Maybe(String),
       category: Match.Maybe(String),
       userLat: Match.Maybe(Number),
       userLng: Match.Maybe(Number),
@@ -88,17 +89,20 @@ CheckInExistingEvent = function(eventId) {
   this.eventDate = eventDate;
 };
 
-CheckInNewEvent = function(eventName, eventDescription, category, eventDate) {
+CheckInNewEvent = function(eventName, eventDescription, category, eventDate, 
+                           eventType) {
   check(eventName, String);
   check(eventDescription, Match.Maybe(String));
   check(category, String);
   check(eventDate, Date);
+  check(eventType, Match.Maybe(String));
 
   this.eventId = 'new'
   this.eventName = eventName;
   this.eventDescription = eventDescription;
   this.category = category;
   this.eventDate = eventDate;
+  this.eventType = eventType;
 };
 
 CheckIn = function(defaultHours) {
@@ -124,6 +128,7 @@ CheckIn.prototype.submitCheckIn = async function submitCheckIn() {
     const userId = Meteor.userId();
     const imageId = await uploadUserPhotoIfExists(userPhoto);
     const attributes = await getValidatedAttributes(addons, event, hours, userId, geolocation, imageId);
+    debugger
     const approvalType = await callInsert(attributes);
 
     this.checkingIn.set(false);

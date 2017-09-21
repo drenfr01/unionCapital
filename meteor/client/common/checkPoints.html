@@ -24,9 +24,9 @@
         <div class="panel panel-default ">
           <div class="panel-heading {{rowBackgroundClass}}" role="tab" id="heading{{_id}}">
             <div class="header-container text-center">
-              <div class="eventTime">{{formatDate transactionDate}}</div>
+              <div class="eventTime">{{formatDate event.eventDate}}</div>
               <div class="eventName">
-                <a data-toggle="collapse" href="#{{_id}}" aria-expanded="true" aria-controls="{{_id}}" id="link{{_id}}" class="block-link">{{{event.name}}}</a>
+                <a data-toggle="collapse" href="#{{_id}}" aria-expanded="true" aria-controls="{{_id}}" id="link{{_id}}" class="block-link">{{ eventName }}</a>
               </div>
               <div class="eventTime">{{eventPoints}}</div>
             </div>
@@ -35,8 +35,11 @@
                                                             aria-labelledby="heading{{_id}}">
             <div class="panel-body">
               <p><b>Description: </b>{{event.description}}</p>
+              <p><b>Category: </b>{{event.category}}</p>
+              <p><b>Event Date: </b>{{formatDate event.eventDate}}</p>
+              <p><b>Submitted On: </b>{{formatDate transactionDate}}</p>
               <p>
-i	      <p>
+	      <p>
 	      <b>Image:</b>
                 {{#if hasImage}} 
 		  <a href="image/{{imageId}}">View Image</a>
