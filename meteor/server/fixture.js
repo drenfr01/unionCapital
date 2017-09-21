@@ -437,5 +437,4 @@ Meteor.startup(function () {
   Houston.hide_collection(Events);
   Houston.hide_collection(Transactions);
   Houston.hide_collection(Reservations);
-  Houston.hide_collection("cfs._tempstore.chunks");
 });
