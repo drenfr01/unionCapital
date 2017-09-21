@@ -12,7 +12,7 @@ Template.collectUserDemographics.onCreated(function() {
 
 Template.collectUserDemographics.helpers({
   organizations: function() {
-    return PartnerOrgs.find();
+    return PartnerOrgs.find({}, {sort: {name: 1}});
   },
   incomeBrackets: function() {
     return IncomeBrackets.find();
@@ -24,7 +24,7 @@ Template.collectUserDemographics.helpers({
     return Races.find();
   },
   partnerOrgs: function(e) {
-    return PartnerOrganizations.find(); 
+    return PartnerOrganizations.find({}, {sort: {name: 1}}); 
   },
 });
 
