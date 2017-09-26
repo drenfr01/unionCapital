@@ -34,7 +34,7 @@ AppConfig = {
       // how many days to look into the future
       hoursAhead: 6*7*24,
       // how many days to look into the future
-      hoursBehind: 0
+      hoursBehind: -24
     },
     past: {
       // how many days to look into the future

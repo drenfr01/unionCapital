@@ -122,7 +122,6 @@ Template.eventsCalendar.events({
   },
 
   'change #startDate': function(e) {
-    console.log($('#startDate').val());
     const startDate = $('#startDate').val()
     if(startDate) {
       Template.instance().startDate.set(startDate); 
