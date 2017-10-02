@@ -71,9 +71,9 @@ function uploadUserPhotoIfExists(userPhoto) {
         if (err) {
           reject(err);
         } else {
-console.log(userPhoto)
+
           userPhoto = new File([userPhoto], id, { type: userPhoto.type });
-console.log(userPhoto)
+
           var uploader = new Slingshot.Upload("uploadUserPhoto");
           uploader.send(userPhoto, function (error, downloadUrl) {
             if (error) {
