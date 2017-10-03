@@ -4,19 +4,23 @@ Template.imageViewer.rendered = function() {
 
 Template.imageViewer.onCreated(function() {
   this.subscribe('images');
+  this.subscribe('allUsers');
 });
 
 Template.imageViewer.helpers({
   'images': function() {
-    var userImages = Images.find().fetch();
+    // This needs pagination or it will try to return the whole images collection over time
+    var userImages = Images.find({}, {sort: {inserted: -1 }}).fetch();
+
 
     var fields = ['profile.firstName', 'profile.lastName', 'profile.partnerOrg'];
-    // var userImages = Images.userMatches({ searchText: Session.get('searchString'), searchFields: fields, idField: 'userImage.metadata.userId' });
 
     //keeping reactivity by using function
     var users = _.map(userImages, function(userImage) {
       // Find a user that meets the searchText
-      var user = Meteor.users.searchForOne({ _id: userImage.metadata.userId }, Session.get('searchString'), fields);
+      var user = Meteor.users.findOne({ _id: userImage.userId })
+      // TODO: I know I am breaking the searching here, but searchForOne is only used here and is giving me trouble
+      //, Session.get('searchString'), fields);
 
       if (!user) return;
 
@@ -24,21 +28,16 @@ Template.imageViewer.helpers({
       _.extend(user, {
         _id: userImage._id,
         imageId: userImage._id,
-        submissionTime: userImage.metadata.submissionTime
+        imageUrl: userImage.imageUrl,
+        submissionTime: userImage.inserted,
       });
 
       return user;
     });
-
+console.log(users);
     // Remove all nulls from the map process
     users = _.filter(users, function(user) { return _.isObject(user);});
     return _.isEmpty(users) ? null : users;
-  },
-
-  'imageUrl': function(imageId) {
-    if(Images.findOne(imageId)) {
-      return Images.findOne(imageId).url();
-    }
   },
 
   'modalData': function() {

@@ -11,3 +11,4 @@ screenshots/
 *.swo
 mongorestore.sh
 node_modules/
+meteor/dump

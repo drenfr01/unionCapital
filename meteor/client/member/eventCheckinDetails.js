@@ -87,14 +87,14 @@ Template.addonCheckboxPanel.helpers({
       return Addons.find({
         display: true,
         name: { $ne: 'Partner Organization Event' },
-      }); 
+      });
     }
-      
+
     //selfie eve
     return Addons.find({
       display: true,
       categoryWhitelist: AppConfig.selfieEvent,
-    }); 
+    });
   },
 });
 
@@ -149,9 +149,9 @@ Template.eventCheckinDetails.events({
     var input = $('#upPhoto')[0];
 
     if (input.files && input.files[0]) {
-      checkIn.setPhoto(input.files[0]);
+      checkIn.userPhoto = input.files[0];
     } else {
-      checkIn.removePhoto();
+      checkIn.userPhoto = null;
     }
   },
 

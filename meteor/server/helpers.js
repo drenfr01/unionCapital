@@ -19,14 +19,14 @@ ServerHelpers = (function() {
   return {
     partnerAdminScope: function(userId) {
       var partnerAdmin = Meteor.users.findOne({_id: userId});
-      
+
       //TODO: This will perform horribly at scale. Please refactor....
-      var users = Meteor.users.find({"profile.partnerOrg": {$in: partnerAdmin.primaryPartnerOrg()}}, 
+      var users = Meteor.users.find({"profile.partnerOrg": {$in: partnerAdmin.primaryPartnerOrg()}},
                                     {fields: {_id: 1}}).fetch();
       var usersArray = _.map(users, function(user) {
         return user._id;
       });
-      var events = Events.find({institution: partnerAdmin.primaryPartnerOrg()}, 
+      var events = Events.find({institution: partnerAdmin.primaryPartnerOrg()},
                                {fields: {_id: 1}}).fetch();
       var eventsArray = _.map(events, function(event) {
         return event._id;
@@ -39,5 +39,3 @@ ServerHelpers = (function() {
     }
   };
 }());
-  
-
