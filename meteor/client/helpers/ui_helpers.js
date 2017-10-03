@@ -29,7 +29,7 @@ UI.registerHelper('formatDate', function(unformattedDate) {
 
 UI.registerHelper('formatJustDate', function(unformattedDate) {
     if(moment(unformattedDate).isValid()) {
-      return DSTCorrectedTime(unformattedDate).format('MMMM DD');
+      return DSTCorrectedTime(unformattedDate).format('MMM DD');
     } else {
       return "";
     }
