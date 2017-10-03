@@ -38,7 +38,7 @@ const CATEGORY_RULES_FUNCTIONS = {
 
   ONE_MAX_ENTRY_PER_DAY: function({ userId, category, transactionDate }) {
     const earliestDate = moment(transactionDate).startOf('day').toDate();
-    const latestDate = moment(transactionDate).endOf('day').toDate();
+    const latestDate = moment(transactionDate).endOf('year').toDate();
     const count = Transactions.find({
       userId,
       'event.category': category,

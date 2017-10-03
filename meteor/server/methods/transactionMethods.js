@@ -70,6 +70,7 @@ Meteor.methods({
 
     var duplicateTransaction = Transactions.findOne({
       userId: currentUser._id,
+      'event.category': attributes.category,
       'event.name': attributes.eventName,
       'event.description': attributes.eventDescription,
       'event.eventDate': attributes.eventDate
