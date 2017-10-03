@@ -27,6 +27,14 @@ UI.registerHelper('formatDate', function(unformattedDate) {
     }
 });
 
+UI.registerHelper('formatJustDate', function(unformattedDate) {
+    if(moment(unformattedDate).isValid()) {
+      return DSTCorrectedTime(unformattedDate).format('MMMM DD');
+    } else {
+      return "";
+    }
+});
+
 UI.registerHelper('formatPrettyDate', function(unformattedDate) {
     if(moment(unformattedDate).isValid()) {
       return DSTCorrectedTime(unformattedDate).format('dddd, MMMM Do');
