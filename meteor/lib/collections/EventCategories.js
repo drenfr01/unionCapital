@@ -53,7 +53,7 @@ const categoriesBySuperCategory = {
         rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
-        name: 'Program at Library, Museum,Education Center',
+        name: 'Chaperone Field Trip/Sport Activity',
         rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
@@ -63,7 +63,7 @@ const categoriesBySuperCategory = {
       {
         name: 'Reading with child',
         eventType: AppConfig.selfieEvent,
-        rules: [],
+        rules: ['ONE_MAX_ENTRY_PER_DAY'],
       },
       {
         name: 'Visiting Library, Museum (non-program)',
@@ -88,20 +88,20 @@ const categoriesBySuperCategory = {
     categories: [
       {
         name: 'Exercise program, event',
-        rules: ['LESS_THAN_OR_EQUAL_2_HOURS', 'ONE_MAX_ENTRY_PER_DAY'],
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
         name: 'Fitness Class',
-        rules: ['LESS_THAN_OR_EQUAL_2_HOURS', 'ONE_MAX_ENTRY_PER_DAY'],
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
         name: 'Health Workshop',
-        rules: ['LESS_THAN_OR_EQUAL_2_HOURS', 'ONE_MAX_ENTRY_PER_DAY'],
+        rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
         name: 'Walking, Running, Biking',
         eventType: AppConfig.selfieEvent,
-        rules: [],
+        rules: ['ONE_MAX_ENTRY_PER_DAY'],
       },
       {
         name: 'Fitness Center Exercise',
@@ -111,7 +111,7 @@ const categoriesBySuperCategory = {
       {
         name: 'Health Center Appointment',
         eventType: AppConfig.selfieEvent,
-        rules: [],
+        rules: ['ONE_MAX_ENTRY_PER_DAY'],
       },
       {
         name: 'Farmers Market, Food Cares, Fair Foods, Food Bank',
@@ -129,7 +129,7 @@ const categoriesBySuperCategory = {
         rules: ['SUPER_ADMIN_ONLY'],
       },
       {
-        name: 'Financial Employment Workshops',
+        name: 'Financial, Employment Workshops',
         rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
@@ -191,12 +191,12 @@ const categoriesBySuperCategory = {
       },
       {
         name: 'Attending a Performance, Festival',
-        rules: ['ONE_MAX_ENTRY_PER_DAY', 'LESS_THAN_OR_EQUAL_4_HOURS'],
+        rules: ['LESS_THAN_OR_EQUAL_4_HOURS'],
       },
       {
         name: 'Attending extended-family celebrations',
         eventType: AppConfig.selfieEvent,
-        rules: [],
+        rules: ['ONE_MAX_ENTRY_PER_DAY'],
       },
       {
         name: 'Service projects done in the home',
