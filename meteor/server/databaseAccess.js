@@ -100,6 +100,8 @@ DB = {
       var event = transaction.event;
       if(event && event.eventType === AppConfig.selfieEvent) {
         sum += 0;
+      } else if(event && event.eventType == AppConfig.event100Points) {
+        sum += 100; 
       } else if(event && event.isPointsPerHour) {
         var val = Math.round(event.pointsPerHour * transaction.hoursSpent);
         sum += isNaN(val) ? 0 : val;

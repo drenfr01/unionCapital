@@ -56,5 +56,9 @@ AppConfig = {
     comment: "comment"
   },
   selfieEvent: "Selfie",
-  prelistedEvent: "Prelisted"
+  prelistedEvent: "Prelisted",
+  //this below is a complete hack, but re-writing how we 
+  //handle fixed point events that are selfie submissions
+  //is a huge undertaking
+  event100Points: "Event 100 points"
 };

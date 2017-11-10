@@ -174,7 +174,6 @@ Template.eventCheckinDetails.events({
         eventName, eventDescription, category, eventDate, eventType);
 
       isValid = validateNewEventForms();
-      debugger
     } else {
       event = new CheckInExistingEvent(eventId);
     }
