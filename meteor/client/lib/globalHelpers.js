@@ -53,10 +53,14 @@ GlobalHelpers = (function() {
 
     eventPoints: function(trans) {
       const sum = 0;
-
+      console.log(trans);
       var event = trans.event;
+      //TODO: this should be factored because the same logic is duplicated 
+      //in databaseAccess.js 
       if(event && event.eventType == AppConfig.selfieEvent) {
         return '*';
+      } else if(event && event.eventType == AppConfig.event100Points) {
+        return sum + 100;
       } else if(event && event.isPointsPerHour) {
         return sum + Math.round(event.pointsPerHour * trans.hoursSpent) || '?';
       } else if (event && event.points){

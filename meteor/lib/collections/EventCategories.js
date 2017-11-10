@@ -5,7 +5,7 @@
 EventCategories = new Meteor.Collection('eventCategories');
 
 //note: this is a re-used global, should re-factor it. 
-AppConfig = {selfieEvent: "Selfie"}
+AppConfig = {selfieEvent: "Selfie", event100Points: "Event 100 points"}
 
 EventCategories.attachSchema({
   name: {
@@ -183,7 +183,11 @@ const categoriesBySuperCategory = {
       },
       {
         name: 'Donating clothing, goods, food (100 points)',
-        rules: ['ONE_MAX_ENTRY_PER_DAY', 'LESS_THAN_OR_EQUAL_2_HOURS'],
+        rules: ['ONE_MAX_ENTRY_PER_DAY'],
+        eventType: AppConfig.event100Points
+        //this just means this event will also be worth 100 points
+        //It is a hack, see the eventCategories.js for the rationale
+        //and see databaseAccess.js for how this is applied
       },
       {
         name: 'Attending a Performance, Festival',
