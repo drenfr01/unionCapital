@@ -58,7 +58,7 @@ async function getValidatedAttributes(addons, event, hours, userId, geolocation,
 }
 
 // -> Promise -> ?imageId
-function uploadUserPhotoIfExists(userPhoto) {
+async function uploadUserPhotoIfExists(userPhoto) {
   return new Promise(function (resolve, reject) {
     if(userPhoto) {
       attributes = {
@@ -73,6 +73,7 @@ function uploadUserPhotoIfExists(userPhoto) {
           reject(err);
         } else {
 
+          // The new file is required, because the ID needs to be on the File Object
           userPhoto = new File([userPhoto], id, { type: userPhoto.type });
 
           var uploader = new Slingshot.Upload("uploadUserPhoto");
@@ -82,14 +83,15 @@ function uploadUserPhotoIfExists(userPhoto) {
             }
             else {
               Meteor.call('updateImageWithUrl', {imageId: id, imageUrl: downloadUrl});
-              resolve();
+              resolve(id);
             }
           });
         }
       });
+    } else {
+      // No photo, just resolve
+      resolve();
     }
-    // No photo, just resolve
-    resolve();
   });
 }
 
@@ -141,7 +143,7 @@ CheckIn.prototype.submitCheckIn = async function submitCheckIn() {
   this.checkingIn.set(true);
   try {
     const userId = Meteor.userId();
-    const imageId = await uploadUserPhotoIfExists(userPhoto);
+    var imageId = await uploadUserPhotoIfExists(userPhoto);
     const attributes = await getValidatedAttributes(addons, event, hours, userId, geolocation, imageId);
     debugger
     const approvalType = await callInsert(attributes);

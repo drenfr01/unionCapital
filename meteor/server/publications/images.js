@@ -18,6 +18,6 @@ Slingshot.createDirective("uploadUserPhoto", Slingshot.S3Storage, {
   }
 });
 
-Meteor.publish("images", function() {
+Meteor.publish("memberImage", function() {
   return Images.find();
 });
