@@ -26,7 +26,7 @@ Template.approveTransactions.rendered = function() {
         //listTransactions[trans._id] = {canApprove: canApprove};
       //});
       //self.transactionInstances.set(listTransactions);
-    //}   
+    //}
   //});
 };
 
@@ -83,12 +83,12 @@ Template.approveTransactions.helpers({
   },
 
   'descriptionModalData': function() {
-    return Session.get('descriptionModalContext'); 
+    return Session.get('descriptionModalContext');
   },
 
   'imageUrl': function(imageId) {
     if(Images.findOne(imageId)) {
-      return Images.findOne(imageId).url();
+      return Images.findOne(imageId).imageUrl;
     }
   },
 
@@ -99,13 +99,13 @@ Template.approveTransactions.helpers({
   isAdmin: function() {
     return Roles.userIsInRole(Meteor.userId(), 'admin');
   },
-  
+
   transactionDescription: function() {
     return this.event.description.substr(0,50);
   },
 
   //isCheckboxDisabled: function() {
-    //return Template.instance().transactionInstances.get()[this._id].canApprove ? 
+    //return Template.instance().transactionInstances.get()[this._id].canApprove ?
         //"" : "disabled";
   //}
 
@@ -129,13 +129,13 @@ Template.approveTransactions.events({
       if(error) {
         sAlert.error(error.reason);
       } else {
-        sAlert.success('Rejected event'); 
+        sAlert.success('Rejected event');
       }
     });
   },
 
   'click .eventName': function(e) {
-    Session.set('descriptionModalContext', this); 
+    Session.set('descriptionModalContext', this);
   },
 
   'click #sendApproval': function(e) {
