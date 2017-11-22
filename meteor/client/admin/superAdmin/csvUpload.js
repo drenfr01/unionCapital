@@ -77,7 +77,12 @@ _.extend(CSVUpload.prototype, {
         }, thisRowEvent);
 
         thisRowEvent.addLocationData();
-        thisRowEvent.addSuperCategory(thisRowEvent.category);
+        try {
+          thisRowEvent.addSuperCategory(thisRowEvent.category);
+        } catch (e) {
+          thisRowEvent.statusClass = "bg-danger";
+          thisRowEvent.statusMsg = "Can't find Category";
+        }
       }
       curr = this.events.get();
       curr.push(thisRowEvent)
