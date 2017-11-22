@@ -1,12 +1,12 @@
 <template name="singleImage">
   <div class="row">
-    <div class="col-xs-6 col-xs-offset-3 page-panel text-center"> 
+    <div class="col-xs-6 col-xs-offset-3 page-panel text-center">
         <a href="/checkPoints">Back</a>
     </div>
   </div>
   {{#if Template.subscriptionsReady}}
   <img src="{{imageUrl}}"
-       alt="No Image Found" height=100% width=100%>
+       alt="No Image Found">
   {{else}}
     {{> spinner}}
   {{/if}}

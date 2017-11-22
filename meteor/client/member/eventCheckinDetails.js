@@ -153,6 +153,13 @@ Template.eventCheckinDetails.events({
     } else {
       checkIn.userPhoto = null;
     }
+
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      $("#tempPhoto")
+        .attr('src', e.target.result);
+    }
+    reader.readAsDataURL(input.files[0]);
   },
 
   // Async, pass the check
@@ -207,8 +214,9 @@ Template.eventCheckinDetails.events({
     Router.go('checkin');
   },
 
-  'click #photoPanel': function() {
+  'click #removePhoto': function() {
     checkIn.removePhoto();
+    $("#tempPhoto").attr('src', null);
   },
 
   'change #addonForm': function() {
