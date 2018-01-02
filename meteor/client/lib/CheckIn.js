@@ -136,7 +136,8 @@ CheckIn = function(defaultHours) {
 CheckIn.prototype.submitCheckIn = async function submitCheckIn() {
   const { userPhoto, geolocation, addons, event, hours } = this;
 
-  if (!userPhoto || !geolocation || !addons || !hours) {
+  //TODO: temporary hack to  allow deploy
+  if (!geolocation || !addons || !hours) {
     throw new Error('Missing needed arguments');
   }
 
