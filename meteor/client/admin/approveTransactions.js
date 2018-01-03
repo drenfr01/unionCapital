@@ -34,12 +34,7 @@ Template.approveTransactions.onCreated(function() {
   this.subscribe('transactions', {approved: false});
   this.subscribe('partnerOrganizations');
   //this.transactionInstances = new ReactiveVar({});
-
-    var self = this;
-    self.autorun(function() {
-      var dataContext = Session.get('modalDataContext') || {userId: ""};
-      self.subscribe('singleImage', dataContext.userId);
-    });
+  this.subscribe('memberImage', this.data);
 });
 
 Template.approveTransactions.helpers({
