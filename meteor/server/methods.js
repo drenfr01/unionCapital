@@ -39,7 +39,8 @@ Meteor.methods({
         gender: Match.Optional(String),
         medicaid: Match.Optional(String),
         reducedLunch: Match.Optional(String),
-        UCBAppAccess: Match.Optional(String)
+        UCBAppAccess: Match.Optional(String),
+        displayLanguage: Match.Optional(String)
       }
     });
 
@@ -65,7 +66,8 @@ Meteor.methods({
           'profile.gender': attributes.profile.gender,
           'profile.medicaid': attributes.profile.medicaid,
           'profile.reducedLunch': attributes.profile.reducedLunch,
-          'profile.UCBAppAccess': attributes.profile.UCBAppAccess
+          'profile.UCBAppAccess': attributes.profile.UCBAppAccess,
+          'profile.displayLanguage': attributes.profile.displayLanguage
         }
       });
       Meteor.users.update(attributes.userId,

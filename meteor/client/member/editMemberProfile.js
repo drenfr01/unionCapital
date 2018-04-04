@@ -50,10 +50,13 @@ Template.editMemberProfile.helpers({
     return UCBAppAccess.find();
   },
   partnerOrgs: function() {
-    return PartnerOrganizations.find(); 
+    return PartnerOrganizations.find();
   },
   selectedRace: function(race) {
     return race === Meteor.user().profile.race ? 'selected' : '';
+  },
+  displayLanguage: function() {
+    return displayLanguage.find();
   }
 });
 
@@ -64,7 +67,7 @@ Template.editMemberProfile.events({
   },
 
   'click .removePartnerOrg': function(e) {
-    PartnerOrganizations.remove(this._id); 
+    PartnerOrganizations.remove(this._id);
   },
 
   'click #submit': function(e) {
@@ -91,6 +94,7 @@ Template.editMemberProfile.events({
     if($("#genderForm input[type='radio']:checked").val()) attributes.profile.gender = $("#genderForm input[type='radio']:checked").val();
     if($("#reducedLunchForm input[type='radio']:checked").val()) attributes.profile.reducedLunch = $("#reducedLunchForm input[type='radio']:checked").val();
     if($('#device').val()) attributes.profile.UCBAppAccess = $('#device').val();
+    if($('#displayLanguage').val()) attributtes.profile.displayLanguage = $("#languageForm input[type='radio']:checked").val();
 
     Meteor.call('updateUser', attributes, function(error) {
       if(error) {

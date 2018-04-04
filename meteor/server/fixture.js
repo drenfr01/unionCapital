@@ -39,7 +39,7 @@ Meteor.startup(function () {
         sector: "Education", membersReported: 15, deleteInd: false},
       {name: "Union Capital Boston", description: "Overcoming the Poverty Trap",
         sector: "Community", membersReported: 300, deleteInd: false},
-      {name: "Other", description: "Other", 
+      {name: "Other", description: "Other",
         sector: "Community", membersReported: 50, deleteInd: false}
     ];
 
@@ -150,6 +150,7 @@ Meteor.startup(function () {
          profile: {
            firstName: 'admin',
            lastName: 'admin',
+           displayLanguage: AppConfig.languages.english
          },
          roles:['admin']
       },
@@ -169,7 +170,8 @@ Meteor.startup(function () {
           reducedLunch: 'yes',
           medicaid: 'yes',
           race: "Black or African-American",
-          UCBAppAccess: 'iPad/Table'
+          UCBAppAccess: 'iPad/Table',
+          displayLanguage: AppConfig.languages.english
         },
         roles:['user']
       },
@@ -430,7 +432,7 @@ Meteor.startup(function () {
   ];
 
   if(PointLevels.find().count() === 0) {
-    R.map((pointLevel) => PointLevels.insert(pointLevel), pointLevels); 
+    R.map((pointLevel) => PointLevels.insert(pointLevel), pointLevels);
   }
   //Hide collections from Houston
   Houston.hide_collection(Feedback);

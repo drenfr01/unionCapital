@@ -57,8 +57,12 @@ AppConfig = {
   },
   selfieEvent: "Selfie",
   prelistedEvent: "Prelisted",
-  //this below is a complete hack, but re-writing how we 
+  //this below is a complete hack, but re-writing how we
   //handle fixed point events that are selfie submissions
   //is a huge undertaking
-  event100Points: "Event 100 points"
+  event100Points: "Event 100 points",
+  languages: {
+    english: "English",
+    spanish: "Spanish"
+  },
 };

@@ -39,6 +39,9 @@ Template.createNewUser.events({
           required: true,
           email: true
         },
+        displayLanguage: {
+          required: true
+        },
         userPassword: {
           required: true,
           minlength: 6
@@ -52,6 +55,7 @@ Template.createNewUser.events({
       userAttributes.profile.lastName = $('#lastName').val();
       userAttributes.email = $('#userEmail').val().toLowerCase();
       userAttributes.password = $('#userPassword').val();
+      userAttributes.profile.displayLanguage = $('#displayLanguage').val();
       Session.set('signupPage','collectUserDemographics');
     }
   }

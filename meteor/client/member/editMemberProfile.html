@@ -66,8 +66,8 @@
           </div>
         </form>
         {{#each partnerOrgs}}
-        <b>{{name}}:</b> {{description}} 
-          <span class="glyphicon glyphicon-remove removePartnerOrg" 
+        <b>{{name}}:</b> {{description}}
+          <span class="glyphicon glyphicon-remove removePartnerOrg"
             area-hidden="true"></span>
           <br>
         {{/each}}
@@ -83,12 +83,12 @@
             Male
           </label>
           <label class="radio-inline">
-            <input type="radio" name="inlineRadioOptions" id="female" 
+            <input type="radio" name="inlineRadioOptions" id="female"
             value="female">
             Female
           </label>
           <label class="radio-inline">
-            <input type="radio" name="inlineRadioOptions" id="noresponse" 
+            <input type="radio" name="inlineRadioOptions" id="noresponse"
             value="noresponse">Prefer not to respond
           </label>
         </div>
@@ -104,12 +104,25 @@
           </select>
         </div>
       </form>
-    </div>
+      <form role="form" id="languageForm">
+        <div class="form-group">
+          <label> Display Language / Idioma de Visualización </label>
+            <label class="radio-inline">
+              <input type="radio" name="inlineRadioOptions" id="en" value="en">
+               English
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="inlineRadioOptions" id="es" value="es">
+              Español
+            </label>
+          </div>
+        </form>
+        </div>
+      </div>
   </div>
   <!-- TODO: remove unnessary info and consolidate panes. My thought here is to
   have partners be a list with a search bar, exactly the same as private events
   then people can just add / subtract as necessary. I'm thinking read in partners into a local collection and then add / subtract to it for reactivity-->
-</div>
     {{>bottomNav buttonType="submit"}}
 {{/with}}
 </template>

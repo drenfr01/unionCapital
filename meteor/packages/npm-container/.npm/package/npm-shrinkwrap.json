@@ -3,22 +3,22 @@
     "fast-csv": {
       "version": "0.5.3",
       "resolved": "https://registry.npmjs.org/fast-csv/-/fast-csv-0.5.3.tgz",
-      "from": "fast-csv@0.5.3",
+      "from": "https://registry.npmjs.org/fast-csv/-/fast-csv-0.5.3.tgz",
       "dependencies": {
         "extended": {
           "version": "0.0.6",
           "resolved": "https://registry.npmjs.org/extended/-/extended-0.0.6.tgz",
-          "from": "extended@0.0.6",
+          "from": "https://registry.npmjs.org/extended/-/extended-0.0.6.tgz",
           "dependencies": {
             "extender": {
               "version": "0.0.10",
               "resolved": "https://registry.npmjs.org/extender/-/extender-0.0.10.tgz",
-              "from": "extender@0.0.10",
+              "from": "https://registry.npmjs.org/extender/-/extender-0.0.10.tgz",
               "dependencies": {
                 "declare.js": {
                   "version": "0.0.8",
                   "resolved": "https://registry.npmjs.org/declare.js/-/declare.js-0.0.8.tgz",
-                  "from": "declare.js@0.0.8"
+                  "from": "https://registry.npmjs.org/declare.js/-/declare.js-0.0.8.tgz"
                 }
               }
             }
@@ -27,22 +27,22 @@
         "is-extended": {
           "version": "0.0.10",
           "resolved": "https://registry.npmjs.org/is-extended/-/is-extended-0.0.10.tgz",
-          "from": "is-extended@0.0.10"
+          "from": "https://registry.npmjs.org/is-extended/-/is-extended-0.0.10.tgz"
         },
         "object-extended": {
           "version": "0.0.7",
           "resolved": "https://registry.npmjs.org/object-extended/-/object-extended-0.0.7.tgz",
-          "from": "object-extended@0.0.7",
+          "from": "https://registry.npmjs.org/object-extended/-/object-extended-0.0.7.tgz",
           "dependencies": {
             "array-extended": {
               "version": "0.0.11",
               "resolved": "https://registry.npmjs.org/array-extended/-/array-extended-0.0.11.tgz",
-              "from": "array-extended@0.0.11",
+              "from": "https://registry.npmjs.org/array-extended/-/array-extended-0.0.11.tgz",
               "dependencies": {
                 "arguments-extended": {
                   "version": "0.0.3",
                   "resolved": "https://registry.npmjs.org/arguments-extended/-/arguments-extended-0.0.3.tgz",
-                  "from": "arguments-extended@0.0.3"
+                  "from": "https://registry.npmjs.org/arguments-extended/-/arguments-extended-0.0.3.tgz"
                 }
               }
             }
@@ -51,24 +51,24 @@
         "string-extended": {
           "version": "0.0.8",
           "resolved": "https://registry.npmjs.org/string-extended/-/string-extended-0.0.8.tgz",
-          "from": "string-extended@0.0.8",
+          "from": "https://registry.npmjs.org/string-extended/-/string-extended-0.0.8.tgz",
           "dependencies": {
             "array-extended": {
               "version": "0.0.11",
               "resolved": "https://registry.npmjs.org/array-extended/-/array-extended-0.0.11.tgz",
-              "from": "array-extended@0.0.11",
+              "from": "https://registry.npmjs.org/array-extended/-/array-extended-0.0.11.tgz",
               "dependencies": {
                 "arguments-extended": {
                   "version": "0.0.3",
                   "resolved": "https://registry.npmjs.org/arguments-extended/-/arguments-extended-0.0.3.tgz",
-                  "from": "arguments-extended@0.0.3"
+                  "from": "https://registry.npmjs.org/arguments-extended/-/arguments-extended-0.0.3.tgz"
                 }
               }
             },
             "date-extended": {
               "version": "0.0.6",
               "resolved": "https://registry.npmjs.org/date-extended/-/date-extended-0.0.6.tgz",
-              "from": "date-extended@0.0.6"
+              "from": "https://registry.npmjs.org/date-extended/-/date-extended-0.0.6.tgz"
             }
           }
         }
@@ -77,24 +77,24 @@
     "jszip": {
       "version": "2.4.0",
       "resolved": "https://registry.npmjs.org/jszip/-/jszip-2.4.0.tgz",
-      "from": "jszip@2.4.0",
+      "from": "https://registry.npmjs.org/jszip/-/jszip-2.4.0.tgz",
       "dependencies": {
         "pako": {
           "version": "0.2.8",
           "resolved": "https://registry.npmjs.org/pako/-/pako-0.2.8.tgz",
-          "from": "pako@0.2.8"
+          "from": "https://registry.npmjs.org/pako/-/pako-0.2.8.tgz"
         }
       }
     },
     "xmlbuilder": {
       "version": "2.4.4",
       "resolved": "https://registry.npmjs.org/xmlbuilder/-/xmlbuilder-2.4.4.tgz",
-      "from": "xmlbuilder@2.4.4",
+      "from": "https://registry.npmjs.org/xmlbuilder/-/xmlbuilder-2.4.4.tgz",
       "dependencies": {
         "lodash-node": {
           "version": "2.4.1",
           "resolved": "https://registry.npmjs.org/lodash-node/-/lodash-node-2.4.1.tgz",
-          "from": "lodash-node@2.4.1"
+          "from": "https://registry.npmjs.org/lodash-node/-/lodash-node-2.4.1.tgz"
         }
       }
     }
