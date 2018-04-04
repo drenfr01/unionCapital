@@ -5,11 +5,11 @@
         <div class="grid">
           <div class="col">
             <h3 class="data-point" style="color: {{ currentLevelColor }};">{{ currentLevel }}</h3>
-            <p class="subtitle">current level</p>
+            <p class="subtitle">{{_ "currentLvl"}}</p>
           </div>
           <div class="col">
             <h3 class="data-point">{{ formatNumber totalPoints }}</h3>
-            <p class="subtitle">points</p>
+            <p class="subtitle">{{_ "points"}}</p>
           </div>
         </div>
       </a>
@@ -22,7 +22,7 @@
         </div>
         <div class="col">
           <h3 class="data-point">{{ formatNumber pointsToNextLevel }}</h3>
-          <p class="subtitle">points to next level</p>
+          <p class="subtitle">{{_ "points2NxtLvl"}}</p>
         </div>
       </div>
     </div>
