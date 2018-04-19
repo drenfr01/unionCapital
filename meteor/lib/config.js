@@ -62,7 +62,7 @@ AppConfig = {
   //is a huge undertaking
   event100Points: "Event 100 points",
   languages: {
-    english: "English",
-    spanish: "Spanish"
+    english: "en",
+    spanish: "es"
   },
 };

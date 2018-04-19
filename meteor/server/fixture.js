@@ -171,7 +171,7 @@ Meteor.startup(function () {
           medicaid: 'yes',
           race: "Black or African-American",
           UCBAppAccess: 'iPad/Table',
-          displayLanguage: AppConfig.languages.english
+          displayLanguage: 'English'
         },
         roles:['user']
       },
