@@ -115,7 +115,6 @@ momentjs:moment@2.13.1
 mongo@1.1.7
 mongo-id@1.0.4
 mongo-livedata@1.0.12
-mrt:googlemaps-server@1.0.0
 npm-bcrypt@0.8.5
 npm-container@1.2.0
 npm-mongo@1.4.43

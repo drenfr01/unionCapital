@@ -143,9 +143,9 @@ Template.addEvents.events({
                       sAlert.error(error.reason);
                       Router.go('addEvents');
                     } else {
-                      sAlert.success("Geocoding complete: Lat = " + result.location.lat + ", Long = " + result.location.lng);
-                      Session.set('latitude', result.location.lat);
-                      Session.set('longitude', result.location.lng);
+                      sAlert.success("Geocoding complete: Lat = " + result.latitude + ", Long = " + result.longitude);
+                      Session.set('latitude', result.latitude);
+                      Session.set('longitude', result.longitude);
                     }
                   });
     }

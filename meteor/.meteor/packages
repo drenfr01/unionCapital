@@ -17,7 +17,6 @@ coffeescript
 jquery
 underscore
 email
-mrt:googlemaps-server
 mdg:camera
 alethes:pages
 sacha:spin

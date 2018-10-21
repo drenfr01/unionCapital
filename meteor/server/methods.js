@@ -1,9 +1,13 @@
 /* global Future */
 /* global Roles */
-/* global googlemaps */
+/* global node-geocoder */
 /* global Images */
 /* global Images */
 /* global emailHelper */
+
+var NodeGeocoder = require('node-geocoder');
+
+var geocoder = NodeGeocoder(Meteor.settings.google_maps);
 
 Meteor.methods({
   removeImage: function(imageId) {
@@ -155,11 +159,11 @@ Meteor.methods({
 
   geocodeAddress: function(address) {
     var myFuture = new Future();
-    googlemaps.geocode(address, function(err, data) {
+    geocoder.geocode(address, function(err, data) {
       if(err) {
         myFuture.throw(err);
       } else {
-        myFuture.return(data.results[0].geometry);
+        myFuture.return(data[0]);
       }
     });
     return myFuture.wait();
