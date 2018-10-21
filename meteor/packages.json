@@ -1,5 +1,6 @@
 {
   "jszip": "2.4.0",
   "xmlbuilder": "2.4.4",
-  "fast-csv": "0.5.3"  
+  "fast-csv": "0.5.3",
+  "node-geocoder": "3.22.0"
 }
