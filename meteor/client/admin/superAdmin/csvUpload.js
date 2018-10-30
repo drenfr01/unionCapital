@@ -117,8 +117,8 @@ _.extend(NewEvent.prototype, {
         self._addWarning("Bad Location");
         console.log(error.reason)
       } else {
-        self.eventData.latitude = result.location.lat;
-        self.eventData.longitude = result.location.lng;
+        self.eventData.latitude = result.latitude;
+        self.eventData.longitude = result.longitude;
         self.locationFound.set(true);
         // good for debugging
         // sAlert.success('lat long success' + result.location.lat + ':' + result.location.lng);
