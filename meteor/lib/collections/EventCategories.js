@@ -4,7 +4,7 @@
 
 EventCategories = new Meteor.Collection('eventCategories');
 
-//note: this is a re-used global, should re-factor it. 
+//note: this is a re-used global, should re-factor it.
 AppConfig = {selfieEvent: "Selfie", event100Points: "Event 100 points"}
 
 EventCategories.attachSchema({
@@ -53,7 +53,7 @@ const categoriesBySuperCategory = {
         rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
-        name: 'Chaperone Field Trip/Sport Activity',
+        name: 'Program at Library, Museum, Education Center',
         rules: ['LESS_THAN_OR_EQUAL_2_HOURS'],
       },
       {
@@ -243,7 +243,7 @@ function getMaxVersionNumber(categories) {
 }
 
 function getCategories(legacy) {
-  const categories = EventCategories.find({ deleteInd: { $ne: true }} , 
+  const categories = EventCategories.find({ deleteInd: { $ne: true }} ,
                                           {sort: {name: 1}}).fetch();
   const minVersionNumber = legacy ? 0 : getMaxVersionNumber(categories);
   return categories.filter(cat => cat.version >= minVersionNumber);
@@ -292,7 +292,7 @@ getInitialCategoryData = function getInitialCategoryData() {
   return R.compose(
     R.flatten,
     R.values,
-    R.mapObjIndexed(({ version, categories }, superCategoryName) => R.map(cat => ({ superCategoryName, version, ...cat, 
+    R.mapObjIndexed(({ version, categories }, superCategoryName) => R.map(cat => ({ superCategoryName, version, ...cat,
                                                                                   eventType: cat.eventType,deleteInd: false }), categories))
   )(categoriesBySuperCategory);
 };

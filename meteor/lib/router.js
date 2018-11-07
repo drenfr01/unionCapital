@@ -78,8 +78,7 @@ Router.onBeforeAction(function() {
    'addPartnerAdminUser',
    'addPartnerOrg',
    'partnerOrgs',
-   'uploadEvents',
-   'imageViewer']}
+   'uploadEvents']}
 );
 
 Router.route('/allMembers/:page?', function() {
@@ -96,12 +95,6 @@ Router.route('/viewMemberProfile/:_id', function () {
   });
 }, {
   name: 'viewMemberProfile'
-});
-
-Router.route('/imageviewer', function () {
-  this.render('imageViewer');
-}, {
-  name: 'imageViewer'
 });
 
 Router.route('/editmemberprofile', function() {
@@ -350,7 +343,7 @@ Router.map(function() {
   this.route('singleImage', {
     path: '/image/:_id',
     data: function() {
-      return this.params._id; 
+      return this.params._id;
     }
   });
 
