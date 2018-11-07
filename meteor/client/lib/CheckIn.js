@@ -146,7 +146,6 @@ CheckIn.prototype.submitCheckIn = async function submitCheckIn() {
     const userId = Meteor.userId();
     var imageId = await uploadUserPhotoIfExists(userPhoto);
     const attributes = await getValidatedAttributes(addons, event, hours, userId, geolocation, imageId);
-    debugger
     const approvalType = await callInsert(attributes);
 
     this.checkingIn.set(false);
